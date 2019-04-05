@@ -50,12 +50,12 @@ public class Model {
     /*
     updatePlayer()
     */
-    public void updatePlayer() {
-
-    }
+//    public void updatePlayer() {
+//
+//    }
     
     /*
-    updateObstacles()
+    updateObstacles() will update the location and direction of the obstacles
     */
     public void updateObstacles() {
 
@@ -68,23 +68,20 @@ public class Model {
     public void spawnObstacle() {
 
     }
-    
-    /*
-    
-    */
-    public void start() {
 
-    }
-    /*
-    getUserInput()
-    */
-    public void getUserInput() {
-
-    }
+//    public void start() {
+//
+//    }
     
-    public void getProgress() {
-
-    }
+    // don't need this method because the User input will be gotten in the Controller
+//    public void getUserInput() {
+//
+//    }
+   
+    //not sure what this method does
+//    public void getProgress() {
+//
+//    }
     
     /*
     eat() will increment the player's food score
@@ -100,7 +97,7 @@ public class Model {
     }
 
     /*
-    nest()
+    nest() will handle the event of the player nesting
     */
     public void nest() {
 

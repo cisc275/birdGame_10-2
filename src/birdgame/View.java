@@ -61,31 +61,53 @@ public class View extends JPanel {
 
     }
 
+    /*
+    createImage() will create a BufferedImage that will be loaded into an array
+    */
     public BufferedImage createImage() {
 
         return null;
     }
-
+    
+    /*
+    paint() will be called to update the visuals of the game
+    */
     public void paint(Graphics g) {
 
     }
 
+    /*
+    update() will update the attributes within View based off of the values that
+    are determined in Model
+    */
     public void update(int xLoc, int yLoc, Direction dir) {
 
     }
 
-    public void renderGame() {
+//    public void renderGame() {
+//
+//    }
 
-    }
-
+    /*
+    displayStartScreen() will display the visual at the beginning of the game and
+    can be recalled when the player dies or goes to the next bird
+    */
     public void displayStartScreen() {
 
     }
 
+    /*
+    displayMiniMap() will be called every tick to update the bird's location on
+    the miniMap to see it's progress
+    */
     public void displayMiniMap() {
 
     }
 
+    /*
+    displayEndScreen() will be called at the end of the game once the player
+    has finished playing the game
+    */
     public void displayEndScreen() {
 
     }
