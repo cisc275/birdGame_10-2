@@ -10,76 +10,106 @@ package birdgame;
  * @author crnis
  */
 public class Model {
-	
-	int fWidth;
-	int fHeight;
-	int imgHeight;
-	int imgWidth;
-	int xLocation;
-	int yLocation;
-	int xincr;
-	int yincr;
-	int sceneNum;
-	GamePiece[] gamePieces;
-	int progress;
-	int enemyFrequency;
-	int foodFrequency;
-	int specialfoodFrequency;
-	int totalLevelTicks;
-	
-	public Model(int width, int height, int imageWidth, int imageHeight) {
-		
-	}
-	
-	public void updateLocationAndDirection() {
-		
-	}
-	
-	public void handleTicks() {
-		
-	}
-	
-	public void updatePlayer() {
-		
-	}
-	
-	public void updateObstacles() {
-		
-	}
-	
-	public void spawnObstacle() {
-		
-	}
-	
-	public void start() {
-		
-	}
-	
-	public void getUserInput() {
-		
-	}
-	
-	public void getProgress() {
-		
-	}
-	
-	public void eat() {
-		
-	}
-	
-	public void die() {
-		
-	}
-	
-	public void nest() {
-		
-	}
-	
-	public void collide() {
-		
-	}
-	
-	public static void main(String args[]) {
-		
-	}
+    int fWidth;
+    int fHeight;
+    int imgHeight;
+    int imgWidth;
+    int xLocation;
+    int yLocation;
+    int xincr;
+    int yincr;
+    int sceneNum;
+    GamePiece[] gamePieces;
+    int progress;
+    int enemyFrequency;
+    int foodFrequency;
+    int specialfoodFrequency;
+    int totalLevelTicks;
+    
+    /*
+    constructor
+    */
+    public Model(int width, int height, int imageWidth, int imageHeight) {
+
+    }
+    /*
+    updateLocationAndDirection() will increment/decrement the object's location
+    and change the object's direction
+    */
+    public void updateLocationAndDirection() {
+
+    }
+    
+    /*
+    the handleTicks() method will call update the screen every tick
+    */
+    public void handleTicks() {
+
+    }
+
+    /*
+    updatePlayer()
+    */
+    public void updatePlayer() {
+
+    }
+    
+    /*
+    updateObstacles()
+    */
+    public void updateObstacles() {
+
+    }
+    
+    /*
+    spawnObstacle() will randomly generate an obstacle on the screen (i.e. building,
+    enemy, etc.)
+    */
+    public void spawnObstacle() {
+
+    }
+    
+    /*
+    
+    */
+    public void start() {
+
+    }
+    /*
+    getUserInput()
+    */
+    public void getUserInput() {
+
+    }
+    
+    public void getProgress() {
+
+    }
+    
+    /*
+    eat() will increment the player's food score
+    */
+    public void eat() {
+
+    }
+    /*
+    die() will handle the event of the player dying
+    */
+    public void die() {
+
+    }
+
+    /*
+    nest()
+    */
+    public void nest() {
+
+    }
+
+    /*
+    collide() will handle if any collisions between GamePieces
+    */
+    public void collide() {
+
+    }
 }

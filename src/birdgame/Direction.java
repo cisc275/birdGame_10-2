@@ -11,7 +11,10 @@ package birdgame;
  */
 public class Direction {
 	String name;
-	
+	/*
+        Direction will be an enum with various directions in which a GamePiece 
+        can travel in
+        */
 	public Direction(String S){
 		
 	}

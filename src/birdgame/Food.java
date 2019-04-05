@@ -9,8 +9,10 @@ package birdgame;
  *
  * @author crnis
  */
-public class Food extends GamePiece{
+public class Food extends GamePiece {
 
-	int foodValue;
-	
+    int foodValue;
+    /*
+    inherits methods from the GamePiece class
+     */
 }

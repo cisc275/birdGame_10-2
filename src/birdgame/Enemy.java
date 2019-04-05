@@ -9,8 +9,11 @@ package birdgame;
  *
  * @author crnis
  */
-public class Enemy extends GamePiece{
+public class Enemy extends GamePiece {
 
-	int damage;
-	
+    int damage;
+    /*
+    inherits methods from the GamePiece class
+    */
+
 }

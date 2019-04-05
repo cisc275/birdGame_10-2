@@ -47,10 +47,16 @@ public class View extends JPanel {
     Direction direction;
     boolean paused;
 
+    /*
+    Constructor
+    */
     public View() {
 
     }
 
+    /*
+    loadImages() will load the BufferedImages into arrays
+    */
     public void loadImages() {
 
     }

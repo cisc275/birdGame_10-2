@@ -11,15 +11,23 @@ public class Controller {
 
     Model model;
     View view;
-
+    /* 
+    start() will be called from the main() method in the Main class
+    */
     public void start() {
 
     }
-
+    /*
+    keyTyped() will handle the user input when they press the arrow keys to move
+    the bird
+    */
     public void keyTyped(KeyEvent e) {
 
     }
-
+    /*
+    keyPressed() will handle the user input if they hold down the arrowkeys to 
+    move the bird
+    */
     public void keyPressed(KeyEvent e) {
 
     }
