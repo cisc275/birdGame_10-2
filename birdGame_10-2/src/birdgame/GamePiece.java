@@ -20,7 +20,7 @@ public class GamePiece {
     String type;
     /*
     the move() method will call upon the methods in the Model class to update 
-    the object's location and direction
+    the object's location
     */
     public void move() {
 
