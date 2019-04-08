@@ -18,7 +18,8 @@ import java.awt.event.*;
 import javax.swing.KeyStroke;
 
 /**
- *
+ * View contains all the methods and attributes related directly to the display 
+ * of the game.
  * @author crnis
  */
 public class View extends JPanel {
@@ -47,67 +48,75 @@ public class View extends JPanel {
     Direction direction;
     boolean paused;
 
-    /*
-    Constructor
-    */
+    /**
+     * constructor will initialize JFrame and other components that will be on it.
+     */
+
     public View() {
 
     }
+    
+    /**
+     * loadImages() will load the BufferedImages into arrays.
+     */
 
-    /*
-    loadImages() will load the BufferedImages into arrays
-    */
     public void loadImages() {
 
     }
 
-    /*
-    createImage() will create a BufferedImage that will be loaded into an array
-    */
-    public BufferedImage createImage() {
+    /**
+     * createImage() will create a BufferedImage that will be loaded into an array
+     * @return a BufferedImage
+     */
 
+    public BufferedImage createImage() {
         return null;
     }
-    
-    /*
-    paint() will be called to update the visuals of the game
-    */
+
+    /**
+     * paint() will be called to update the visuals of the game.
+     * @param g is a Graphics object
+     */
+
     public void paint(Graphics g) {
 
     }
 
-    /*
-    update() will update the attributes within View based off of the values that
-    are determined in Model
-    */
+    /**
+     * update() will update the attributes within View based off of the values that
+     * are determined in Model.
+     * @param xLoc is the new x location for the player from Model
+     * @param yLoc is the new y location for the player from Model
+     * @param dir is the new direction for the player from Model
+     */
+
     public void update(int xLoc, int yLoc, Direction dir) {
 
     }
 
-//    public void renderGame() {
-//
-//    }
+    /**
+     * displayStartScreen() will display the visual at the beginning of the game and
+     * can be recalled when the player dies or goes to the next bird.
+     */
 
-    /*
-    displayStartScreen() will display the visual at the beginning of the game and
-    can be recalled when the player dies or goes to the next bird
-    */
     public void displayStartScreen() {
 
     }
 
-    /*
-    displayMiniMap() will be called every tick to update the bird's location on
-    the miniMap to see it's progress
-    */
+    /**
+     * displayMiniMap() will be called every tick to update the bird's location on
+     * the miniMap to see it's progress
+     */
+
     public void displayMiniMap() {
 
     }
 
-    /*
-    displayEndScreen() will be called at the end of the game once the player
-    has finished playing the game
-    */
+    /**
+     * displayEndScreen() will be called at the end of the game once the player
+     * has finished playing the game
+     */
+
     public void displayEndScreen() {
 
     }

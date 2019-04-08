@@ -6,13 +6,10 @@
 package birdgame;
 
 /**
- *
+ * Food inherits from GamePiece class; contains int foodValue that has a value for
+ * the score increment that a particular food may have.
  * @author crnis
  */
 public class Food extends GamePiece {
-
     int foodValue;
-    /*
-    inherits methods from the GamePiece class
-     */
 }

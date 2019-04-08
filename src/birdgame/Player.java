@@ -6,7 +6,7 @@
 package birdgame;
 
 /**
- *
+ * Player class contains all the attributes and methods related to the bird (user).
  * @author crnis
  */
 public class Player extends GamePiece {
@@ -14,39 +14,22 @@ public class Player extends GamePiece {
     int health;
     int score;
 
-//    public void move() {
-//
-//    }
-    
-    /*
-    isAlive() returns true if the player is still alive and false otherwise
-    */
+    /**
+     * isAlive() checks if the player is still alive
+     * @return true if player is still alive and false otherwise
+     */
+
     public boolean isAlive() {
         return true;
     }
 
-    /*
-    checkCollision() returns true if the player collides with another GamePiece
-    and false if otherwise
-    */
+    /**
+     * checks if the Player collides with a GamePiece
+     * @return true if player collides with GamePiece and false otherwise
+     */
+
     public boolean checkCollision() {
         return true;
     }
-
-//    public void eat() {
-//
-//    }
-//
-//    public void die() {
-//
-//    }
-//
-//    public void nest() {
-//
-//    }
-//
-//    public void collide() {
-//
-//    }
 
 }

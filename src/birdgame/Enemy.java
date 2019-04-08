@@ -6,14 +6,12 @@
 package birdgame;
 
 /**
- *
+ * Enemy inherits from the GamePiece class; contains int damage that has a value
+ * for the amount of damage the enemy can do to the bird
  * @author crnis
  */
 public class Enemy extends GamePiece {
 
     int damage;
-    /*
-    inherits methods from the GamePiece class
-    */
 
 }

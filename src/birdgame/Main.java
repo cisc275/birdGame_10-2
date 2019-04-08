@@ -6,13 +6,15 @@
 package birdgame;
 
 /**
- *
+ * Main contains the main() method
  * @author crnis
  */
 public class Main {
-    /*
-    will call the start() method in Controller
-    */
+    /**
+     * will call the start() method in Controller
+     * @param args
+     */
+
     public static void main(String[] args) {
         // TODO Auto-generated method stub
 

@@ -6,7 +6,9 @@
 package birdgame;
 
 /**
- *
+ * Model contains and deals with the basic logic of the game, including updating
+ * an object's location and direction, handling collisions, spawning obstacles, 
+ * and player progress.
  * @author crnis
  */
 public class Model {
@@ -25,87 +27,91 @@ public class Model {
     int foodFrequency;
     int specialfoodFrequency;
     int totalLevelTicks;
+    int score;
     
-    /*
-    constructor
-    */
-    public Model(int width, int height, int imageWidth, int imageHeight) {
+    /**
+     * Model constructor will take in four variables defined below
+     * @param fwidth is an int for the width of the frame
+     * @param fheight is an int for the height of the frame
+     * @param imageWidth is an int for the width of the image
+     * @param imageHeight is an int for the height of the image
+     */
+
+    public Model(int fwidth, int fheight, int imageWidth, int imageHeight) {
 
     }
-    /*
-    updateLocationAndDirection() will increment/decrement the object's location
-    and change the object's direction
-    */
+
+    /**
+     * updateLocationAndDirection() will increment/decrement the object's location
+     * and change the object's direction based off of user input from Controller
+     */
+
     public void updateLocationAndDirection() {
 
     }
-    
-    /*
-    the handleTicks() method will call update the screen every tick
-    */
+
+    /**
+     * the handleTicks() method will update the screen every tick, including 
+     * updating the player's direction and location, spawning obstacles periodically,
+     * updating progress on minimap, and checking win/lose conditions.
+     */
+
     public void handleTicks() {
 
     }
 
-    /*
-    updatePlayer()
-    */
-//    public void updatePlayer() {
-//
-//    }
-    
-    /*
-    updateObstacles() will update the location and direction of the obstacles
-    */
-    public void updateObstacles() {
+    /**
+     * spawnObstacle() will randomly generate an obstacle on the screen, including
+     * buildings, enemies, food, etc.
+     */
 
-    }
-    
-    /*
-    spawnObstacle() will randomly generate an obstacle on the screen (i.e. building,
-    enemy, etc.)
-    */
     public void spawnObstacle() {
 
     }
-
-//    public void start() {
-//
-//    }
-    
-    // don't need this method because the User input will be gotten in the Controller
-//    public void getUserInput() {
-//
-//    }
    
-    //not sure what this method does
-//    public void getProgress() {
-//
-//    }
-    
-    /*
-    eat() will increment the player's food score
-    */
+    //minimap
+
+    /**
+     * will return an int value describing progress throughout the level to update
+     * the minimap.
+     * @return an int value that describes the progress of the user
+     */
+    public int getProgress() {
+        return progress;
+    }
+
+    /**
+     * eat() will increment the player's score based off of what is eaten.
+     */
+
     public void eat() {
 
     }
-    /*
-    die() will handle the event of the player dying
-    */
+
+    /**
+     * die() will handle the event of the player dying by resetting everything 
+     * and taking them back to the level screen.
+     */
+
     public void die() {
 
     }
 
-    /*
-    nest() will handle the event of the player nesting
-    */
+    /**
+     * nest() will handle the event of the player nesting by displaying screen
+     * showing bird nesting.
+     */
+
     public void nest() {
 
     }
 
-    /*
-    collide() will handle if any collisions between GamePieces
-    */
+
+    /**
+     * collide() will handle if any collisions between the player and GamePieces
+     * based on what the GamePiece is (food, enemy, obstacle) 
+     */
+
     public void collide() {
 
     }

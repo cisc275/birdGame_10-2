@@ -7,31 +7,46 @@ package birdgame;
 
 import java.awt.event.KeyEvent;
 
+/**
+ * Controller class will handle flow of game and will take user input.
+ * @author crnis
+ */
 public class Controller {
 
     Model model;
     View view;
-    /* 
-    start() will be called from the main() method in the Main class
-    */
+
+    /**
+     *start() will be called from the main() method in the Main class and will 
+     * have a loop to iterate through the game.
+     */
     public void start() {
 
     }
-    /*
-    keyTyped() will handle the user input when they press the arrow keys to move
-    the bird
-    */
+
+    /**
+     * keyTyped() will handle a KeyEvent that the user might perform.
+     * @param e is a KeyEvent that a user might input (up, down). 
+     */
+
     public void keyTyped(KeyEvent e) {
 
     }
-    /*
-    keyPressed() will handle the user input if they hold down the arrowkeys to 
-    move the bird
-    */
+
+    /**
+     * keyPressed() will handle the user input if they hold down the arrowkeys to 
+     * move the bird.
+     * @param e is a KeyEvent that a user might input (up, down).
+     */
+
     public void keyPressed(KeyEvent e) {
 
     }
 
+    /**
+     * keyReleased will not be used for our game
+     * @param e
+     */
     public void keyReleased(KeyEvent e) {
 
     }

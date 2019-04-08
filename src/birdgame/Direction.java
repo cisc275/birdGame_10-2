@@ -6,16 +6,30 @@
 package birdgame;
 
 /**
+ * Direction is an enum that contains all the directions that our bird might
+ * travel
  *
  * @author crnis
  */
-public class Direction {
-	String name;
-	/*
-        Direction will be an enum with various directions in which a GamePiece 
-        can travel in
-        */
-	public Direction(String S){
-		
-	}
+public enum Direction {
+    UP("up"),
+    DOWN("down");
+    private String name;
+
+    /**
+     *
+     * @param s is a String direction that correlates with an existing direction
+     * defined in the enum
+     */
+    private Direction(String s){
+        
+    }
+    
+    /**
+     *
+     * @return name variable corresponding to the direction
+     */
+    public String getName(){
+        return name;
+    }
 }

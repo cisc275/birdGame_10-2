@@ -8,7 +8,9 @@ package birdgame;
 import java.util.HashMap;
 
 /**
- *
+ * SpecialFood is food that may appear larger on screen with some glowing and 
+ * will offer more of a score increment to the player provided they answer the 
+ * question that is prompted correctly.
  * @author crnis
  */
 public class SpecialFood extends Food {
@@ -16,18 +18,21 @@ public class SpecialFood extends Food {
     HashMap<String, String> answerKey;
     HashMap<String, String[]> answerOptions;
 
-    /*
-    checkAnswer() will return true if the player chooses the right answer to the
-    question and will return false if player chooses the wrong answer
-    */
+    /**
+     * checkAnswer() will check if the player's answer is in line with the answerKey
+     * @return true if player chooses right answer and false if player chooses
+     * wrong answer
+     */
+
     public boolean checkAnswer() {
         return true;
     }
 
-    /*
-    generateQuestion() will randomly select a question from the answerOptions
-    HashMap to ask the player
-    */
+    /**
+     * generateQuestion() will randomly select a question from the answerOptions
+     * HashMap to ask the player.
+     */
+
     public void generateQuestion() {
 
     }
