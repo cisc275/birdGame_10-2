@@ -103,10 +103,4 @@ public class Model {
 
     }
 
-    /*
-    collide() will handle if any collisions between GamePieces
-    */
-    public void collide() {
-
-    }
 }

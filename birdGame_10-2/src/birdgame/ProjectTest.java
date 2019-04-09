@@ -83,5 +83,87 @@ public class ProjectTest {
 		//Cannot write JUnit tests for paint(), update(), or displayX() methods due to visual nature of method
 	
 	//Tests for Model
-		//
+		//updateLocationAndDirection()
+	@Test
+	public void playerThatMovesPlus5XMovesPlus5X() {
+		Model m = new Model(1,1,1,1);
+		Player p = new Player();
+		m.gamePieces[0] = p;
+		p.xLocation = 1;
+		p.xincr = 5;
+		m.updateLocationAndDirection();
+		assert p.xLocation == 6;
+	}
+	@Test
+	public void playerThatDoesNotMoveStaysInTheSameSpot() {
+		Model m = new Model(1,1,1,1);
+		Player p = new Player();
+		m.gamePieces[0] = p;
+		p.xLocation = 1;
+		p.xincr = 0;
+		m.updateLocationAndDirection();
+		assert p.xLocation == 1;
+	}
+		//Cannot write JUnit tests for handleTicks() because it deals with screen updates (Calls methods in view)
+		//updateObstacles()
+	@Test
+	public void obstacleThatMovesPlus5XMovesPlus5X() {
+		Model m = new Model(1,1,1,1);
+		Enemy e = new Enemy();
+		m.gamePieces[0] = e;
+		e.xLocation = 1;
+		e.xincr = 5;
+		m.updateObstacles();
+		assert e.xLocation == 6;
+	}
+	@Test
+	public void obstaceThatDoesNotMoveStaysInTheSameSpot() {
+		Model m = new Model(1,1,1,1);
+		Enemy e = new Enemy();
+		m.gamePieces[0] = e;
+		e.xLocation = 1;
+		e.xincr = 0;
+		m.updateObstacles();
+		assert e.xLocation == 1;
+	}
+		//Cannot write tests for spawnObstacle() due to random elements of spawning an object
+		//eat()
+	@Test
+	public void playerEatingIncreasesFoodScoreBy1() {
+		Model m = new Model(1,1,1,1);
+		Player p = new Player();
+		p.score = 0;
+		m.gamePieces[0] = p;
+		m.eat();
+		assert p.score == 1;
+	}
+	@Test
+	public void playerEatingIncreasesHealthBy1() {
+		Model m = new Model(1,1,1,1);
+		Player p = new Player();
+		p.health = 1;
+		m.gamePieces[0] = p;
+		m.eat();
+		assert p.health == 2;
+	}
+		//die()
+	@Test
+	public void playerDyingDecreasesHealthToZero() {
+		Model m = new Model(1,1,1,1);
+		Player p = new Player();
+		p.health = 1;
+		m.gamePieces[0] = p;
+		m.die();
+		assert p.score == 0;
+	}
+	@Test
+	public void playerDyingDecreasesHealthToZeroTest2() {
+		Model m = new Model(1,1,1,1);
+		Player p = new Player();
+		p.health = 10000;
+		m.gamePieces[0] = p;
+		m.die();
+		assert p.health == 0;
+	}
+		//Cannot write tests for Nest due to graphic nature (It calls a method in view).
 }
