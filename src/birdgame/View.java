@@ -45,7 +45,7 @@ public class View extends JPanel {
     int imgHeight;
     int xLocation;
     int yLocation;
-    Direction direction;
+    static Direction direction;
     boolean paused;
 
     /**
@@ -61,7 +61,25 @@ public class View extends JPanel {
      */
 
     public void loadImages() {
-
+        //use orc images for Alpha, use actual bird images later
+        
+        //fly forward
+        BufferedImage forwardImg = createImage("orc_forward_east");
+        for (int j = 0; j < frameCount; j++) {
+            flyForward[j] = forwardImg.getSubimage(imgWidth * j, 0, imgWidth, imgHeight);
+        }
+        
+        //fly up
+        BufferedImage upImg = createImage("orc_forward_north");
+        for (int j = 0; j < frameCount; j++) {
+            flyUp[j] = upImg.getSubimage(imgWidth * j, 0, imgWidth, imgHeight);
+        }
+        
+        //fly down
+        BufferedImage downImg = createImage("orc_forward_south");
+        for (int j = 0; j < frameCount; j++) {
+            flyDown[j] = downImg.getSubimage(imgWidth * j, 0, imgWidth, imgHeight);
+        }
     }
 
     /**
@@ -69,7 +87,15 @@ public class View extends JPanel {
      * @return a BufferedImage
      */
 
-    public BufferedImage createImage() {
+    public BufferedImage createImage(String path) {
+        BufferedImage buff;
+        try {
+            buff = ImageIO.read(new File("images/orc/"
+                    + path + ".png"));
+            return buff;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

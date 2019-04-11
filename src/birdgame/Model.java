@@ -37,8 +37,11 @@ public class Model {
      * @param imageHeight is an int for the height of the image
      */
 
-    public Model(int fwidth, int fheight, int imageWidth, int imageHeight) {
-
+    public Model(int frameWidth, int frameHeight, int imageWidth, int imageHeight) {
+        fWidth = frameWidth;
+        fHeight = frameHeight;
+        imgWidth = imageWidth;
+        imgHeight = imageHeight;
     }
 
     /**

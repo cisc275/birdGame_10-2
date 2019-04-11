@@ -6,15 +6,16 @@
 package birdgame;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Controller class will handle flow of game and will take user input.
  * @author crnis
  */
-public class Controller {
+public class Controller implements KeyListener{
 
-    Model model;
-    View view;
+    private Model model;
+    private View view;
 
     /**
      *start() will be called from the main() method in the Main class and will 
@@ -28,7 +29,7 @@ public class Controller {
      * keyTyped() will handle a KeyEvent that the user might perform.
      * @param e is a KeyEvent that a user might input (up, down). 
      */
-
+    @Override
     public void keyTyped(KeyEvent e) {
 
     }
@@ -38,15 +39,22 @@ public class Controller {
      * move the bird.
      * @param e is a KeyEvent that a user might input (up, down).
      */
-
+    @Override
     public void keyPressed(KeyEvent e) {
-
+        int key = e.getKeyCode();
+        if(key==KeyEvent.VK_UP){
+            View.direction = Direction.UP;
+        }
+        else if(key == KeyEvent.VK_DOWN){
+            View.direction = Direction.DOWN;
+        }
     }
 
     /**
      * keyReleased will not be used for our game
      * @param e
      */
+    @Override
     public void keyReleased(KeyEvent e) {
 
     }
