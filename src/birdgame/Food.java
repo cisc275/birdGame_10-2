@@ -11,5 +11,6 @@ package birdgame;
  * @author crnis
  */
 public class Food extends GamePiece {
+	
     int foodValue;
 }

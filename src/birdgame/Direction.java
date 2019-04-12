@@ -22,7 +22,7 @@ public enum Direction {
      * defined in the enum
      */
     private Direction(String s){
-        
+        this.name = s;
     }
     
     /**
