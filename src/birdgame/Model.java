@@ -50,6 +50,8 @@ public class Model {
     	for (GamePiece gP : gamePieces) {
     		gP.move();
     	}
+    	//not sure how to do the user-input stuff.
+    	//Might make more sense to do the userinput before the above code, because player will move in the above loop
     }
 
     /**
@@ -59,7 +61,15 @@ public class Model {
      */
 
     public void handleTicks() {
-
+    	updateLocationAndDirection();
+    	/*for (GamePiece gP : gamePieces) {
+    		int xLoc = gP.xLocation;
+    		int yLoc = gP.yLocation;
+    		Direction dir = gP.Direction;
+    		update(xLoc,yLoc,dir);
+    	}*/
+    	//doesn't work, but is somewhat what we want I think
+    	progress += 1; //this lets progress increase throughout the level
     }
 
     /**
@@ -68,7 +78,7 @@ public class Model {
      */
 
     public void spawnObstacle() {
-
+    	//we can spawn obstacles off the screen and have them move on to it
     }
    
     //minimap
@@ -87,7 +97,8 @@ public class Model {
      */
 
     public void eat() {
-
+    	//need a way to figure out what food is being eaten
+    	//increase the player's health,score by the foodvalue of the food
     }
 
     /**
@@ -105,7 +116,10 @@ public class Model {
      */
 
     public void nest() {
-
+    	//imo we would want to have a set x,y series of events for nest
+    	//nest would do everything including moving the player, any other needed characters
+    	//nest would include the wait commands and stuff
+    	//it would essentially operate all on its own without user input until the nest stuff was all done
     }
 
 
@@ -115,6 +129,8 @@ public class Model {
      */
 
     public void collide() {
-
+    	//need a way to determine what is colliding and with what
+    	//based on what the player collides with, different methods get called
+    	//such as eat, die, nest
     }
 }
