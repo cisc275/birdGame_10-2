@@ -23,11 +23,12 @@ public class GamePiece {
     String type;
 
     /**
-     * the move() method will call upon the methods in the Model class to update 
+     * the move() method [will call upon the methods] [[Will be called by methods]] in the Model class to update 
      * the object's location and direction.
      */
 
     public void move() {
-
+    	xLocation = xLocation + xincr;
+    	yLocation = yLocation + yincr;
     }
 }

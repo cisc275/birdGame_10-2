@@ -47,7 +47,9 @@ public class Model {
      */
 
     public void updateLocationAndDirection() {
-
+    	for (GamePiece gP : gamePieces) {
+    		gP.move();
+    	}
     }
 
     /**
