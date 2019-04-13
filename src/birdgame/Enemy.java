@@ -13,5 +13,14 @@ package birdgame;
 public class Enemy extends GamePiece {
 
     int damage;
-
+    public Enemy(int x, int y){
+        xLocation = x;
+        yLocation = y;
+        xincr = 5;
+    	yincr = 5;
+    	width = 165;
+    	height = 165;
+    	type = "enemy";
+    	damage = 20;
+    }
 }

@@ -17,12 +17,20 @@ public class Controller implements KeyListener{
     private Model model;
     private View view;
 
+    public Controller(){
+        view = new View();
+        model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
+    }
     /**
      *start() will be called from the main() method in the Main class and will 
      * have a loop to iterate through the game.
      */
     public void start() {
-
+        while(model.player.isAlive()){
+            model.updateLocationAndDirection();
+            view.update(model.player.getX(), model.player.getY(),model.currentGPs, model.direction);
+        }
+        view.displayEndScreen();
     }
 
     /**

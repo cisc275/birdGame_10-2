@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.*;
 import javax.swing.KeyStroke;
+import java.util.ArrayList;
 
 /**
  * View contains all the methods and attributes related directly to the display 
@@ -23,15 +24,20 @@ import javax.swing.KeyStroke;
  * @author crnis
  */
 public class View extends JPanel {
-	final static int frameWidth = 500;
-    final static int frameHeight = 300;
+    final static int frameWidth = 1000;
+    final static int frameHeight = 1000;
     final static int imageWidth = 165;
     final static int imageHeight = 165;
     final static int frameCount = 10;
-    int picNum;
-    BufferedImage[] flyForward;
-    BufferedImage[] flyUp;
-    BufferedImage[] flyDown;
+    static int picNum =0;
+    int playerXLoc = 0;
+    int playerYLoc = 0;
+    int gpXLoc;
+    int gpYLoc;
+    BufferedImage[] flyForward = new BufferedImage[10];
+    BufferedImage[] flyUp = new BufferedImage[10];
+    BufferedImage[] flyDown = new BufferedImage[10];
+    //don't forget below
     BufferedImage[] catchPrey;
     BufferedImage[] crash;
     BufferedImage[] enterNest;
@@ -40,21 +46,27 @@ public class View extends JPanel {
     BufferedImage[] miniMap2;
     BufferedImage[] miniMap3;
     BufferedImage[] miniMap4;
-    JFrame frame;
+    static JFrame frame;
     JPanel pane;
-    int imgWidth;
-    int imgHeight;
+    Direction direction;
     int xLocation;
     int yLocation;
-    
     boolean paused;
+    ArrayList<GamePiece> currentViewableGPs;
 
     /**
      * constructor will initialize JFrame and other components that will be on it.
      */
 
     public View() {
-
+        frame = new JFrame();
+        frame.getContentPane().add(this);
+        frame.setBackground(Color.white);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(frameWidth, frameHeight);
+        loadImages();
+        frame.setVisible(true);
+        currentViewableGPs = new ArrayList<GamePiece>();
     }
     
     /**
@@ -67,19 +79,19 @@ public class View extends JPanel {
         //fly forward
         BufferedImage forwardImg = createImage("orc_forward_east");
         for (int j = 0; j < frameCount; j++) {
-            flyForward[j] = forwardImg.getSubimage(imgWidth * j, 0, imgWidth, imgHeight);
+            flyForward[j] = forwardImg.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
         }
         
         //fly up
         BufferedImage upImg = createImage("orc_forward_north");
         for (int j = 0; j < frameCount; j++) {
-            flyUp[j] = upImg.getSubimage(imgWidth * j, 0, imgWidth, imgHeight);
+            flyUp[j] = upImg.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
         }
         
         //fly down
         BufferedImage downImg = createImage("orc_forward_south");
         for (int j = 0; j < frameCount; j++) {
-            flyDown[j] = downImg.getSubimage(imgWidth * j, 0, imgWidth, imgHeight);
+            flyDown[j] = downImg.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
         }
     }
 
@@ -106,7 +118,26 @@ public class View extends JPanel {
      */
 
     public void paint(Graphics g) {
-
+        picNum = (picNum + 1) % frameCount;
+        if(direction == Direction.UP){
+            
+        }
+        else if(direction == Direction.DOWN){
+            
+        }
+        else{
+            g.drawImage(flyForward[picNum], playerXLoc, playerYLoc,Color.gray, this);
+            for(GamePiece gp: currentViewableGPs){
+                BufferedImage bf = null;
+                try {
+                    bf = ImageIO.read(new File("images/square.png"));
+                
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } 
+                g.drawImage(bf, gp.getX(), gp.getY(), Color.gray, this);
+            }
+        }
     }
 
     /**
@@ -117,8 +148,12 @@ public class View extends JPanel {
      * @param dir is the new direction for the player from Model
      */
 
-    public void update(int xLoc, int yLoc, Direction dir) {
-
+    public void update(int xLoc, int yLoc, ArrayList<GamePiece> g, Direction dir) {
+        playerXLoc = xLoc;
+        playerYLoc = yLoc;
+        currentViewableGPs = g;
+        direction = dir;
+        
     }
 
     /**

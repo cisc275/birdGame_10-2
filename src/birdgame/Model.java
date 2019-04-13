@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package birdgame;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Model contains and deals with the basic logic of the game, including updating
@@ -16,21 +18,23 @@ public class Model {
     int fHeight;
     int imgHeight;
     int imgWidth;
+    int groundLevel;
   //  int xLocation;
   //  int yLocation;  These are implemented in individual gamepiece classes
   //  int xincr;
   //  int yincr;
     int sceneNum;
-    GamePiece[] gamePieces;
+    ArrayList<GamePiece> gamePieces = new ArrayList<>();
     int progress;
     int enemyFrequency;
     int foodFrequency;
     int specialfoodFrequency;
     int totalLevelTicks;
-    int score;
     static Direction direction;
     Player player;
-    
+    //GamePiece currentGP;
+    int indexOfGP;
+    ArrayList<GamePiece> currentGPs = new ArrayList<>();
     
     /**
      * Model constructor will take in four variables defined below
@@ -46,6 +50,9 @@ public class Model {
     	imgWidth = imageWidth;
     	imgHeight = imageHeight;
     	player = new Player();
+        groundLevel = (int)(0.8*fHeight);
+        spawnGamePieces();
+        indexOfGP = 0;
     }
 
     /**
@@ -54,7 +61,7 @@ public class Model {
      */
 
     public void updateLocationAndDirection() {
-    	for (GamePiece gameObjs:gamePieces) {
+    	for(GamePiece gameObjs:gamePieces) {
     		gameObjs.move();
     	}
     	
@@ -65,7 +72,7 @@ public class Model {
     	}
     	if (direction == Direction.DOWN){
     		if (player.yLocation < fHeight) {
-    			player.move(Direction.UP);
+    			player.move(Direction.DOWN);
     		}
     	}
     	
@@ -79,16 +86,53 @@ public class Model {
 
     public void handleTicks() {
     	updateLocationAndDirection();
-
+        for(GamePiece g: gamePieces){
+            if(player.checkCollision(g)){
+                if(g.type.equals("food")){
+                    eat((Food)g);
+                }
+                else if(g.type.equals("enemy")){
+                    obstacleHit((Enemy)g);
+                }
+            }
+        }
+        player.isAlive();
+        clearCurrentGP();
+        seeCurrentGP();
+        
     }
 
     /**
-     * spawnObstacle() will randomly generate an obstacle on the screen, including
+     * spawnGamePieces() will randomly generate an obstacle on the screen, including
      * buildings, enemies, food, etc.
      */
 
-    public void spawnObstacle() {
-
+    //randomize the location of the GamePieces (1 every screen)
+    public void spawnGamePieces() {
+        int numGamePieces = 0;
+        int tempXLoc = fWidth;
+        while(numGamePieces < 20){
+            if(Math.random()<0.5){
+                Food f = new Food((int)(Math.random()*tempXLoc),(int)(Math.random()*fHeight));
+                gamePieces.add(f);
+            }
+            else{
+                Enemy e = new Enemy((int)(Math.random()*tempXLoc), (int)(Math.random()*fHeight));
+                gamePieces.add(e);
+            }
+            numGamePieces++;
+            tempXLoc += fWidth;
+        }
+    }
+    public void clearCurrentGP(){
+        currentGPs.clear();
+    }
+    
+    public void seeCurrentGP(){
+        for(GamePiece g: gamePieces){
+            if(g.getX() <= fWidth && g.getX() >= 0)
+                currentGPs.add(g);
+        }
     }
    
     //minimap
@@ -106,17 +150,29 @@ public class Model {
      * eat() will increment the player's score based off of what is eaten.
      */
 
-    public void eat() {
-
+    public void eat(Food f) {
+        player.score+=f.foodValue;
+        if(player.health > 95){
+            player.health = 100;
+        }
+        else{
+            player.health+=5;
+        }
     }
 
     /**
-     * die() will handle the event of the player dying by resetting everything 
+     * obstacleHit() will handle the event of the player dying by resetting everything 
      * and taking them back to the level screen.
      */
 
-    public void die() {
-
+    public void obstacleHit(Enemy e) {
+        player.score-=e.damage;
+        if(player.health < 20){
+            player.health =0;
+        }
+        else{
+            player.health-=20;
+        }
     }
 
     /**
@@ -127,14 +183,6 @@ public class Model {
     public void nest() {
 
     }
+    
 
-
-    /**
-     * collide() will handle if any collisions between the player and GamePieces
-     * based on what the GamePiece is (food, enemy, obstacle) 
-     */
-
-    public void collide() {
-
-    }
 }

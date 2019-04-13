@@ -17,15 +17,21 @@ public class Player extends GamePiece {
 	yincr = 3;
 	xLocation = 30;
 	yLocation = 300;
+	width = 50;
+	height = 50;
 	}
-    
-    /**
+
+
+	/**
      * isAlive() checks if the player is still alive
      * @return true if player is still alive and false otherwise
      */
 
 
     public boolean isAlive() {
+        if (health < 0) {
+        	return false;
+        }
         return true;
     }
 
@@ -35,7 +41,35 @@ public class Player extends GamePiece {
      */
 
     public boolean checkCollision(GamePiece piece) {
-        if ()
+    	int x = xLocation;
+    	int y = yLocation;
+    	int w = width;
+    	int h = height;
+    	int otherX = piece.xLocation;
+    	int otherY = piece.yLocation;
+    	int otherW = piece.width;
+    	int otherH = piece.height;
+    	
+    	//probably bugged, should test more
+        if (x + w >= otherX && x + w <= otherX + otherW) {
+        	if (y >= otherY && y <= otherY + otherW) {
+        		return true;
+        	}
+        	else if (y + h >= otherH && y + h <= otherY + otherH) {
+        		return true;	
+        	}
+        }
+        else if (x >= otherX && x <= otherX + otherH) {
+        	if (y >= otherY && y <= otherY + otherW) {
+        		return true;
+        	}
+        	if (y + h >= otherY && y + h <= otherY + otherH) {
+        		return true;
+        	}
+        }
+       
+       return false;
+        
     }
     public void move(Direction dir) {
     	if (dir.equals(Direction.UP)) {

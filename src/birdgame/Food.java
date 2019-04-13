@@ -13,4 +13,15 @@ package birdgame;
 public class Food extends GamePiece {
 	
     int foodValue;
+    
+    public Food(int x, int y){
+        xLocation = x;
+        yLocation = y;
+        xincr = 5;
+    	yincr = 5;
+    	width = 165;
+    	height = 165;
+    	type = "food";
+    	foodValue = 10;
+    }
 }

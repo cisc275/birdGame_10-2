@@ -31,4 +31,12 @@ public class GamePiece {
     	xLocation = xLocation + xincr;
     	yLocation = yLocation + yincr;
     }
+    public int getX(){
+        return xLocation;
+    }
+    
+    public int getY(){
+        return yLocation;
+    }
+    
 }
