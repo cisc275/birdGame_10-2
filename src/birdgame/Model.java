@@ -16,10 +16,10 @@ public class Model {
     int fHeight;
     int imgHeight;
     int imgWidth;
-    int xLocation;
-    int yLocation;
-    int xincr;
-    int yincr;
+  //  int xLocation;
+  //  int yLocation;  These are implemented in individual gamepiece classes
+  //  int xincr;
+  //  int yincr;
     int sceneNum;
     GamePiece[] gamePieces;
     int progress;
@@ -28,6 +28,9 @@ public class Model {
     int specialfoodFrequency;
     int totalLevelTicks;
     int score;
+    static Direction direction;
+    Player player;
+    
     
     /**
      * Model constructor will take in four variables defined below
@@ -38,7 +41,11 @@ public class Model {
      */
 
     public Model(int fwidth, int fheight, int imageWidth, int imageHeight) {
-
+    	fWidth = fwidth;
+    	fHeight = fheight;
+    	imgWidth = imageWidth;
+    	imgHeight = imageHeight;
+    	player = new Player();
     }
 
     /**
@@ -47,7 +54,21 @@ public class Model {
      */
 
     public void updateLocationAndDirection() {
-
+    	for (GamePiece gameObjs:gamePieces) {
+    		gameObjs.move();
+    	}
+    	
+    	if (direction == Direction.UP) {
+    		if (player.yLocation > 0) {      //Needs to be adjusted
+    			player.move(Direction.UP);
+    		}
+    	}
+    	if (direction == Direction.DOWN){
+    		if (player.yLocation < fHeight) {
+    			player.move(Direction.UP);
+    		}
+    	}
+    	
     }
 
     /**
@@ -57,6 +78,7 @@ public class Model {
      */
 
     public void handleTicks() {
+    	updateLocationAndDirection();
 
     }
 

@@ -23,9 +23,12 @@ import javax.swing.KeyStroke;
  * @author crnis
  */
 public class View extends JPanel {
-
+	final static int frameWidth = 500;
+    final static int frameHeight = 300;
+    final static int imageWidth = 165;
+    final static int imageHeight = 165;
+    final static int frameCount = 10;
     int picNum;
-    int frameCount;
     BufferedImage[] flyForward;
     BufferedImage[] flyUp;
     BufferedImage[] flyDown;
@@ -39,13 +42,11 @@ public class View extends JPanel {
     BufferedImage[] miniMap4;
     JFrame frame;
     JPanel pane;
-    int frameWidth;
-    int frameHeight;
     int imgWidth;
     int imgHeight;
     int xLocation;
     int yLocation;
-    Direction direction;
+    
     boolean paused;
 
     /**
@@ -61,7 +62,25 @@ public class View extends JPanel {
      */
 
     public void loadImages() {
-
+        //use orc images for Alpha, use actual bird images later
+        
+        //fly forward
+        BufferedImage forwardImg = createImage("orc_forward_east");
+        for (int j = 0; j < frameCount; j++) {
+            flyForward[j] = forwardImg.getSubimage(imgWidth * j, 0, imgWidth, imgHeight);
+        }
+        
+        //fly up
+        BufferedImage upImg = createImage("orc_forward_north");
+        for (int j = 0; j < frameCount; j++) {
+            flyUp[j] = upImg.getSubimage(imgWidth * j, 0, imgWidth, imgHeight);
+        }
+        
+        //fly down
+        BufferedImage downImg = createImage("orc_forward_south");
+        for (int j = 0; j < frameCount; j++) {
+            flyDown[j] = downImg.getSubimage(imgWidth * j, 0, imgWidth, imgHeight);
+        }
     }
 
     /**
@@ -69,7 +88,15 @@ public class View extends JPanel {
      * @return a BufferedImage
      */
 
-    public BufferedImage createImage() {
+    public BufferedImage createImage(String path) {
+        BufferedImage buff;
+        try {
+            buff = ImageIO.read(new File("images/orc/"
+                    + path + ".png"));
+            return buff;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -119,6 +146,18 @@ public class View extends JPanel {
 
     public void displayEndScreen() {
 
+    }
+    public int getWidth(){
+        return frameWidth;
+    }
+    public int getHeight(){
+        return frameHeight;
+    }
+    public int getImageWidth(){
+        return imageWidth;
+    }
+    public int getImageHeight(){
+        return imageHeight;
     }
 
 }

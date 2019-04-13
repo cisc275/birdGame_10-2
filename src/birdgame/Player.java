@@ -10,14 +10,20 @@ package birdgame;
  * @author crnis
  */
 public class Player extends GamePiece {
-
-    int health;
+	int health;
     int score;
 
+	Player(){
+	yincr = 3;
+	xLocation = 30;
+	yLocation = 300;
+	}
+    
     /**
      * isAlive() checks if the player is still alive
      * @return true if player is still alive and false otherwise
      */
+
 
     public boolean isAlive() {
         return true;
@@ -28,8 +34,16 @@ public class Player extends GamePiece {
      * @return true if player collides with GamePiece and false otherwise
      */
 
-    public boolean checkCollision() {
-        return true;
+    public boolean checkCollision(GamePiece piece) {
+        if ()
+    }
+    public void move(Direction dir) {
+    	if (dir.equals(Direction.UP)) {
+    		yLocation = yLocation - yincr;
+    	}
+    	if (dir.equals(Direction.DOWN)) {
+    		yLocation = yLocation + yincr;
+    	}
     }
 
 }
