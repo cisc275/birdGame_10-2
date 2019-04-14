@@ -30,7 +30,7 @@ public class Controller implements KeyListener{
         int i = 0;
         while(model.player.isAlive()){
             model.handleTicks();
-            System.out.println(model.currentGPs.get(0).getX());
+            //System.out.println(model.currentGPs.get(0).getX());
             view.update(model.player.getX(), model.player.getY(),model.currentGPs, model.direction);
             i++;
         }
@@ -68,7 +68,8 @@ public class Controller implements KeyListener{
      */
     @Override
     public void keyReleased(KeyEvent e) {
-
+        int key = e.getKeyCode();
+        Model.direction = null;
     }
 
 }

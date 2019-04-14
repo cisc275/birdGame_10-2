@@ -120,10 +120,30 @@ public class View extends JPanel {
     public void paint(Graphics g) {
         picNum = (picNum + 1) % frameCount;
         if(direction == Direction.UP){
-            
+            g.drawImage(flyUp[picNum], playerXLoc, playerYLoc,Color.gray, this);
+            for(GamePiece gp: currentViewableGPs){
+                BufferedImage bf = null;
+                try {
+                    bf = ImageIO.read(new File("images/orc/orc_forward_west.png"));
+                
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } 
+                g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
+            }
         }
         else if(direction == Direction.DOWN){
-            
+            g.drawImage(flyDown[picNum], playerXLoc, playerYLoc,Color.gray, this);
+            for(GamePiece gp: currentViewableGPs){
+                BufferedImage bf = null;
+                try {
+                    bf = ImageIO.read(new File("images/orc/orc_forward_west.png"));
+                
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } 
+                g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
+            }
         }
         else{
             g.drawImage(flyForward[picNum], playerXLoc, playerYLoc,Color.gray, this);

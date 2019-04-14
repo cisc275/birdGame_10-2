@@ -17,6 +17,7 @@ public class Main {
 
     public static void main(String[] args) {
         Controller c = new Controller();
+        View.frame.addKeyListener(c);
         c.start();
 
     }

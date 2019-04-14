@@ -88,6 +88,7 @@ public class Model {
     	updateLocationAndDirection();
         for(GamePiece g: gamePieces){
             if(player.checkCollision(g)){
+                System.out.println(player.checkCollision(g));
                 if(g.type.equals("food")){
                     eat((Food)g);
                 }
