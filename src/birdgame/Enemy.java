@@ -16,8 +16,8 @@ public class Enemy extends GamePiece {
     public Enemy(int x, int y){
         xLocation = x;
         yLocation = y;
-        xincr = 5;
-    	yincr = 5;
+        xincr = 10;
+    	yincr = 0;
     	width = 165;
     	height = 165;
     	type = "enemy";

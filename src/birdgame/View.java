@@ -52,7 +52,7 @@ public class View extends JPanel {
     int xLocation;
     int yLocation;
     boolean paused;
-    ArrayList<GamePiece> currentViewableGPs;
+    ArrayList<GamePiece> currentViewableGPs = new ArrayList<>();
 
     /**
      * constructor will initialize JFrame and other components that will be on it.
@@ -66,7 +66,7 @@ public class View extends JPanel {
         frame.setSize(frameWidth, frameHeight);
         loadImages();
         frame.setVisible(true);
-        currentViewableGPs = new ArrayList<GamePiece>();
+        
     }
     
     /**
@@ -130,12 +130,12 @@ public class View extends JPanel {
             for(GamePiece gp: currentViewableGPs){
                 BufferedImage bf = null;
                 try {
-                    bf = ImageIO.read(new File("images/square.png"));
+                    bf = ImageIO.read(new File("images/orc/orc_forward_west.png"));
                 
                 } catch (IOException e) {
                     e.printStackTrace();
                 } 
-                g.drawImage(bf, gp.getX(), gp.getY(), Color.gray, this);
+                g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
             }
         }
     }
@@ -153,7 +153,12 @@ public class View extends JPanel {
         playerYLoc = yLoc;
         currentViewableGPs = g;
         direction = dir;
-        
+        frame.repaint();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

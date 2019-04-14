@@ -26,9 +26,13 @@ public class Controller implements KeyListener{
      * have a loop to iterate through the game.
      */
     public void start() {
+        //while(model.player.isAlive()){
+        int i = 0;
         while(model.player.isAlive()){
-            model.updateLocationAndDirection();
+            model.handleTicks();
+            System.out.println(model.currentGPs.get(0).getX());
             view.update(model.player.getX(), model.player.getY(),model.currentGPs, model.direction);
+            i++;
         }
         view.displayEndScreen();
     }

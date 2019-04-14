@@ -28,8 +28,8 @@ public class GamePiece {
      */
 
     public void move() {
-    	xLocation = xLocation + xincr;
-    	yLocation = yLocation + yincr;
+    	xLocation = xLocation - xincr;
+    	yLocation = yLocation - yincr;
     }
     public int getX(){
         return xLocation;

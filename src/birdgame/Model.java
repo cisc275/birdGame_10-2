@@ -100,6 +100,7 @@ public class Model {
         clearCurrentGP();
         seeCurrentGP();
         
+        
     }
 
     /**
@@ -110,19 +111,22 @@ public class Model {
     //randomize the location of the GamePieces (1 every screen)
     public void spawnGamePieces() {
         int numGamePieces = 0;
-        int tempXLoc = fWidth;
+        int tempXLoc = 500;
         while(numGamePieces < 20){
             if(Math.random()<0.5){
-                Food f = new Food((int)(Math.random()*tempXLoc),(int)(Math.random()*fHeight));
+                Food f = new Food(tempXLoc,500);
                 gamePieces.add(f);
             }
             else{
-                Enemy e = new Enemy((int)(Math.random()*tempXLoc), (int)(Math.random()*fHeight));
+                Enemy e = new Enemy(tempXLoc, 500);
                 gamePieces.add(e);
             }
             numGamePieces++;
             tempXLoc += fWidth;
         }
+//        for(GamePiece g: gamePieces){
+//            System.out.println(g.xLocation +", "+ g.yLocation);
+//        }
     }
     public void clearCurrentGP(){
         currentGPs.clear();
