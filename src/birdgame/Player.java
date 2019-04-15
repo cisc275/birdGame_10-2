@@ -17,8 +17,8 @@ public class Player extends GamePiece {
 	yincr = 3;
 	xLocation = 30;
 	yLocation = 300;
-	width = 50;
-	height = 50;
+	width = 165;
+	height = 165;
 	}
 
 
@@ -55,7 +55,7 @@ public class Player extends GamePiece {
         	if (y >= otherY && y <= otherY + otherW) {
         		return true;
         	}
-        	else if (y + h >= otherH && y + h <= otherY + otherH) {
+        	else if (y + h >= otherY && y + h <= otherY + otherH) {
         		return true;	
         	}
         }
