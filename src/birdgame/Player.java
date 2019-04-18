@@ -10,8 +10,8 @@ package birdgame;
  * @author crnis
  */
 public class Player extends GamePiece {
-	int health;
-    int score;
+	int health = 100;
+    int score = 0;
 
 	Player(){
 	yincr = 3;

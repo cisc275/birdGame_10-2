@@ -19,6 +19,7 @@ public class Main {
         Controller c = new Controller();
         View.frame.addKeyListener(c);
         c.start();
+        
 
     }
 
