@@ -156,7 +156,7 @@ public class Model {
      */
 
     public void eat(Food f) {
-        player.score+=f.foodValue;
+        player.score += f.foodValue;
         if(player.health > 95){
             player.health = 100;
         }

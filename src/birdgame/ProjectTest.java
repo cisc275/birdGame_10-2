@@ -67,7 +67,7 @@ public class ProjectTest {
 		g.yLocation = 1;
 		g.yincr = 5;
 		g.move();
-		assert g.yLocation == 6;
+		assert g.yLocation == -4;
 	}
 	
 	//Tests for Controller
@@ -81,68 +81,125 @@ public class ProjectTest {
 	//Tests for Model
 		//updateLocationAndDirection()
 	@Test
-	public void playerThatMovesPlus5XMovesPlus5X() {
+	public void enemyThatMovesPlus5XMovesPlus5X() {
 		Model m = new Model(1,1,1,1);
-		Player p = new Player();
-		m.gamePieces.add(p);
-		p.xLocation = 1;
-		p.xincr = 5;
+		Enemy e = new Enemy(1,1);
+		m.gamePieces.add(e);
+		e.xincr = 5;
 		m.updateLocationAndDirection();
-		assert p.xLocation == 6;
+		assert e.xLocation == -4;
 	}
 	@Test
-	public void playerThatDoesNotMoveStaysInTheSameSpot() {
+	public void enemyThatDoesNotMoveStaysInTheSameSpot() {
+		Model m = new Model(1,1,1,1);
+		Enemy e = new Enemy(1,1);
+		m.gamePieces.add(e);
+		e.xincr = 0;
+		m.updateLocationAndDirection();
+		assert e.xLocation == 1;
+	}
+	@Test
+	public void playerThatDoesNotMoveStaysStill() {
 		Model m = new Model(1,1,1,1);
 		Player p = new Player();
-		m.gamePieces.add(p);
+		m.player = p;
 		p.xLocation = 1;
 		p.xincr = 0;
 		m.updateLocationAndDirection();
 		assert p.xLocation == 1;
 	}
-		//Cannot write JUnit tests for handleTicks() because it deals with screen updates (Calls methods in view)
-		//updateObstacles()
-	/*
 	@Test
-	public void obstacleThatMovesPlus5XMovesPlus5X() {
-		Model m = new Model(1,1,1,1);
-		Enemy e = new Enemy(1,1);
-		m.gamePieces.add(e);
-		e.xincr = 5;
-		m.updateObstacles();
-		assert e.xLocation == 6;
-	}
-	@Test
-	public void obstaceThatDoesNotMoveStaysInTheSameSpot() {
-		Model m = new Model(1,1,1,1);
-		Enemy e = new Enemy();
-		m.gamePieces[0] = e;
-		e.xLocation = 1;
-		e.xincr = 0;
-		m.updateObstacles();
-		assert e.xLocation == 1;
-	}*/
-		//Cannot write tests for spawnObstacle() due to random elements of spawning an object
-		//eat()
-	@Test
-	public void playerEatingIncreasesFoodScoreBy1() {
+	public void playerWithDirectionUpMovesUp() {
 		Model m = new Model(1,1,1,1);
 		Player p = new Player();
-		p.score = 0;
-		m.gamePieces.add(p);
-		Food f = new Food(1,1);
-		m.eat(f);
-		assert p.score == 1;
+		m.player = p;
+		m.direction = Direction.UP;
+		p.yLocation = 1;
+		p.yincr = 5;
+		m.updateLocationAndDirection();
+		assert p.yLocation == -4;
 	}
 	@Test
-	public void playerEatingIncreasesHealthBy1() {
+	public void playerWithDirectionDownMovesDown() {
+		Model m = new Model(1,1,1,1);
+		m.fHeight = 100;
+		Player p = new Player();
+		m.player = p;
+		m.direction = Direction.DOWN;
+		p.yLocation = 1;
+		p.yincr = -5;
+		m.updateLocationAndDirection();
+		assert p.yLocation == -4;
+	}
+		//clearCurrentGP()
+	@Test
+	public void clearingGamePiecesPlayerWillHaveNoneLeft() {
+		Model m = new Model(1,1,1,1);
+		Player p = new Player();
+		m.currentGPs.add(p);
+		m.clearCurrentGP();
+		assert m.currentGPs.size() == 0;
+	}
+	@Test
+	public void clearingGamePiecesEnemyWillHaveNoneLeft() {
+		Model m = new Model(1,1,1,1);
+		Enemy e = new Enemy(1,1);
+		m.currentGPs.add(e);
+		m.clearCurrentGP();
+		assert m.currentGPs.size() == 0;
+	}
+		//seeCurrentGP()
+	
+	
+	
+		//Cannot write JUnit tests for handleTicks() because it deals with screen updates (Calls methods in view)
+		//updateObstacles()
+		//Cannot write tests for spawnObstacle() due to random elements of spawning an object
+		//getProgress()
+	@Test
+	public void getProgressOf0ReturnsProgressOf0() {
+		Model m = new Model(1,1,1,1);
+		m.progress = 0;
+		assert m.getProgress() == 0;
+	}
+	@Test
+	public void getProgressReturnsProgress() {
+		Model m = new Model(1,1,1,1);
+		m.progress = 50;
+		assert m.getProgress() == 50;
+	}
+		//eat()
+	@Test
+	public void playerEatingIncreasesHealthUnder95by5() {
 		Model m = new Model(1,1,1,1);
 		Player p = new Player();
 		p.health = 1;
-		m.gamePieces.add(p);
+		m.player = p;
 		Food f = new Food(1,1);
 		m.eat(f);
-		assert p.health == 2;
+		assert p.health == 6;
+	}
+	@Test
+	public void playerEatingIncreasesHealthAbove95to100() {
+		Model m = new Model(1,1,1,1);
+		Player p = new Player();
+		p.health = 97;
+		m.player = p;
+		Food f = new Food(1,1);
+		m.eat(f);
+		assert p.health == 100;
+	}
+	@Test
+	public void playerEatingIncreasesScoreBy1() {
+		Model m = new Model(1,1,1,1);
+		Player p = new Player();
+		p.health = 1;
+		p.score = 1;
+		m.player = p;
+		Food f = new Food(1,1);
+		f.foodValue = 1;
+		m.eat(f);
+		assert p.score == 2;
 	}
 		//Cannot write tests for Nest due to graphic nature (It calls a method in view).
 }
