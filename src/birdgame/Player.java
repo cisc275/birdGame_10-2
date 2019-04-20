@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package birdgame;
 
 /**
  * Player class contains all the attributes and methods related to the bird (user).
@@ -14,11 +13,12 @@ public class Player extends GamePiece {
     int score;
 
 	Player(){
-	yincr = 3;
+	yincr = 10;
 	xLocation = 30;
 	yLocation = 300;
 	width = 165;
 	height = 165;
+	health = 100;
 	}
 
 
@@ -29,7 +29,7 @@ public class Player extends GamePiece {
 
 
     public boolean isAlive() {
-        if (health <= 0) {
+        if (health < 0) {
         	return false;
         }
         return true;
@@ -78,6 +78,7 @@ public class Player extends GamePiece {
     	if (dir.equals(Direction.DOWN)) {
     		yLocation = yLocation + yincr;
     	}
+    	
     }
 
 }
