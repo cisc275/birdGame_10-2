@@ -111,7 +111,6 @@ public class View extends JPanel {
      */
     public void loadImages() {
         //use orc images for Alpha, use actual bird images later
-
         //fly forward
         BufferedImage forwardImg = createImage("images/BirdImages/BirdFlying.png");
         //BufferedImage forwardImg = createImage("images/orc/orc_forward_east.png");
@@ -144,6 +143,7 @@ public class View extends JPanel {
 //            buff = ImageIO.read(new File("orc/"
 //                    + path + ".png"));
             buff = ImageIO.read(new File(path));
+
             return buff;
         } catch (IOException e) {
             e.printStackTrace();

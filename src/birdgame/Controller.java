@@ -24,6 +24,7 @@ public class Controller implements KeyListener {
         model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
     }
 
+
     /**
      * start() will be called from the main() method in the Main class and will
      * have a loop to iterate through the game.
