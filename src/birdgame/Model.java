@@ -218,9 +218,9 @@ public class Model {
      * showing bird nesting.
      */
 
-    public void nest() {
+/*    public void nest() {
 
-    }
+    }*/
     
 
 }

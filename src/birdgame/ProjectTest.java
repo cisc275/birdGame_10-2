@@ -149,12 +149,64 @@ public class ProjectTest {
 		assert m.currentGPs.size() == 0;
 	}
 		//seeCurrentGP()
-	
-	
-	
-		//Cannot write JUnit tests for handleTicks() because it deals with screen updates (Calls methods in view)
-		//updateObstacles()
-		//Cannot write tests for spawnObstacle() due to random elements of spawning an object
+	@Test
+	public void seeingCurrentGPsShouldAddAllGPsOnScreen() {
+		Model m = new Model(100,1,1,1);
+		Enemy e = new Enemy(1,1);
+		m.gamePieces.add(e);
+		m.seeCurrentGP();
+		assert m.currentGPs.size() == 1;
+	}
+	@Test
+	public void seeingCurrentGPsShouldAddNoOffScreenRightGPs() {
+		Model m = new Model(100,1,1,1);
+		Enemy e = new Enemy(101,1);
+		m.gamePieces.add(e);
+		m.seeCurrentGP();
+		assert m.currentGPs.size() == 0;
+	}
+	@Test
+	public void seeingCurrentGPsShouldAddNoOffScreenLeftGPs() {
+		Model m = new Model(100,1,1,1);
+		Enemy e = new Enemy(-1,1);
+		m.gamePieces.add(e);
+		m.seeCurrentGP();
+		assert m.currentGPs.size() == 0;
+	}
+		//handleTicks()
+	@Test
+	public void handleTicksUpdatesLocationAndDirection() {
+		Model m = new Model(1,1,1,1);
+		Enemy e = new Enemy(1,1);
+		m.gamePieces.add(e);
+		e.xincr = 5;
+		m.handleTicks();
+		assert e.xLocation == -4;
+	}
+	@Test
+	public void whenPlayerCollidesWithAGamePieceThePieceGetsRemoved() {
+		Model m = new Model(1,1,1,1);
+		Food f = new Food(1,1);
+		int origSize = m.gamePieces.size();
+		m.gamePieces.add(f);
+		m.player.xLocation = 1;
+		m.player.yLocation = 1;
+		m.handleTicks();
+		assert m.gamePieces.size() == origSize;
+	}
+	@Test
+	public void whenPlayerCollidesWithAnEnemyObstacleHitIsCalled() {
+		Model m = new Model(1,1,1,1);
+		Enemy e = new Enemy(1,1);
+		m.gamePieces.add(e);
+		m.player.xLocation = 1;
+		m.player.yLocation = 1;
+		m.player.score = 100;
+		e.damage = 10;
+		m.handleTicks();
+		assert m.player.score == 90;
+	}
+		
 		//getProgress()
 	@Test
 	public void getProgressOf0ReturnsProgressOf0() {
@@ -201,5 +253,31 @@ public class ProjectTest {
 		m.eat(f);
 		assert p.score == 2;
 	}
-		//Cannot write tests for Nest due to graphic nature (It calls a method in view).
+		//obstacleHit()
+	@Test
+	public void hittingAnEnemyWith10DamageDecreasesScoreBy10() {
+		Model m = new Model(1,1,1,1);
+		Enemy e = new Enemy(1,1);
+		m.player.score = 100;
+		e.damage = 10;
+		m.obstacleHit(e);
+		assert m.player.score == 90;
+	}
+	@Test
+	public void hittingAnEnemyWhileHaving15HealthDecreasesHealthto0() {
+		Model m = new Model(1,1,1,1);
+		Enemy e = new Enemy(1,1);
+		m.player.health = 15;
+		m.obstacleHit(e);
+		assert m.player.health == 0;
+	}
+	@Test
+	public void hittingAnEnemyWhileHaving50HealthDecreasesHealthBy20() {
+		Model m = new Model(1,1,1,1);
+		Enemy e = new Enemy(1,1);
+		m.player.health = 50;
+		m.obstacleHit(e);
+		assert m.player.health == 30;
+	}
+		//nest()
 }
