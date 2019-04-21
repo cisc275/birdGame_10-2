@@ -7,9 +7,10 @@ package birdgame;
 
 /**
  * GamePiece contains various attributes of a GamePiece, including x-location,
- * y-location, x and y increment, width, height, and type; in addition, the 
- * GamePiece class contains a move() method that defines how each GamePiece moves
- * on the screen
+ * y-location, x and y increment, width, height, and type; in addition, the
+ * GamePiece class contains a move() method that defines how each GamePiece
+ * moves on the screen
+ *
  * @author crnis
  */
 public class GamePiece {
@@ -23,20 +24,20 @@ public class GamePiece {
     String type;
 
     /**
-     * the move() method will call upon the methods in the Model class to update 
+     * the move() method will call upon the methods in the Model class to update
      * the object's location and direction.
      */
-
     public void move() {
-    	xLocation = xLocation - xincr;
-    	yLocation = yLocation - yincr;
+        xLocation = xLocation - xincr;
+        yLocation = yLocation - yincr;
     }
-    public int getX(){
+
+    public int getX() {
         return xLocation;
     }
-    
-    public int getY(){
+
+    public int getY() {
         return yLocation;
     }
-    
+
 }

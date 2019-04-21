@@ -8,19 +8,21 @@ package birdgame;
 /**
  * Enemy inherits from the GamePiece class; contains int damage that has a value
  * for the amount of damage the enemy can do to the bird
+ *
  * @author crnis
  */
 public class Enemy extends GamePiece {
 
     int damage;
-    public Enemy(int x, int y){
+
+    public Enemy(int x, int y) {
         xLocation = x;
         yLocation = y;
         xincr = 10;
-    	yincr = 0;
-    	width = 165;
-    	height = 165;
-    	type = "enemy";
-    	damage = 20;
+        yincr = 0;
+        width = 165;
+        height = 165;
+        type = "enemy";
+        damage = 20;
     }
 }

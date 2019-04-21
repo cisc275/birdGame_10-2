@@ -9,6 +9,6 @@ package birdgame;
  *
  * @author crnis
  */
-public class Nest extends GamePiece{
-    
+public class Nest extends GamePiece {
+
 }
