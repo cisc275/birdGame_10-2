@@ -22,6 +22,7 @@ public class Player extends GamePiece {
         width = 165;
         height = 165;
         health = 100;
+        yincr = 20;
     }
 
     /**

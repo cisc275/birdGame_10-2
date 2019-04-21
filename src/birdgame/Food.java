@@ -18,7 +18,7 @@ public class Food extends GamePiece {
     public Food(int x, int y) {
         xLocation = x;
         yLocation = y;
-        xincr = 10;
+        xincr = 25;
         yincr = 0;
         width = 165;
         height = 165;

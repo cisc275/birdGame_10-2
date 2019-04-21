@@ -45,9 +45,9 @@ public class View extends JPanel {
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     final static int frameWidth = (int) screenSize.getWidth();
     final static int frameHeight = (int) screenSize.getHeight();
-    final static int imageWidth = 165;
-    final static int imageHeight = 165;
-    final static int frameCount = 10;
+    final static int imageWidth = 110;
+    final static int imageHeight = 110;
+    final static int frameCount = 6;
     static int picNum = 0;
     int playerXLoc = 0;
     int playerYLoc = 0;
@@ -97,11 +97,11 @@ public class View extends JPanel {
         frame.setContentPane(this);
         frame.setBackground(Color.white);
         frame.setSize(frameWidth, frameHeight);
-        loadImages();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setUndecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(false);
+        loadImages();
 //   		frame2.drawImage(ospreyImg.getImage(),100,100,100,100, null);
 
     }
@@ -113,9 +113,10 @@ public class View extends JPanel {
         //use orc images for Alpha, use actual bird images later
 
         //fly forward
-        BufferedImage forwardImg = createImage("images/BirdImages/OspreyTest.png");
+        BufferedImage forwardImg = createImage("images/BirdImages/BirdFlying.png");
+        //BufferedImage forwardImg = createImage("images/orc/orc_forward_east.png");
         for (int j = 0; j < frameCount; j++) {
-            flyForward[j] = forwardImg.getSubimage(imageWidth * j, 30, imageWidth, imageHeight);
+            flyForward[j] = forwardImg.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
         }
 
         //fly up
@@ -183,37 +184,16 @@ public class View extends JPanel {
         if (direction == Direction.UP) {
             g.drawImage(flyUp[picNum], playerXLoc, playerYLoc, Color.gray, this);
             for (GamePiece gp : currentViewableGPs) {
-                BufferedImage bf = null;
-                try {
-                    bf = ImageIO.read(new File("images/orc/orc_forward_west.png"));
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
             }
         } else if (direction == Direction.DOWN) {
             g.drawImage(flyDown[picNum], playerXLoc, playerYLoc, Color.gray, this);
             for (GamePiece gp : currentViewableGPs) {
-                BufferedImage bf = null;
-                try {
-                    bf = ImageIO.read(new File("images/orc/orc_forward_west.png"));
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
             }
         } else {
             g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, Color.gray, this);
             for (GamePiece gp : currentViewableGPs) {
-                BufferedImage bf = null;
-                try {
-                    bf = ImageIO.read(new File("images/orc/orc_forward_west.png"));
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
             }
         }
