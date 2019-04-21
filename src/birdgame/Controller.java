@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package birdgame;
+
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -18,6 +18,7 @@ public class Controller implements KeyListener{
     private View view;
 
     public Controller(){
+
         view = new View();
         model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
     }
@@ -26,13 +27,9 @@ public class Controller implements KeyListener{
      * have a loop to iterate through the game.
      */
     public void start() {
-        //while(model.player.isAlive()){
-        int i = 0;
-        while(model.player.isAlive()){
+    	while(model.player.isAlive()){
             model.handleTicks();
-            //System.out.println(model.currentGPs.get(0).getX());
-            view.update(model.player.getX(), model.player.getY(),model.currentGPs, model.direction);
-            i++;
+            view.update(model.player.getX(), model.player.getY(),model.currentGPs, model.direction,model.player.health, model.player.score);
         }
         view.displayEndScreen();
     }

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package birdgame;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -86,21 +85,29 @@ public class Model {
 
     public void handleTicks() {
     	updateLocationAndDirection();
-        for(GamePiece g: gamePieces){
-            if(player.checkCollision(g)){
-                System.out.println(player.checkCollision(g));
-                if(g.type.equals("food")){
-                    eat((Food)g);
-                }
-                else if(g.type.equals("enemy")){
+        //for(GamePiece g: gamePieces){
+    	Iterator it = gamePieces.iterator();
+    	while(it.hasNext()) {
+    		GamePiece g = (GamePiece) it.next();
+            if(player.checkCollision(g)){            	
+            	if(g instanceof Food) {
+            		eat((Food)g);
+            		System.out.println("this is a food");
+            	}
+            	
+                else if(g instanceof Enemy){
                     obstacleHit((Enemy)g);
+                    System.out.println("this is a enemy");
                 }
+            	it.remove();
             }
-        }
+    	}
         player.isAlive();
         clearCurrentGP();
         seeCurrentGP();
-        
+        System.out.println("Health: " + player.health);
+        System.out.println("Score: " + player.score);
+
         
     }
 
@@ -112,22 +119,47 @@ public class Model {
     //randomize the location of the GamePieces (1 every screen)
     public void spawnGamePieces() {
         int numGamePieces = 0;
+        int oldTempXLoc = 0;
         int tempXLoc = 500;
-        while(numGamePieces < 20){
-            if(Math.random()<0.5){
-                Food f = new Food(tempXLoc,500);
-                gamePieces.add(f);
-            }
-            else{
-                Enemy e = new Enemy(tempXLoc, 500);
-                gamePieces.add(e);
-            }
-            numGamePieces++;
-            tempXLoc += fWidth;
+        boolean flag = true;
+        while(numGamePieces < 40){
+        	
+        	//need to check for food and enemy collisions 
+        	
+        	//decide what the foods and enemies are
+        	
+        	
+//        	int foodX= (int) ((Math.random()*tempXLoc)+oldTempXLoc);
+//        	int foodY= (int) (Math.random()*fHeight);
+//        	int enemyX= (int) ((Math.random()*tempXLoc)+oldTempXLoc);
+//        	int enemyY= (int) (Math.random()*fHeight);
+//        	
+//        	
+//            Food f = new Food(foodX, foodY);
+//            Enemy e = new Enemy(enemyX,enemyY);
+//            gamePieces.add(f);
+//            gamePieces.add(e);
+//            
+//
+//            numGamePieces++;
+//            oldTempXLoc = tempXLoc;
+//            tempXLoc += fWidth;
+        	
+        	if(Math.random() < .5) {
+        		gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight)));
+        		gamePieces.add(new Enemy(tempXLoc + 500, (int) (Math.random()*fHeight)));
+        		
+        	}else {
+        		gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight)));
+        		gamePieces.add(new Food(tempXLoc + 500, (int) (Math.random()*fHeight)));
+        	}
+        
+        	numGamePieces++;
+        	tempXLoc +=fWidth;
+        	
         }
-//        for(GamePiece g: gamePieces){
-//            System.out.println(g.xLocation +", "+ g.yLocation);
-//        }
+        
+      
     }
     public void clearCurrentGP(){
         currentGPs.clear();
