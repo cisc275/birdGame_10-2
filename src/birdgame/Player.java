@@ -14,7 +14,7 @@ public class Player extends GamePiece {
     int score;
 
 	Player(){
-	yincr = 3;
+	yincr = 20;
 	xLocation = 30;
 	yLocation = 300;
 	width = 165;

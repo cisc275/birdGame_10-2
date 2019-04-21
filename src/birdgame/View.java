@@ -26,9 +26,9 @@ import java.util.ArrayList;
 public class View extends JPanel {
     final static int frameWidth = 1000;
     final static int frameHeight = 1000;
-    final static int imageWidth = 165;
-    final static int imageHeight = 165;
-    final static int frameCount = 10;
+    final static int imageWidth = 208;
+    final static int imageHeight = 160;
+    final static int frameCount = 4;
     static int picNum =0;
     int playerXLoc = 0;
     int playerYLoc = 0;
@@ -77,19 +77,19 @@ public class View extends JPanel {
         //use orc images for Alpha, use actual bird images later
         
         //fly forward
-        BufferedImage forwardImg = createImage("orc_forward_east");
+        BufferedImage forwardImg = createImage("images/BirdImages/OspreyTest.png");
         for (int j = 0; j < frameCount; j++) {
-            flyForward[j] = forwardImg.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
+            flyForward[j] = forwardImg.getSubimage(imageWidth * j, 30, imageWidth, imageHeight);
         }
         
         //fly up
-        BufferedImage upImg = createImage("orc_forward_north");
+        BufferedImage upImg = createImage("images/orc/orc_forward_north.png");
         for (int j = 0; j < frameCount; j++) {
             flyUp[j] = upImg.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
         }
         
         //fly down
-        BufferedImage downImg = createImage("orc_forward_south");
+        BufferedImage downImg = createImage("images/orc/orc_forward_south.png");
         for (int j = 0; j < frameCount; j++) {
             flyDown[j] = downImg.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
         }
@@ -103,8 +103,9 @@ public class View extends JPanel {
     public BufferedImage createImage(String path) {
         BufferedImage buff;
         try {
-            buff = ImageIO.read(new File("images/orc/"
-                    + path + ".png"));
+ //           buff = ImageIO.read(new File("images/orc/"
+   //                 + path + ".png"));
+            buff = ImageIO.read(new File(path));
             return buff;
         } catch (IOException e) {
             e.printStackTrace();
