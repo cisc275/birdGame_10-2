@@ -45,8 +45,8 @@ public class View extends JPanel {
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     final static int frameWidth = (int) screenSize.getWidth();
     final static int frameHeight = (int) screenSize.getHeight();
-    final static int imageWidth = 110;
-    final static int imageHeight = 110;
+    final static int imageWidth = 184;
+    final static int imageHeight = 165;
     final static int frameCount = 6;
     static int picNum = 0;
     int playerXLoc = 0;
@@ -114,9 +114,15 @@ public class View extends JPanel {
         //fly forward
         BufferedImage forwardImg = createImage("images/BirdImages/BirdFlying.png");
         //BufferedImage forwardImg = createImage("images/orc/orc_forward_east.png");
-        for (int j = 0; j < frameCount; j++) {
-            flyForward[j] = forwardImg.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
-        }
+//        for (int j = 0; j < frameCount; j++) {
+//            flyForward[j] = forwardImg.getSubimage(imageWidth * j, 40, imageWidth, imageHeight);
+//        }
+        flyForward[0] = createImage("images/BirdImages/Bird0.png");
+        flyForward[1] = createImage("images/BirdImages/Bird1.png");
+        flyForward[2] = createImage("images/BirdImages/Bird2.png");
+        flyForward[3] = createImage("images/BirdImages/Bird3.png");
+        flyForward[4] = createImage("images/BirdImages/Bird4.png");
+        flyForward[5] = createImage("images/BirdImages/Bird5.png");
 
         //fly up
         BufferedImage upImg = createImage("images/orc/orc_forward_north.png");
@@ -179,15 +185,21 @@ public class View extends JPanel {
      * @param g is a Graphics object
      */
     public void paint(Graphics g) {
+//        g.drawImage(flyForward[0], 10, 50, Color.gray, this);
+//        g.drawImage(flyForward[1], 310, 50, Color.gray, this);
+//        g.drawImage(flyForward[2], 610, 50, Color.gray, this);
+//        g.drawImage(flyForward[3], 910, 50, Color.gray, this);
+//        g.drawImage(flyForward[4], 1210, 50, Color.gray, this);
+//        g.drawImage(flyForward[5], 1510, 50, Color.gray, this);
         paintBackground(g);
         picNum = (picNum + 1) % frameCount;
         if (direction == Direction.UP) {
-            g.drawImage(flyUp[picNum], playerXLoc, playerYLoc, Color.gray, this);
+            g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, Color.gray, this);
             for (GamePiece gp : currentViewableGPs) {
                 g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
             }
         } else if (direction == Direction.DOWN) {
-            g.drawImage(flyDown[picNum], playerXLoc, playerYLoc, Color.gray, this);
+            g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, Color.gray, this);
             for (GamePiece gp : currentViewableGPs) {
                 g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
             }

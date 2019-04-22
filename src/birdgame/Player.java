@@ -19,7 +19,7 @@ public class Player extends GamePiece {
     Player() {
         xLocation = 30;
         yLocation = 300;
-        width = 165;
+        width = 184;
         height = 165;
         health = 100;
         yincr = 20;
