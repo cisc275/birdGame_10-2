@@ -110,31 +110,21 @@ public class View extends JPanel {
      * loadImages() will load the BufferedImages into arrays.
      */
     public void loadImages() {
-        //use orc images for Alpha, use actual bird images later
-        //fly forward
-        BufferedImage forwardImg = createImage("images/BirdImages/BirdFlying.png");
-        //BufferedImage forwardImg = createImage("images/orc/orc_forward_east.png");
+        for(int i = 0; i < frameCount; i++){
+            flyForward[i] = createImage("images/BirdImages/Bird" + i + ".png");
+        }
+//
+//        //fly up
+//        BufferedImage upImg = createImage("images/orc/orc_forward_north.png");
 //        for (int j = 0; j < frameCount; j++) {
-//            flyForward[j] = forwardImg.getSubimage(imageWidth * j, 40, imageWidth, imageHeight);
+//            flyUp[j] = upImg.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
 //        }
-        flyForward[0] = createImage("images/BirdImages/Bird0.png");
-        flyForward[1] = createImage("images/BirdImages/Bird1.png");
-        flyForward[2] = createImage("images/BirdImages/Bird2.png");
-        flyForward[3] = createImage("images/BirdImages/Bird3.png");
-        flyForward[4] = createImage("images/BirdImages/Bird4.png");
-        flyForward[5] = createImage("images/BirdImages/Bird5.png");
-
-        //fly up
-        BufferedImage upImg = createImage("images/orc/orc_forward_north.png");
-        for (int j = 0; j < frameCount; j++) {
-            flyUp[j] = upImg.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
-        }
-
-        //fly down
-        BufferedImage downImg = createImage("images/orc/orc_forward_south.png");
-        for (int j = 0; j < frameCount; j++) {
-            flyDown[j] = downImg.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
-        }
+//
+//        //fly down
+//        BufferedImage downImg = createImage("images/orc/orc_forward_south.png");
+//        for (int j = 0; j < frameCount; j++) {
+//            flyDown[j] = downImg.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
+//        }
     }
 
     /**
@@ -185,28 +175,22 @@ public class View extends JPanel {
      * @param g is a Graphics object
      */
     public void paint(Graphics g) {
-//        g.drawImage(flyForward[0], 10, 50, Color.gray, this);
-//        g.drawImage(flyForward[1], 310, 50, Color.gray, this);
-//        g.drawImage(flyForward[2], 610, 50, Color.gray, this);
-//        g.drawImage(flyForward[3], 910, 50, Color.gray, this);
-//        g.drawImage(flyForward[4], 1210, 50, Color.gray, this);
-//        g.drawImage(flyForward[5], 1510, 50, Color.gray, this);
         paintBackground(g);
         picNum = (picNum + 1) % frameCount;
         if (direction == Direction.UP) {
-            g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, Color.gray, this);
+            g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
             for (GamePiece gp : currentViewableGPs) {
-                g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
+                g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), this);
             }
         } else if (direction == Direction.DOWN) {
-            g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, Color.gray, this);
+            g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
             for (GamePiece gp : currentViewableGPs) {
-                g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
+                g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), this);
             }
         } else {
-            g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, Color.gray, this);
+            g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
             for (GamePiece gp : currentViewableGPs) {
-                g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
+                g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), this);
             }
         }
         g.setColor(Color.red);
