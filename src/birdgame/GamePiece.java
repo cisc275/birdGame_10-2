@@ -21,7 +21,7 @@ public class GamePiece {
     int yincr;
     int width;
     int height;
-    String type;
+    int type;
 
     /**
      * the move() method will call upon the methods in the Model class to update

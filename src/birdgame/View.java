@@ -48,14 +48,20 @@ public class View extends JPanel {
     final static int imageWidth = 184;
     final static int imageHeight = 165;
     final static int frameCount = 6;
+    final static int miceFrameCount = 2;
+    final static int bunnyFrameCount = 4;
     static int picNum = 0;
+    static int micePicNum = 0;
+    static int bunnyPicNum = 0;
     int playerXLoc = 0;
     int playerYLoc = 0;
     int gpXLoc;
     int gpYLoc;
-    BufferedImage[] flyForward = new BufferedImage[10];
+    BufferedImage[] flyForward = new BufferedImage[6];
     BufferedImage[] flyUp = new BufferedImage[10];
     BufferedImage[] flyDown = new BufferedImage[10];
+    BufferedImage[] mice = new BufferedImage[2];
+    BufferedImage[] bunny = new BufferedImage[4];
     //don't forget below
     BufferedImage[] catchPrey;
     BufferedImage[] crash;
@@ -112,6 +118,12 @@ public class View extends JPanel {
     public void loadImages() {
         for(int i = 0; i < frameCount; i++){
             flyForward[i] = createImage("images/BirdImages/Bird" + i + ".png");
+        }
+        for(int i = 0; i < miceFrameCount; i++){
+            mice[i] = createImage("images/BirdImages/Mice" + i + ".png");
+        }
+        for(int i = 0; i < bunnyFrameCount; i++){
+            bunny[i] = createImage("images/BirdImages/Bunny" + i + ".png");
         }
 //
 //        //fly up
@@ -180,17 +192,54 @@ public class View extends JPanel {
         if (direction == Direction.UP) {
             g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
             for (GamePiece gp : currentViewableGPs) {
-                g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), this);
+                if(gp instanceof Food){
+                    if(gp.type == 0){ //mice
+                        micePicNum = (micePicNum + 1) % miceFrameCount;
+                        g.drawImage(mice[micePicNum], gp.getX(), gp.getY(), this);
+                    }
+                    if(gp.type == 1){ //bunny
+                        bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
+                        g.drawImage(bunny[bunnyPicNum], gp.getX(), gp.getY(), this);
+                    }
+                }
+                else{
+                    g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), this);
+                }
             }
         } else if (direction == Direction.DOWN) {
             g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
             for (GamePiece gp : currentViewableGPs) {
-                g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), this);
+                if(gp instanceof Food){
+                    if(gp.type == 0){
+                        micePicNum = (micePicNum + 1) % miceFrameCount;
+                        g.drawImage(mice[micePicNum], gp.getX(), gp.getY(), this);
+                    }
+                    if(gp.type == 1){ //bunny
+                        bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
+                        g.drawImage(bunny[bunnyPicNum], gp.getX(), gp.getY(), this);
+                    }
+                }
+                else{
+                    g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), this);
+                }
             }
         } else {
             g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
             for (GamePiece gp : currentViewableGPs) {
-                g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), this);
+                //g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), this);
+                if(gp instanceof Food){
+                    if(gp.type == 0){
+                        micePicNum = (micePicNum + 1) % miceFrameCount;
+                        g.drawImage(mice[micePicNum], gp.getX(), gp.getY(), this);
+                    }
+                    if(gp.type == 1){ //bunny
+                        bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
+                        g.drawImage(bunny[bunnyPicNum], gp.getX(), gp.getY(), this);
+                    }
+                }
+                else{
+                    g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), this);
+                }
             }
         }
         g.setColor(Color.red);

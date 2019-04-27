@@ -15,14 +15,14 @@ public class Food extends GamePiece {
 
     int foodValue;
 
-    public Food(int x, int y) {
+    public Food(int x, int y, int foodType) {
         xLocation = x;
         yLocation = y;
         xincr = 25;
         yincr = 0;
         width = 165;
         height = 165;
-        type = "food";
+        type = foodType; // 0 = mice; 
         foodValue = 10;
     }
 }

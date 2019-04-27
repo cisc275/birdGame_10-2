@@ -147,12 +147,12 @@ public class Model {
 //            tempXLoc += fWidth;
         	
         	if(Math.random() < .5) {
-        		gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight)));
-        		gamePieces.add(new Enemy(tempXLoc + 500, (int) (Math.random()*fHeight)));
+        		gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight), 1));
+        		gamePieces.add(new Enemy(tempXLoc + 500, (int) (Math.random()*fHeight), 0));
         		
         	}else {
-        		gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight)));
-        		gamePieces.add(new Food(tempXLoc + 500, (int) (Math.random()*fHeight)));
+        		gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));
+        		gamePieces.add(new Food(tempXLoc + 500, (int) (Math.random()*fHeight), 1));
         	}
         
         	numGamePieces++;

@@ -15,14 +15,14 @@ public class Enemy extends GamePiece {
 
     int damage;
 
-    public Enemy(int x, int y) {
+    public Enemy(int x, int y, int enemyType) {
         xLocation = x;
         yLocation = y;
         xincr = 25;
         yincr = 0;
         width = 165;
         height = 165;
-        type = "enemy";
+        type = enemyType;
         damage = 20;
     }
 }

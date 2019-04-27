@@ -28,7 +28,7 @@ public class ProjectTest {
         p.width = 10;
         p.xLocation = 1;
         p.yLocation = 1;
-        Enemy e = new Enemy(1, 1);
+        Enemy e = new Enemy(1, 1, 0);
         e.height = 5;
         e.width = 5;
         assert true == p.checkCollision(e);
@@ -41,7 +41,7 @@ public class ProjectTest {
         p.width = 10;
         p.xLocation = 1;
         p.yLocation = 1;
-        Enemy e = new Enemy(500, 500);
+        Enemy e = new Enemy(500, 500, 0);
         e.height = 5;
         e.width = 5;
         assert false == p.checkCollision(e);
@@ -83,7 +83,7 @@ public class ProjectTest {
     @Test
     public void enemyThatMovesPlus5XMovesPlus5X() {
         Model m = new Model(1, 1, 1, 1);
-        Enemy e = new Enemy(1, 1);
+        Enemy e = new Enemy(1, 1, 0);
         m.gamePieces.add(e);
         e.xincr = 5;
         m.updateLocationAndDirection();
@@ -93,7 +93,7 @@ public class ProjectTest {
     @Test
     public void enemyThatDoesNotMoveStaysInTheSameSpot() {
         Model m = new Model(1, 1, 1, 1);
-        Enemy e = new Enemy(1, 1);
+        Enemy e = new Enemy(1, 1, 0);
         m.gamePieces.add(e);
         e.xincr = 0;
         m.updateLocationAndDirection();
@@ -149,7 +149,7 @@ public class ProjectTest {
     @Test
     public void clearingGamePiecesEnemyWillHaveNoneLeft() {
         Model m = new Model(1, 1, 1, 1);
-        Enemy e = new Enemy(1, 1);
+        Enemy e = new Enemy(1, 1, 0);
         m.currentGPs.add(e);
         m.clearCurrentGP();
         assert m.currentGPs.size() == 0;
@@ -181,7 +181,7 @@ public class ProjectTest {
         Player p = new Player();
         p.health = 1;
         m.player = p;
-        Food f = new Food(1, 1);
+        Food f = new Food(1, 1, 0);
         m.eat(f);
         assert p.health == 6;
     }
@@ -192,7 +192,7 @@ public class ProjectTest {
         Player p = new Player();
         p.health = 97;
         m.player = p;
-        Food f = new Food(1, 1);
+        Food f = new Food(1, 1, 0);
         m.eat(f);
         assert p.health == 100;
     }
@@ -204,7 +204,7 @@ public class ProjectTest {
         p.health = 1;
         p.score = 1;
         m.player = p;
-        Food f = new Food(1, 1);
+        Food f = new Food(1, 1, 0);
         f.foodValue = 1;
         m.eat(f);
         assert p.score == 2;
