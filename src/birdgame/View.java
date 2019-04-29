@@ -71,8 +71,8 @@ public class View extends JPanel {
     int gpYLoc;
     BufferedImage[] flyForward = new BufferedImage[6];
     BufferedImage[] mice = new BufferedImage[2];
-    BufferedImage[] bunny = new BufferedImage[4];
-    BufferedImage[] redFox = new BufferedImage[4];
+    BufferedImage[] bunny = new BufferedImage[4]; 
+    BufferedImage[] redFox = new BufferedImage[4]; 
     BufferedImage[] raccoon = new BufferedImage[4];
     BufferedImage[] fish = new BufferedImage[10];
     BufferedImage[] snake = new BufferedImage[1];

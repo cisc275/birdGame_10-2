@@ -74,7 +74,7 @@ public class Model {
     		}
     	}
     	if (direction == Direction.DOWN){
-    		if (player.getY() < fHeight) {
+    		if (player.getY() < fHeight - imgHeight) {
     			player.move(Direction.DOWN);
     		}
     	}
