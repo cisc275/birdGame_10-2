@@ -262,7 +262,7 @@ public class View extends JPanel {
 //                else{// fish
 //                    fishPicNum = (fishPicNum + 1) % fishFrameCount;
 //                    g.drawImage(fish[fishPicNum], gp.getX(), gp.getY(), this);
-//                }
+//                }  
             }
             else if (gp.isEnemy()){
             	System.out.println("in view " + gp.getType().getName());
@@ -270,12 +270,12 @@ public class View extends JPanel {
                     redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
                     g.drawImage(redFox[redFoxPicNum], gp.getX(), gp.getY(), this);
                 }
-//                else if(gp.getType() == 1){ //raccoons
-//                    System.out.println("hi");
-//                    raccoonPicNum = (raccoonPicNum + 1) % raccoonFrameCount;
-//                    System.out.println("hi");
-//                    g.drawImage(raccoon[raccoonPicNum], gp.getX(), gp.getY(), this);
-//                    System.out.println("hi");
+               // else if(gp.getType().equals(Type.RACOON)){ //raccoons
+                
+                else {
+                	raccoonPicNum = (raccoonPicNum + 1) % raccoonFrameCount;
+                    g.drawImage(raccoon[raccoonPicNum], gp.getX(), gp.getY(), this);
+                }
 //                }
 //                else if(gp.getType() == 2){ //eagles
 //                    eaglePicNum = (eaglePicNum + 1) % eagleFrameCount;
@@ -285,8 +285,10 @@ public class View extends JPanel {
 //                    planePicNum = (planePicNum + 1) % planeFrameCount;
 //                    g.drawImage(plane[planePicNum], gp.getX(), gp.getY(), this);
 //                }
-            }
+//            }
         }
+            
+     }
         g.setColor(Color.red);
         g.drawRect(10, 10, 100 * 2, 50);
         g.fillRect(10, 10, health * 2, 50);

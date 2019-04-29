@@ -131,7 +131,7 @@ public class Model {
         if(bird == 1){ //northern harrier
             while(numGamePieces < 100){
                 if(Math.random() < .5){ //food
-                    if(Math.random() < .5){//bunny
+                    if(Math.random() < .33){//bunny
                     	System.out.println("bunny");
                         gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.BUNNY));
                     }
@@ -140,7 +140,7 @@ public class Model {
                     }
                 }
                 else{//enemy
-                    if(Math.random() < 1){//red fox
+                    if(Math.random() < .5){//red fox
                         System.out.println("fox");
                         gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.REDFOX));//0
                     }
