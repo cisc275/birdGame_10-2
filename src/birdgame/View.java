@@ -216,19 +216,19 @@ public class View extends JPanel {
       paintBackground(g);
       picNum = (picNum + 1) % frameCount;
       if (direction == Direction.UP) {
-          g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, Color.gray, this);
+          g.drawImage(flyForward[picNum], playerXLoc, playerYLoc,  this);
           for (GamePiece gp : currentViewableGPs) {
-              g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
+              g.drawImage(flyForward[picNum], gp.getX(), gp.getY(),  this);
           }
       } else if (direction == Direction.DOWN) {
-          g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, Color.gray, this);
+          g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
           for (GamePiece gp : currentViewableGPs) {
-              g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
+              g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), this);
           }
       } else {
-          g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, Color.gray, this);
+          g.drawImage(flyForward[picNum], playerXLoc, playerYLoc,  this);
           for (GamePiece gp : currentViewableGPs) {
-              g.drawImage(flyForward[picNum], gp.getX(), gp.getY(), Color.gray, this);
+              g.drawImage(flyForward[picNum], gp.getX(), gp.getY(),  this);
           }
       }
       g.setColor(Color.red);
@@ -292,9 +292,11 @@ public class View extends JPanel {
     	naturePic.setBounds(0,0,frameWidth, frameHeight);
     	ospreyFact1 = new JLabel("Osprey is a bird");
     	ospreyFact1.setFont(new Font("Times New Roman",1,20));
+    	ospreyFact1.setForeground(Color.white);
     	ospreyFact1.setBounds(200,500,frameWidth/2,frameHeight/4);
     	harrierFact1 = new JLabel("Northern Harrier is a bird");
     	harrierFact1.setFont(new Font("Times New Roman",1,20));
+    	harrierFact1.setForeground(Color.white);
     	harrierFact1.setBounds(200+frameWidth/2,500,frameWidth/2,frameHeight/4);
         pane1 = new JPanel();
         pane1.setLayout(null);
@@ -313,7 +315,6 @@ public class View extends JPanel {
         frame2.setUndecorated(true);
         frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
         frameOsprey.setVisible(true);
-//        frameHarrier.setVisible(true);
         frame2.setVisible(true);
     }
 

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package birdgame;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -218,9 +217,9 @@ public class Model {
      * showing bird nesting.
      */
 
-/*    public void nest() {
+    public void nest() {
 
-    }*/
+    }
     
 
 }

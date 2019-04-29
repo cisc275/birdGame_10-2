@@ -3,33 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package birdgame;
 
 /**
- * Player class contains all the attributes and methods related to the bird
- * (user).
- *
+ * Player class contains all the attributes and methods related to the bird (user).
  * @author crnis
  */
 public class Player extends GamePiece {
+	static int health;
+    static int score;
 
-    int health;
-    int score;
+	Player(){
+	yincr = 20;
+	xLocation = 30;
+	yLocation = 300;
+	width = 184;
+	height = 100;
+	health = 100;
+	}
 
-    Player() {
-        xLocation = 30;
-        yLocation = 300;
-        width = 184;
-        height = 165;
-        health = 100;
-        yincr = 20;
-    }
 
-    /**
+	/**
      * isAlive() checks if the player is still alive
-     *
      * @return true if player is still alive and false otherwise
      */
+
+
     public boolean isAlive() {
         if (health <= 0) {
         	return false;
@@ -39,47 +37,49 @@ public class Player extends GamePiece {
 
     /**
      * checks if the Player collides with a GamePiece
-     *
      * @return true if player collides with GamePiece and false otherwise
      */
+
     public boolean checkCollision(GamePiece piece) {
-        int x = xLocation;
-        int y = yLocation;
-        int w = width;
-        int h = height;
-        int otherX = piece.xLocation;
-        int otherY = piece.yLocation;
-        int otherW = piece.width;
-        int otherH = piece.height;
-
-        //probably bugged, should test more
+    	int x = xLocation;
+    	int y = yLocation;
+    	int w = width;
+    	int h = height;
+    	int otherX = piece.xLocation;
+    	int otherY = piece.yLocation;
+    	int otherW = piece.width;
+    	int otherH = piece.height;
+    	
+    	//probably bugged, should test more
         if (x + w >= otherX && x + w <= otherX + otherW) {
-            if (y >= otherY && y <= otherY + otherW) {
-                return true;
-            } else if (y + h >= otherY && y + h <= otherY + otherH) {
-                return true;
-            }
-        } else if (x >= otherX && x <= otherX + otherH) {
-            if (y >= otherY && y <= otherY + otherW) {
-                return true;
-            }
-            if (y + h >= otherY && y + h <= otherY + otherH) {
-                return true;
-            }
+        	if (y >= otherY && y <= otherY + otherW) {
+        		return true;
+        	}
+        	else if (y + h >= otherY && y + h <= otherY + otherH) {
+        		return true;	
+        	}
         }
-
-        return false;
-
+        else if (x >= otherX && x <= otherX + otherH) {
+        	if (y >= otherY && y <= otherY + otherW) {
+        		return true;
+        	}
+        	if (y + h >= otherY && y + h <= otherY + otherH) {
+        		return true;
+        	}
+        }
+       
+       return false;
+        
     }
-
     public void move(Direction dir) {
-        if (dir.equals(Direction.UP)) {
-            yLocation = yLocation - yincr;
-        }
-        if (dir.equals(Direction.DOWN)) {
-            yLocation = yLocation + yincr;
-        }
-
+    	if (dir.equals(Direction.UP)) {
+    		yLocation = yLocation - yincr;
+    	}
+    	if (dir.equals(Direction.DOWN)) {
+    		yLocation = yLocation + yincr;
+    	}
+    	health--;
+    	
     }
 
 }

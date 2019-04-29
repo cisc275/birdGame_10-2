@@ -4,7 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package birdgame;
+
 
 /**
  * Direction is an enum that contains all the directions that our bird might
@@ -22,15 +22,15 @@ public enum Direction {
      * @param s is a String direction that correlates with an existing direction
      * defined in the enum
      */
-    private Direction(String s) {
+    private Direction(String s){
         this.name = s;
     }
-
+    
     /**
      *
      * @return name variable corresponding to the direction
      */
-    public String getName() {
+    public String getName(){
         return name;
     }
 }
