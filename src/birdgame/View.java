@@ -241,17 +241,16 @@ public class View extends JPanel {
     public void paint(Graphics g) {
         paintBackground(g);
         picNum = (picNum + 1) % frameCount;
-        g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
-        System.out.println("1");
-        for(GamePiece gp : currentViewableGPs) {
-            System.out.println("2");
-            if(gp instanceof Food){
-                System.out.println("hello");
-                if(((Food)gp).getType() == 0){ //mice
+       // g.drawImage(bunny[1], 500,500, this);
+        g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);;
+        for(GamePiece gp : currentViewableGPs) {         
+            if(gp.isFood()){
+            	System.out.println("in view " + gp.getType().getName());
+                if(gp.getType().equals(Type.MOUSE)){ //mice
                     micePicNum = (micePicNum + 1) % miceFrameCount;
                     g.drawImage(mice[micePicNum], gp.getX(), gp.getY(), this);
                 }
-                else if(gp.getType() == 1){ //bunny
+                else if(gp.getType().equals(Type.BUNNY)){ //bunny
                     bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
                     g.drawImage(bunny[bunnyPicNum], gp.getX(), gp.getY(), this);
                 }
@@ -264,9 +263,9 @@ public class View extends JPanel {
 //                    g.drawImage(fish[fishPicNum], gp.getX(), gp.getY(), this);
 //                }
             }
-            else{
-                System.out.println("else");
-                if(gp.getType() == 0){ //red fox
+            else if (gp.isEnemy()){
+            	System.out.println("in view " + gp.getType().getName());
+                if(gp.getType().equals(Type.REDFOX)){ //red fox
                     redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
                     g.drawImage(redFox[redFoxPicNum], gp.getX(), gp.getY(), this);
                 }
@@ -288,8 +287,8 @@ public class View extends JPanel {
             }
         }
         g.setColor(Color.red);
-        g.drawRect(10, 10, 100, 30);
-        g.fillRect(10, 10, health, 30);
+        g.drawRect(10, 10, 100 * 2, 50);
+        g.fillRect(10, 10, health * 2, 50);
         g.setColor(Color.white);
         g.setFont(new Font("Times New Roman", 1, 20));
         g.drawRect(frameWidth - 105, 20, 100, 50);
@@ -361,11 +360,13 @@ public class View extends JPanel {
         osprey.addActionListener(ae -> {
             frame2.dispose();
             Controller.bird = 0;
+            Model.bird = 0;
             Main.started = true;
         });
         harrier.addActionListener(ae -> {
             frame2.dispose();
             Controller.bird = 1;
+            Model.bird = 1;
             Main.started = true;
         });
         pane1.add(osprey);

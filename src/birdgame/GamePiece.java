@@ -20,7 +20,7 @@ public class GamePiece {
     private int yincr;
     private int width;
     private int height;
-    private int type;
+    private Type type;
 
     /**
      * the move() method will call upon the methods in the Model class to update 
@@ -56,7 +56,7 @@ public class GamePiece {
     	return height;
     }
     
-    public int getType() {
+    public Type getType() {
     	return type;
     }
     
@@ -84,8 +84,19 @@ public class GamePiece {
     	height = h;
     }
     
-    public void setType(int s) {
+    public void setType(Type s) {
     	type = s;
+    }
+    public boolean isEnemy() {
+    	if (type.equals(Type.PLANE) || type.equals(Type.EAGLE) || type.equals(Type.REDFOX) || type.equals(Type.RACOON)){
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
+    public boolean isFood() {
+    	return !(isEnemy());
     }
     
     public String toString(){
