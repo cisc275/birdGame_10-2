@@ -27,9 +27,9 @@ public class Controller implements KeyListener{
      * have a loop to iterate through the game.
      */
     public void start() {
-    	while(model.player.isAlive()){
+    	while(model.getPlayer().isAlive()){
             model.handleTicks();
-            view.update(model.player.getX(), model.player.getY(),model.currentGPs, model.direction,model.player.health, model.player.score);
+            view.update(model.getPlayer().getX(), model.getPlayer().getY(),model.getCurrentGPs(), model.getDirection(),model.getPlayer().getHealth(), model.getPlayer().getScore());
         }
     }
 
@@ -51,10 +51,10 @@ public class Controller implements KeyListener{
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if(key==KeyEvent.VK_UP){
-            Model.direction = Direction.UP;
+            Model.setDirection(Direction.UP);
         }
         else if(key == KeyEvent.VK_DOWN){
-            Model.direction = Direction.DOWN;
+            Model.setDirection(Direction.DOWN);
         }
     }
 
@@ -65,7 +65,7 @@ public class Controller implements KeyListener{
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
-        Model.direction = null;
+        Model.setDirection(null);
     }
 
 }

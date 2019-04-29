@@ -13,15 +13,23 @@ package birdgame;
  */
 public class Enemy extends GamePiece {
 
-    int damage;
+    private int damage;
     public Enemy(int x, int y){
-        xLocation = x;
-        yLocation = y;
-        xincr = 10;
-    	yincr = 0;
-    	width = 165;
-    	height = 165;
-    	type = "enemy";
-    	damage = 20;
+        setX(x);
+        setY(y);
+        setXIncr(10);
+    	setYIncr(0);
+    	setWidth(165);
+    	setHeight(165);
+    	setType("enemy");
+    	setDamage(20);
     }
+	public int getDamage() {
+		return damage;
+	}
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+    
+    
 }

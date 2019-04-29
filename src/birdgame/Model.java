@@ -15,27 +15,27 @@ import java.util.Iterator;
  * @author crnis
  */
 public class Model {
-    int fWidth;
-    int fHeight;
-    int imgHeight;
-    int imgWidth;
-    int groundLevel;
+    private int fWidth;
+    private int fHeight;
+    private int imgHeight;
+    private int imgWidth;
+    private int groundLevel;
   //  int xLocation;
   //  int yLocation;  These are implemented in individual gamepiece classes
   //  int xincr;
   //  int yincr;
-    int sceneNum;
-    ArrayList<GamePiece> gamePieces = new ArrayList<>();
-    int progress;
-    int enemyFrequency;
-    int foodFrequency;
-    int specialfoodFrequency;
-    int totalLevelTicks;
-    static Direction direction;
-    Player player;
+    private int sceneNum;
+    private ArrayList<GamePiece> gamePieces = new ArrayList<>();
+    private int progress;
+    private int enemyFrequency;
+    private int foodFrequency;
+    private int specialfoodFrequency;
+    private int totalLevelTicks;
+    private static Direction direction;
+    private Player player;
     //GamePiece currentGP;
-    int indexOfGP;
-    ArrayList<GamePiece> currentGPs = new ArrayList<>();
+    private int indexOfGP;
+    private ArrayList<GamePiece> currentGPs = new ArrayList<>();
     
     /**
      * Model constructor will take in four variables defined below
@@ -48,12 +48,12 @@ public class Model {
     public Model(int fwidth, int fheight, int imageWidth, int imageHeight) {
     	fWidth = fwidth;
     	fHeight = fheight;
-    	imgWidth = imageWidth;
-    	imgHeight = imageHeight;
+    	setImgWidth(imageWidth);
+    	setImgHeight(imageHeight);
     	player = new Player();
-        groundLevel = (int)(0.8*fHeight);
+        setGroundLevel((int)(0.8*fHeight));
         spawnGamePieces();
-        indexOfGP = 0;
+        setIndexOfGP(0);
     }
 
     /**
@@ -67,12 +67,12 @@ public class Model {
     	}
     	
     	if (direction == Direction.UP) {
-    		if (player.yLocation > 0) {      //Needs to be adjusted
+    		if (player.getY() > 0) {      //Needs to be adjusted
     			player.move(Direction.UP);
     		}
     	}
     	if (direction == Direction.DOWN){
-    		if (player.yLocation < fHeight) {
+    		if (player.getY() < fHeight) {
     			player.move(Direction.DOWN);
     		}
     	}
@@ -107,8 +107,8 @@ public class Model {
         player.isAlive();
         clearCurrentGP();
         seeCurrentGP();
-        System.out.println("Health: " + player.health);
-        System.out.println("Score: " + player.score);
+        System.out.println("Health: " + player.getHealth());
+        System.out.println("Score: " + player.getScore());
 
         
     }
@@ -190,12 +190,12 @@ public class Model {
      */
 
     public void eat(Food f) {
-        player.score+=f.foodValue;
-        if(player.health > 95){
-            player.health = 100;
+        player.setScore(player.getScore() + f.getFoodValue());
+        if(player.getHealth() > 95){
+            player.setHealth(100);
         }
         else{
-            player.health+=5;
+            player.setHealth( player.getHealth() + 5);
         }
     }
 
@@ -205,12 +205,12 @@ public class Model {
      */
 
     public void obstacleHit(Enemy e) {
-        player.score-=e.damage;
-        if(player.health < 20){
-            player.health =0;
+        player.setScore(player.getScore() - e.getDamage());
+        if(player.getHealth() < 20){
+            player.setHealth(0);
         }
         else{
-            player.health-=20;
+            player.setHealth(player.getHeight() - 20);
         }
     }
 
@@ -222,6 +222,97 @@ public class Model {
     public void nest() {
 
     }
+
+	public int getImgHeight() {
+		return imgHeight;
+	}
+	
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public ArrayList<GamePiece> getCurrentGPs() {
+		return currentGPs;
+	}
+
+	//private static Direction direction;
+	
+	public Direction getDirection() {
+		return direction;
+	}
+	
+	public static void setDirection(Direction Direction) {
+		direction = Direction;
+	}
+	
+	public void setImgHeight(int imgHeight) {
+		this.imgHeight = imgHeight;
+	}
+
+	public int getImgWidth() {
+		return imgWidth;
+	}
+
+	public void setImgWidth(int imgWidth) {
+		this.imgWidth = imgWidth;
+	}
+
+	public int getGroundLevel() {
+		return groundLevel;
+	}
+
+	public void setGroundLevel(int groundLevel) {
+		this.groundLevel = groundLevel;
+	}
+
+	public int getSceneNum() {
+		return sceneNum;
+	}
+
+	public void setSceneNum(int sceneNum) {
+		this.sceneNum = sceneNum;
+	}
+
+	public int getEnemyFrequency() {
+		return enemyFrequency;
+	}
+
+	public void setEnemyFrequency(int enemyFrequency) {
+		this.enemyFrequency = enemyFrequency;
+	}
+
+	public int getFoodFrequency() {
+		return foodFrequency;
+	}
+
+	public void setFoodFrequency(int foodFrequency) {
+		this.foodFrequency = foodFrequency;
+	}
+
+	public int getSpecialfoodFrequency() {
+		return specialfoodFrequency;
+	}
+
+	public void setSpecialfoodFrequency(int specialfoodFrequency) {
+		this.specialfoodFrequency = specialfoodFrequency;
+	}
+
+	public int getTotalLevelTicks() {
+		return totalLevelTicks;
+	}
+
+	public void setTotalLevelTicks(int totalLevelTicks) {
+		this.totalLevelTicks = totalLevelTicks;
+	}
+
+	public int getIndexOfGP() {
+		return indexOfGP;
+	}
+
+	public void setIndexOfGP(int indexOfGP) {
+		this.indexOfGP = indexOfGP;
+	}
     
+	
 
 }

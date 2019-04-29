@@ -15,13 +15,13 @@ package birdgame;
  */
 public class GamePiece {
 
-    int xLocation;
-    int yLocation;
-    int xincr;
-    int yincr;
-    int width;
-    int height;
-    String type;
+    private int xLocation;
+    private int yLocation;
+    private int xincr;
+    private int yincr;
+    private int width;
+    private int height;
+    private String type;
 
     /**
      * the move() method will call upon the methods in the Model class to update 
@@ -40,5 +40,55 @@ public class GamePiece {
     public int getY(){
         return yLocation;
     }
+    
+    public int getXIncr() {
+    	return xincr;
+    }
+    
+    public int getYIncr() {
+    	return yincr;
+    }
+    
+    public int getWidth() {
+    	return width;
+    }
+    
+    public int getHeight() {
+    	return height;
+    }
+    
+    public String getType() {
+    	return type;
+    }
+    
+    public void setX( int x){
+        xLocation = x;
+    }
+    
+    public void setY(int y){
+        yLocation = y;
+    }
+    
+    public void setXIncr(int x) {
+    	xincr = x;
+    }
+    
+    public void setYIncr( int y) {
+    	yincr = y;
+    }
+    
+    public void setWidth(int w) {
+    	width = w;
+    }
+    
+    public void setHeight(int h) {
+    	height = h;
+    }
+    
+    public void setType(String s) {
+    	type = s;
+    }
+    
+    
     
 }

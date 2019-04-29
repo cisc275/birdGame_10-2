@@ -343,7 +343,7 @@ public class View extends JPanel {
     	gameOver = new JLabel("Game Over");
     	gameOver.setFont(new Font("Times New Roman",1,70));
     	gameOver.setBounds(frameWidth/2-150,frameHeight/2-100,1000,200);
-    	finalScore = new JLabel("Score: " + Player.score);
+    	finalScore = new JLabel("Score: " + Player.getScore());
     	finalScore.setFont(new Font("Times New Roman",1,20));
     	finalScore.setBounds(frameWidth/2-100,frameHeight/2,100,100);
     	pane2 = new JPanel();

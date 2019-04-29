@@ -39,7 +39,7 @@ public class Main {
     			test=false;
         		c1.start();
     		}
-    		if(Player.health<=0) {
+    		if(Player.getHealth()<=0) {
     			View.displayEndScreen();
     			View.frameOsprey.dispose(); 
 

@@ -13,16 +13,24 @@ package birdgame;
  */
 public class Food extends GamePiece {
 	
-    int foodValue;
+    private int foodValue;
     
     public Food(int x, int y){
-        xLocation = x;
-        yLocation = y;
-        xincr = 10;
-    	yincr = 0;
-    	width = 165;
-    	height = 165;
-    	type = "food";
-    	foodValue = 10;
+        setX(x);
+        setY(y);
+        setXIncr(10);
+    	setYIncr(0);
+    	setWidth(165);
+    	setHeight(165);
+    	setType("food");
+    	setFoodValue(10);
     }
+
+	public int getFoodValue() {
+		return foodValue;
+	}
+
+	public void setFoodValue(int foodValue) {
+		this.foodValue = foodValue;
+	}
 }

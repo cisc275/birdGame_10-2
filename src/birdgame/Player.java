@@ -10,15 +10,15 @@ package birdgame;
  * @author crnis
  */
 public class Player extends GamePiece {
-	static int health;
-    static int score;
+	private static int health;
+    private static int score;
 
 	Player(){
-	yincr = 20;
-	xLocation = 30;
-	yLocation = 300;
-	width = 184;
-	height = 100;
+	setYIncr(20);
+	setX(30);
+	setY(300);
+	setWidth(184);
+	setHeight(100);
 	health = 100;
 	}
 
@@ -42,14 +42,14 @@ public class Player extends GamePiece {
      */
 
     public boolean checkCollision(GamePiece piece) {
-    	int x = xLocation;
-    	int y = yLocation;
-    	int w = width;
-    	int h = height;
-    	int otherX = piece.xLocation;
-    	int otherY = piece.yLocation;
-    	int otherW = piece.width;
-    	int otherH = piece.height;
+    	int x = getX();
+    	int y = getY();
+    	int w = getWidth();
+    	int h = getHeight();
+    	int otherX = piece.getX();
+    	int otherY = piece.getY();
+    	int otherW = piece.getWidth();
+    	int otherH = piece.getHeight();
     	
     	//probably bugged, should test more
         if (x + w >= otherX && x + w <= otherX + otherW) {
@@ -74,13 +74,33 @@ public class Player extends GamePiece {
     }
     public void move(Direction dir) {
     	if (dir.equals(Direction.UP)) {
-    		yLocation = yLocation - yincr;
+    		
+    		setY(getY() - getYIncr());
     	}
     	if (dir.equals(Direction.DOWN)) {
-    		yLocation = yLocation + yincr;
+    		setY(getY() + getYIncr());
     	}
     	health--;
     	
     }
+
+
+	public static int getScore() {
+		return score;
+	}
+
+
+	public static void setScore(int score) {
+		Player.score = score;
+	}
+	
+	public static int getHealth() {
+		return health;
+	}
+
+
+	public static void setHealth(int health) {
+		Player.health = health;
+	}
 
 }
