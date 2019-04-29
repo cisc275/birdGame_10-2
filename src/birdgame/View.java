@@ -288,8 +288,8 @@ public class View extends JPanel {
             }
         }
         g.setColor(Color.red);
-        g.drawRect(10, 10, 100, 30);
-        g.fillRect(10, 10, health, 30);
+        g.drawRect(10, 10, 100 * 2, 50);
+        g.fillRect(10, 10, health * 2, 50);
         g.setColor(Color.white);
         g.setFont(new Font("Times New Roman", 1, 20));
         g.drawRect(frameWidth - 105, 20, 100, 50);
