@@ -124,8 +124,8 @@ public class Model {
         int numGamePieces = 0;
         //background0:
             //land: 0-432px, 1776-2640px, 
-        int tempXLoc = (int)(Math.random() * 2639 + 1776);
-        System.out.println(tempXLoc);
+        //int tempXLoc = (int)(Math.random() * 2639 + 1776);
+        int tempXLoc = 500;
         int landHeight = 96;
         boolean flag = true;
         if(bird == 1){ //northern harrier
@@ -140,14 +140,14 @@ public class Model {
                 }
                 else{//enemy
                     if(Math.random() < 0.5){//red fox
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));//0
                     }
                     else{//raccoon
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 1));
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 1));//1
                     }
                 }
                 numGamePieces++;
-                //tempXLoc+=Math.random()
+                tempXLoc+=fWidth;
             }
         }
         else{
@@ -162,13 +162,14 @@ public class Model {
                 }
                 else{//enemy
                     if(Math.random() < 0.5){//eagles
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 2));
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 2));//2
                     }
                     else{//planes
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 3));
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 3));//3
                     }
                 }
                 numGamePieces++;
+                tempXLoc+=fWidth;
             }
         }
 //        while(numGamePieces < 40){  
