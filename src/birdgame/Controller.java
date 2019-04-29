@@ -16,11 +16,11 @@ public class Controller implements KeyListener{
 
     private Model model;
     private View view;
+    static int bird;
 
-    public Controller(){
-
+    public Controller() {
         view = new View();
-        model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
+        model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight(), bird);
     }
     /**
      *start() will be called from the main() method in the Main class and will 

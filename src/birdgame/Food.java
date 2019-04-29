@@ -15,14 +15,14 @@ public class Food extends GamePiece {
 	
     private int foodValue;
     
-    public Food(int x, int y){
+    public Food(int x, int y, int foodType){
         setX(x);
         setY(y);
         setXIncr(10);
     	setYIncr(0);
     	setWidth(165);
     	setHeight(165);
-    	setType("food");
+    	setType(foodType);
     	setFoodValue(10);
     }
 
@@ -34,3 +34,4 @@ public class Food extends GamePiece {
 		this.foodValue = foodValue;
 	}
 }
+

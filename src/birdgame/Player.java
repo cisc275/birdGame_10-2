@@ -11,7 +11,7 @@ package birdgame;
  */
 public class Player extends GamePiece {
 	private static int health;
-    private static int score;
+        private static int score;
 
 	Player(){
 	setYIncr(20);
