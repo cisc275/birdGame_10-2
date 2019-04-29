@@ -14,6 +14,7 @@ package birdgame;
 public class Food extends GamePiece {
 	
     private int foodValue;
+    private int fType;
     
     public Food(int x, int y, int foodType){
         setX(x);
@@ -24,6 +25,7 @@ public class Food extends GamePiece {
     	setHeight(165);
     	setType(foodType);
     	setFoodValue(10);
+        fType = foodType;
     }
 
 	public int getFoodValue() {
@@ -33,5 +35,9 @@ public class Food extends GamePiece {
 	public void setFoodValue(int foodValue) {
 		this.foodValue = foodValue;
 	}
+        
+        public int getType(){
+            return fType;
+        }
 }
 

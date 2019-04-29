@@ -166,18 +166,18 @@ public class View extends JPanel {
         for(int i = 0; i < raccoonFrameCount; i++){
             raccoon[i] = createImage("images/BirdImages/Raccoon" + i + ".png");
         }
-        for(int i = 0; i < fishFrameCount; i++){
-            fish[i] = createImage("images/BirdImages/Fish" + i + ".png");
-        }
-        for(int i = 0; i < snakeFrameCount; i++){
-            snake[i] = createImage("images/BirdImages/Snake" + i + ".png");
-        }
-        for(int i = 0; i < eagleFrameCount; i++){
-            eagle[i] = createImage("images/BirdImages/Eagle" + i + ".png");
-        }
-        for(int i = 0; i < planeFrameCount; i++){
-            plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
-        }
+//        for(int i = 0; i < fishFrameCount; i++){
+//            fish[i] = createImage("images/BirdImages/Fish" + i + ".png");
+//        }
+//        for(int i = 0; i < snakeFrameCount; i++){
+//            snake[i] = createImage("images/BirdImages/Snake" + i + ".png");
+//        }
+//        for(int i = 0; i < eagleFrameCount; i++){
+//            eagle[i] = createImage("images/BirdImages/Eagle" + i + ".png");
+//        }
+//        for(int i = 0; i < planeFrameCount; i++){
+//            plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
+//        }
     }
 
     /**
@@ -246,7 +246,8 @@ public class View extends JPanel {
         for(GamePiece gp : currentViewableGPs) {
             System.out.println("2");
             if(gp instanceof Food){
-                if(gp.getType() == 0){ //mice
+                System.out.println("hello");
+                if(((Food)gp).getType() == 0){ //mice
                     micePicNum = (micePicNum + 1) % miceFrameCount;
                     g.drawImage(mice[micePicNum], gp.getX(), gp.getY(), this);
                 }
@@ -264,6 +265,7 @@ public class View extends JPanel {
 //                }
             }
             else{
+                System.out.println("else");
                 if(gp.getType() == 0){ //red fox
                     redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
                     g.drawImage(redFox[redFoxPicNum], gp.getX(), gp.getY(), this);

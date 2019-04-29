@@ -110,6 +110,7 @@ public class Model {
         player.isAlive();
         clearCurrentGP();
         seeCurrentGP();
+        System.out.println(currentGPs);
         System.out.println("Health: " + player.getHealth());
         System.out.println("Score: " + player.getScore());
 
@@ -132,23 +133,23 @@ public class Model {
         boolean flag = true;
         if(bird == 1){ //northern harrier
             while(numGamePieces < 40){
-                if(Math.random() < 0.5){ //food
-                    if(Math.random() < 0.5){//bunny
-                        gamePieces.add(new Food(tempXLoc, landHeight, 1));
+                if(Math.random() < 1){ //food
+                    if(Math.random() < 1){//bunny
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight), 1));
                     }
-                    else{//mouse
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight), 0));
-                    }
+//                    else{//mouse
+//                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight), 0));
+//                    }
                 }
                 else{//enemy
                     if(Math.random() < 0.5){//red fox
                         System.out.println("hi");
                         gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));//0
                     }
-                    else{//raccoon
-                        System.out.println("hi");
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 1));//1
-                    }
+//                    else{//raccoon
+//                        System.out.println("hi");
+//                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 1));//1
+//                    }
                 }
                 numGamePieces++;
                 tempXLoc+=fWidth;
@@ -175,6 +176,7 @@ public class Model {
                 numGamePieces++;
                 tempXLoc+=fWidth;
             }
+            //System.out.println(gamePieces);
         }
 //        while(numGamePieces < 40){  
 //            if(Math.random() < .5) {

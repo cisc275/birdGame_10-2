@@ -88,6 +88,9 @@ public class GamePiece {
     	type = s;
     }
     
+    public String toString(){
+        return getType() + " ";
+    }
     
     
 }
