@@ -5,6 +5,7 @@
  * and open the template in the editor.
  */
 
+package birdgame;
 
 /**
  * Direction is an enum that contains all the directions that our bird might

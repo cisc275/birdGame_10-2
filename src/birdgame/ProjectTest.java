@@ -1,3 +1,4 @@
+package birdgame;
 
 
 import org.junit.Test;

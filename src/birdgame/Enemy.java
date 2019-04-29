@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+package birdgame;
 
 /**
  * Enemy inherits from the GamePiece class; contains int damage that has a value

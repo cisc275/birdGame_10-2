@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+package birdgame;
 
 /**
  * Food inherits from GamePiece class; contains int foodValue that has a value for

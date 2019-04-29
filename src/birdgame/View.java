@@ -1,3 +1,5 @@
+package birdgame;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -133,12 +135,12 @@ public class View extends JPanel {
 //        for (int j = 0; j < frameCount; j++) {
 //            flyForward[j] = forwardImg.getSubimage(imageWidth * j, 40, imageWidth, imageHeight);
 //        }
-        flyForward[0] = createImage("Bird0.png");
-        flyForward[1] = createImage("Bird1.png");
-        flyForward[2] = createImage("Bird2.png");
-        flyForward[3] = createImage("Bird3.png");
-        flyForward[4] = createImage("Bird4.png");
-        flyForward[5] = createImage("Bird5.png");
+        flyForward[0] = createImage("images/BirdImages/Bird0.png");
+        flyForward[1] = createImage("images/BirdImages/Bird1.png");
+        flyForward[2] = createImage("images/BirdImages/Bird2.png");
+        flyForward[3] = createImage("images/BirdImages/Bird3.png");
+        flyForward[4] = createImage("images/BirdImages/Bird4.png");
+        flyForward[5] = createImage("images/BirdImages/Bird5.png");
 
 //        //fly up
 //        BufferedImage upImg = createImage("orc/orc_forward_north");
