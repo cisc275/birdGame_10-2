@@ -22,7 +22,7 @@ public class Enemy extends GamePiece {
         yincr = 0;
         width = 165;
         height = 165;
-        type = enemyType;
+        type = enemyType; //0 = red fox, 1 = raccoons, 2 = eagles, 3 = planes
         damage = 20;
     }
 }

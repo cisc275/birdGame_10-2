@@ -22,7 +22,7 @@ public class Food extends GamePiece {
         yincr = 0;
         width = 165;
         height = 165;
-        type = foodType; // 0 = mice; 
+        type = foodType; // 0 = mice; 1 = bunny; 2 = snake; 3 = fish
         foodValue = 10;
     }
 }

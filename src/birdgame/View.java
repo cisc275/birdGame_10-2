@@ -310,10 +310,12 @@ public class View extends JPanel {
         pane1.setLayout(null);
         osprey.addActionListener(ae -> {
             frame2.dispose();
+            Controller.bird = 0;
             Main.started = true;
         });
         harrier.addActionListener(ae -> {
             frame2.dispose();
+            Controller.bird = 1;
             Main.started = true;
         });
         pane1.add(osprey);

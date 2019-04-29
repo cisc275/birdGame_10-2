@@ -82,7 +82,7 @@ public class ProjectTest {
     //updateLocationAndDirection()
     @Test
     public void enemyThatMovesPlus5XMovesPlus5X() {
-        Model m = new Model(1, 1, 1, 1);
+        Model m = new Model(1, 1, 1, 1,0);
         Enemy e = new Enemy(1, 1, 0);
         m.gamePieces.add(e);
         e.xincr = 5;
@@ -92,7 +92,7 @@ public class ProjectTest {
 
     @Test
     public void enemyThatDoesNotMoveStaysInTheSameSpot() {
-        Model m = new Model(1, 1, 1, 1);
+        Model m = new Model(1, 1, 1, 1,0);
         Enemy e = new Enemy(1, 1, 0);
         m.gamePieces.add(e);
         e.xincr = 0;
@@ -102,7 +102,7 @@ public class ProjectTest {
 
     @Test
     public void playerThatDoesNotMoveStaysStill() {
-        Model m = new Model(1, 1, 1, 1);
+        Model m = new Model(1, 1, 1, 1,0);
         Player p = new Player();
         m.player = p;
         p.xLocation = 1;
@@ -113,7 +113,7 @@ public class ProjectTest {
 
     @Test
     public void playerWithDirectionUpMovesUp() {
-        Model m = new Model(1, 1, 1, 1);
+        Model m = new Model(1, 1, 1, 1,0);
         Player p = new Player();
         m.player = p;
         m.direction = Direction.UP;
@@ -125,7 +125,7 @@ public class ProjectTest {
 
     @Test
     public void playerWithDirectionDownMovesDown() {
-        Model m = new Model(1, 1, 1, 1);
+        Model m = new Model(1, 1, 1, 1,0);
         m.fHeight = 100;
         Player p = new Player();
         m.player = p;
@@ -139,7 +139,7 @@ public class ProjectTest {
 
     @Test
     public void clearingGamePiecesPlayerWillHaveNoneLeft() {
-        Model m = new Model(1, 1, 1, 1);
+        Model m = new Model(1, 1, 1, 1,0);
         Player p = new Player();
         m.currentGPs.add(p);
         m.clearCurrentGP();
@@ -148,7 +148,7 @@ public class ProjectTest {
 
     @Test
     public void clearingGamePiecesEnemyWillHaveNoneLeft() {
-        Model m = new Model(1, 1, 1, 1);
+        Model m = new Model(1, 1, 1, 1,0);
         Enemy e = new Enemy(1, 1, 0);
         m.currentGPs.add(e);
         m.clearCurrentGP();
@@ -162,14 +162,14 @@ public class ProjectTest {
     //getProgress()
     @Test
     public void getProgressOf0ReturnsProgressOf0() {
-        Model m = new Model(1, 1, 1, 1);
+        Model m = new Model(1, 1, 1, 1,0);
         m.progress = 0;
         assert m.getProgress() == 0;
     }
 
     @Test
     public void getProgressReturnsProgress() {
-        Model m = new Model(1, 1, 1, 1);
+        Model m = new Model(1, 1, 1, 1,0);
         m.progress = 50;
         assert m.getProgress() == 50;
     }
@@ -177,7 +177,7 @@ public class ProjectTest {
 
     @Test
     public void playerEatingIncreasesHealthUnder95by5() {
-        Model m = new Model(1, 1, 1, 1);
+        Model m = new Model(1, 1, 1, 1, 0);
         Player p = new Player();
         p.health = 1;
         m.player = p;
@@ -188,7 +188,7 @@ public class ProjectTest {
 
     @Test
     public void playerEatingIncreasesHealthAbove95to100() {
-        Model m = new Model(1, 1, 1, 1);
+        Model m = new Model(1, 1, 1, 1, 0);
         Player p = new Player();
         p.health = 97;
         m.player = p;
@@ -199,7 +199,7 @@ public class ProjectTest {
 
     @Test
     public void playerEatingIncreasesScoreBy1() {
-        Model m = new Model(1, 1, 1, 1);
+        Model m = new Model(1, 1, 1, 1, 0);
         Player p = new Player();
         p.health = 1;
         p.score = 1;
