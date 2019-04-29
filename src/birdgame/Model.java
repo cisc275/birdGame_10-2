@@ -5,7 +5,7 @@
  */
 package birdgame;
 
-import java.util.ArrayList;
+import java.util.ArrayList;    
 import java.util.Iterator;
 
 /**
@@ -15,7 +15,7 @@ import java.util.Iterator;
  * @author crnis
  */
 public class Model {
-    private int bird; //0 is osprey, 1 is harrier
+    static int bird; //0 is osprey, 1 is harrier
     private int fWidth;
     private int fHeight;
     private int imgHeight;
@@ -46,17 +46,16 @@ public class Model {
      * @param imageHeight is an int for the height of the image
      */
 
-    public Model(int fwidth, int fheight, int imageWidth, int imageHeight, int newBird) {
+    public Model(int fwidth, int fheight, int imageWidth, int imageHeight) {
     	fWidth = fwidth;
     	fHeight = fheight;
     	setImgWidth(imageWidth);
     	setImgHeight(imageHeight);
     	player = new Player();
         setGroundLevel((int)(0.8*fHeight));
-        spawnGamePieces();
         setIndexOfGP(0);
         indexOfGP = 0;
-        bird = newBird;
+      //  bird = newBird;
     }
 
     /**
@@ -91,16 +90,16 @@ public class Model {
     public void handleTicks() {
     	updateLocationAndDirection();
         //for(GamePiece g: gamePieces){
-    	Iterator it = gamePieces.iterator();
+    	Iterator<GamePiece> it = gamePieces.iterator();
     	while(it.hasNext()) {
     		GamePiece g = (GamePiece) it.next();
             if(player.checkCollision(g)){            	
-            	if(g instanceof Food) {
+            	if(g.isFood()) {
             		eat((Food)g);
             		//System.out.println("this is a food");
             	}
             	
-                else if(g instanceof Enemy){
+                else if(g.isEnemy()){
                     obstacleHit((Enemy)g);
                     //System.out.println("this is a enemy");
                 }
@@ -110,8 +109,7 @@ public class Model {
         player.isAlive();
         clearCurrentGP();
         seeCurrentGP();
-        System.out.println("Health: " + player.getHealth());
-        System.out.println("Score: " + player.getScore());
+        
 
         
     }
@@ -131,49 +129,53 @@ public class Model {
         int landHeight = 96;
         boolean flag = true;
         if(bird == 1){ //northern harrier
-            while(numGamePieces < 40){
-                if(Math.random() < 0.5){ //food
-                    if(Math.random() < 0.5){//bunny
-                        gamePieces.add(new Food(tempXLoc, landHeight, 1));
+            while(numGamePieces < 100){
+                if(Math.random() < .5){ //food
+                    if(Math.random() < .5){//bunny
+                    	System.out.println("bunny");
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.BUNNY));
                     }
                     else{//mouse
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight), 0));
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.MOUSE));
                     }
                 }
                 else{//enemy
                     if(Math.random() < 1){//red fox
-                        System.out.println("hi");
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));//0
+                        System.out.println("fox");
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.REDFOX));//0
                     }
                     else{//raccoon
-                        System.out.println("hi");
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 1));//1
+                        System.out.println("racoon");
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.RACOON));//1
                     }
                 }
                 numGamePieces++;
-                tempXLoc+=fWidth;
+                tempXLoc+=fWidth/3;
             }
         }
         else{
-            while(numGamePieces < 40){
+            while(numGamePieces < 100){
                 if(Math.random() < 0.5){ //food
                     if(Math.random() < 0.5){//snakes
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight), 2));
+                        System.out.println("snake");
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.SNAKE));
                     }
                     else{//fish
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight), 3));
+                        System.out.println("fish");
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.FISH));
                     }
                 }
                 else{//enemy
                     if(Math.random() < 0.5){//eagles
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));//2
+                        System.out.println("eagles");
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.EAGLE));
                     }
                     else{//planes
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));//3
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.PLANE));
                     }
                 }
                 numGamePieces++;
-                tempXLoc+=fWidth;
+                tempXLoc+=fWidth/3;
             }
         }
 //        while(numGamePieces < 40){  

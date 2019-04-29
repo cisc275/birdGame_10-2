@@ -15,7 +15,7 @@ public class Food extends GamePiece {
 	
     private int foodValue;
     
-    public Food(int x, int y, int foodType){
+    public Food(int x, int y, Type foodType){
         setX(x);
         setY(y);
         setXIncr(10);

@@ -241,16 +241,17 @@ public class View extends JPanel {
     public void paint(Graphics g) {
         paintBackground(g);
         picNum = (picNum + 1) % frameCount;
-        g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
-        System.out.println("1");
+       // g.drawImage(bunny[1], 500,500, this);
+        g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);;
         for(GamePiece gp : currentViewableGPs) {
-            System.out.println("2");
-            if(gp instanceof Food){
-                if(gp.getType() == 0){ //mice
+           
+            if(gp.isFood()){
+            	System.out.println("in view " + gp.getType().getName());
+                if(gp.getType().equals(Type.MOUSE)){ //mice
                     micePicNum = (micePicNum + 1) % miceFrameCount;
                     g.drawImage(mice[micePicNum], gp.getX(), gp.getY(), this);
                 }
-                else if(gp.getType() == 1){ //bunny
+                else if(gp.getType().equals(Type.BUNNY)){ //bunny
                     bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
                     g.drawImage(bunny[bunnyPicNum], gp.getX(), gp.getY(), this);
                 }
@@ -263,8 +264,9 @@ public class View extends JPanel {
 //                    g.drawImage(fish[fishPicNum], gp.getX(), gp.getY(), this);
 //                }
             }
-            else{
-                if(gp.getType() == 0){ //red fox
+            else if (gp.isEnemy()){
+            	System.out.println("in view " + gp.getType().getName());
+                if(gp.getType().equals(Type.REDFOX)){ //red fox
                     redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
                     g.drawImage(redFox[redFoxPicNum], gp.getX(), gp.getY(), this);
                 }
@@ -359,11 +361,13 @@ public class View extends JPanel {
         osprey.addActionListener(ae -> {
             frame2.dispose();
             Controller.bird = 0;
+            Model.bird = 0;
             Main.started = true;
         });
         harrier.addActionListener(ae -> {
             frame2.dispose();
             Controller.bird = 1;
+            Model.bird = 1;
             Main.started = true;
         });
         pane1.add(osprey);

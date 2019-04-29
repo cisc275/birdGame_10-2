@@ -14,7 +14,7 @@ package birdgame;
 public class Enemy extends GamePiece {
 
     private int damage;
-    public Enemy(int x, int y, int enemyType){
+    public Enemy(int x, int y, Type enemyType){
         setX(x);
         setY(y);
         setXIncr(10);
