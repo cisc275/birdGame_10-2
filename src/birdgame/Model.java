@@ -139,10 +139,12 @@ public class Model {
                     }
                 }
                 else{//enemy
-                    if(Math.random() < 0.5){//red fox
+                    if(Math.random() < 1){//red fox
+                        System.out.println("hi");
                         gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));//0
                     }
                     else{//raccoon
+                        System.out.println("hi");
                         gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 1));//1
                     }
                 }
@@ -162,10 +164,10 @@ public class Model {
                 }
                 else{//enemy
                     if(Math.random() < 0.5){//eagles
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 2));//2
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));//2
                     }
                     else{//planes
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 3));//3
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));//3
                     }
                 }
                 numGamePieces++;
