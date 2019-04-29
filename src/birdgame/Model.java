@@ -210,7 +210,7 @@ public class Model {
             player.setHealth(0);
         }
         else{
-            player.setHealth(player.getHeight() - 20);
+            player.setHealth(player.getHealth() - 20);
         }
     }
 
@@ -233,6 +233,10 @@ public class Model {
 	
 	public ArrayList<GamePiece> getCurrentGPs() {
 		return currentGPs;
+	}
+	
+	public ArrayList<GamePiece> getGamePieces() {
+		return gamePieces;
 	}
 
 	//private static Direction direction;
@@ -311,6 +315,18 @@ public class Model {
 
 	public void setIndexOfGP(int indexOfGP) {
 		this.indexOfGP = indexOfGP;
+	}
+	
+	public void setPlayer(Player p) {
+		this.player = p;
+	}
+	
+	public void setFHeight(int h) {
+		this.fHeight = h;
+	}
+	
+	public void setProgress(int h) {
+		this.progress = h;
 	}
     
 	
