@@ -7,7 +7,7 @@ package birdgame;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
+//hello
 /**
  * Model contains and deals with the basic logic of the game, including updating
  * an object's location and direction, handling collisions, spawning obstacles, 
