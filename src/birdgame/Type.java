@@ -1,8 +1,6 @@
 package birdgame;
 
-public enum Type {
-	
-	
+public enum Type{
 	BUNNY("bunny"),
 	SNAKE("snake"),
 	MOUSE("mouse"),
@@ -10,7 +8,9 @@ public enum Type {
 	EAGLE("eagle"),
 	PLANE("plane"),
 	FISH("fish"),
-	RACCOON("raccoon");
+	RACCOON("raccoon"),
+        NORTHERN_HARRIER("northern harrier"),
+        OSPREY("osprey");
 	String name;
 	
 	private Type(String s) {

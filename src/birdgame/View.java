@@ -53,10 +53,10 @@ public class View extends JPanel {
     final static int bunnyFrameCount = 4;
     final static int redFoxFrameCount = 4;
     final static int raccoonFrameCount = 4;
-    final static int fishFrameCount = 0;
-    final static int snakeFrameCount = 0;
-    final static int eagleFrameCount = 0;
-    final static int planeFrameCount = 0;
+    final static int fishFrameCount = 4;
+    final static int snakeFrameCount = 4;
+    final static int eagleFrameCount = 6;
+    final static int planeFrameCount = 1;
     static int micePicNum = 0;
     static int bunnyPicNum = 0;
     static int redFoxPicNum = 0;
@@ -74,10 +74,10 @@ public class View extends JPanel {
     BufferedImage[] bunny = new BufferedImage[4]; 
     BufferedImage[] redFox = new BufferedImage[4]; 
     BufferedImage[] raccoon = new BufferedImage[4];
-    BufferedImage[] fish = new BufferedImage[10];
-    BufferedImage[] snake = new BufferedImage[1];
-    BufferedImage[] plane = new BufferedImage[10];
-    BufferedImage[] eagle = new BufferedImage[10];
+    BufferedImage[] fish = new BufferedImage[4];
+    BufferedImage[] snake = new BufferedImage[4];
+    BufferedImage[] plane = new BufferedImage[1];
+    BufferedImage[] eagle = new BufferedImage[6];
     //don't forget below
     BufferedImage[] catchPrey;
     BufferedImage[] crash;
@@ -166,18 +166,18 @@ public class View extends JPanel {
         for(int i = 0; i < raccoonFrameCount; i++){
             raccoon[i] = createImage("images/BirdImages/Raccoon" + i + ".png");
         }
-//        for(int i = 0; i < fishFrameCount; i++){
-//            fish[i] = createImage("images/BirdImages/Fish" + i + ".png");
-//        }
-//        for(int i = 0; i < snakeFrameCount; i++){
-//            snake[i] = createImage("images/BirdImages/Snake" + i + ".png");
-//        }
-//        for(int i = 0; i < eagleFrameCount; i++){
-//            eagle[i] = createImage("images/BirdImages/Eagle" + i + ".png");
-//        }
-//        for(int i = 0; i < planeFrameCount; i++){
-//            plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
-//        }
+        for(int i = 0; i < fishFrameCount; i++){
+            fish[i] = createImage("images/BirdImages/Fish" + i + ".png");
+        }
+        for(int i = 0; i < snakeFrameCount; i++){
+            snake[i] = createImage("images/BirdImages/Snake" + i + ".png");
+        }
+        for(int i = 0; i < eagleFrameCount; i++){
+            eagle[i] = createImage("images/BirdImages/Eagle" + i + ".png");
+        }
+        for(int i = 0; i < planeFrameCount; i++){
+            plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
+        }
     }
 
     /**
@@ -253,39 +253,36 @@ public class View extends JPanel {
                     bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
                     g.drawImage(bunny[bunnyPicNum], gp.getX(), gp.getY(), this);
                 }
-//                else if(gp.getType() == 2){ //snake
-//                    snakePicNum = (snakePicNum + 1) % snakeFrameCount;
-//                    g.drawImage(snake[snakePicNum], gp.getX(), gp.getY(), this);
-//                }
-//                else{// fish
-//                    fishPicNum = (fishPicNum + 1) % fishFrameCount;
-//                    g.drawImage(fish[fishPicNum], gp.getX(), gp.getY(), this);
-//                }  
+                else if(gp.getType().equals(Type.SNAKE)){ //snake
+                    snakePicNum = (snakePicNum + 1) % snakeFrameCount;
+                    g.drawImage(snake[snakePicNum], gp.getX(), gp.getY(), this);
+                }
+                else{// fish
+                    fishPicNum = (fishPicNum + 1) % fishFrameCount;
+                    g.drawImage(fish[fishPicNum], gp.getX(), gp.getY(), this);
+                }  
             }
             else if (gp.isEnemy()){
                 if(gp.getType().equals(Type.REDFOX)){ //red fox
                     redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
                     g.drawImage(redFox[redFoxPicNum], gp.getX(), gp.getY(), this);
                 }
-               // else if(gp.getType().equals(Type.RACOON)){ //raccoons
-                
-                else {
+                else if(gp.getType().equals(Type.RACCOON)){ //raccoons
                     raccoonPicNum = (raccoonPicNum + 1) % raccoonFrameCount;
                     g.drawImage(raccoon[raccoonPicNum], gp.getX(), gp.getY(), this);
                 }
-//                }
-//                else if(gp.getType() == 2){ //eagles
-//                    eaglePicNum = (eaglePicNum + 1) % eagleFrameCount;
-//                    g.drawImage(eagle[eaglePicNum], gp.getX(), gp.getY(), this);
-//                }
-//                else{ //planes
-//                    planePicNum = (planePicNum + 1) % planeFrameCount;
-//                    g.drawImage(plane[planePicNum], gp.getX(), gp.getY(), this);
-//                }
-//            }
-        }
+                else if(gp.getType().equals(Type.EAGLE)){ //eagles
+                    eaglePicNum = (eaglePicNum + 1) % eagleFrameCount;
+                    g.drawImage(eagle[eaglePicNum], gp.getX(), gp.getY(), this);
+                }
+                else{ //planes
+                    planePicNum = (planePicNum + 1) % planeFrameCount;
+                    g.drawImage(plane[planePicNum], gp.getX(), gp.getY(), this);
+                }
+
+            }   
             
-     }
+        }
         g.setColor(Color.red);
         g.drawRect(10, 10, 100 * 2, 50);
         g.fillRect(10, 10, health * 2, 50);
