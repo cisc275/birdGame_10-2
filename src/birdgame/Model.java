@@ -135,9 +135,6 @@ public class Model {
                     else{//mouse
                         gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.MOUSE));
                     }
-//                    else{//mouse
-//                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight), 0));
-//                    }
                 }
                 else{
                     if(Math.random() < 0.5){//red fox

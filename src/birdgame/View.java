@@ -269,13 +269,10 @@ public class View extends JPanel {
                     redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
                     g.drawImage(redFox[redFoxPicNum], gp.getX(), gp.getY(), this);
                 }
-//                else if(gp.getType() == 1){ //raccoons
-//                    System.out.println("hi");
-//                    raccoonPicNum = (raccoonPicNum + 1) % raccoonFrameCount;
-//                    System.out.println("hi");
-//                    g.drawImage(raccoon[raccoonPicNum], gp.getX(), gp.getY(), this);
-//                    System.out.println("hi");
-//                }
+                else if(gp.getType().equals(Type.RACOON)){ //raccoons
+                    raccoonPicNum = (raccoonPicNum + 1) % raccoonFrameCount;
+                    g.drawImage(raccoon[raccoonPicNum], gp.getX(), gp.getY(), this);
+                }
 //                else if(gp.getType() == 2){ //eagles
 //                    eaglePicNum = (eaglePicNum + 1) % eagleFrameCount;
 //                    g.drawImage(eagle[eaglePicNum], gp.getX(), gp.getY(), this);
