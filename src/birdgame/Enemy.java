@@ -23,6 +23,7 @@ public class Enemy extends GamePiece {
     	setHeight(165);
     	setType(enemyType);
     	setDamage(20);
+    	setOffsets(); //MIGHT NOT WORK
 
     }
 	public int getDamage() {
@@ -31,6 +32,8 @@ public class Enemy extends GamePiece {
 	public void setDamage(int damage) {
 		this.damage = damage;
 	}
+	
+	
     
     
 }

@@ -74,7 +74,7 @@ public class Model {
     		}
     	}
     	if (direction == Direction.DOWN){
-    		if (player.getY() < fHeight) {
+    		if (player.getY() < fHeight - imgHeight) {
     			player.move(Direction.DOWN);
     		}
     	}
@@ -128,22 +128,19 @@ public class Model {
         if(bird == 1){ //northern harrier
             while(numGamePieces < 100){
                 if(Math.random() < .5){ //food
-                    if(Math.random() < .5){//bunny
-                    	System.out.println("bunny");
+                    if(Math.random() < .33){//bunny
                         gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.BUNNY));
                     }
                     else{//mouse
                         gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.MOUSE));
                     }
                 }
-                else{
-                    if(Math.random() < 0.5){//red fox
-                        System.out.println("fox");
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.REDFOX));//0
+                else{//enemy
+                    if(Math.random() < .5){//red fox
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.REDFOX));
                     }
                     else{//raccoon
-                        System.out.println("racoon");
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.RACOON));//1
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.RACCOON));
                     }
                 }
                 numGamePieces++;
@@ -154,17 +151,14 @@ public class Model {
             while(numGamePieces < 100){
                 if(Math.random() < 0.5){ //food
                     if(Math.random() < 0.5){//snakes
-                        System.out.println("snake");
                         gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.SNAKE));
                     }
                     else{//fish
-                        System.out.println("fish");
                         gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.FISH));
                     }
                 }
                 else{//enemy
                     if(Math.random() < 0.5){//eagles
-                        System.out.println("eagles");
                         gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.EAGLE));
                     }
                     else{//planes

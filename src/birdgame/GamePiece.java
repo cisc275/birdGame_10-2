@@ -21,12 +21,14 @@ public class GamePiece {
     private int width;
     private int height;
     private Type type;
+    private int xOffset;
+    private int yOffset;
 
     /**
      * the move() method will call upon the methods in the Model class to update 
      * the object's location and direction.
      */
-
+    
     public void move() {
     	xLocation = xLocation - xincr;
     	yLocation = yLocation - yincr;
@@ -88,7 +90,7 @@ public class GamePiece {
     	type = s;
     }
     public boolean isEnemy() {
-    	if (type.equals(Type.PLANE) || type.equals(Type.EAGLE) || type.equals(Type.REDFOX) || type.equals(Type.RACOON)){
+    	if (type.equals(Type.PLANE) || type.equals(Type.EAGLE) || type.equals(Type.REDFOX) || type.equals(Type.RACCOON)){
     		return true;
     	}
     	else {
@@ -99,9 +101,39 @@ public class GamePiece {
     	return !(isEnemy());
     }
     
-    public String toString(){
-        return getType() + " ";
+    public void setOffsets() {
+		if (getType().equals(Type.REDFOX)) {
+			//TODO	
+		}
+		if (getType().equals(Type.EAGLE)) {
+			//TODO
+		}
+		if(getType().equals(Type.PLANE)) {
+			//TODO
+		}
+		if (getType().equals(Type.BUNNY)) {
+			//TODO
+		}
+		if (getType().equals(Type.MOUSE)) {
+			//TODO
+		}
+		if (getType().equals(Type.FISH)) {
+			//TODO
+		}
+		if (getType().equals(Type.RACCOON)) {
+			//TODO
+		}
+		if (getType().equals(Type.SNAKE)) {
+			//TODO
+		}
+		xOffset = 30; //DON'T FORGET TO CHANGE THIS!!
+		yOffset = 30;
+	}
+    
+    public int getXOffset() {
+    	return xOffset;
     }
-    
-    
+    public int getYOffset() {
+    	return yOffset;
+    }
 }

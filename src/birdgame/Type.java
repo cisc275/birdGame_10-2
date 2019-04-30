@@ -10,7 +10,7 @@ public enum Type {
 	EAGLE("eagle"),
 	PLANE("plane"),
 	FISH("fish"),
-	RACOON("racoon");
+	RACCOON("raccoon");
 	String name;
 	
 	private Type(String s) {
