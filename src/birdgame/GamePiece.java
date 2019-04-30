@@ -88,7 +88,7 @@ public class GamePiece {
     	type = s;
     }
     public boolean isEnemy() {
-    	if (type.equals(Type.PLANE) || type.equals(Type.EAGLE) || type.equals(Type.REDFOX) || type.equals(Type.RACOON)){
+    	if (type.equals(Type.PLANE) || type.equals(Type.EAGLE) || type.equals(Type.REDFOX) || type.equals(Type.RACCOON)){
     		return true;
     	}
     	else {

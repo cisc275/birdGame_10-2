@@ -145,8 +145,8 @@ public class Model {
                         gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.REDFOX));//0
                     }
                     else{//raccoon
-                        System.out.println("racoon");
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.RACOON));//1
+                        System.out.println("raccoon");
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.RACCOON));//1
                     }
                 }
                 numGamePieces++;
