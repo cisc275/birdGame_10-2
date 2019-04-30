@@ -327,31 +327,31 @@ public class View extends JPanel {
 
     public static void displayStartScreen() {
     	
-    	natureImg = new ImageIcon("StartScreen.jpg");
-    	ospreyImg = new ImageIcon("osprey.jpg");
-    	harrierImg = new ImageIcon("NorthernHarrier.jpg");
+    	natureImg = new ImageIcon("images/BirdImages/StartScreen.png");
+    	//ospreyImg = new ImageIcon("osprey.jpg");
+    	//harrierImg = new ImageIcon("NorthernHarrier.jpg");
     	frame2 = new JFrame();
         osprey = new JButton("Osprey");
         harrier = new JButton("Northern Harrier");
-    	osprey.setBounds(0,0,frameWidth/2,frameHeight/10);
-    	harrier.setBounds(frameWidth/2,0,frameWidth/2,frameHeight/10);
-    	ospreyPic = new JLabel();
-    	ospreyPic.setIcon(new ImageIcon(ospreyImg.getImage().getScaledInstance(300,300, Image.SCALE_SMOOTH)));
-    	ospreyPic.setBounds(200,100,300,300);
-    	harrierPic = new JLabel();
-    	harrierPic.setIcon(new ImageIcon(harrierImg.getImage().getScaledInstance(300,300, Image.SCALE_SMOOTH)));
-    	harrierPic.setBounds(200+frameWidth/2,100,300,300);
+    	osprey.setBounds(frameWidth/10,(frameHeight*4)/5,frameWidth/4,frameHeight/10);
+    	harrier.setBounds((frameWidth*6)/10,frameHeight/3,frameWidth/4,frameHeight/10);
+//    	ospreyPic = new JLabel();
+//    	ospreyPic.setIcon(new ImageIcon(ospreyImg.getImage().getScaledInstance(300,300, Image.SCALE_SMOOTH)));
+//    	ospreyPic.setBounds(200,100,300,300);
+//    	harrierPic = new JLabel();
+//    	harrierPic.setIcon(new ImageIcon(harrierImg.getImage().getScaledInstance(300,300, Image.SCALE_SMOOTH)));
+//    	harrierPic.setBounds(200+frameWidth/2,100,300,300);
     	naturePic = new JLabel();
     	naturePic.setIcon(new ImageIcon(natureImg.getImage().getScaledInstance(frameWidth,frameHeight, Image.SCALE_SMOOTH)));
     	naturePic.setBounds(0,0,frameWidth, frameHeight);
-    	ospreyFact1 = new JLabel("Osprey is a bird");
-    	ospreyFact1.setFont(new Font("Times New Roman",1,20));
-    	ospreyFact1.setForeground(Color.white);
-    	ospreyFact1.setBounds(200,500,frameWidth/2,frameHeight/4);
-    	harrierFact1 = new JLabel("Northern Harrier is a bird");
-    	harrierFact1.setFont(new Font("Times New Roman",1,20));
-    	harrierFact1.setForeground(Color.white);
-    	harrierFact1.setBounds(200+frameWidth/2,500,frameWidth/2,frameHeight/4);
+//    	ospreyFact1 = new JLabel("Osprey is a bird");
+//    	ospreyFact1.setFont(new Font("Times New Roman",1,20));
+//    	ospreyFact1.setForeground(Color.white);
+//    	ospreyFact1.setBounds(200,500,frameWidth/2,frameHeight/4);
+//    	harrierFact1 = new JLabel("Northern Harrier is a bird");
+//    	harrierFact1.setFont(new Font("Times New Roman",1,20));
+//    	harrierFact1.setForeground(Color.white);
+//    	harrierFact1.setBounds(200+frameWidth/2,500,frameWidth/2,frameHeight/4);
         pane1 = new JPanel();
         pane1.setLayout(null);
         osprey.addActionListener(ae -> {
@@ -368,10 +368,10 @@ public class View extends JPanel {
         });
         pane1.add(osprey);
         pane1.add(harrier);
-        pane1.add(ospreyPic);
-        pane1.add(harrierPic);
-        pane1.add(ospreyFact1);
-        pane1.add(harrierFact1);
+//        pane1.add(ospreyPic);
+//        pane1.add(harrierPic);
+//        pane1.add(ospreyFact1);
+//        pane1.add(harrierFact1);
         pane1.add(naturePic);
         frame2.add(pane1);
         frame2.setSize(frameWidth, frameHeight);
