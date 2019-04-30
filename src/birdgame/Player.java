@@ -12,6 +12,8 @@ package birdgame;
 public class Player extends GamePiece {
 	private static int health;
         private static int score;
+        private int xOffset;
+        private int yOffset;
 
 	Player(){
 	setYIncr(20);
@@ -20,6 +22,8 @@ public class Player extends GamePiece {
 	setWidth(184);
 	setHeight(100);
 	health = 100;
+	xOffset = 30;
+	yOffset = 30;
 	}
 
 
@@ -42,35 +46,37 @@ public class Player extends GamePiece {
      */
 
     public boolean checkCollision(GamePiece piece) {
-    	int x = getX();
-    	int y = getY();
-    	int w = getWidth();
-    	int h = getHeight();
-    	int otherX = piece.getX();
-    	int otherY = piece.getY();
-    	int otherW = piece.getWidth();
-    	int otherH = piece.getHeight();
-    	
-    	//probably bugged, should test more
-        if (x + w >= otherX && x + w <= otherX + otherW) {
-        	if (y >= otherY && y <= otherY + otherW) {
-        		return true;
-        	}
-        	else if (y + h >= otherY && y + h <= otherY + otherH) {
-        		return true;	
-        	}
+        int x = getX();
+        int y = getY();
+        int w = getWidth();
+        int h = getHeight();
+        int xOff = getXOffset();
+        int yOff = getYOffset();
+        int otherX = piece.getX();
+        int otherY = piece.getY();
+        int otherW = piece.getWidth();
+        int otherH = piece.getHeight();
+        int otherYOff = piece.getYOffset();
+        int otherXOff = piece.getXOffset();
+
+        //probably bugged, should test more
+        if (x + w - xOff >= otherX + otherXOff && x + w -xOff <= otherX + otherW - otherXOff) {
+            if (y + yOff >= otherY + otherYOff && y + yOff <= otherY + otherW - otherYOff) {
+                return true;
+            } else if (y + h - yOff >= otherY + otherYOff && y + h - yOff <= otherY + otherH - otherYOff) {
+                return true;
+            }
+        } else if (x + xOff >= otherX + otherXOff && x + xOff <= otherX + otherH - otherXOff) {
+            if (y + yOff >= otherY + otherYOff && y + yOff <= otherY + otherW - otherYOff) {
+                return true;
+            }
+            if (y + h - yOff >= otherY + otherYOff && y + h - yOff <= otherY + otherH - otherYOff) {
+                return true;
+            }
         }
-        else if (x >= otherX && x <= otherX + otherH) {
-        	if (y >= otherY && y <= otherY + otherW) {
-        		return true;
-        	}
-        	if (y + h >= otherY && y + h <= otherY + otherH) {
-        		return true;
-        	}
-        }
-       
-       return false;
-        
+
+        return false;
+
     }
     public void move(Direction dir) {
     	if (dir.equals(Direction.UP)) {
@@ -101,6 +107,12 @@ public class Player extends GamePiece {
 
 	public static void setHealth(int health) {
 		Player.health = health;
+	}
+	public int getXOffset() {
+		return xOffset;
+	}
+	public int getYOffset() {
+		return yOffset;
 	}
 
 }

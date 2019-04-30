@@ -246,7 +246,6 @@ public class View extends JPanel {
         for(GamePiece gp : currentViewableGPs) {
            
             if(gp.isFood()){
-            	System.out.println("in view " + gp.getType().getName());
                 if(gp.getType().equals(Type.MOUSE)){ //mice
                     micePicNum = (micePicNum + 1) % miceFrameCount;
                     g.drawImage(mice[micePicNum], gp.getX(), gp.getY(), this);
@@ -265,7 +264,6 @@ public class View extends JPanel {
 //                }  
             }
             else if (gp.isEnemy()){
-            	System.out.println("in view " + gp.getType().getName());
                 if(gp.getType().equals(Type.REDFOX)){ //red fox
                     redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
                     g.drawImage(redFox[redFoxPicNum], gp.getX(), gp.getY(), this);

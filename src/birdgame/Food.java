@@ -24,6 +24,7 @@ public class Food extends GamePiece {
     	setHeight(165);
     	setType(foodType);
     	setFoodValue(10);
+    	setOffsets(); //MIGHT NOT WORK
     }
 
 	public int getFoodValue() {
