@@ -33,9 +33,10 @@ public class Main {
         started = false;
         boolean test=true;
         View.frameOsprey.addKeyListener(c1);
+        Model.level = 0;
     	View.displayStartScreen();
     	while(test) {
-    		if(started==true) {
+                if(started==true) {
     			test=false;
         		c1.start();
     		}
@@ -45,7 +46,10 @@ public class Main {
 
     		}
     		System.out.print("");
-    	}
+            
+        }
+    		
+    	
 
     }
 

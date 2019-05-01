@@ -16,6 +16,7 @@ import java.util.Iterator;
  */
 public class Model {
     static int bird; //0 is osprey, 1 is harrier
+    static int level;
     private int fWidth;
     private int fHeight;
     private int imgHeight;
