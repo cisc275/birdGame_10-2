@@ -17,11 +17,21 @@ public class Enemy extends GamePiece {
     public Enemy(int x, int y, Type enemyType){
         setX(x);
         setY(y);
-        setXIncr(10);
+        setXIncr(25);
     	setYIncr(0);
     	setWidth(165);
     	setHeight(165);
     	setType(enemyType);
+        setPicNum(0);
+//        if(enemyType.equals(Type.EAGLE)){
+//            setPicNum(6);
+//        }
+//        else if(enemyType.equals(Type.PLANE)){
+//            setPicNum(1);
+//        }
+//        else{
+//            setPicNum(4);
+//        }
     	setDamage(20);
     	setOffsets(); //MIGHT NOT WORK
 
