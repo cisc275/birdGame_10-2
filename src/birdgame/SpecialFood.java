@@ -6,6 +6,7 @@ import java.util.Random;
 // * and open the template in the editor.
 // */
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,7 +40,8 @@ public class SpecialFood extends Food {
     }
     
     public String[] getAnswers(ArrayList<String[]>  QandAs) {
-    	return null;
+    	String[] answers = Arrays.copyOfRange(QandAs.get(1), 0, QandAs.get(1).length -1);
+    	return answers;
     }
     public static void initializeQandAs() {
     	QuizOsprey = new HashMap<>();
