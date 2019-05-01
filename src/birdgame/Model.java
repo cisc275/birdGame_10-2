@@ -52,7 +52,8 @@ public class Model {
     	setImgWidth(imageWidth);
     	setImgHeight(imageHeight);
     	player = new Player();
-        setGroundLevel((int)(0.8*fHeight));
+//        setGroundLevel((int)(0.8*fHeight));
+    	setGroundLevel(fHeight - imgHeight);
         setIndexOfGP(0);
         indexOfGP = 0;
       //  bird = newBird;
@@ -108,10 +109,7 @@ public class Model {
     	}
         player.isAlive();
         clearCurrentGP();
-        seeCurrentGP();
-        
-
-        
+        seeCurrentGP();        
     }
 
     /**
@@ -130,8 +128,11 @@ public class Model {
         boolean flag = true;
         if(bird == 1){ //northern harrier
             while(numGamePieces < 100){
+            	int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
+            	int topHalfY = ((int) (Math.random()*(fHeight/2)));
+            	
                 if(Math.random() < .5){ //food
-                    if(Math.random() < .33){//bunny
+                    if(Math.random() < .5){//bunny
                         gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.BUNNY));
                     }
                     else{//mouse
@@ -152,6 +153,9 @@ public class Model {
         }
         else{
             while(numGamePieces < 100){
+            	int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
+            	int topHalfY = ((int) (Math.random()*(fHeight/2)));
+            	
                 if(Math.random() < 0.5){ //food
                     if(Math.random() < 0.5){//snakes
                         gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.SNAKE));
@@ -171,6 +175,7 @@ public class Model {
                 numGamePieces++;
                 tempXLoc+=fWidth/3;
             }
+            //System.out.println(gamePieces);
         }
 //        while(numGamePieces < 40){  
 //            if(Math.random() < .5) {

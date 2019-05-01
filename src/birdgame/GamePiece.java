@@ -23,6 +23,7 @@ public class GamePiece {
     private Type type;
     private int xOffset;
     private int yOffset;
+    private int picNum;
 
     /**
      * the move() method will call upon the methods in the Model class to update 
@@ -33,6 +34,12 @@ public class GamePiece {
     	xLocation = xLocation - xincr;
     	yLocation = yLocation - yincr;
     	
+    }
+    public void setPicNum(int newNum){
+        picNum = newNum;
+    }
+    public int getPicNum(){
+        return picNum;
     }
     public int getX(){
         return xLocation;
@@ -100,6 +107,7 @@ public class GamePiece {
     public boolean isFood() {
     	return !(isEnemy());
     }
+    
     public void setOffsets() {
 		if (getType().equals(Type.REDFOX)) {
 			//TODO	

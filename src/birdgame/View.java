@@ -42,7 +42,7 @@ import java.util.ArrayList;
  * @author crnis
  */
 public class View extends JPanel {
-	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     final static int frameWidth = (int) screenSize.getWidth();
     final static int frameHeight = (int) screenSize.getHeight();
     final static int imageWidth = 184;
@@ -53,10 +53,10 @@ public class View extends JPanel {
     final static int bunnyFrameCount = 4;
     final static int redFoxFrameCount = 4;
     final static int raccoonFrameCount = 4;
-    final static int fishFrameCount = 0;
-    final static int snakeFrameCount = 0;
-    final static int eagleFrameCount = 0;
-    final static int planeFrameCount = 0;
+    final static int fishFrameCount = 4;
+    final static int snakeFrameCount = 4;
+    final static int eagleFrameCount = 6;
+    final static int planeFrameCount = 1;
     static int micePicNum = 0;
     static int bunnyPicNum = 0;
     static int redFoxPicNum = 0;
@@ -74,10 +74,10 @@ public class View extends JPanel {
     BufferedImage[] bunny = new BufferedImage[4]; 
     BufferedImage[] redFox = new BufferedImage[4]; 
     BufferedImage[] raccoon = new BufferedImage[4];
-    BufferedImage[] fish = new BufferedImage[10];
-    BufferedImage[] snake = new BufferedImage[1];
-    BufferedImage[] plane = new BufferedImage[10];
-    BufferedImage[] eagle = new BufferedImage[10];
+    BufferedImage[] fish = new BufferedImage[4];
+    BufferedImage[] snake = new BufferedImage[4];
+    BufferedImage[] plane = new BufferedImage[1];
+    BufferedImage[] eagle = new BufferedImage[6];
     //don't forget below
     BufferedImage[] catchPrey;
     BufferedImage[] crash;
@@ -100,7 +100,7 @@ public class View extends JPanel {
     int x = 0;
     int health;
     int score;
-	static JButton osprey;
+    static JButton osprey;
     static JButton harrier;
     static ImageIcon ospreyImg;
     static ImageIcon harrierImg;
@@ -115,9 +115,7 @@ public class View extends JPanel {
     static JLabel gameOver;
     static boolean isOsprey;
     static boolean isDone;
-
     
-
 
     /**
      * constructor will initialize JFrame and other components that will be on it.
@@ -243,50 +241,54 @@ public class View extends JPanel {
         picNum = (picNum + 1) % frameCount;
        // g.drawImage(bunny[1], 500,500, this);
         g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);;
-        for(GamePiece gp : currentViewableGPs) {
-           
+        for(GamePiece gp : currentViewableGPs) {         
             if(gp.isFood()){
                 if(gp.getType().equals(Type.MOUSE)){ //mice
-                    micePicNum = (micePicNum + 1) % miceFrameCount;
-                    g.drawImage(mice[micePicNum], gp.getX(), gp.getY(), this);
+                    //micePicNum = (micePicNum + 1) % miceFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% miceFrameCount);
+                    g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(), this);
                 }
                 else if(gp.getType().equals(Type.BUNNY)){ //bunny
-                    bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
-                    g.drawImage(bunny[bunnyPicNum], gp.getX(), gp.getY(), this);
+                    //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% bunnyFrameCount);
+                    g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(), this);
                 }
-//                else if(gp.getType() == 2){ //snake
-//                    snakePicNum = (snakePicNum + 1) % snakeFrameCount;
-//                    g.drawImage(snake[snakePicNum], gp.getX(), gp.getY(), this);
-//                }
-//                else{// fish
-//                    fishPicNum = (fishPicNum + 1) % fishFrameCount;
-//                    g.drawImage(fish[fishPicNum], gp.getX(), gp.getY(), this);
-//                }  
+                else if(gp.getType().equals(Type.SNAKE)){ //snake
+                    //snakePicNum = (snakePicNum + 1) % snakeFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% snakeFrameCount);
+                    g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                }
+                else{// fish
+                    //fishPicNum = (fishPicNum + 1) % fishFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% fishFrameCount);
+                    g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                }  
             }
             else if (gp.isEnemy()){
                 if(gp.getType().equals(Type.REDFOX)){ //red fox
-                    redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
-                    g.drawImage(redFox[redFoxPicNum], gp.getX(), gp.getY(), this);
+                    //redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% redFoxFrameCount);
+                    g.drawImage(redFox[gp.getPicNum()], gp.getX(), gp.getY(), this);
                 }
-               // else if(gp.getType().equals(Type.RACOON)){ //raccoons
-                
-                else {
-                	raccoonPicNum = (raccoonPicNum + 1) % raccoonFrameCount;
-                    g.drawImage(raccoon[raccoonPicNum], gp.getX(), gp.getY(), this);
+                else if(gp.getType().equals(Type.RACCOON)){ //raccoons
+                    //raccoonPicNum = (raccoonPicNum + 1) % raccoonFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% raccoonFrameCount);
+                    g.drawImage(raccoon[gp.getPicNum()], gp.getX(), gp.getY(), this);
                 }
-//                }
-//                else if(gp.getType() == 2){ //eagles
-//                    eaglePicNum = (eaglePicNum + 1) % eagleFrameCount;
-//                    g.drawImage(eagle[eaglePicNum], gp.getX(), gp.getY(), this);
-//                }
-//                else{ //planes
-//                    planePicNum = (planePicNum + 1) % planeFrameCount;
-//                    g.drawImage(plane[planePicNum], gp.getX(), gp.getY(), this);
-//                }
-//            }
-        }
+                else if(gp.getType().equals(Type.EAGLE)){ //eagles
+                    //eaglePicNum = (eaglePicNum + 1) % eagleFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% eagleFrameCount);
+                    g.drawImage(eagle[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                }
+                else{ //planes
+                    //planePicNum = (planePicNum + 1) % planeFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% planeFrameCount);
+                    g.drawImage(plane[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                }
+
+            }   
             
-     }
+        }
         g.setColor(Color.red);
         g.drawRect(10, 10, 100 * 2, 50);
         g.fillRect(10, 10, health * 2, 50);
@@ -330,32 +332,33 @@ public class View extends JPanel {
      */
 
     public static void displayStartScreen() {
-    	
-    	natureImg = new ImageIcon("StartScreen.jpg");
-    	ospreyImg = new ImageIcon("osprey.jpg");
-    	harrierImg = new ImageIcon("NorthernHarrier.jpg");
+    	natureImg = new ImageIcon("images/BirdImages/StartScreen.png");
+    	//ospreyImg = new ImageIcon("osprey.jpg");
+    	//harrierImg = new ImageIcon("NorthernHarrier.jpg");
     	frame2 = new JFrame();
-        osprey = new JButton("Osprey");
-        harrier = new JButton("Northern Harrier");
-    	osprey.setBounds(0,0,frameWidth/2,frameHeight/10);
-    	harrier.setBounds(frameWidth/2,0,frameWidth/2,frameHeight/10);
-    	ospreyPic = new JLabel();
-    	ospreyPic.setIcon(new ImageIcon(ospreyImg.getImage().getScaledInstance(300,300, Image.SCALE_SMOOTH)));
-    	ospreyPic.setBounds(200,100,300,300);
-    	harrierPic = new JLabel();
-    	harrierPic.setIcon(new ImageIcon(harrierImg.getImage().getScaledInstance(300,300, Image.SCALE_SMOOTH)));
-    	harrierPic.setBounds(200+frameWidth/2,100,300,300);
+        osprey = new JButton("Play as Osprey");
+        osprey.setFont(new Font("Agency FB", Font.BOLD, 45));
+        harrier = new JButton("Play as Northern Harrier");
+        harrier.setFont(new Font("Agency FB", Font.BOLD, 45));
+    	osprey.setBounds(frameWidth/10,(frameHeight*4)/5,frameWidth/4,frameHeight/10);
+    	harrier.setBounds((frameWidth*6)/10,frameHeight/3,frameWidth/4,frameHeight/10);
+//    	ospreyPic = new JLabel();
+//    	ospreyPic.setIcon(new ImageIcon(ospreyImg.getImage().getScaledInstance(300,300, Image.SCALE_SMOOTH)));
+//    	ospreyPic.setBounds(200,100,300,300);
+//    	harrierPic = new JLabel();
+//    	harrierPic.setIcon(new ImageIcon(harrierImg.getImage().getScaledInstance(300,300, Image.SCALE_SMOOTH)));
+//    	harrierPic.setBounds(200+frameWidth/2,100,300,300);
     	naturePic = new JLabel();
     	naturePic.setIcon(new ImageIcon(natureImg.getImage().getScaledInstance(frameWidth,frameHeight, Image.SCALE_SMOOTH)));
     	naturePic.setBounds(0,0,frameWidth, frameHeight);
-    	ospreyFact1 = new JLabel("Osprey is a bird");
-    	ospreyFact1.setFont(new Font("Times New Roman",1,20));
-    	ospreyFact1.setForeground(Color.white);
-    	ospreyFact1.setBounds(200,500,frameWidth/2,frameHeight/4);
-    	harrierFact1 = new JLabel("Northern Harrier is a bird");
-    	harrierFact1.setFont(new Font("Times New Roman",1,20));
-    	harrierFact1.setForeground(Color.white);
-    	harrierFact1.setBounds(200+frameWidth/2,500,frameWidth/2,frameHeight/4);
+//    	ospreyFact1 = new JLabel("Osprey is a bird");
+//    	ospreyFact1.setFont(new Font("Times New Roman",1,20));
+//    	ospreyFact1.setForeground(Color.white);
+//    	ospreyFact1.setBounds(200,500,frameWidth/2,frameHeight/4);
+//    	harrierFact1 = new JLabel("Northern Harrier is a bird");
+//    	harrierFact1.setFont(new Font("Times New Roman",1,20));
+//    	harrierFact1.setForeground(Color.white);
+//    	harrierFact1.setBounds(200+frameWidth/2,500,frameWidth/2,frameHeight/4);
         pane1 = new JPanel();
         pane1.setLayout(null);
         osprey.addActionListener(ae -> {
@@ -372,10 +375,10 @@ public class View extends JPanel {
         });
         pane1.add(osprey);
         pane1.add(harrier);
-        pane1.add(ospreyPic);
-        pane1.add(harrierPic);
-        pane1.add(ospreyFact1);
-        pane1.add(harrierFact1);
+//        pane1.add(ospreyPic);
+//        pane1.add(harrierPic);
+//        pane1.add(ospreyFact1);
+//        pane1.add(harrierFact1);
         pane1.add(naturePic);
         frame2.add(pane1);
         frame2.setSize(frameWidth, frameHeight);
@@ -401,7 +404,6 @@ public class View extends JPanel {
      */
 
     public static void displayEndScreen() {
-    	
     	frame3 = new JFrame();
     	naturePic = new JLabel();
     	naturePic.setIcon(new ImageIcon(natureImg.getImage().getScaledInstance(frameWidth,frameHeight, Image.SCALE_SMOOTH)));
@@ -425,6 +427,7 @@ public class View extends JPanel {
     	frame3.setVisible(true);
     	
     }
+    
     public int getWidth(){
         return frameWidth;
     }
