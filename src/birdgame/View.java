@@ -16,8 +16,10 @@ import javax.swing.JScrollPane;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -42,9 +44,10 @@ import java.util.ArrayList;
  * @author crnis
  */
 public class View extends JPanel {
-    static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    final static int frameWidth = (int) screenSize.getWidth();
-    final static int frameHeight = (int) screenSize.getHeight();
+//    static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    static Rectangle rect = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+    final static int frameWidth = (int) rect.getWidth();
+    final static int frameHeight = (int) rect.getHeight();
     final static int imageWidth = 184;
     final static int imageHeight = 165;
     final static int frameCount = 6;
