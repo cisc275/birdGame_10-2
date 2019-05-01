@@ -19,7 +19,7 @@ public class SpecialFood extends Food {
 
     public SpecialFood(int x, int y, Type foodType, int currentBird) {
 		super(x, y, foodType);
-		initializeQandAs();
+		initializeQandAs(); // WRONG!!!!!!!!!!!!!!!! Initialize in model!!
 	}
 
 	
@@ -33,15 +33,20 @@ public class SpecialFood extends Food {
      * wrong answer
      */
 
-    public boolean checkAnswer() {
-        return true;
+    public boolean checkAnswer(String[] answers, String userAns) {
+    	String rightAns = answers[-1];
+    	return rightAns.equals(userAns);
+    }
+    
+    public String[] getAnswers(ArrayList<String[]>  QandAs) {
+    	return null;
     }
     public static void initializeQandAs() {
     	QuizOsprey = new HashMap<>();
     	QuizHarrier = new HashMap<>();
     	
-    	String[] ansOsp = {"1","4","5","answer","4"};
-    	String[] ansHar = {"1","4","5","answer","5"};
+    	String[] ansOsp = {"1","4","5","6","4"};
+    	String[] ansHar = {"1","4","5","7","5"};
 
     	QuizOsprey.put("Whats 2 + 2", ansOsp);
     	QuizHarrier.put("Whats 4 + 1", ansHar);
@@ -55,19 +60,34 @@ public class SpecialFood extends Food {
      * HashMap to ask the player.
      */
 
-    public String getQuestion(int birdType) {
+    public ArrayList<String[]> getQuestion(int birdType) {
     	if (birdType == 0) {
     		List<String> questionList = new ArrayList<String>(QuizOsprey.keySet());
     		int randomIndex = new Random().nextInt(questionList.size());
-    		return questionList.get(randomIndex);
+    		String question = questionList.get(randomIndex);
+    		String[] questionArr = new String[0];
+    		questionArr[0] = question;
+    		ArrayList<String[]> returnArray = new ArrayList<>();
+    		 returnArray.add(questionArr);
+    		returnArray.add(QuizOsprey.get(question));
+    		QuizOsprey.remove(question);
+    		return returnArray;
     	}
     	if (birdType == 1) {
     		List<String> questionList = new ArrayList<String>(QuizHarrier.keySet());
-        	int randomIndex = new Random().nextInt(questionList.size());
-        	return questionList.get(randomIndex);
+    		int randomIndex = new Random().nextInt(questionList.size());
+    		String question = questionList.get(randomIndex);
+    		String[] questionArr = new String[0];
+    		questionArr[0] = question;
+    		ArrayList<String[]> returnArray = new ArrayList<>();
+    		 returnArray.add(questionArr);
+    		returnArray.add(QuizHarrier.get(question));
+    		QuizHarrier.remove(question);
+    		return returnArray;
     	}
-    	else return "";
+    	else return null;
     	
     }
 
 }
+ 
