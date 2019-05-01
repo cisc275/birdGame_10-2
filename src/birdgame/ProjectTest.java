@@ -135,6 +135,30 @@ public class ProjectTest {
 		m.updateLocationAndDirection();
 		assert p.getY() == -4;
 	}
+	@Test
+	public void playerWithDirectionUpMovesUpUnlessAtTop() {
+		Model m = new Model(1,1,1,1);
+		Player p = new Player();
+		m.setPlayer(p);
+		m.setDirection(Direction.UP);
+		p.setY(-2);
+		p.setYIncr(5);
+		m.updateLocationAndDirection();
+		assert p.getY() == -2;
+	}
+	@Test
+	public void playerWithDirectionDownMovesDownUnlessAtBottom() {
+		Model m = new Model(1,1,1,1);
+		m.setFHeight(100);
+		m.setImgHeight(10);
+		Player p = new Player();
+		m.setPlayer(p);
+		m.setDirection(Direction.DOWN);
+		p.setY(91);
+		p.setYIncr(-5);
+		m.updateLocationAndDirection();
+		assert p.getY() == 91;
+	}
 		//clearCurrentGP()
 	@Test
 	public void clearingGamePiecesPlayerWillHaveNoneLeft() {
