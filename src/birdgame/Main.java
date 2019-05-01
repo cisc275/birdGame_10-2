@@ -36,7 +36,7 @@ public class Main {
         Model.level = 0;
     	View.displayStartScreen();
     	while(test) {
-                if(started==true) {
+    		if(started==true) {
     			test=false;
         		c1.start();
     		}
@@ -46,8 +46,7 @@ public class Main {
 
     		}
     		System.out.print("");
-            
-        }
+    	}
     		
     	
 
