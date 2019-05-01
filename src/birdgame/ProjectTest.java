@@ -229,6 +229,19 @@ public class ProjectTest {
 		assert m.getGamePieces().size() == origSize;
 	}
 	@Test
+	public void whenPlayerCollidesWithFoodTheFoodIsEaten() {
+		Model m = new Model(1,1,1,1);
+		Type t = Type.FISH;
+		Food f = new Food(1,1,t);
+		f.setFoodValue(100);
+		m.getGamePieces().add(f);
+		m.getPlayer().setX(1);
+		m.getPlayer().setY(1);
+		m.getPlayer().setScore(100);
+		m.handleTicks();
+		assert m.getPlayer().getScore() == 200;
+	}
+	@Test
 	public void whenPlayerCollidesWithAnEnemyObstacleHitIsCalled() {
 		Model m = new Model(1,1,1,1);
 		Type t = Type.REDFOX;
