@@ -373,7 +373,8 @@ public class View extends JPanel {
             frame2.dispose();
             Controller.bird = 0;
             Model.bird = 0;
-            Main.started = true;
+            displayLevelStartScreen();
+            //Main.started = true;
         });
         harrier.addActionListener(ae -> {
             frame2.dispose();
@@ -440,11 +441,18 @@ public class View extends JPanel {
         levelStartFrame = new JFrame();
         levelStartPanel = new JPanel();
         levelStartLabel = new JLabel();
+        JButton level1 = new JButton(new ImageIcon("images/BirdImages/Level1Icon.png"));
+        level1.setBounds(0,0,frameWidth/10,frameWidth/10);
         levelDisplayStart = new ImageIcon("images/BirdImages/OspreyLevelScreen0.png");
         //add JLabel to JPanel
         levelStartLabel.setIcon(new ImageIcon(levelDisplayStart.getImage().getScaledInstance(frameWidth,frameHeight, Image.SCALE_SMOOTH)));
         levelStartLabel.setBounds(0,0,frameWidth,frameHeight);
         levelStartPanel.setLayout(null);
+        level1.addActionListener(ae -> {
+            levelStartFrame.dispose();
+            Model.level = 1;
+            Main.started = true;
+        });
         levelStartPanel.add(levelStartLabel);
         
         //add JPanel to JFrame
