@@ -205,11 +205,11 @@ public class Model {
 
     public void eat(Food f) {
         player.setScore(player.getScore() + f.getFoodValue());
-        if(player.getHealth() > 95){
+        if(player.getHealth() > 90){
             player.setHealth(100);
         }
         else{
-            player.setHealth( player.getHealth() + 5);
+            player.setHealth( player.getHealth() + 10);
         }
     }
 

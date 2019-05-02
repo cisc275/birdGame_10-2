@@ -373,8 +373,7 @@ public class View extends JPanel {
             frame2.dispose();
             Controller.bird = 0;
             Model.bird = 0;
-            displayLevelStartScreen();
-            //Main.started = true;
+            Main.started = true;
         });
         harrier.addActionListener(ae -> {
             frame2.dispose();
