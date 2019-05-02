@@ -37,6 +37,7 @@ public class Model {
     //GamePiece currentGP;
     private int indexOfGP;
     private ArrayList<GamePiece> currentGPs = new ArrayList<>();
+    private GamePiece furthestGP;
     
     /**
      * Model constructor will take in four variables defined below
@@ -109,7 +110,23 @@ public class Model {
     	}
         player.isAlive();
         clearCurrentGP();
-        seeCurrentGP();        
+        seeCurrentGP();
+        
+        if(furthestGP.getX() < 0){
+        	endOfLevel();
+        }
+        
+        if(player.getX() > (fWidth - imgWidth)) {
+        	System.out.println("youre off the screen");
+        }
+    }
+    
+    
+    public void endOfLevel() {
+    	player.setXIncr(40);    	
+//    	player.setXIncr((int)(fWidth * .5));
+    	player.setX(player.getX() + player.getXIncr());
+
     }
 
     /**
@@ -127,7 +144,7 @@ public class Model {
         int landHeight = 96;
         boolean flag = true;
         if(bird == 1){ //northern harrier
-            while(numGamePieces < 100){
+            while(numGamePieces < 5){
             	int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
             	int topHalfY = ((int) (Math.random()*(fHeight/2)));
             	
@@ -156,8 +173,8 @@ public class Model {
             	int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
             	int topHalfY = ((int) (Math.random()*(fHeight/2)));
             	
-                if(Math.random() < 0.5){ //food
-                    if(Math.random() < 0.5){//snakes
+                if(Math.random() < .5){ //food
+                    if(Math.random() < .5){//snakes
                         gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.SNAKE));
                     }
                     else{//fish
@@ -191,6 +208,26 @@ public class Model {
 //            tempXLoc +=fWidth;
 //        	
 //        }
+        
+        
+        for(GamePiece gp: gamePieces) {
+        	int furthestGPLoc = 0;
+        	if(gp.getX() > furthestGPLoc) {
+        		furthestGPLoc = gp.getX();
+        		furthestGP = gp;
+        		
+        	}
+        }
+        
+//        
+//        for(GamePiece gp: gamePieces) {
+//        	System.out.println("gp loc: " + gp.getX());
+//        }
+        
+        
+
+        
+        System.out.println("hi, furthest gamepiece loc: " + furthestGP);
         
       
     }

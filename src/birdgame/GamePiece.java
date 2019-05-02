@@ -30,11 +30,16 @@ public class GamePiece {
      * the object's location and direction.
      */
     
+    public String toString(){
+    	return " " + type;
+    }
+    
     public void move() {
     	xLocation = xLocation - xincr;
     	yLocation = yLocation - yincr;
     	
     }
+    
     public void setPicNum(int newNum){
         picNum = newNum;
     }
