@@ -33,7 +33,6 @@ public class Main {
         started = false;
         boolean test=true;
         View.frameOsprey.addKeyListener(c1);
-    	View.displayStartScreen();
     	while(test) {
     		if(started==true) {
     			test=false;

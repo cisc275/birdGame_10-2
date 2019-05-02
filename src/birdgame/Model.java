@@ -98,12 +98,9 @@ public class Model {
             if(player.checkCollision(g)){            	
             	if(g.isFood()) {
             		eat((Food)g);
-            		//System.out.println("this is a food");
             	}
-            	
                 else if(g.isEnemy()){
                     obstacleHit((Enemy)g);
-                    //System.out.println("this is a enemy");
                 }
             	it.remove();
             }
@@ -178,21 +175,6 @@ public class Model {
             }
             //System.out.println(gamePieces);
         }
-//        while(numGamePieces < 40){  
-//            if(Math.random() < .5) {
-//                    gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight), 1));
-//                    gamePieces.add(new Enemy(tempXLoc + 500, (int) (Math.random()*fHeight), 0));
-//
-//            }else {
-//                    gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));
-//                    gamePieces.add(new Food(tempXLoc + 500, (int) (Math.random()*fHeight), 1));
-//            }
-//
-//            numGamePieces++;
-//            tempXLoc +=fWidth;
-//        	
-//        }
-        
       
     }
     public void clearCurrentGP(){
