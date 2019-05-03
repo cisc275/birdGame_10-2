@@ -192,24 +192,7 @@ public class Model {
             }
             //System.out.println(gamePieces);
         }
-<<<<<<< HEAD
-=======
-//        while(numGamePieces < 40){  
-//            if(Math.random() < .5) {
-//                    gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight), 1));
-//                    gamePieces.add(new Enemy(tempXLoc + 500, (int) (Math.random()*fHeight), 0));
-//
-//            }else {
-//                    gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));
-//                    gamePieces.add(new Food(tempXLoc + 500, (int) (Math.random()*fHeight), 1));
-//            }
-//
-//            numGamePieces++;
-//            tempXLoc +=fWidth;
-//        	
-//        }
-        
-        
+
         for(GamePiece gp: gamePieces) {
         	int furthestGPLoc = 0;
         	if(gp.getX() > furthestGPLoc) {
@@ -228,8 +211,6 @@ public class Model {
 
         
         System.out.println("hi, furthest gamepiece loc: " + furthestGP);
-        
->>>>>>> 63f9873812be2baf7ab69282a570920034b0a266
       
     }
     public void clearCurrentGP(){
