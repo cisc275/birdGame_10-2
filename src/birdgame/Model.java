@@ -100,7 +100,7 @@ public class Model {
             	if(g.isFood()) {
             		eat((Food)g);
             	}
-                else if(g.isEnemy()){
+                else {
                     obstacleHit((Enemy)g);
                 }
             	it.remove();

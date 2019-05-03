@@ -27,7 +27,7 @@ public class ProjectTest {
 		p.setWidth(100);
 		p.setX(1);
 		p.setY(1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(1,1,t);
 		e.setHeight(100);
 		e.setWidth(100);
@@ -40,7 +40,7 @@ public class ProjectTest {
 		p.setWidth(10);
 		p.setX(1);
 		p.setY(1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(500,500,t);
 		e.setHeight(5);
 		e.setWidth(5);
@@ -85,7 +85,7 @@ public class ProjectTest {
 	@Test
 	public void enemyThatMovesPlus5XMovesPlus5X() {
 		Model m = new Model(1,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(1,1,t);
 		m.getGamePieces().add(e);
 		e.setXIncr(5);
@@ -95,7 +95,7 @@ public class ProjectTest {
 	@Test
 	public void enemyThatDoesNotMoveStaysInTheSameSpot() {
 		Model m = new Model(1,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(1,1,t);
 		m.getGamePieces().add(e);
 		e.setXIncr(0);
@@ -171,7 +171,7 @@ public class ProjectTest {
 	@Test
 	public void clearingGamePiecesEnemyWillHaveNoneLeft() {
 		Model m = new Model(1,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(1,1,t);
 		m.getCurrentGPs().add(e);
 		m.clearCurrentGP();
@@ -181,7 +181,7 @@ public class ProjectTest {
 	@Test
 	public void seeingCurrentGPsShouldAddAllGPsOnScreen() {
 		Model m = new Model(100,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(1,1,t);
 		m.getGamePieces().add(e);
 		m.seeCurrentGP();
@@ -190,7 +190,7 @@ public class ProjectTest {
 	@Test
 	public void seeingCurrentGPsShouldAddNoOffScreenRightGPs() {
 		Model m = new Model(100,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(101,1,t);
 		m.getGamePieces().add(e);
 		m.seeCurrentGP();
@@ -199,7 +199,7 @@ public class ProjectTest {
 	@Test
 	public void seeingCurrentGPsShouldAddNoOffScreenLeftGPs() {
 		Model m = new Model(100,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(-1,1,t);
 		m.getGamePieces().add(e);
 		m.seeCurrentGP();
@@ -209,7 +209,7 @@ public class ProjectTest {
 	@Test
 	public void handleTicksUpdatesLocationAndDirection() {
 		Model m = new Model(1,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(1,1,t);
 		m.getGamePieces().add(e);
 		e.setXIncr(5);
@@ -219,7 +219,7 @@ public class ProjectTest {
 	@Test
 	public void whenPlayerCollidesWithAGamePieceThePieceGetsRemoved() {
 		Model m = new Model(1,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(1,1,t);
 		int origSize = m.getGamePieces().size();
 		m.getGamePieces().add(e);
@@ -231,7 +231,7 @@ public class ProjectTest {
 	@Test
 	public void whenPlayerCollidesWithFoodTheFoodIsEaten() {
 		Model m = new Model(1,1,1,1);
-		Type t = Type.FISH;
+		Sprite t = Sprite.FISH;
 		Food f = new Food(1,1,t);
 		f.setFoodValue(100);
 		m.getGamePieces().add(f);
@@ -244,7 +244,7 @@ public class ProjectTest {
 	@Test
 	public void whenPlayerCollidesWithAnEnemyObstacleHitIsCalled() {
 		Model m = new Model(1,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(1,1,t);
 		m.getGamePieces().add(e);
 		m.getPlayer().setX(1);
@@ -257,7 +257,7 @@ public class ProjectTest {
 	@Test
 	public void whenPlayerCollidesWithAnGamePieceObstacleHitIsNotCalled() {
 		Model m = new Model(1,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		GamePiece gP = new GamePiece();
 		gP.setX(1);
 		gP.setY(1);
@@ -288,7 +288,7 @@ public class ProjectTest {
 		Player p = new Player();
 		p.setHealth(1);
 		m.setPlayer(p);
-		Type t = Type.FISH;
+		Sprite t = Sprite.FISH;
 		Food f = new Food(1,1,t);
 		m.eat(f);
 		System.out.println(p.getHealth());
@@ -300,7 +300,7 @@ public class ProjectTest {
 		Player p = new Player();
 		p.setHealth(97);
 		m.setPlayer(p);
-		Type t = Type.FISH;
+		Sprite t = Sprite.FISH;
 		Food f = new Food(1,1,t);
 		m.eat(f);
 		assert p.getHealth() == 100;
@@ -312,7 +312,7 @@ public class ProjectTest {
 		p.setHealth(1);
 		p.setScore(1);
 		m.setPlayer(p);
-		Type t = Type.FISH;
+		Sprite t = Sprite.FISH;
 		Food f = new Food(1,1,t);
 		f.setFoodValue(1);
 		m.eat(f);
@@ -322,7 +322,7 @@ public class ProjectTest {
 	@Test
 	public void hittingAnEnemyWith10DamageDecreasesScoreBy10() {
 		Model m = new Model(1,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(1,1,t);
 		m.getPlayer().setScore(100);
 		e.setDamage(10);
@@ -332,7 +332,7 @@ public class ProjectTest {
 	@Test
 	public void hittingAnEnemyWhileHaving15HealthDecreasesHealthto0() {
 		Model m = new Model(1,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(1,1,t);
 		m.getPlayer().setHealth(15);
 		m.obstacleHit(e);
@@ -341,7 +341,7 @@ public class ProjectTest {
 	@Test
 	public void hittingAnEnemyWhileHaving50HealthDecreasesHealthBy20() {
 		Model m = new Model(1,1,1,1);
-		Type t = Type.REDFOX;
+		Sprite t = Sprite.REDFOX;
 		Enemy e = new Enemy(1,1,t);
 		m.getPlayer().setHealth(50);
 		m.obstacleHit(e);
