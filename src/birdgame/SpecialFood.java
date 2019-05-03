@@ -20,7 +20,7 @@ public class SpecialFood extends Food {
 
     public SpecialFood(int x, int y, Type foodType, int currentBird) {
 		super(x, y, foodType);
-		initializeQandAs(); // WRONG!!!!!!!!!!!!!!!! Initialize in model!!
+		//DO I NEED CURRENT BIRD? 
 	}
 
 	
