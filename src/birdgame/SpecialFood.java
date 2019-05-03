@@ -34,8 +34,8 @@ public class SpecialFood extends Food {
      * wrong answer
      */
 
-    public boolean checkAnswer(String[] answers, String userAns) {
-    	String rightAns = answers[-1];
+    public static boolean checkAnswer(String[] answers, String userAns) {
+    	String rightAns = answers[answers.length -1];
     	return rightAns.equals(userAns);
     }
     
@@ -77,13 +77,15 @@ public class SpecialFood extends Food {
     	}
     	if (birdType == 1) {
     		List<String> questionList = new ArrayList<String>(QuizHarrier.keySet());
+    		System.out.println(questionList); //Question is normal here
     		int randomIndex = new Random().nextInt(questionList.size());
     		String question = questionList.get(randomIndex);
-    		String[] questionArr = new String[0];
-    		questionArr[0] = question;
+    		String[] questionArr = {question};
+    		System.out.println(questionArr);
     		ArrayList<String[]> returnArray = new ArrayList<>();
     		 returnArray.add(questionArr);
     		returnArray.add(QuizHarrier.get(question));
+    		System.out.println(QuizHarrier.get(question));
     		QuizHarrier.remove(question);
     		return returnArray;
     	}

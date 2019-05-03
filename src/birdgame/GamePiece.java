@@ -115,31 +115,38 @@ public class GamePiece {
     
     public void setOffsets() {
 		if (getType().equals(Type.REDFOX)) {
-			//TODO	
+			xOffset = 50;
+			yOffset = 50;
 		}
 		if (getType().equals(Type.EAGLE)) {
-			//TODO
+			xOffset = 30;
+			yOffset = 30;
 		}
 		if(getType().equals(Type.PLANE)) {
-			//TODO
+			xOffset = 30;
+			yOffset = 30;
 		}
 		if (getType().equals(Type.BUNNY)) {
-			//TODO
+			xOffset = 10;
+			yOffset = 10;
 		}
 		if (getType().equals(Type.MOUSE)) {
-			//TODO
+			xOffset = 10;
+			yOffset = 10;
 		}
 		if (getType().equals(Type.FISH)) {
-			//TODO
+			xOffset = 30;
+			yOffset = 30;
 		}
 		if (getType().equals(Type.RACCOON)) {
-			//TODO
+			xOffset = 30;
+			yOffset = 30;
 		}
 		if (getType().equals(Type.SNAKE)) {
-			//TODO
+			xOffset = 30;
+			yOffset = 30;
 		}
-		xOffset = 30; //DON'T FORGET TO CHANGE THIS!!
-		yOffset = 30;
+		
 	}
     
     public int getXOffset() {
