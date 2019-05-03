@@ -112,7 +112,7 @@ public class Model {
         clearCurrentGP();
         seeCurrentGP();
         
-        if(furthestGP.getX() < 0){
+        if(furthestGP == null || furthestGP.getX() < 0){
         	endOfLevel();
         }
         
