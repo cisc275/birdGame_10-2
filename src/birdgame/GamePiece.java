@@ -20,7 +20,7 @@ public class GamePiece {
     private int yincr;
     private int width;
     private int height;
-    private Type type;
+    private Sprite type;
     private int xOffset;
     private int yOffset;
     private int picNum;
@@ -70,7 +70,7 @@ public class GamePiece {
     	return height;
     }
     
-    public Type getType() {
+    public Sprite getSprite() {
     	return type;
     }
     
@@ -98,11 +98,11 @@ public class GamePiece {
     	height = h;
     }
     
-    public void setType(Type s) {
+    public void setSprite(Sprite s) {
     	type = s;
     }
     public boolean isEnemy() {
-    	if (type.equals(Type.PLANE) || type.equals(Type.EAGLE) || type.equals(Type.REDFOX) || type.equals(Type.RACCOON)){
+    	if (type.equals(Sprite.PLANE) || type.equals(Sprite.EAGLE) || type.equals(Sprite.REDFOX) || type.equals(Sprite.RACCOON)){
     		return true;
     	}
     	else {
@@ -114,28 +114,28 @@ public class GamePiece {
     }
     
     public void setOffsets() {
-		if (getType().equals(Type.REDFOX)) {
+		if (getSprite().equals(Sprite.REDFOX)) {
 			//TODO	
 		}
-		if (getType().equals(Type.EAGLE)) {
+		if (getSprite().equals(Sprite.EAGLE)) {
 			//TODO
 		}
-		if(getType().equals(Type.PLANE)) {
+		if(getSprite().equals(Sprite.PLANE)) {
 			//TODO
 		}
-		if (getType().equals(Type.BUNNY)) {
+		if (getSprite().equals(Sprite.BUNNY)) {
 			//TODO
 		}
-		if (getType().equals(Type.MOUSE)) {
+		if (getSprite().equals(Sprite.MOUSE)) {
 			//TODO
 		}
-		if (getType().equals(Type.FISH)) {
+		if (getSprite().equals(Sprite.FISH)) {
 			//TODO
 		}
-		if (getType().equals(Type.RACCOON)) {
+		if (getSprite().equals(Sprite.RACCOON)) {
 			//TODO
 		}
-		if (getType().equals(Type.SNAKE)) {
+		if (getSprite().equals(Sprite.SNAKE)) {
 			//TODO
 		}
 		xOffset = 30; //DON'T FORGET TO CHANGE THIS!!
