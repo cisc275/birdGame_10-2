@@ -1,6 +1,6 @@
 package birdgame;
 
-public enum Type{
+public enum Sprite{
 	BUNNY("bunny"),
 	SNAKE("snake"),
 	MOUSE("mouse"),
@@ -13,7 +13,7 @@ public enum Type{
         OSPREY("osprey");
 	String name;
 	
-	private Type(String s) {
+	private Sprite(String s) {
 		this.name = s;
 	}
 	public String getName() {

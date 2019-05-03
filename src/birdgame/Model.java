@@ -148,18 +148,18 @@ public class Model {
             	
                 if(Math.random() < .5){ //food
                     if(Math.random() < .5){//bunny
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.BUNNY));
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.BUNNY));
                     }
                     else{//mouse
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.MOUSE));
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.MOUSE));
                     }
                 }
                 else{//enemy
                     if(Math.random() < .5){//red fox
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.REDFOX));
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.REDFOX));
                     }
                     else{//raccoon
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.RACCOON));
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.RACCOON));
                     }
                 }
                 numGamePieces++;
@@ -167,24 +167,24 @@ public class Model {
             }
         }
         else{
-            while(numGamePieces < 100){
+            while(numGamePieces < 5){
             	int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
             	int topHalfY = ((int) (Math.random()*(fHeight/2)));
             	
                 if(Math.random() < .5){ //food
                     if(Math.random() < .5){//snakes
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.SNAKE));
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.SNAKE));
                     }
                     else{//fish
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.FISH));
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.FISH));
                     }
                 }
                 else{//enemy
                     if(Math.random() < 0.5){//eagles
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.EAGLE));
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.EAGLE));
                     }
                     else{//planes
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.PLANE));
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.PLANE));
                     }
                 }
                 numGamePieces++;

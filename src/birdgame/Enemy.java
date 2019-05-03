@@ -14,14 +14,14 @@ package birdgame;
 public class Enemy extends GamePiece {
 
     private int damage;
-    public Enemy(int x, int y, Type enemyType){
+    public Enemy(int x, int y, Sprite enemyType){
         setX(x);
         setY(y);
         setXIncr(25);
     	setYIncr(0);
     	setWidth(165);
     	setHeight(165);
-    	setType(enemyType);
+    	setSprite(enemyType);
         setPicNum(0);
 //        if(enemyType.equals(Type.EAGLE)){
 //            setPicNum(6);

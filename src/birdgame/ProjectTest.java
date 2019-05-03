@@ -425,4 +425,3 @@ public class ProjectTest {
 		assert m.getIndexOfGP() == 100;
 	}
 }
-
