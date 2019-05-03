@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class SpecialFood extends Food {
 
-    public SpecialFood(int x, int y, Type foodType, int currentBird) {
+    public SpecialFood(int x, int y, Sprite foodType, int currentBird) {
 		super(x, y, foodType);
 		//DO I NEED CURRENT BIRD? 
 	}
