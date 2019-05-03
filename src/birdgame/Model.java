@@ -16,6 +16,7 @@ import java.util.Iterator;
  */
 public class Model {
     static int bird; //0 is osprey, 1 is harrier
+    static int level;
     private int fWidth;
     private int fHeight;
     private int imgHeight;
@@ -37,6 +38,7 @@ public class Model {
     //GamePiece currentGP;
     private int indexOfGP;
     private ArrayList<GamePiece> currentGPs = new ArrayList<>();
+    private GamePiece furthestGP;
     
     /**
      * Model constructor will take in four variables defined below
@@ -52,7 +54,8 @@ public class Model {
     	setImgWidth(imageWidth);
     	setImgHeight(imageHeight);
     	player = new Player();
-        setGroundLevel((int)(0.8*fHeight));
+//        setGroundLevel((int)(0.8*fHeight));
+    	setGroundLevel(fHeight - imgHeight);
         setIndexOfGP(0);
         indexOfGP = 0;
       //  bird = newBird;
@@ -96,19 +99,32 @@ public class Model {
             if(player.checkCollision(g)){            	
             	if(g.isFood()) {
             		eat((Food)g);
-            		//System.out.println("this is a food");
             	}
-            	
-                else if(g.isEnemy()){
+                else {
                     obstacleHit((Enemy)g);
-                    //System.out.println("this is a enemy");
                 }
             	it.remove();
             }
     	}
         player.isAlive();
         clearCurrentGP();
-        seeCurrentGP();        
+        seeCurrentGP();
+        
+        if(furthestGP == null || furthestGP.getX() < 0){
+        	endOfLevel();
+        }
+        
+        if(player.getX() > (fWidth - imgWidth)) {
+        	System.out.println("youre off the screen");
+        }
+    }
+    
+    
+    public void endOfLevel() {
+    	player.setXIncr(40);    	
+//    	player.setXIncr((int)(fWidth * .5));
+    	player.setX(player.getX() + player.getXIncr());
+
     }
 
     /**
@@ -126,21 +142,24 @@ public class Model {
         int landHeight = 96;
         boolean flag = true;
         if(bird == 1){ //northern harrier
-            while(numGamePieces < 100){
+            while(numGamePieces < 5){
+            	int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
+            	int topHalfY = ((int) (Math.random()*(fHeight/2)));
+            	
                 if(Math.random() < .5){ //food
-                    if(Math.random() < .33){//bunny
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.BUNNY));
+                    if(Math.random() < .5){//bunny
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.BUNNY));
                     }
                     else{//mouse
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.MOUSE));
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.MOUSE));
                     }
                 }
                 else{//enemy
                     if(Math.random() < .5){//red fox
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.REDFOX));
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.REDFOX));
                     }
                     else{//raccoon
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.RACCOON));
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.RACCOON));
                     }
                 }
                 numGamePieces++;
@@ -148,21 +167,24 @@ public class Model {
             }
         }
         else{
-            while(numGamePieces < 100){
-                if(Math.random() < 0.5){ //food
-                    if(Math.random() < 0.5){//snakes
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.SNAKE));
+            while(numGamePieces < 5){
+            	int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
+            	int topHalfY = ((int) (Math.random()*(fHeight/2)));
+            	
+                if(Math.random() < .5){ //food
+                    if(Math.random() < .5){//snakes
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.SNAKE));
                     }
                     else{//fish
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Type.FISH));
+                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.FISH));
                     }
                 }
                 else{//enemy
                     if(Math.random() < 0.5){//eagles
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.EAGLE));
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.EAGLE));
                     }
                     else{//planes
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Type.PLANE));
+                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.PLANE));
                     }
                 }
                 numGamePieces++;
@@ -170,21 +192,25 @@ public class Model {
             }
             //System.out.println(gamePieces);
         }
-//        while(numGamePieces < 40){  
-//            if(Math.random() < .5) {
-//                    gamePieces.add(new Food(tempXLoc, (int) (Math.random()*fHeight), 1));
-//                    gamePieces.add(new Enemy(tempXLoc + 500, (int) (Math.random()*fHeight), 0));
-//
-//            }else {
-//                    gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*fHeight), 0));
-//                    gamePieces.add(new Food(tempXLoc + 500, (int) (Math.random()*fHeight), 1));
-//            }
-//
-//            numGamePieces++;
-//            tempXLoc +=fWidth;
-//        	
+
+        for(GamePiece gp: gamePieces) {
+        	int furthestGPLoc = 0;
+        	if(gp.getX() > furthestGPLoc) {
+        		furthestGPLoc = gp.getX();
+        		furthestGP = gp;
+        		
+        	}
+        }
+        
+//        
+//        for(GamePiece gp: gamePieces) {
+//        	System.out.println("gp loc: " + gp.getX());
 //        }
         
+        
+
+        
+        System.out.println("hi, furthest gamepiece loc: " + furthestGP);
       
     }
     public void clearCurrentGP(){
@@ -215,11 +241,11 @@ public class Model {
 
     public void eat(Food f) {
         player.setScore(player.getScore() + f.getFoodValue());
-        if(player.getHealth() > 95){
+        if(player.getHealth() > 90){
             player.setHealth(100);
         }
         else{
-            player.setHealth( player.getHealth() + 5);
+            player.setHealth( player.getHealth() + 10);
         }
     }
 

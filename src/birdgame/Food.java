@@ -16,14 +16,21 @@ public class Food extends GamePiece {
     private int foodValue;
     private int fType;
     
-    public Food(int x, int y, Type foodType){
+    public Food(int x, int y, Sprite foodType){
         setX(x);
         setY(y);
-        setXIncr(10);
+        setXIncr(25);
     	setYIncr(0);
     	setWidth(165);
     	setHeight(165);
-    	setType(foodType);
+    	setSprite(foodType);
+        setPicNum(0);
+//        if(foodType.equals(Type.BUNNY) || foodType.equals(Type.FISH) || foodType.equals(Type.SNAKE)){
+//            setPicNum(4);
+//        }
+//        else{
+//            setPicNum(2);
+//        }
     	setFoodValue(10);
     	setOffsets(); //MIGHT NOT WORK
     }

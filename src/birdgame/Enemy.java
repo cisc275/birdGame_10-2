@@ -14,14 +14,24 @@ package birdgame;
 public class Enemy extends GamePiece {
 
     private int damage;
-    public Enemy(int x, int y, Type enemyType){
+    public Enemy(int x, int y, Sprite enemyType){
         setX(x);
         setY(y);
-        setXIncr(10);
+        setXIncr(25);
     	setYIncr(0);
     	setWidth(165);
     	setHeight(165);
-    	setType(enemyType);
+    	setSprite(enemyType);
+        setPicNum(0);
+//        if(enemyType.equals(Type.EAGLE)){
+//            setPicNum(6);
+//        }
+//        else if(enemyType.equals(Type.PLANE)){
+//            setPicNum(1);
+//        }
+//        else{
+//            setPicNum(4);
+//        }
     	setDamage(20);
     	setOffsets(); //MIGHT NOT WORK
 
