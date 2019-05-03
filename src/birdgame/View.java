@@ -345,9 +345,9 @@ public class View extends JPanel {
     	//harrierImg = new ImageIcon("NorthernHarrier.jpg");
     	frame2 = new JFrame();
         osprey = new JButton("Play as Osprey");
-        osprey.setFont(new Font("Agency FB", Font.BOLD, 45));
+        osprey.setFont(new Font("Agency FB", Font.BOLD, frameWidth/55));
         harrier = new JButton("Play as Northern Harrier");
-        harrier.setFont(new Font("Agency FB", Font.BOLD, 45));
+        harrier.setFont(new Font("Agency FB", Font.BOLD, frameWidth/65));
     	osprey.setBounds(frameWidth/10,(frameHeight*4)/5,frameWidth/4,frameHeight/10);
     	harrier.setBounds((frameWidth*6)/10,frameHeight/3,frameWidth/4,frameHeight/10);
 //    	ospreyPic = new JLabel();
