@@ -197,7 +197,7 @@ public class Model {
         	int furthestGPLoc = 0;
         	if(gp.getX() > furthestGPLoc) {
         		furthestGPLoc = gp.getX();
-        		furthestGP = gp;
+        		setFurthestGP(gp);
         		
         	}
         }
@@ -379,6 +379,8 @@ public class Model {
 		this.progress = h;
 	}
     
-	
+	public void setFurthestGP(GamePiece gP) {
+		this.furthestGP = gP;
+	}
 
 }
