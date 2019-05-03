@@ -254,7 +254,20 @@ public class ProjectTest {
 		m.handleTicks();
 		assert m.getPlayer().getScore() == 90;
 	}
-		
+	@Test
+	public void whenPlayerCollidesWithAnGamePieceObstacleHitIsNotCalled() {
+		Model m = new Model(1,1,1,1);
+		Type t = Type.REDFOX;
+		GamePiece gP = new GamePiece();
+		gP.setX(1);
+		gP.setY(1);
+		m.getGamePieces().add(gP);
+		m.getPlayer().setX(1);
+		m.getPlayer().setY(1);
+		m.getPlayer().setScore(100);
+		m.handleTicks();
+		assert m.getPlayer().getScore() == 100;
+	}	
 		//getProgress()
 	@Test
 	public void getProgressOf0ReturnsProgressOf0() {
@@ -278,7 +291,8 @@ public class ProjectTest {
 		Type t = Type.FISH;
 		Food f = new Food(1,1,t);
 		m.eat(f);
-		assert p.getHealth() == 6;
+		System.out.println(p.getHealth());
+		assert p.getHealth() == 11;
 	}
 	@Test
 	public void playerEatingIncreasesHealthAbove95to100() {
