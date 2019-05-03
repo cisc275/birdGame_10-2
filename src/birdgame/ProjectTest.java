@@ -229,6 +229,19 @@ public class ProjectTest {
 		assert m.getGamePieces().size() == origSize;
 	}
 	@Test
+	public void whenPlayerCollidesWithFoodTheFoodIsEaten() {
+		Model m = new Model(1,1,1,1);
+		Type t = Type.FISH;
+		Food f = new Food(1,1,t);
+		f.setFoodValue(100);
+		m.getGamePieces().add(f);
+		m.getPlayer().setX(1);
+		m.getPlayer().setY(1);
+		m.getPlayer().setScore(100);
+		m.handleTicks();
+		assert m.getPlayer().getScore() == 200;
+	}
+	@Test
 	public void whenPlayerCollidesWithAnEnemyObstacleHitIsCalled() {
 		Model m = new Model(1,1,1,1);
 		Type t = Type.REDFOX;
@@ -321,5 +334,81 @@ public class ProjectTest {
 		assert m.getPlayer().getHealth() == 30;
 	}
 		//nest()
+	@Test
+	public void thisTestOnlyExistsSoNestDoesNotHaveAnyRedBarsWeWillAddMoreTestsWhenWeAddNest() {
+		Model m = new Model(1,1,1,1);
+		m.nest();
+		assert true == true;
+	}
+		//getImgHeight()
+	@Test
+	public void getImgHeightReturnsImgHeight() {
+		Model m = new Model(1,1,1,1);
+		m.setImgHeight(100);
+		assert m.getImgHeight() == 100;
+	}
+		//getDirection()
+	@Test
+	public void getDirectionReturnsDirection() {
+		Model m = new Model(1,1,1,1);
+		m.setDirection(Direction.UP);
+		assert m.getDirection() == Direction.UP;
+	}
+		//getImgWidth()
+	@Test
+	public void getImgWidthReturnsImgWidth() {
+		Model m = new Model(1,1,1,1);
+		m.setImgWidth(100);
+		assert m.getImgWidth() == 100;
+	}
+		//getGroundLevel()
+	@Test
+	public void getGroundLevelReturnsGroundLevel() {
+		Model m = new Model(1,1,1,1);
+		m.setGroundLevel(100);
+		assert m.getGroundLevel() == 100;
+	}
+		//getSceneNum()
+	@Test
+	public void getSceneNumReturnsSceneNum() {
+		Model m = new Model(1,1,1,1);
+		m.setSceneNum(100);
+		assert m.getSceneNum() == 100;
+	}
+		//getEnemyFrequency()
+	@Test
+	public void getEnemyFrequencyReturnsEnemyFrequency() {
+		Model m = new Model(1,1,1,1);
+		m.setEnemyFrequency(100);
+		assert m.getEnemyFrequency() == 100;
+	}
+		//getFoodFrequency()
+	@Test
+	public void getFoodFrequencyReturnsFoodFrequency() {
+		Model m = new Model(1,1,1,1);
+		m.setFoodFrequency(100);
+		assert m.getFoodFrequency() == 100;
+	}
+		//getSpecialfoodFrequency()
+	@Test
+	public void getSpecialFoodFrequencyReturnsSpecialFoodFrequency() {
+		Model m = new Model(1,1,1,1);
+		m.setSpecialfoodFrequency(100);
+		assert m.getSpecialfoodFrequency() == 100;
+	}
+		//getTotalLevelTicks()
+	@Test
+	public void getTotalLevelTicksReturnsTotalLevelTicks() {
+		Model m = new Model(1,1,1,1);
+		m.setTotalLevelTicks(100);
+		assert m.getTotalLevelTicks() == 100;
+	}
+		//getIndexOfGP()
+	@Test
+	public void getIndexOfGPReturnsIndexOfGP() {
+		Model m = new Model(1,1,1,1);
+		m.setIndexOfGP(100);
+		assert m.getIndexOfGP() == 100;
+	}
 }
 

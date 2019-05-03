@@ -119,6 +119,11 @@ public class View extends JPanel {
     static boolean isOsprey;
     static boolean isDone;
     
+    static JFrame levelStartFrame;
+    static JPanel levelStartPanel;
+    static JLabel levelStartLabel;
+    static ImageIcon levelDisplayStart;
+    
 
     /**
      * constructor will initialize JFrame and other components that will be on it.
@@ -429,6 +434,39 @@ public class View extends JPanel {
         frame3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
     	frame3.setVisible(true);
     	
+    }
+    
+    public static void displayLevelStartScreen(){
+        levelStartFrame = new JFrame();
+        levelStartPanel = new JPanel();
+        levelStartLabel = new JLabel();
+        JButton level1 = new JButton(new ImageIcon("images/BirdImages/Level1Icon.png"));
+        level1.setBounds(0,0,frameWidth/10,frameWidth/10);
+        levelDisplayStart = new ImageIcon("images/BirdImages/OspreyLevelScreen0.png");
+        //add JLabel to JPanel
+        levelStartLabel.setIcon(new ImageIcon(levelDisplayStart.getImage().getScaledInstance(frameWidth,frameHeight, Image.SCALE_SMOOTH)));
+        levelStartLabel.setBounds(0,0,frameWidth,frameHeight);
+        levelStartPanel.setLayout(null);
+        level1.addActionListener(ae -> {
+            levelStartFrame.dispose();
+            Model.level = 1;
+            Main.started = true;
+        });
+        levelStartPanel.add(levelStartLabel);
+        
+        //add JPanel to JFrame
+        levelStartFrame.add(levelStartPanel);
+        levelStartFrame.setSize(frameWidth, frameHeight);
+        levelStartFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        levelStartFrame.setUndecorated(true);
+        levelStartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+    	levelStartFrame.setVisible(true);
+    }
+    public static void displayLevel1Transition(){
+        
+    }
+    public static void displayLevel2Transition(){
+        
     }
     
     public int getWidth(){
