@@ -15,7 +15,7 @@ import java.util.Iterator;
  * @author crnis
  */
 public class Model {
-    static int bird; //0 is osprey, 1 is harrier
+    static Sprite bird; //0 is osprey, 1 is harrier
     static int level;
     private int fWidth;
     private int fHeight;
@@ -142,7 +142,7 @@ public class Model {
         int tempXLoc = 500;
         int landHeight = 96;
         boolean flag = true;
-        if(bird == 1){ //northern harrier
+        if(bird.equals(Sprite.NORTHERN_HARRIER)){ //northern harrier
             while(numGamePieces < 5){
             	int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
             	int topHalfY = ((int) (Math.random()*(fHeight/2)));

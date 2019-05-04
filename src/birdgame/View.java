@@ -214,7 +214,7 @@ public class View extends JPanel {
    		ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
    		ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
    		ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
-   		if(Controller.bird ==0) {
+   		if(Model.bird.equals(Sprite.OSPREY)) {
    			imgback = imgOsprey.getImage();
    			imgback2 = imgOsprey2.getImage();
    		}
@@ -371,15 +371,14 @@ public class View extends JPanel {
         pane1.setLayout(null);
         osprey.addActionListener(ae -> {
             frame2.dispose();
-            Controller.bird = 0;
-            Model.bird = 0;
+            Model.bird = Sprite.OSPREY;
             Main.started = true;
         });
         harrier.addActionListener(ae -> {
             frame2.dispose();
-            Controller.bird = 1;
-            Model.bird = 1;
+           Model.bird = Sprite.NORTHERN_HARRIER;
             Main.started = true;
+            
         });
         pane1.add(osprey);
         pane1.add(harrier);

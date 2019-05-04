@@ -115,28 +115,36 @@ public class GamePiece {
     
     public void setOffsets() {
 		if (getSprite().equals(Sprite.REDFOX)) {
-			//TODO	
+			xOffset = 50;
+			yOffset = 50;
 		}
 		if (getSprite().equals(Sprite.EAGLE)) {
-			//TODO
+			xOffset = 30;
+			yOffset = 30;
 		}
 		if(getSprite().equals(Sprite.PLANE)) {
-			//TODO
+			xOffset = 40;
+			yOffset = 20;
 		}
 		if (getSprite().equals(Sprite.BUNNY)) {
-			//TODO
+			xOffset = 20;
+			yOffset = 20;
 		}
 		if (getSprite().equals(Sprite.MOUSE)) {
-			//TODO
+			xOffset = 10;
+			yOffset = 5;
 		}
 		if (getSprite().equals(Sprite.FISH)) {
-			//TODO
+			yOffset = 20;
+			xOffset = 10;
 		}
 		if (getSprite().equals(Sprite.RACCOON)) {
-			//TODO
+			xOffset = 30;
+			yOffset = 30;
 		}
 		if (getSprite().equals(Sprite.SNAKE)) {
-			//TODO
+			xOffset = 30;
+			yOffset = 30;
 		}
 		
 	}

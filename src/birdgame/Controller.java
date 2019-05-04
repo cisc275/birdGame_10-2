@@ -16,7 +16,7 @@ public class Controller implements KeyListener{
 
     private Model model;
     private View view;
-    static int bird;
+   
 
     public Controller() {
         view = new View();
