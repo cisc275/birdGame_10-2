@@ -17,81 +17,54 @@ import java.util.List;
  * @author crnis
  */
 public class SpecialFood extends Food {
-
+	public static HashMap<String,HashMap<String,String[]>> factsAndQuestionsHarrier = new HashMap<>();
+	public static HashMap<String,HashMap<String,String[]>> factsAndQuestionsOsprey = new HashMap<>();
     public SpecialFood(int x, int y, Sprite foodType, int currentBird) {
 		super(x, y, foodType);
-		//DO I NEED CURRENT BIRD? 
+		
 	}
+    public static void generateFactsAndQuestions() {
+    	HashMap<String,String[]> QandAsHarrier1 = new HashMap<>();
+    	String[] harrierFood = {"rodents", "fish", "eagles","plants", "rodents"};
+    	QandAsHarrier1.put("What do Northern Harriers eat?",harrierFood);
+    	factsAndQuestionsHarrier.put("Northern Harriers Like to eat rodents like mice and bunnies", QandAsHarrier1);
+    	
+    	HashMap<String,String[]> QandAsHarrier2 = new HashMap<>();
+    	String[] harrierMigrate = {"They migrate to South America","They migrate to California", "They don't migrate", "They migrate to canada", "They don't migrate"};
+    	QandAsHarrier2.put("Where do Harriers migrate", harrierMigrate);
+    	factsAndQuestionsHarrier.put("Northern Harriers are non-migratory birds",QandAsHarrier2);
+    	
+    	HashMap<String,String[]> QandAsHarrier3 = new HashMap<>();
+    	String[] harrierPred = {"Foxes", "Snakes","Cats","Humans","Foxes"};
+    	QandAsHarrier3.put("What is a major predator of Northern Harriers", harrierPred);
+    	factsAndQuestionsHarrier.put("Foxes are a common predator on Northern Harriers", QandAsHarrier3);
+    	
+    	HashMap<String,String[]> QandAsOsprey1 = new HashMap<>();
+    	
+    	HashMap<String,String[]> QandAsOsprey2 = new HashMap<>();
+    	HashMap<String,String[]> QandAsOsprey3 = new HashMap<>();
+
+
+
+    	
+    
+    	
+    }
 
 	
-    static HashMap<String, String[]> QuizOsprey;
-    static HashMap<String, String[]> QuizHarrier;
-    //Answer to question will always be repeated as the last option in the answers array
-
-    /**
-     * checkAnswer() will check if the player's answer is in line with the answerKey
-     * @return true if player chooses right answer and false if player chooses
-     * wrong answer
-     */
-
-    public static boolean checkAnswer(String[] answers, String userAns) {
-    	String rightAns = answers[answers.length -1];
-    	return rightAns.equals(userAns);
-    }
     
-    public String[] getAnswers(ArrayList<String[]>  QandAs) {
-    	String[] answers = Arrays.copyOfRange(QandAs.get(1), 0, QandAs.get(1).length -1);
-    	return answers;
-    }
-    public static void initializeQandAs() {
-    	QuizOsprey = new HashMap<>();
-    	QuizHarrier = new HashMap<>();
+    
+    
+   
+  
     	
-    	String[] ansOsp = {"1","4","5","6","4"};
-    	String[] ansHar = {"1","4","5","7","5"};
-
-    	QuizOsprey.put("Whats 2 + 2", ansOsp);
-    	QuizHarrier.put("Whats 4 + 1", ansHar);
+    	
     	
 
 
    }
 
-    /**
-     * generateQuestion() will randomly select a question from the answerOptions
-     * HashMap to ask the player.
-     */
+  
+   
 
-    public ArrayList<String[]> getQuestion(int birdType) {
-    	if (birdType == 0) {
-    		List<String> questionList = new ArrayList<String>(QuizOsprey.keySet());
-    		int randomIndex = new Random().nextInt(questionList.size());
-    		String question = questionList.get(randomIndex);
-    		String[] questionArr = new String[0];
-    		questionArr[0] = question;
-    		ArrayList<String[]> returnArray = new ArrayList<>();
-    		 returnArray.add(questionArr);
-    		returnArray.add(QuizOsprey.get(question));
-    		QuizOsprey.remove(question);
-    		return returnArray;
-    	}
-    	if (birdType == 1) {
-    		List<String> questionList = new ArrayList<String>(QuizHarrier.keySet());
-    		System.out.println(questionList); //Question is normal here
-    		int randomIndex = new Random().nextInt(questionList.size());
-    		String question = questionList.get(randomIndex);
-    		String[] questionArr = {question};
-    		System.out.println(questionArr);
-    		ArrayList<String[]> returnArray = new ArrayList<>();
-    		 returnArray.add(questionArr);
-    		returnArray.add(QuizHarrier.get(question));
-    		System.out.println(QuizHarrier.get(question));
-    		QuizHarrier.remove(question);
-    		return returnArray;
-    	}
-    	else return null;
-    	
-    }
-
-}
  
