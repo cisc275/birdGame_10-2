@@ -35,6 +35,7 @@ public class Main {
         View.frameOsprey.addKeyListener(c1);
         View.displayStartScreen();
         
+        
     	while(test) {
     		if(started==true) {
     			test=false;

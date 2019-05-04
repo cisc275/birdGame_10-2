@@ -134,7 +134,7 @@ public class Model {
 
     //randomize the location of the GamePieces (1 every screen)
     public void spawnGamePieces() {
-    	SpecialFood.initializeQandAs();
+    	
         int numGamePieces = 0;
         //background0:
             //land: 0-432px, 1776-2640px, 
