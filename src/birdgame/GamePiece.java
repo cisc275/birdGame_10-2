@@ -24,6 +24,7 @@ public class GamePiece {
     private int xOffset;
     private int yOffset;
     private int picNum;
+    private boolean isSpecialFood;
 
     /**
      * the move() method will call upon the methods in the Model class to update 
@@ -155,4 +156,10 @@ public class GamePiece {
     public int getYOffset() {
     	return yOffset;
     }
+    public boolean isSpecialFood() {
+		return isSpecialFood;
+	}
+    public void setSpecialFood(boolean bool) {
+		isSpecialFood = bool;
+	}
 }

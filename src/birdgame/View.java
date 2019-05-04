@@ -248,9 +248,31 @@ public class View extends JPanel {
         paintBackground(g);
         picNum = (picNum + 1) % frameCount;
        // g.drawSprite(bunny[1], 500,500, this);
-        g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);;
-        for(GamePiece gp : currentViewableGPs) {         
-            if(gp.isFood()){
+        g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
+        for(GamePiece gp : currentViewableGPs) {   
+        	if (gp.isSpecialFood()) {
+        		if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
+                    //micePicNum = (micePicNum + 1) % miceFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% miceFrameCount);
+                    g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                }
+                else if(gp.getSprite().equals(Sprite.BUNNY)){ //bunny
+                    //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% bunnyFrameCount);
+                    g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                }
+                else if(gp.getSprite().equals(Sprite.SNAKE)){ //snake
+                    //snakePicNum = (snakePicNum + 1) % snakeFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% snakeFrameCount);
+                    g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                }
+                else{// fish
+                    //fishPicNum = (fishPicNum + 1) % fishFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% fishFrameCount);
+                    g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                } 
+        	}
+        	else if(gp.isFood()){
                 if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
                     //micePicNum = (micePicNum + 1) % miceFrameCount;
                     gp.setPicNum((gp.getPicNum() + 1)% miceFrameCount);

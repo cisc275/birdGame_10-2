@@ -14,9 +14,8 @@ package birdgame;
 public class Food extends GamePiece {
 	
     private int foodValue;
-    protected boolean isSpecialFood;
     public Food(int x, int y, Sprite foodType){
-    	isSpecialFood = false;
+    	setSpecialFood(false);
         setX(x);
         setY(y);
         setXIncr(25);
@@ -36,11 +35,7 @@ public class Food extends GamePiece {
 	public void setFoodValue(int foodValue) {
 		this.foodValue = foodValue;
 	}
-	public boolean isSpecialFood() {
-		return isSpecialFood;
-	}
-	public void setSpecialFood(boolean bool) {
-		isSpecialFood = bool;
-	}
+	
+	
 }
 

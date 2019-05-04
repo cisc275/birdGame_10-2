@@ -67,6 +67,7 @@ public class SpecialFood extends Food {
 
     public void setFact(Sprite birdType) {
     	if (birdType.equals(Sprite.OSPREY)) {
+    		
     		int randomIndex = new Random().nextInt(avaliableFactsOsprey.size());
     		fact = avaliableFactsOsprey.get(randomIndex);
     		avaliableFactsOsprey.remove(randomIndex);
@@ -74,8 +75,9 @@ public class SpecialFood extends Food {
     	}
     	else {
     		int randomIndex = new Random().nextInt(avaliableFactsHarrier.size());
+    		System.out.println(avaliableFactsOsprey.size());
     		fact = avaliableFactsHarrier.get(randomIndex);
-    		avaliableFactsHarrier.remove(randomIndex);
+    		//avaliableFactsHarrier.remove(randomIndex);
     		//Remove might be bugged
     	}
     	
