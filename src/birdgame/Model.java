@@ -15,17 +15,13 @@ import java.util.Iterator;
  * @author crnis
  */
 public class Model {
-    static Sprite bird; //0 is osprey, 1 is harrier
+    static Sprite bird; 
     static int level;
     private int fWidth;
     private int fHeight;
     private int imgHeight;
     private int imgWidth;
     private int groundLevel;
-  //  int xLocation;
-  //  int yLocation;  These are implemented in individual gamepiece classes
-  //  int xincr;
-  //  int yincr;
     private int sceneNum;
     private ArrayList<GamePiece> gamePieces = new ArrayList<>();
     private int progress;
@@ -134,7 +130,6 @@ public class Model {
 
     //randomize the location of the GamePieces (1 every screen)
     public void spawnGamePieces() {
-    	
         int numGamePieces = 0;
         //background0:
             //land: 0-432px, 1776-2640px, 

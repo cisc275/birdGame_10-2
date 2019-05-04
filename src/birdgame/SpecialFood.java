@@ -17,10 +17,16 @@ import java.util.List;
  * @author crnis
  */
 public class SpecialFood extends Food {
+	//All of these static fields are defined in the generateFactsAndQuestions method!
 	public static HashMap<String,HashMap<String,String[]>> factsAndQuestionsHarrier = new HashMap<>();
 	public static HashMap<String,HashMap<String,String[]>> factsAndQuestionsOsprey = new HashMap<>();
-    public SpecialFood(int x, int y, Sprite foodType, int currentBird) {
+	public static ArrayList<String> avaliableFactsHarrier;
+	public static ArrayList<String> avaliableFactsOsprey;
+	private String fact;
+    public SpecialFood(int x, int y, Sprite foodType) {
 		super(x, y, foodType);
+		setSpecialFood(true);
+		setFact(Model.bird);
 		
 	}
     public static void generateFactsAndQuestions() {
@@ -40,18 +46,43 @@ public class SpecialFood extends Food {
     	factsAndQuestionsHarrier.put("Foxes are a common predator on Northern Harriers", QandAsHarrier3);
     	
     	HashMap<String,String[]> QandAsOsprey1 = new HashMap<>();
+    	String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Sankes and Fish"};
+    	QandAsOsprey1.put("What do Ospreys eat?", OspreyFood);
+    	factsAndQuestionsOsprey.put("Ospreys like to eat Snakes and Fish", QandAsOsprey1);
     	
     	HashMap<String,String[]> QandAsOsprey2 = new HashMap<>();
+    	String[] OspreyMigrate = {"They migrate to South America","They migrate to California", "They don't migrate", "They migrate to canada", "They migrate to South America"};
+    	QandAsOsprey2.put("Where do Ospreys migrate", OspreyMigrate);
+    	factsAndQuestionsOsprey.put("Ospreys migrate to South America for the winter", QandAsOsprey2);
+    	
     	HashMap<String,String[]> QandAsOsprey3 = new HashMap<>();
+    	String[] OspreyPred = {"Foxes", "Snakes", "Eagles", "Eagles"};
+    	QandAsHarrier3.put("What is a major predator of Ospreys", OspreyPred);
+    	factsAndQuestionsHarrier.put("Eagles are a major predator of Ospreys", QandAsOsprey3);
 
 
-
-    	
-    
-    	
+    	avaliableFactsOsprey = new ArrayList<String>(factsAndQuestionsOsprey.keySet());
+    	avaliableFactsHarrier = new ArrayList<String>(factsAndQuestionsOsprey.keySet());
     }
 
-	
+    public void setFact(Sprite birdType) {
+    	if (birdType.equals(Sprite.OSPREY)) {
+    		int randomIndex = new Random().nextInt(avaliableFactsOsprey.size());
+    		fact = avaliableFactsOsprey.get(randomIndex);
+    		avaliableFactsOsprey.remove(randomIndex);
+    		//Remove might be bugged
+    	}
+    	else {
+    		int randomIndex = new Random().nextInt(avaliableFactsHarrier.size());
+    		fact = avaliableFactsHarrier.get(randomIndex);
+    		avaliableFactsHarrier.remove(randomIndex);
+    		//Remove might be bugged
+    	}
+    	
+    }
+    public String getFact() {
+		return fact;
+	}
     
     
     
