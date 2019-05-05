@@ -219,6 +219,7 @@ public class View extends JPanel {
    		ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
    		ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
    		ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
+   		System.out.println(Model.getBird());
    		if(Model.getBird().equals(Sprite.OSPREY)) {
    			imgback = imgOsprey.getImage();
    			imgback2 = imgOsprey2.getImage();

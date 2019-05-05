@@ -15,7 +15,7 @@ import java.util.Iterator;
  * @author crnis
  */
 public class Model {
-    private static Sprite bird; 
+    private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
     static int level;
     private int fWidth;
     private int fHeight;
@@ -291,7 +291,7 @@ public class Model {
              player.setHealth( player.getHealth() + 10);
          }
      }
-    }
+    
 
     /**
      * obstacleHit() will handle the event of the player dying by resetting everything 
