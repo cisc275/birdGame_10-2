@@ -90,6 +90,7 @@ public class View extends JPanel {
     BufferedImage[] miniMap2;
     BufferedImage[] miniMap3;
     BufferedImage[] miniMap4;
+    Image thoughtBubble;
     static JFrame frameOsprey;
     static JFrame frameHarrier;
     static JFrame frame2;
@@ -184,7 +185,11 @@ public class View extends JPanel {
         for(int i = 0; i < planeFrameCount; i++){
             plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
         }
+        thoughtBubble = createImage("images/bub.png").getScaledInstance
+        		(300, 300, Image.SCALE_SMOOTH);
+  
     }
+    
 
     /**
      * createImage() will create a BufferedImage that will be loaded into an array
@@ -245,10 +250,12 @@ public class View extends JPanel {
     
     
     public void paint(Graphics g) {
+    	
         paintBackground(g);
         picNum = (picNum + 1) % frameCount;
-       // g.drawSprite(bunny[1], 500,500, this);
+      
         g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
+        g.drawImage(thoughtBubble,playerXLoc + 100,playerYLoc,this);
         for(GamePiece gp : currentViewableGPs) {   
         	if (gp.isSpecialFood()) {
         		if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
