@@ -214,7 +214,7 @@ public class View extends JPanel {
    		ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
    		ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
    		ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
-   		if(Controller.bird ==0) {
+   		if(Model.bird.equals(Sprite.OSPREY)) {
    			imgback = imgOsprey.getImage();
    			imgback2 = imgOsprey2.getImage();
    		}
@@ -248,9 +248,31 @@ public class View extends JPanel {
         paintBackground(g);
         picNum = (picNum + 1) % frameCount;
        // g.drawSprite(bunny[1], 500,500, this);
-        g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);;
-        for(GamePiece gp : currentViewableGPs) {         
-            if(gp.isFood()){
+        g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
+        for(GamePiece gp : currentViewableGPs) {   
+        	if (gp.isSpecialFood()) {
+        		if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
+                    //micePicNum = (micePicNum + 1) % miceFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% miceFrameCount);
+                    g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                }
+                else if(gp.getSprite().equals(Sprite.BUNNY)){ //bunny
+                    //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% bunnyFrameCount);
+                    g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                }
+                else if(gp.getSprite().equals(Sprite.SNAKE)){ //snake
+                    //snakePicNum = (snakePicNum + 1) % snakeFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% snakeFrameCount);
+                    g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                }
+                else{// fish
+                    //fishPicNum = (fishPicNum + 1) % fishFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% fishFrameCount);
+                    g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                } 
+        	}
+        	else if(gp.isFood()){
                 if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
                     //micePicNum = (micePicNum + 1) % miceFrameCount;
                     gp.setPicNum((gp.getPicNum() + 1)% miceFrameCount);
@@ -371,8 +393,7 @@ public class View extends JPanel {
         pane1.setLayout(null);
         osprey.addActionListener(ae -> {
             frame2.dispose();
-            Controller.bird = 0;
-            Model.bird = 0;
+            Model.bird = Sprite.OSPREY;
             displayLevelStartScreen();
             try{
                 //displayLevelStartScreen();
@@ -385,9 +406,9 @@ public class View extends JPanel {
         });
         harrier.addActionListener(ae -> {
             frame2.dispose();
-            Controller.bird = 1;
-            Model.bird = 1;
+           Model.bird = Sprite.NORTHERN_HARRIER;
             Main.started = true;
+            
         });
         pane1.add(osprey);
         pane1.add(harrier);

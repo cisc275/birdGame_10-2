@@ -14,6 +14,7 @@ public class Player extends GamePiece {
         private static int score;
         private int xOffset;
         private int yOffset;
+        private Sprite bird;
 
 	Player(){
 	setYIncr(20);
@@ -114,5 +115,4 @@ public class Player extends GamePiece {
 	public int getYOffset() {
 		return yOffset;
 	}
-
 }

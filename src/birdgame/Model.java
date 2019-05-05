@@ -15,17 +15,13 @@ import java.util.Iterator;
  * @author crnis
  */
 public class Model {
-    static int bird; //0 is osprey, 1 is harrier
+    static Sprite bird = Sprite.OSPREY; //default to avoid nullpointer
     static int level;
     private int fWidth;
     private int fHeight;
     private int imgHeight;
     private int imgWidth;
     private int groundLevel;
-  //  int xLocation;
-  //  int yLocation;  These are implemented in individual gamepiece classes
-  //  int xincr;
-  //  int yincr;
     private int sceneNum;
     private ArrayList<GamePiece> gamePieces = new ArrayList<>();
     private int progress;
@@ -58,7 +54,6 @@ public class Model {
     	setGroundLevel(fHeight - imgHeight);
         setIndexOfGP(0);
         indexOfGP = 0;
-      //  bird = newBird;
     }
 
     /**
@@ -96,7 +91,10 @@ public class Model {
     	Iterator<GamePiece> it = gamePieces.iterator();
     	while(it.hasNext()) {
     		GamePiece g = (GamePiece) it.next();
-            if(player.checkCollision(g)){            	
+            if(player.checkCollision(g)){ 
+            	if (g.isSpecialFood()) {
+            		eatSpecial((SpecialFood) g);
+            	}
             	if(g.isFood()) {
             		eat((Food)g);
             	}
@@ -115,7 +113,8 @@ public class Model {
         }
         
         if(player.getX() > (fWidth - imgWidth)) {
-        	System.out.println("youre off the screen");
+        	//TODO
+        	//MAKE IT SO TRANSITIONS TO NEXT LEVEL SCREEN
         }
     }
     
@@ -134,6 +133,7 @@ public class Model {
 
     //randomize the location of the GamePieces (1 every screen)
     public void spawnGamePieces() {
+    	SpecialFood.generateFactsAndQuestions();
         int numGamePieces = 0;
         //background0:
             //land: 0-432px, 1776-2640px, 
@@ -141,14 +141,21 @@ public class Model {
         int tempXLoc = 500;
         int landHeight = 96;
         boolean flag = true;
-        if(bird == 1){ //northern harrier
-            while(numGamePieces < 5){
+        if(bird.equals(Sprite.NORTHERN_HARRIER)){ //northern harrier
+            while(numGamePieces < 40){
             	int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
             	int topHalfY = ((int) (Math.random()*(fHeight/2)));
             	
                 if(Math.random() < .5){ //food
                     if(Math.random() < .5){//bunny
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.BUNNY));
+                    	if (Math.random() < .6) {
+                    		gamePieces.add(new SpecialFood(tempXLoc, (int) (Math.random()*groundLevel), Sprite.BUNNY));
+                    		System.out.println("SpecialFood spawned");
+                    	}
+                    	else {
+                    		gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.BUNNY));
+                    	}
+                        
                     }
                     else{//mouse
                         gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.MOUSE));
@@ -167,7 +174,7 @@ public class Model {
             }
         }
         else{
-            while(numGamePieces < 5){
+            while(numGamePieces < 40){
             	int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
             	int topHalfY = ((int) (Math.random()*(fHeight/2)));
             	
@@ -247,6 +254,9 @@ public class Model {
         else{
             player.setHealth( player.getHealth() + 10);
         }
+    }
+    public void eatSpecial(SpecialFood sf) {
+    	System.out.println("TODO, specialFood eaten");
     }
 
     /**
