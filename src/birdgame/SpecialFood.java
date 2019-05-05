@@ -27,6 +27,7 @@ public class SpecialFood extends Food {
 		super(x, y, foodType);
 		setSpecialFood(true);
 		setFact(Model.bird);
+		setXIncr(45);
 		
 	}
     public static void generateFactsAndQuestions() {
@@ -70,7 +71,7 @@ public class SpecialFood extends Food {
     		
     		int randomIndex = new Random().nextInt(avaliableFactsOsprey.size());
     		fact = avaliableFactsOsprey.get(randomIndex);
-    		avaliableFactsOsprey.remove(randomIndex);
+    		//avaliableFactsOsprey.remove(randomIndex);
     		//Remove might be bugged
     	}
     	else {
