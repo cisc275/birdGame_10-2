@@ -90,6 +90,7 @@ public class View extends JPanel {
     BufferedImage[] miniMap2;
     BufferedImage[] miniMap3;
     BufferedImage[] miniMap4;
+    Image thoughtBubble;
     static JFrame frameOsprey;
     static JFrame frameHarrier;
     static JFrame frame2;
@@ -184,8 +185,10 @@ public class View extends JPanel {
         for(int i = 0; i < planeFrameCount; i++){
             plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
         }
-        levelDisplayStart = new ImageIcon("images/BirdImages/OspreyLevelScreen0.png");
+        thoughtBubble = createImage("images/bub.png").getScaledInstance
+        		(300, 300, Image.SCALE_SMOOTH);
     }
+    
 
     /**
      * createImage() will create a BufferedImage that will be loaded into an array
@@ -215,7 +218,8 @@ public class View extends JPanel {
    		ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
    		ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
    		ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
-   		if(Model.bird.equals(Sprite.OSPREY)) {
+   		System.out.println(Model.getBird());
+   		if(Model.getBird().equals(Sprite.OSPREY)) {
    			imgback = imgOsprey.getImage();
    			imgback2 = imgOsprey2.getImage();
    		}
@@ -246,10 +250,12 @@ public class View extends JPanel {
     
     
     public void paint(Graphics g) {
+    	
         paintBackground(g);
         picNum = (picNum + 1) % frameCount;
-       // g.drawSprite(bunny[1], 500,500, this);
+      
         g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
+        g.drawImage(thoughtBubble,playerXLoc + 100,playerYLoc,this);
         for(GamePiece gp : currentViewableGPs) {   
         	if (gp.isSpecialFood()) {
         		if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
@@ -394,20 +400,17 @@ public class View extends JPanel {
         pane1.setLayout(null);
         osprey.addActionListener(ae -> {
             frame2.dispose();
-            Model.bird = Sprite.OSPREY;
+
+            Model.setBird(Sprite.OSPREY);
             displayLevelStartScreen();
-            try{
-                //displayLevelStartScreen();
-                Thread.sleep(5000);
-                //levelStartFrame.dispose();
-            } catch (InterruptedException e){
-                e.printStackTrace();
-            }
-            Main.started = true;
+            new Timer(5000, ae2 -> {
+        		levelStartFrame.dispose();
+        		Main.started = true;
+              }).start();
         });
         harrier.addActionListener(ae -> {
             frame2.dispose();
-           Model.bird = Sprite.NORTHERN_HARRIER;
+            Model.setBird(Sprite.NORTHERN_HARRIER);
             Main.started = true;
             
         });
@@ -470,7 +473,7 @@ public class View extends JPanel {
         levelStartFrame = new JFrame();
         levelStartPanel = new JPanel();
         levelStartLabel = new JLabel();
-        //levelDisplayStart = new ImageIcon("images/BirdImages/OspreyLevelScreen0.png");
+        levelDisplayStart = new ImageIcon("images/BirdImages/OspreyLevelScreen0.png");
         //add JLabel to JPanel
         levelStartLabel.setIcon(new ImageIcon(levelDisplayStart.getImage().getScaledInstance(frameWidth,frameHeight, Image.SCALE_SMOOTH)));
         levelStartLabel.setBounds(0,0,frameWidth,frameHeight);
