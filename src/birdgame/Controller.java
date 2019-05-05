@@ -69,4 +69,11 @@ public class Controller implements KeyListener{
         Model.setDirection(null);
     }
 
+    public View getView() {
+    	return view;
+    }
+    
+    public Model getModel() {
+    	return model;
+    }
 }
