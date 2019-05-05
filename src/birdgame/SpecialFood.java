@@ -28,6 +28,7 @@ public class SpecialFood extends Food {
 		setSpecialFood(true);
 		setFact(Model.getBird());
 		setXIncr(45);
+		setFoodValue(30);
 		
 	}
     public static void generateFactsAndQuestions() {

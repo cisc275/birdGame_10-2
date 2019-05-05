@@ -115,4 +115,5 @@ public class Player extends GamePiece {
 	public int getYOffset() {
 		return yOffset;
 	}
+	
 }
