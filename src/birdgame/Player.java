@@ -115,4 +115,8 @@ public class Player extends GamePiece {
 	public int getYOffset() {
 		return yOffset;
 	}
+	
+	public void reset() {
+		setHealth(100);
+	}
 }

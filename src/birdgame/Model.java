@@ -30,7 +30,7 @@ public class Model {
     private int specialfoodFrequency;
     private int totalLevelTicks;
     private static Direction direction;
-    private Player player;
+    private static Player player;
     //GamePiece currentGP;
     private int indexOfGP;
     private ArrayList<GamePiece> currentGPs = new ArrayList<>();
@@ -320,7 +320,7 @@ public class Model {
 		return imgHeight;
 	}
 	
-	public Player getPlayer() {
+	public static Player getPlayer() {
 		return player;
 	}
 	
