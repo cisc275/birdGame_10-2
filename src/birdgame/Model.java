@@ -283,6 +283,14 @@ public class Model {
     }
     public void eatSpecial(SpecialFood sf) {
     	System.out.println("TODO, specialFood eaten");
+    	 player.setScore(player.getScore() + sf.getFoodValue());
+         if(player.getHealth() > 90){
+             player.setHealth(100);
+         }
+         else{
+             player.setHealth( player.getHealth() + 10);
+         }
+     }
     }
 
     /**
