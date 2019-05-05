@@ -91,7 +91,7 @@ public class View extends JPanel {
     BufferedImage[] miniMap3;
     BufferedImage[] miniMap4;
     Image thoughtBubble;
-    static JFrame frameOsprey;
+    JFrame frameOsprey;
     static JFrame frameHarrier;
     static JFrame frame2;
     static JPanel pane1;
@@ -369,7 +369,7 @@ public class View extends JPanel {
      * can be recalled when the player dies or goes to the next bird.
      */
 
-    public static void displayStartScreen() {
+    public void displayStartScreen() {
     	natureImg = new ImageIcon("images/BirdImages/StartScreen.png");
     	//ospreyImg = new ImageIcon("osprey.jpg");
     	//harrierImg = new ImageIcon("NorthernHarrier.jpg");
@@ -403,6 +403,7 @@ public class View extends JPanel {
             frame2.dispose();
 
             Model.setBird(Sprite.OSPREY);
+            Main.birdCount++;
             displayLevelStartScreen();
             new Timer(5000, ae2 -> {
         		levelStartFrame.dispose();
@@ -412,7 +413,9 @@ public class View extends JPanel {
         harrier.addActionListener(ae -> {
             frame2.dispose();
             Model.setBird(Sprite.NORTHERN_HARRIER);
+            Main.birdCount++;
             Main.started = true;
+
             
         });
         pane1.add(osprey);
@@ -445,7 +448,7 @@ public class View extends JPanel {
      * has finished playing the game
      */
 
-    public static void displayEndScreen() {
+    public void displayEndScreen() {
     	frame3 = new JFrame();
     	naturePic = new JLabel();
     	naturePic.setIcon(new ImageIcon(natureImg.getImage().getScaledInstance(frameWidth,frameHeight, Image.SCALE_SMOOTH)));
