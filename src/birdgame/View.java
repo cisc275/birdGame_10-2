@@ -374,13 +374,13 @@ public class View extends JPanel {
             Controller.bird = 0;
             Model.bird = 0;
             displayLevelStartScreen();
-//            try{
-//                displayLevelStartScreen();
-//                Thread.sleep(5000);
-//                levelStartFrame.dispose();
-//            } catch (InterruptedException e){
-//                e.printStackTrace();
-//            }
+            try{
+                //displayLevelStartScreen();
+                Thread.sleep(5000);
+                //levelStartFrame.dispose();
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
             Main.started = true;
         });
         harrier.addActionListener(ae -> {
