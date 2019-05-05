@@ -400,11 +400,12 @@ public class View extends JPanel {
         pane1 = new JPanel();
         pane1.setLayout(null);
         osprey.addActionListener(ae -> {
+        	displayLevelStartScreen();
             frame2.dispose();
 
             Model.setBird(Sprite.OSPREY);
             Main.birdCount++;
-            displayLevelStartScreen();
+            
             new Timer(5000, ae2 -> {
         		levelStartFrame.dispose();
         		Main.started = true;
