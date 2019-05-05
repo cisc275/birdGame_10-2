@@ -395,8 +395,11 @@ public class View extends JPanel {
             frame2.dispose();
 
             Model.bird = Sprite.OSPREY;
-
-            Main.started = true;
+            displayLevelStartScreen();
+            new Timer(5000, ae2 -> {
+        		levelStartFrame.dispose();
+        		Main.started = true;
+              }).start();
         });
         harrier.addActionListener(ae -> {
             frame2.dispose();
