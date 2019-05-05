@@ -219,7 +219,7 @@ public class View extends JPanel {
    		ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
    		ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
    		ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
-   		if(Model.bird.equals(Sprite.OSPREY)) {
+   		if(Model.getBird().equals(Sprite.OSPREY)) {
    			imgback = imgOsprey.getImage();
    			imgback2 = imgOsprey2.getImage();
    		}
@@ -401,7 +401,7 @@ public class View extends JPanel {
         osprey.addActionListener(ae -> {
             frame2.dispose();
 
-            Model.bird = Sprite.OSPREY;
+            Model.setBird(Sprite.OSPREY);
             displayLevelStartScreen();
             new Timer(5000, ae2 -> {
         		levelStartFrame.dispose();
@@ -410,7 +410,7 @@ public class View extends JPanel {
         });
         harrier.addActionListener(ae -> {
             frame2.dispose();
-           Model.bird = Sprite.NORTHERN_HARRIER;
+            Model.setBird(Sprite.NORTHERN_HARRIER);
             Main.started = true;
             
         });

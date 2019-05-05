@@ -15,7 +15,7 @@ import java.util.Iterator;
  * @author crnis
  */
 public class Model {
-    static Sprite bird; 
+    private static Sprite bird; 
     static int level;
     private int fWidth;
     private int fHeight;
@@ -417,6 +417,14 @@ public class Model {
     
 	public void setFurthestGP(GamePiece gP) {
 		this.furthestGP = gP;
+	}
+	
+	public static Sprite getBird() {
+		return bird;
+	}
+	
+	public static void setBird(Sprite b) {
+		bird = b;
 	}
 
 }
