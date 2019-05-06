@@ -15,30 +15,28 @@ import java.util.Iterator;
  * @author crnis
  */
 public class Model {
-    static int bird; //0 is osprey, 1 is harrier
+    private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
     static int level;
-    private int fWidth;
-    private int fHeight;
+    protected int fWidth;
+    protected int fHeight;
     private int imgHeight;
     private int imgWidth;
-    private int groundLevel;
-  //  int xLocation;
-  //  int yLocation;  These are implemented in individual gamepiece classes
-  //  int xincr;
-  //  int yincr;
+    protected int groundLevel;
     private int sceneNum;
-    private ArrayList<GamePiece> gamePieces = new ArrayList<>();
+    protected ArrayList<GamePiece> gamePieces;
     private int progress;
     private int enemyFrequency;
     private int foodFrequency;
     private int specialfoodFrequency;
     private int totalLevelTicks;
     private static Direction direction;
-    private Player player;
+    private static Player player;
     //GamePiece currentGP;
     private int indexOfGP;
+    private static String currentFact;
     private ArrayList<GamePiece> currentGPs = new ArrayList<>();
     private GamePiece furthestGP;
+    private static boolean specialFoodEaten = false;
     
     /**
      * Model constructor will take in four variables defined below
@@ -49,6 +47,7 @@ public class Model {
      */
 
     public Model(int fwidth, int fheight, int imageWidth, int imageHeight) {
+    	gamePieces = new ArrayList<>();
     	fWidth = fwidth;
     	fHeight = fheight;
     	setImgWidth(imageWidth);
@@ -58,7 +57,6 @@ public class Model {
     	setGroundLevel(fHeight - imgHeight);
         setIndexOfGP(0);
         indexOfGP = 0;
-      //  bird = newBird;
     }
 
     /**
@@ -96,7 +94,10 @@ public class Model {
     	Iterator<GamePiece> it = gamePieces.iterator();
     	while(it.hasNext()) {
     		GamePiece g = (GamePiece) it.next();
-            if(player.checkCollision(g)){            	
+            if(player.checkCollision(g)){ 
+            	if (g.isSpecialFood()) {
+            		eatSpecial((SpecialFood) g);
+            	}
             	if(g.isFood()) {
             		eat((Food)g);
             	}
@@ -115,7 +116,8 @@ public class Model {
         }
         
         if(player.getX() > (fWidth - imgWidth)) {
-        	System.out.println("youre off the screen");
+        	//TODO
+        	//MAKE IT SO TRANSITIONS TO NEXT LEVEL SCREEN
         }
     }
     
@@ -133,86 +135,119 @@ public class Model {
      */
 
     //randomize the location of the GamePieces (1 every screen)
-    public void spawnGamePieces() {
-        int numGamePieces = 0;
-        //background0:
-            //land: 0-432px, 1776-2640px, 
-        //int tempXLoc = (int)(Math.random() * 2639 + 1776);
-        int tempXLoc = 500;
-        int landHeight = 96;
-        boolean flag = true;
-        if(bird == 1){ //northern harrier
-            while(numGamePieces < 5){
-            	int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
-            	int topHalfY = ((int) (Math.random()*(fHeight/2)));
-            	
-                if(Math.random() < .5){ //food
-                    if(Math.random() < .5){//bunny
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.BUNNY));
-                    }
-                    else{//mouse
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.MOUSE));
-                    }
-                }
-                else{//enemy
-                    if(Math.random() < .5){//red fox
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.REDFOX));
-                    }
-                    else{//raccoon
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.RACCOON));
-                    }
-                }
-                numGamePieces++;
-                tempXLoc+=fWidth/3;
-            }
-        }
-        else{
-            while(numGamePieces < 5){
-            	int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
-            	int topHalfY = ((int) (Math.random()*(fHeight/2)));
-            	
-                if(Math.random() < .5){ //food
-                    if(Math.random() < .5){//snakes
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.SNAKE));
-                    }
-                    else{//fish
-                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.FISH));
-                    }
-                }
-                else{//enemy
-                    if(Math.random() < 0.5){//eagles
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.EAGLE));
-                    }
-                    else{//planes
-                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.PLANE));
-                    }
-                }
-                numGamePieces++;
-                tempXLoc+=fWidth/3;
-            }
-            //System.out.println(gamePieces);
-        }
-
-        for(GamePiece gp: gamePieces) {
-        	int furthestGPLoc = 0;
-        	if(gp.getX() > furthestGPLoc) {
-        		furthestGPLoc = gp.getX();
-        		furthestGP = gp;
-        		
-        	}
-        }
-        
+//    public void spawnGamePieces() {
+//    	SpecialFood.generateFactsAndQuestions();
+//        int numGamePieces = 0;
+//        int numSpecialFood = 0;
 //        
-//        for(GamePiece gp: gamePieces) {
-//        	System.out.println("gp loc: " + gp.getX());
+//        //background0:
+//            //land: 0-432px, 1776-2640px, 
+//        //int tempXLoc = (int)(Math.random() * 2639 + 1776);
+//        int tempXLoc = 500;
+//        int landHeight = 96;
+//        boolean flag = true;
+//        
+//        int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
+//    	int topHalfY = ((int) (Math.random()*(fHeight/2)));
+//    	int maxSpecialFood = 3;
+//        if(bird.equals(Sprite.NORTHERN_HARRIER)){ //northern harrier
+//            while(numGamePieces < 10){
+//            	if( numSpecialFood < 3) {
+//            		if (Math.random() < .2) {
+//            			if (Math.random() < .5) {
+//            				gamePieces.add(new SpecialFood(3*tempXLoc, (int) (Math.random()*groundLevel), Sprite.BUNNY));
+//            			}
+//            			else {
+//            				gamePieces.add(new SpecialFood(3*tempXLoc, (int) (Math.random()*groundLevel), Sprite.MOUSE));
+//
+//            			}
+//            			numSpecialFood++;
+//            			
+//            		}
+//            	}
+//            	
+//                if(Math.random() < .5){ //food
+//                    if(Math.random() < .5){//bunny
+//                    		gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.BUNNY));
+//                    	}
+//                        
+//                    
+//                    else{//mouse
+//                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.MOUSE));
+//                    }
+//                }
+//                else{//enemy
+//                    if(Math.random() < .5){//red fox
+//                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.REDFOX));
+//                    }
+//                    else{//raccoon
+//                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.RACCOON));
+//                    }
+//                }
+//                numGamePieces++;
+//                tempXLoc+=fWidth/3;
+//            
 //        }
-        
-        
+//        }
+//    
+//        else{
+//            while(numGamePieces < 10){
+//            	if (numSpecialFood < maxSpecialFood) {
+//            		if (Math.random() < .2) {
+//            			if (Math.random() < .5) {
+//            				gamePieces.add(new SpecialFood(3*tempXLoc, (int) (Math.random()*groundLevel), Sprite.SNAKE));
+//            			}
+//            			else {
+//            				gamePieces.add(new SpecialFood(3*tempXLoc, (int) (Math.random()*groundLevel), Sprite.FISH));
+//
+//            			}
+//            			numSpecialFood++;
+//            			
+//            		}
+//            	}
+//            	
+//            
+//            	
+//                if(Math.random() < .5){ //food
+//                    if(Math.random() < .5){//snakes
+//                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.SNAKE));
+//                    }
+//                    else{//fish
+//                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.FISH));
+//                    }
+//                }
+//                else{//enemy
+//                    if(Math.random() < 0.5){//eagles
+//                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.EAGLE));
+//                    }
+//                    else{//planes
+//                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.PLANE));
+//                    }
+//                }
+//                numGamePieces++;
+//                tempXLoc+=fWidth/3;
+//            }
+//            //System.out.println(gamePieces);
+//        }
+//
+//        for(GamePiece gp: gamePieces) {
+//        	int furthestGPLoc = 0;
+//        	if(gp.getX() > furthestGPLoc) {
+//        		furthestGPLoc = gp.getX();
+//        		setFurthestGP(gp);
+//        		
+//        	}
+//        }
+//        
+//
+//        
+//        
+//
+//        
+//        System.out.println("hi, furthest gamepiece loc: " + furthestGP);
+//      
+//    }
 
-        
-        System.out.println("hi, furthest gamepiece loc: " + furthestGP);
-      
-    }
     public void clearCurrentGP(){
         currentGPs.clear();
     }
@@ -248,6 +283,23 @@ public class Model {
             player.setHealth( player.getHealth() + 10);
         }
     }
+    public void eatSpecial(SpecialFood sf) {
+    	System.out.println("TODO, specialFood eaten");
+    	specialFoodEaten = true;
+    	currentFact = sf.getFact();
+    	 player.setScore(player.getScore() + sf.getFoodValue());
+         if(player.getHealth() > 90){
+             player.setHealth(100);
+         }
+         else{
+             player.setHealth( player.getHealth() + 10);
+         }
+     }
+    public static boolean specialFoodEaten() {
+    	return specialFoodEaten;
+    }
+    
+    
 
     /**
      * obstacleHit() will handle the event of the player dying by resetting everything 
@@ -277,7 +329,7 @@ public class Model {
 		return imgHeight;
 	}
 	
-	public Player getPlayer() {
+	public static Player getPlayer() {
 		return player;
 	}
 	
@@ -379,6 +431,19 @@ public class Model {
 		this.progress = h;
 	}
     
+	public void setFurthestGP(GamePiece gP) {
+		this.furthestGP = gP;
+	}
 	
+	public static Sprite getBird() {
+		return bird;
+	}
+	
+	public static void setBird(Sprite b) {
+		bird = b;
+	}
+	public static String getCurrentFact() {
+		return currentFact;
+	}
 
 }
