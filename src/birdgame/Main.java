@@ -66,10 +66,9 @@ public class Main {
 					break;
     			}
     			else {
-					c2.getView().displayStartScreen();
-					c1.getView().frameOsprey.dispose(); 
-    				c2.getModel().getPlayer().reset();
-    				c2.start();
+					c1.getView().displayStartScreen();
+    				c1.getModel().getPlayer().reset();
+    				c1.start();
     			}
 
     		}

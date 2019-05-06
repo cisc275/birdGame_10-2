@@ -10,7 +10,7 @@ public enum Sprite{
 	FISH("fish"),
 	RACCOON("raccoon"),
     NORTHERN_HARRIER("northern harrier"),
-    OSPREY("osprey");
+        OSPREY("osprey");
 	String name;
 	
 	private Sprite(String s) {

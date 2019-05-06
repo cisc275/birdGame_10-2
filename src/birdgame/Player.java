@@ -34,7 +34,7 @@ public class Player extends GamePiece {
      */
 
 
-    public static boolean isAlive() {
+    public boolean isAlive() {
         if (health <= 0) {
         	return false;
         }
@@ -119,5 +119,4 @@ public class Player extends GamePiece {
 	public void reset() {
 		setHealth(100);
 	}
-
 }

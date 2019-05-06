@@ -18,8 +18,8 @@ public class GamePiece {
     private int yLocation;
     private int xincr;
     private int yincr;
-     int width;
-     int height;
+    private int width;
+    private int height;
     private Sprite type;
     private int xOffset;
     private int yOffset;
