@@ -356,7 +356,7 @@ public class View extends JPanel {
         x+=25;
         frameOsprey.repaint();
         try {
-            Thread.sleep(100);
+            Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
