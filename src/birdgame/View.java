@@ -107,6 +107,7 @@ static JFrame frameHarrier;
     int x = 0;
     int health;
     int score;
+	private JLabel fact;
     static JButton osprey;
     static JButton harrier;
     static ImageIcon ospreyImg;
@@ -120,8 +121,8 @@ static JFrame frameHarrier;
     static JFrame frame3;
     static JLabel finalScore;
     static JLabel gameOver;
+    static JLabel bubble;
     static boolean isDone;
-    private int tempFrameCount;
     static JFrame levelStartFrame;
     static JPanel levelStartPanel;
     static JLabel levelStartLabel;
@@ -187,8 +188,8 @@ static JFrame frameHarrier;
         for(int i = 0; i < planeFrameCount; i++){
             plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
         }
-//        thoughtBubble = createImage("images/bub.png").getScaledInstance
-//        		(300, 300, Image.SCALE_SMOOTH);
+      thoughtBubble = createImage("images/bub.png").getScaledInstance
+       		(300, 300, Image.SCALE_SMOOTH);
     }
     
 
@@ -260,7 +261,6 @@ static JFrame frameHarrier;
         
       
         g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
-        g.drawImage(thoughtBubble,playerXLoc + 100,playerYLoc,this);
         for(GamePiece gp : currentViewableGPs) {   
         	if (gp.isSpecialFood()) {
         		if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
@@ -478,6 +478,19 @@ static JFrame frameHarrier;
     	frame3.setVisible(true);
     	
     }
+ public void displayFacts(Graphics g) {
+    	
+    	bubble = new JLabel(new ImageIcon(thoughtBubble));
+    	System.out.println(Model.getCurrentFact());
+    	fact = new JLabel(Model.getCurrentFact());
+    	fact.setFont(new Font("Times New Roman",1,60));
+    	g.drawImage(thoughtBubble, playerXLoc + 184, playerYLoc -200, this);
+    	
+    	
+   
+    	
+    	
+    }
     
     public static void displayLevelStartScreen(){
         levelStartFrame = new JFrame();
@@ -504,10 +517,7 @@ static JFrame frameHarrier;
     public static void displayLevel2Transition(){
         
     }
-    public void displayFacts(Graphics g) {
-    	g.drawImage(thoughtBubble, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-    }
-    
+   
     public int getWidth(){
         return frameWidth;
     }

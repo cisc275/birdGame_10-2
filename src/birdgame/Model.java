@@ -33,8 +33,10 @@ public class Model {
     private static Player player;
     //GamePiece currentGP;
     private int indexOfGP;
+    private static String currentFact;
     private ArrayList<GamePiece> currentGPs = new ArrayList<>();
     private GamePiece furthestGP;
+    private static boolean specialFoodEaten = false;
     
     /**
      * Model constructor will take in four variables defined below
@@ -282,6 +284,8 @@ public class Model {
     }
     public void eatSpecial(SpecialFood sf) {
     	System.out.println("TODO, specialFood eaten");
+    	specialFoodEaten = true;
+    	currentFact = sf.getFact();
     	 player.setScore(player.getScore() + sf.getFoodValue());
          if(player.getHealth() > 90){
              player.setHealth(100);
@@ -290,6 +294,10 @@ public class Model {
              player.setHealth( player.getHealth() + 10);
          }
      }
+    public static boolean specialFoodEaten() {
+    	return specialFoodEaten;
+    }
+    
     
 
     /**
@@ -432,6 +440,9 @@ public class Model {
 	
 	public static void setBird(Sprite b) {
 		bird = b;
+	}
+	public static String getCurrentFact() {
+		return currentFact;
 	}
 
 }
