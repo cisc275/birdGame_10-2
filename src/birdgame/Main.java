@@ -25,20 +25,24 @@ public class Main {
     public static boolean started2;
     public static int birdCount;
     public static boolean playedBoth;
-
+	public static boolean isOsprey;
+	public static Controller c1;
+	public static Controller c2;
+	
     /**
      * will call the start() method in Controller
      *
      * @param args
      */
     public static void main(String[] args) {
-        Controller c1 = new Controller();
-        Controller c2 = new Controller();
+        c1 = new Controller();
+        c2 = new Controller();
         started = false;
         started2 = false;
         boolean test = true;
         playedBoth = false;
         birdCount = 0;
+        isOsprey=false;
         c1.getView().frameOsprey.addKeyListener(c1);
         c2.getView().frameOsprey.addKeyListener(c2);
         c1.getView().displayStartScreen();
@@ -65,7 +69,14 @@ public class Main {
     			else {
 					c2.getView().displayStartScreen();
 					c1.getView().frameOsprey.dispose(); 
-    				c2.getModel().getPlayer().reset();
+					
+					if(isOsprey==false) {
+						c2.getModel().setBird(Sprite.OSPREY);
+					}
+					else {
+						c2.getModel().setBird(Sprite.NORTHERN_HARRIER);
+					}
+					c2.getModel().getPlayer().reset();
     				c2.start();
     			}
 

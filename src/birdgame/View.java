@@ -117,7 +117,6 @@ public class View extends JPanel {
     static JFrame frame3;
     static JLabel finalScore;
     static JLabel gameOver;
-    static boolean isOsprey;
     static boolean isDone;
     
     static JFrame levelStartFrame;
@@ -401,21 +400,22 @@ public class View extends JPanel {
         osprey.addActionListener(ae -> {
         	displayLevelStartScreen();
             frame2.dispose();
-
             Model.setBird(Sprite.OSPREY);
             Main.birdCount++;
-            
+            Main.isOsprey=true;
             new Timer(5000, ae2 -> {
         		levelStartFrame.dispose();
         		Main.started = true;
               }).start();
+
         });
         harrier.addActionListener(ae -> {
+
+            Main.isOsprey=false;
             frame2.dispose();
             Model.setBird(Sprite.NORTHERN_HARRIER);
             Main.birdCount++;
             Main.started = true;
-
             
         });
         pane1.add(osprey);
