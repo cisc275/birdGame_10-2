@@ -14,9 +14,8 @@ package birdgame;
 public class Food extends GamePiece {
 	
     private int foodValue;
-    private int fType;
-    
     public Food(int x, int y, Sprite foodType){
+    	setSpecialFood(false);
         setX(x);
         setY(y);
         setXIncr(25);
@@ -25,12 +24,6 @@ public class Food extends GamePiece {
     	setHeight(165);
     	setSprite(foodType);
         setPicNum(0);
-//        if(foodType.equals(Type.BUNNY) || foodType.equals(Type.FISH) || foodType.equals(Type.SNAKE)){
-//            setPicNum(4);
-//        }
-//        else{
-//            setPicNum(2);
-//        }
     	setFoodValue(10);
     	setOffsets(); //MIGHT NOT WORK
     }
@@ -42,5 +35,7 @@ public class Food extends GamePiece {
 	public void setFoodValue(int foodValue) {
 		this.foodValue = foodValue;
 	}
+	
+	
 }
 

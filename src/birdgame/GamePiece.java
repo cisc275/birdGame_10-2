@@ -20,10 +20,11 @@ public class GamePiece {
     private int yincr;
     private int width;
     private int height;
-    private Sprite type;
+    private Sprite sprite;
     private int xOffset;
     private int yOffset;
     private int picNum;
+    private boolean isSpecialFood;
 
     /**
      * the move() method will call upon the methods in the Model class to update 
@@ -31,7 +32,7 @@ public class GamePiece {
      */
     
     public String toString(){
-    	return " " + type;
+    	return " " + sprite;
     }
     
     public void move() {
@@ -71,7 +72,7 @@ public class GamePiece {
     }
     
     public Sprite getSprite() {
-    	return type;
+    	return sprite;
     }
     
     public void setX( int x){
@@ -99,10 +100,10 @@ public class GamePiece {
     }
     
     public void setSprite(Sprite s) {
-    	type = s;
+    	sprite = s;
     }
     public boolean isEnemy() {
-    	if (type.equals(Sprite.PLANE) || type.equals(Sprite.EAGLE) || type.equals(Sprite.REDFOX) || type.equals(Sprite.RACCOON)){
+    	if (sprite.equals(Sprite.PLANE) || sprite.equals(Sprite.EAGLE) || sprite.equals(Sprite.REDFOX) || sprite.equals(Sprite.RACCOON)){
     		return true;
     	}
     	else {
@@ -115,31 +116,38 @@ public class GamePiece {
     
     public void setOffsets() {
 		if (getSprite().equals(Sprite.REDFOX)) {
-			//TODO	
+			xOffset = 50;
+			yOffset = 50;
 		}
 		if (getSprite().equals(Sprite.EAGLE)) {
-			//TODO
+			xOffset = 30;
+			yOffset = 30;
 		}
 		if(getSprite().equals(Sprite.PLANE)) {
-			//TODO
+			xOffset = 40;
+			yOffset = 20;
 		}
 		if (getSprite().equals(Sprite.BUNNY)) {
-			//TODO
+			xOffset = 20;
+			yOffset = 20;
 		}
 		if (getSprite().equals(Sprite.MOUSE)) {
-			//TODO
+			xOffset = 10;
+			yOffset = 5;
 		}
 		if (getSprite().equals(Sprite.FISH)) {
-			//TODO
+			xOffset = 10;
+			yOffset = 20;
 		}
 		if (getSprite().equals(Sprite.RACCOON)) {
-			//TODO
+			xOffset = 30;
+			yOffset = 30;
 		}
 		if (getSprite().equals(Sprite.SNAKE)) {
-			//TODO
+			xOffset = 30;
+			yOffset = 30;
 		}
-		xOffset = 30; //DON'T FORGET TO CHANGE THIS!!
-		yOffset = 30;
+		
 	}
     
     public int getXOffset() {
@@ -148,4 +156,10 @@ public class GamePiece {
     public int getYOffset() {
     	return yOffset;
     }
+    public boolean isSpecialFood() {
+		return isSpecialFood;
+	}
+    public void setSpecialFood(boolean bool) {
+		isSpecialFood = bool;
+	}
 }

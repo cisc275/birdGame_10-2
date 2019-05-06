@@ -15,6 +15,7 @@ public class Enemy extends GamePiece {
 
     private int damage;
     public Enemy(int x, int y, Sprite enemyType){
+    	setSpecialFood(false);
         setX(x);
         setY(y);
         setXIncr(25);

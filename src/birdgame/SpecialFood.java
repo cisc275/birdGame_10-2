@@ -6,6 +6,7 @@ import java.util.Random;
 // * and open the template in the editor.
 // */
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,58 +17,88 @@ import java.util.List;
  * @author crnis
  */
 public class SpecialFood extends Food {
-
-    public SpecialFood(int x, int y, Sprite foodType, int currentBird) {
+	//All of these static fields are defined in the generateFactsAndQuestions method!
+//	public static HashMap<String,HashMap<String,String[]>> factsAndQuestionsHarrier = new HashMap<>();
+	public static HashMap<String,HashMap<String,String[]>> factsAndQuestions;
+//	public static ArrayList<String> avaliableFactsHarrier;
+	public static ArrayList<String> avaliableFacts;
+	protected String fact;
+    public SpecialFood(int x, int y, Sprite foodType) {
 		super(x, y, foodType);
-		initializeQandAs();
+		setSpecialFood(true);
+		setXIncr(45);
+		factsAndQuestions = new HashMap<>();
+		
 	}
-
-	
-    static HashMap<String, String[]> QuizOsprey;
-    static HashMap<String, String[]> QuizHarrier;
-    //Answer to question will always be repeated as the last option in the answers array
-
-    /**
-     * checkAnswer() will check if the player's answer is in line with the answerKey
-     * @return true if player chooses right answer and false if player chooses
-     * wrong answer
-     */
-
-    public boolean checkAnswer() {
-        return true;
-    }
-    public static void initializeQandAs() {
-    	QuizOsprey = new HashMap<>();
-    	QuizHarrier = new HashMap<>();
+//    public static void generateFactsAndQuestions() {
+//    	HashMap<String,String[]> QandAsHarrier1 = new HashMap<>();
+//    	String[] harrierFood = {"rodents", "fish", "eagles","plants", "rodents"};
+//    	QandAsHarrier1.put("What do Northern Harriers eat?",harrierFood);
+//    	factsAndQuestionsHarrier.put("Northern Harriers Like to eat rodents like mice and bunnies", QandAsHarrier1);
+//    	
+//    	HashMap<String,String[]> QandAsHarrier2 = new HashMap<>();
+//    	String[] harrierMigrate = {"They migrate to South America","They migrate to California", "They don't migrate", "They migrate to canada", "They don't migrate"};
+//    	QandAsHarrier2.put("Where do Harriers migrate", harrierMigrate);
+//    	factsAndQuestionsHarrier.put("Northern Harriers are non-migratory birds",QandAsHarrier2);
+//    	
+//    	HashMap<String,String[]> QandAsHarrier3 = new HashMap<>();
+//    	String[] harrierPred = {"Foxes", "Snakes","Cats","Humans","Foxes"};
+//    	QandAsHarrier3.put("What is a major predator of Northern Harriers", harrierPred);
+//    	factsAndQuestionsHarrier.put("Foxes are a common predator on Northern Harriers", QandAsHarrier3);
+//    	
+//    	HashMap<String,String[]> QandAsOsprey1 = new HashMap<>();
+//    	String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Sankes and Fish"};
+//    	QandAsOsprey1.put("What do Ospreys eat?", OspreyFood);
+//    	factsAndQuestionsOsprey.put("Ospreys like to eat Snakes and Fish", QandAsOsprey1);
+//    	
+//    	HashMap<String,String[]> QandAsOsprey2 = new HashMap<>();
+//    	String[] OspreyMigrate = {"They migrate to South America","They migrate to California", "They don't migrate", "They migrate to canada", "They migrate to South America"};
+//    	QandAsOsprey2.put("Where do Ospreys migrate", OspreyMigrate);
+//    	factsAndQuestionsOsprey.put("Ospreys migrate to South America for the winter", QandAsOsprey2);
+//    	
+//    	HashMap<String,String[]> QandAsOsprey3 = new HashMap<>();
+//    	String[] OspreyPred = {"Foxes", "Snakes", "Eagles", "Eagles"};
+//    	QandAsHarrier3.put("What is a major predator of Ospreys", OspreyPred);
+//    	factsAndQuestionsHarrier.put("Eagles are a major predator of Ospreys", QandAsOsprey3);
+//
+//
+//    	avaliableFactsOsprey = new ArrayList<String>(factsAndQuestionsOsprey.keySet());
+//    	avaliableFactsHarrier = new ArrayList<String>(factsAndQuestionsOsprey.keySet());
+//    }
+//
+//    public void setFact(Sprite birdType) {
+//    	if (birdType.equals(Sprite.OSPREY)) {
+//    		
+//    		int randomIndex = new Random().nextInt(avaliableFactsOsprey.size());
+//    		fact = avaliableFactsOsprey.get(randomIndex);
+//    		//avaliableFactsOsprey.remove(randomIndex);
+//    		//Remove might be bugged
+//    	}
+//    	else {
+//    		int randomIndex = new Random().nextInt(avaliableFactsHarrier.size());
+//    		System.out.println(avaliableFactsOsprey.size());
+//    		fact = avaliableFactsHarrier.get(randomIndex);
+//    		//avaliableFactsHarrier.remove(randomIndex);
+//    		//Remove might be bugged
+//    	}
+//    	
+//    }
+    public String getFact() {
+		return fact;
+	}
+    
+    
+    
+   
+  
     	
-    	String[] ansOsp = {"1","4","5","answer","4"};
-    	String[] ansHar = {"1","4","5","answer","5"};
-
-    	QuizOsprey.put("Whats 2 + 2", ansOsp);
-    	QuizHarrier.put("Whats 4 + 1", ansHar);
+    	
     	
 
 
    }
 
-    /**
-     * generateQuestion() will randomly select a question from the answerOptions
-     * HashMap to ask the player.
-     */
+  
+   
 
-    public String getQuestion(int birdType) {
-    	if (birdType == 0) {
-    		List<String> questionList = new ArrayList<String>(QuizOsprey.keySet());
-    		int randomIndex = new Random().nextInt(questionList.size());
-    		return questionList.get(randomIndex);
-    	}
-    	if (birdType == 1) {
-    		List<String> questionList = new ArrayList<String>(QuizHarrier.keySet());
-        	int randomIndex = new Random().nextInt(questionList.size());
-        	return questionList.get(randomIndex);
-    	}
-    	else return "";
-    	
-    }
-
-}
+ 
