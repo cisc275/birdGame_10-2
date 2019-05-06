@@ -55,19 +55,21 @@ public class Main {
 //				c1.getView().frameOsprey.dispose(); 
 //    		}
             //if you want both games played
-            while (Player.getHealth() <= 0) {
+            while(Player.getHealth()<=0) {
 
-                if (birdCount == 2) {
-                    c1.getView().displayEndScreen();
-                    c1.getView().frameOsprey.dispose();
-                    break;
-                } else {
-                    c1.getView().displayStartScreen();
-                    c1.getModel().getPlayer().reset();
-                    c1.start();
-                }
+    			if(birdCount ==2) {
+    				c2.getView().displayEndScreen();
+					c2.getView().frameOsprey.dispose(); 
+					break;
+    			}
+    			else {
+					c2.getView().displayStartScreen();
+					c1.getView().frameOsprey.dispose(); 
+    				c2.getModel().getPlayer().reset();
+    				c2.start();
+    			}
 
-            }
+    		}
 
             System.out.print("");
         }

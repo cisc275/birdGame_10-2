@@ -185,8 +185,8 @@ public class View extends JPanel {
         for(int i = 0; i < planeFrameCount; i++){
             plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
         }
-        thoughtBubble = createImage("images/bub.png").getScaledInstance
-        		(300, 300, Image.SCALE_SMOOTH);
+//        thoughtBubble = createImage("images/bub.png").getScaledInstance
+//        		(300, 300, Image.SCALE_SMOOTH);
     }
     
 
