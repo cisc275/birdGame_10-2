@@ -399,7 +399,7 @@ static JFrame frameHarrier;
         osprey.addActionListener(ae -> {
         	OspreyView.displayLevelStartScreen();
             frame2.dispose();
-            Model.setBird(Sprite.OSPREY);
+//            Model.setBird(Sprite.OSPREY);
             Main.birdCount++;
             Main.isOsprey=true;
             new Timer(5000, ae2 -> {
@@ -412,7 +412,7 @@ static JFrame frameHarrier;
 
             Main.isOsprey=false;
             frame2.dispose();
-            Model.setBird(Sprite.NORTHERN_HARRIER);
+//            Model.setBird(Sprite.NORTHERN_HARRIER);
             Main.birdCount++;
             Main.started = true;
             
