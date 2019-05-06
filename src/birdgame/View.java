@@ -93,7 +93,7 @@ public class View extends JPanel {
     BufferedImage[] miniMap4;
     Image thoughtBubble;
     static JPanel thoughtbub;
-    static JFrame frameOsprey;
+    JFrame frameOsprey;
 
     static JFrame frameHarrier;
     static JFrame frame2;
@@ -125,7 +125,7 @@ public class View extends JPanel {
     static JFrame frameFact;
     static boolean isOsprey;
     static boolean isDone;
-    
+    private int tempFrameCount;
     static JFrame levelStartFrame;
     static JPanel levelStartPanel;
     static JLabel levelStartLabel;
@@ -225,7 +225,6 @@ public class View extends JPanel {
    		ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
    		ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
    		ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
-   		System.out.println(Model.getBird());
    		if(Model.getBird().equals(Sprite.OSPREY)) {
    			imgback = imgOsprey.getImage();
    			imgback2 = imgOsprey2.getImage();
@@ -260,7 +259,7 @@ public class View extends JPanel {
     	
         paintBackground(g);
         picNum = (picNum + 1) % frameCount;
-        if (Model.specialFoodEaten()) {
+        if (Model.specialFoodEaten() ) {
         	displayFacts(g);
         }
         
