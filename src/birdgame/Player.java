@@ -34,7 +34,7 @@ public class Player extends GamePiece {
      */
 
 
-    public boolean isAlive() {
+    public static boolean isAlive() {
         if (health <= 0) {
         	return false;
         }
