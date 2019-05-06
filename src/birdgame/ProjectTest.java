@@ -5,7 +5,7 @@
 //public class ProjectTest {
 //	
 //	//Tests for Player
-//	//isAlive()
+//		//isAlive()
 //	@Test
 //	public void playerShouldBeDeadWithZeroHealth() {
 //		Player p = new Player();
@@ -25,13 +25,13 @@
 //		Player p = new Player();
 //		p.setHeight(501);
 //		p.setWidth(501);
-//		p.setX(1);
-//		p.setY(1);
+//		p.setX(100);
+//		p.setY(100);
 //		Sprite t = Sprite.REDFOX;
-//		Enemy e = new Enemy(1,1,t);
+//		Enemy e = new Enemy(100,100,t);
 //		e.setOffsets();
-//		e.setHeight(501);
-//		e.setWidth(501);
+//		e.setHeight(551);
+//		e.setWidth(551);
 //		assert true == p.checkCollision(e);
 //	}
 //	@Test
@@ -55,6 +55,14 @@
 //			//No JUnit testing for functions with random elements
 //	
 //	//Tests for GamePiece
+//		//toString()
+//	@Test
+//	public void toStringReturnsASpaceAndTheSpriteType() {
+//		GamePiece g = new GamePiece();
+//		Sprite t = Sprite.REDFOX;
+//		g.setSprite(t);
+//		assert g.toString().equals(" REDFOX");
+//	}
 //		//move()
 //	@Test
 //	public void pieceWithNoXChangeDoesNotMoveOnXAxis() {
@@ -72,7 +80,171 @@
 //		g.move();
 //		assert g.getY() == -4;
 //	}
-//	
+//		//getPicNum()
+//	@Test
+//	public void getPicNumReturnsPicNum() {
+//		GamePiece g = new GamePiece();
+//		g.setPicNum(1);
+//		assert g.getPicNum() == 1;
+//	}
+//		//isEnemy()
+//	@Test
+//	public void aPlaneIsAnEnemy() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.PLANE;
+//		g.setSprite(s);
+//		assert g.isEnemy() == true;
+//	}
+//	@Test
+//	public void anEagleIsAnEnemy() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.EAGLE;
+//		g.setSprite(s);
+//		assert g.isEnemy() == true;
+//	}
+//	@Test
+//	public void aRedFoxIsAnEnemy() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.REDFOX;
+//		g.setSprite(s);
+//		assert g.isEnemy() == true;
+//	}
+//	@Test
+//	public void aRaccoonIsAnEnemy() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.RACCOON;
+//		g.setSprite(s);
+//		assert g.isEnemy() == true;
+//	}
+//		//setOffsets()
+//	@Test
+//	public void redfoxSetXOffsetis50() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.REDFOX;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getXOffset() == 50;
+//	}
+//	@Test
+//	public void redfoxSetYOffsetis50() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.REDFOX;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getYOffset() == 50;
+//	}
+//	@Test
+//	public void eagleSetXOffsetis30() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.EAGLE;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getXOffset() == 30;
+//	}
+//	@Test
+//	public void eagleSetYOffsetis30() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.EAGLE;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getYOffset() == 30;
+//	}
+//	@Test
+//	public void planeSetXOffsetis40() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.PLANE;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getXOffset() == 40;
+//	}
+//	@Test
+//	public void planeSetYOffsetis20() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.PLANE;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getYOffset() == 20;
+//	}
+//	@Test
+//	public void bunnySetXOffsetis20() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.BUNNY;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getXOffset() == 20;
+//	}
+//	@Test
+//	public void bunnySetYOffsetis20() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.BUNNY;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getYOffset() == 20;
+//	}
+//	@Test
+//	public void mouseSetXOffsetis10() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.MOUSE;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getXOffset() == 10;
+//	}
+//	@Test
+//	public void mouseSetYOffsetis5() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.MOUSE;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getYOffset() == 5;
+//	}
+//	@Test
+//	public void fishSetXOffsetis10() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.FISH;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getXOffset() == 10;
+//	}
+//	@Test
+//	public void fishSetYOffsetis20() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.FISH;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getYOffset() == 20;
+//	}
+//	@Test
+//	public void raccoonSetXOffsetis30() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.RACCOON;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getXOffset() == 30;
+//	}
+//	@Test
+//	public void raccoonSetYOffsetis30() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.RACCOON;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getYOffset() == 30;
+//	}
+//	@Test
+//	public void snakeSetXOffsetis30() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.SNAKE;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getXOffset() == 30;
+//	}
+//	@Test
+//	public void snakeSetYOffsetis30() {
+//		GamePiece g = new GamePiece();
+//		Sprite s = Sprite.SNAKE;
+//		g.setSprite(s);
+//		g.setOffsets();
+//		assert g.getYOffset() == 30;
+//	}
 //	//Tests for Controller
 //		//Cannot write JUnit tests for start()
 //		//Cannot write JUnit tests for keyAction methods because of user input and nature of method
@@ -242,6 +414,20 @@
 //		m.handleTicks();
 //		assert m.getPlayer().getScore() == 200;
 //	}
+//	/*@Test
+//	public void whenPlayerCollidesWithSpecialFoodTheSpecialFoodIsEaten() {
+//		Model m = new Model(1,1,1,1);
+//		Sprite t = Sprite.FISH;
+//		m.setBird(t);
+//		SpecialFood f = new SpecialFood(1,1,t);
+//		f.setFoodValue(100);
+//		m.getGamePieces().add(f);
+//		m.getPlayer().setX(1);
+//		m.getPlayer().setY(1);
+//		m.getPlayer().setScore(100);
+//		m.handleTicks();
+//		assert m.getPlayer().getScore() == 200;
+//	}*/
 //	@Test
 //	public void whenPlayerCollidesWithAnEnemyObstacleHitIsCalled() {
 //		Model m = new Model(1,1,1,1);
@@ -438,5 +624,19 @@
 //		Model m = new Model(1,1,1,1);
 //		m.setIndexOfGP(100);
 //		assert m.getIndexOfGP() == 100;
+//	}
+//	@Test
+//	public void getBirdReturnsBirdSprite() {
+//		Model m = new Model(1,1,1,1);
+//		Sprite b = Sprite.OSPREY;
+//		m.setBird(b);
+//		assert m.getBird() == Sprite.OSPREY;
+//	}
+//	//Tests for Sprite
+//		//getName()
+//	@Test
+//	public void getNameReturnsName() {
+//		Sprite s = Sprite.OSPREY;
+//		assert s.getName() == "osprey";
 //	}
 //}
