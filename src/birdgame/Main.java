@@ -72,9 +72,11 @@ public class Main {
 					
 					if(isOsprey==false) {
 						c2.getModel().setBird(Sprite.OSPREY);
+						c2.getView().harrier.setVisible(false);
 					}
 					else {
 						c2.getModel().setBird(Sprite.NORTHERN_HARRIER);
+						c2.getView().osprey.setVisible(false);
 					}
 					c2.getModel().getPlayer().reset();
     				c2.start();
