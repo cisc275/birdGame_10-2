@@ -258,7 +258,6 @@ static JFrame frameHarrier;
         if (Model.specialFoodEaten() ) {
         	displayFacts(g);
         }
-        
       
         g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
         for(GamePiece gp : currentViewableGPs) {   
@@ -382,8 +381,8 @@ static JFrame frameHarrier;
         osprey.setFont(new Font("Agency FB", Font.BOLD, frameWidth/55));
         harrier = new JButton("Play as Northern Harrier");
         harrier.setFont(new Font("Agency FB", Font.BOLD, frameWidth/65));
-    	osprey.setBounds(frameWidth/10,(frameHeight*4)/5,frameWidth/4,frameHeight/10);
-    	harrier.setBounds((frameWidth*6)/10,frameHeight/3,frameWidth/4,frameHeight/10);
+    	osprey.setBounds(frameWidth/10,(frameHeight*84)/100,frameWidth/4,frameHeight/15);
+    	harrier.setBounds((frameWidth*6)/10,(frameHeight*37)/100,frameWidth/4,frameHeight/15);
 //    	ospreyPic = new JLabel();
 //    	ospreyPic.setIcon(new ImageIcon(ospreyImg.getImage().getScaledInstance(300,300, Image.SCALE_SMOOTH)));
 //    	ospreyPic.setBounds(200,100,300,300);
