@@ -26,8 +26,8 @@ public class Main {
     public static int birdCount;
     public static boolean playedBoth;
 	public static boolean isOsprey;
-	public static Controller c1;
-	public static Controller c2;
+	public static OspreyController c1;
+	public static HarrierController c2;
 	
     /**
      * will call the start() method in Controller
@@ -35,8 +35,8 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-        c1 = new Controller();
-        c2 = new Controller();
+        c1 = new OspreyController();
+        c2 = new HarrierController();
         started = false;
         started2 = false;
         boolean test = true;
