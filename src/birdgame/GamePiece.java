@@ -18,9 +18,9 @@ public class GamePiece {
     private int yLocation;
     private int xincr;
     private int yincr;
-     int width;
-     int height;
-    private Sprite type;
+    private int width;
+    private int height;
+    private Sprite sprite;
     private int xOffset;
     private int yOffset;
     private int picNum;
@@ -32,7 +32,7 @@ public class GamePiece {
      */
     
     public String toString(){
-    	return " " + type;
+    	return " " + sprite;
     }
     
     public void move() {
@@ -72,7 +72,7 @@ public class GamePiece {
     }
     
     public Sprite getSprite() {
-    	return type;
+    	return sprite;
     }
     
     public void setX( int x){
@@ -100,10 +100,10 @@ public class GamePiece {
     }
     
     public void setSprite(Sprite s) {
-    	type = s;
+    	sprite = s;
     }
     public boolean isEnemy() {
-    	if (type.equals(Sprite.PLANE) || type.equals(Sprite.EAGLE) || type.equals(Sprite.REDFOX) || type.equals(Sprite.RACCOON)){
+    	if (sprite.equals(Sprite.PLANE) || sprite.equals(Sprite.EAGLE) || sprite.equals(Sprite.REDFOX) || sprite.equals(Sprite.RACCOON)){
     		return true;
     	}
     	else {
@@ -136,8 +136,8 @@ public class GamePiece {
 			yOffset = 5;
 		}
 		if (getSprite().equals(Sprite.FISH)) {
-			yOffset = 20;
 			xOffset = 10;
+			yOffset = 20;
 		}
 		if (getSprite().equals(Sprite.RACCOON)) {
 			xOffset = 30;

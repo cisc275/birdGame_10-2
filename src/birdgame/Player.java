@@ -16,15 +16,15 @@ public class Player extends GamePiece {
         private int yOffset;
         private Sprite bird;
 
-	Player(){
-	setYIncr(20);
-	setX(30);
-	setY(300);
-	setWidth(184);
-	setHeight(100);
-	health = 100;
-	xOffset = 30;
-	yOffset = 30;
+	public Player(){
+            setYIncr(20);
+            setX(30);
+            setY(300);
+            setWidth(184);
+            setHeight(100);
+            health = 100;
+            xOffset = 30;
+            yOffset = 30;
 	}
 
 
@@ -68,7 +68,7 @@ public class Player extends GamePiece {
                 return true;
             }
         } else if (x + xOff >= otherX + otherXOff && x + xOff <= otherX + otherH - otherXOff) {
-            if (y + yOff >= otherY + otherYOff && y + yOff <= otherY + otherW - otherYOff) {
+        	if (y + yOff >= otherY + otherYOff && y + yOff <= otherY + otherW - otherYOff) {
                 return true;
             }
             if (y + h - yOff >= otherY + otherYOff && y + h - yOff <= otherY + otherH - otherYOff) {
@@ -119,5 +119,4 @@ public class Player extends GamePiece {
 	public void reset() {
 		setHealth(100);
 	}
-
 }

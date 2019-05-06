@@ -28,7 +28,6 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.*;
@@ -92,10 +91,11 @@ public class View extends JPanel {
     BufferedImage[] miniMap3;
     BufferedImage[] miniMap4;
     Image thoughtBubble;
+
     static JPanel thoughtbub;
     JFrame frameOsprey;
 
-    static JFrame frameHarrier;
+static JFrame frameHarrier;
     static JFrame frame2;
     static JPanel pane1;
     static JPanel pane2;
@@ -107,7 +107,6 @@ public class View extends JPanel {
     int x = 0;
     int health;
     int score;
-    static JLabel bubble;
     static JButton osprey;
     static JButton harrier;
     static ImageIcon ospreyImg;
@@ -116,14 +115,11 @@ public class View extends JPanel {
     static JLabel harrierFact1;
     static JLabel ospreyPic;
     static JLabel harrierPic;
-    static JLabel fact;
     static ImageIcon natureImg;
     static JLabel naturePic;
     static JFrame frame3;
     static JLabel finalScore;
     static JLabel gameOver;
-    static JFrame frameFact;
-    static boolean isOsprey;
     static boolean isDone;
     private int tempFrameCount;
     static JFrame levelStartFrame;
@@ -191,9 +187,8 @@ public class View extends JPanel {
         for(int i = 0; i < planeFrameCount; i++){
             plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
         }
-        thoughtBubble = createImage("images/bub.png").getScaledInstance
-        		(300, 300, Image.SCALE_SMOOTH);
-  
+//        thoughtBubble = createImage("images/bub.png").getScaledInstance
+//        		(300, 300, Image.SCALE_SMOOTH);
     }
     
 
@@ -265,7 +260,7 @@ public class View extends JPanel {
         
       
         g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
-        
+        g.drawImage(thoughtBubble,playerXLoc + 100,playerYLoc,this);
         for(GamePiece gp : currentViewableGPs) {   
         	if (gp.isSpecialFood()) {
         		if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
@@ -411,21 +406,22 @@ public class View extends JPanel {
         osprey.addActionListener(ae -> {
         	displayLevelStartScreen();
             frame2.dispose();
-
             Model.setBird(Sprite.OSPREY);
             Main.birdCount++;
-            
+            Main.isOsprey=true;
             new Timer(5000, ae2 -> {
         		levelStartFrame.dispose();
         		Main.started = true;
               }).start();
+
         });
         harrier.addActionListener(ae -> {
+
+            Main.isOsprey=false;
             frame2.dispose();
             Model.setBird(Sprite.NORTHERN_HARRIER);
             Main.birdCount++;
             Main.started = true;
-
             
         });
         pane1.add(osprey);
@@ -448,29 +444,6 @@ public class View extends JPanel {
      * displayMiniMap() will be called every tick to update the bird's location on
      * the miniMap to see it's progress
      */
-    public void displayFacts(Graphics g) {
-    	
-    	bubble = new JLabel(new ImageIcon(thoughtBubble));
-    	System.out.println(Model.getCurrentFact());
-    	fact = new JLabel(Model.getCurrentFact());
-    	fact.setFont(new Font("Times New Roman",1,60));
-    	//Need to get these hardcoded values out of here!
-    	//fact.setBounds(playerXLoc + 184, playerYLoc,playerXLoc + 184 + 300, playerYLoc + 300);
-//    	thoughtbub = new JPanel();
-//    	thoughtbub.setLayout(null);
-//    	thoughtbub.setSize(300,300);
-//    	thoughtbub.setBounds(playerXLoc + 184, playerYLoc,playerXLoc + 184 + 300, playerYLoc + 300);
-//    	thoughtbub.add(bubble);
-//    	thoughtbub.add(fact);
-//    	thoughtbub.setVisible(true);
-//    	frameOsprey.add(thoughtbub);
-    	g.drawImage(thoughtBubble, playerXLoc + 184, playerYLoc -200, this);
-    	
-    	
-    	//Find a way to access player width, ugg
-    	
-    	
-    }
 
     public void displayMiniMap() {
 
@@ -510,18 +483,11 @@ public class View extends JPanel {
         levelStartFrame = new JFrame();
         levelStartPanel = new JPanel();
         levelStartLabel = new JLabel();
-        //Button level1 = new JButton(new ImageIcon("images/BirdImages/Level1Icon.png"));
-        //level1.setBounds(0,0,frameWidth/10,frameWidth/10);
         levelDisplayStart = new ImageIcon("images/BirdImages/OspreyLevelScreen0.png");
         //add JLabel to JPanel
         levelStartLabel.setIcon(new ImageIcon(levelDisplayStart.getImage().getScaledInstance(frameWidth,frameHeight, Image.SCALE_SMOOTH)));
         levelStartLabel.setBounds(0,0,frameWidth,frameHeight);
         levelStartPanel.setLayout(null);
-//        level1.addActionListener(ae -> {
-//            levelStartFrame.dispose();
-//            Model.level = 1;
-//            Main.started = true;
-//        });
         levelStartPanel.add(levelStartLabel);
         
         //add JPanel to JFrame
@@ -537,6 +503,9 @@ public class View extends JPanel {
     }
     public static void displayLevel2Transition(){
         
+    }
+    public void displayFacts(Graphics g) {
+    	g.drawImage(thoughtBubble, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     }
     
     public int getWidth(){
