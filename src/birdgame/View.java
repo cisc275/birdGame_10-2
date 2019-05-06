@@ -253,6 +253,7 @@ static JFrame frameHarrier;
      */
     
     
+
 //    public void paint(Graphics g) {
 //    	
 ////        paintBackground(g);
@@ -345,6 +346,7 @@ static JFrame frameHarrier;
 //
 //  }
 
+
     /**
      * update() will update the attributes within View based off of the values that
      * are determined in Model.
@@ -383,8 +385,10 @@ static JFrame frameHarrier;
         osprey.setFont(new Font("Agency FB", Font.BOLD, frameWidth/55));
         harrier = new JButton("Play as Northern Harrier");
         harrier.setFont(new Font("Agency FB", Font.BOLD, frameWidth/65));
-    	osprey.setBounds(frameWidth/10,(frameHeight*4)/5,frameWidth/4,frameHeight/10);
-    	harrier.setBounds((frameWidth*6)/10,frameHeight/3,frameWidth/4,frameHeight/10);
+
+
+    	osprey.setBounds(frameWidth/10,(frameHeight*84)/100,frameWidth/4,frameHeight/15);
+    	harrier.setBounds((frameWidth*6)/10,(frameHeight*37)/100,frameWidth/4,frameHeight/15);
 
     	naturePic = new JLabel();
     	naturePic.setIcon(new ImageIcon(natureImg.getImage().getScaledInstance(frameWidth,frameHeight, Image.SCALE_SMOOTH)));
