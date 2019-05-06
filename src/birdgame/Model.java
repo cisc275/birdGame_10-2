@@ -29,12 +29,14 @@ public class Model {
     private int foodFrequency;
     private int specialfoodFrequency;
     private int totalLevelTicks;
+    private static boolean specialFoodEaten = false;
     private static Direction direction;
     private static Player player;
     //GamePiece currentGP;
     private int indexOfGP;
     private ArrayList<GamePiece> currentGPs = new ArrayList<>();
     private GamePiece furthestGP;
+    static String currentFact = "";
     
     /**
      * Model constructor will take in four variables defined below
@@ -280,8 +282,10 @@ public class Model {
             player.setHealth( player.getHealth() + 10);
         }
     }
+  //This method is incomplete, will contain logic for Quiz questions
     public void eatSpecial(SpecialFood sf) {
-    	System.out.println("TODO, specialFood eaten");
+    	specialFoodEaten = true;
+    	currentFact = sf.getFact();
     	 player.setScore(player.getScore() + sf.getFoodValue());
          if(player.getHealth() > 90){
              player.setHealth(100);
@@ -289,6 +293,7 @@ public class Model {
          else{
              player.setHealth( player.getHealth() + 10);
          }
+        
      }
     
 
@@ -314,6 +319,12 @@ public class Model {
 
     public void nest() {
 
+    }
+    public static boolean specialFoodEaten() {
+    	return specialFoodEaten;
+    }
+    public static void setSpecialFoodEaten(boolean eaten) {
+    	specialFoodEaten = eaten;
     }
 
 	public int getImgHeight() {
@@ -432,6 +443,9 @@ public class Model {
 	
 	public static void setBird(Sprite b) {
 		bird = b;
+	}
+	public static String getCurrentFact() {
+		return currentFact;
 	}
 
 }

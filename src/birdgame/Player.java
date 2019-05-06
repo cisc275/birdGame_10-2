@@ -119,4 +119,5 @@ public class Player extends GamePiece {
 	public void reset() {
 		setHealth(100);
 	}
+
 }
