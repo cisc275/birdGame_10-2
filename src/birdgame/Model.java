@@ -148,7 +148,7 @@ public class Model {
     	int topHalfY = ((int) (Math.random()*(fHeight/2)));
     	int maxSpecialFood = 3;
         if(bird.equals(Sprite.NORTHERN_HARRIER)){ //northern harrier
-            while(numGamePieces < 40){
+            while(numGamePieces < 10){
             	if( numSpecialFood < 3) {
             		if (Math.random() < .2) {
             			if (Math.random() < .5) {
@@ -188,7 +188,7 @@ public class Model {
         }
     
         else{
-            while(numGamePieces < 40){
+            while(numGamePieces < 10){
             	if (numSpecialFood < maxSpecialFood) {
             		if (Math.random() < .2) {
             			if (Math.random() < .5) {
