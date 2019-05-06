@@ -255,19 +255,33 @@ public class ProjectTest {
 		assert m.getPlayer().getScore() == 90;
 	}
 	@Test
-	public void whenPlayerCollidesWithAnGamePieceObstacleHitIsNotCalled() {
+	public void ifNoFarthestGPThenLevelEnds() {
 		Model m = new Model(1,1,1,1);
-		Sprite t = Sprite.REDFOX;
+		m.getPlayer().setXIncr(30);
+		m.handleTicks();
+		assert m.getPlayer().getXIncr() == 40;
+	}
+	@Test
+	public void ifFarthestGPXLessThan0ThenLevelEnds() {
+		Model m = new Model(1,1,1,1);
+		GamePiece gP = new GamePiece();
+		gP.setX(-1);
+		m.setFurthestGP(gP);
+		m.getPlayer().setXIncr(30);
+		m.handleTicks();
+		assert m.getPlayer().getXIncr() == 40;
+	}
+	@Test
+	public void ifFarthestGPXGreaterThan0ThenLevelDoesNotEnd() {
+		Model m = new Model(1,1,1,1);
 		GamePiece gP = new GamePiece();
 		gP.setX(1);
-		gP.setY(1);
-		m.getGamePieces().add(gP);
-		m.getPlayer().setX(1);
-		m.getPlayer().setY(1);
-		m.getPlayer().setScore(100);
+		m.setFurthestGP(gP);
+		m.getPlayer().setXIncr(30);
 		m.handleTicks();
-		assert m.getPlayer().getScore() == 100;
-	}	
+		assert m.getPlayer().getXIncr() == 30;
+	}
+
 		//getProgress()
 	@Test
 	public void getProgressOf0ReturnsProgressOf0() {

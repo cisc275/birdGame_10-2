@@ -9,7 +9,7 @@ public enum Sprite{
 	PLANE("plane"),
 	FISH("fish"),
 	RACCOON("raccoon"),
-        NORTHERN_HARRIER("northern harrier"),
+    NORTHERN_HARRIER("northern harrier"),
         OSPREY("osprey");
 	String name;
 	
