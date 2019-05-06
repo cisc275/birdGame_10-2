@@ -68,7 +68,7 @@ public class Player extends GamePiece {
                 return true;
             }
         } else if (x + xOff >= otherX + otherXOff && x + xOff <= otherX + otherH - otherXOff) {
-            if (y + yOff >= otherY + otherYOff && y + yOff <= otherY + otherW - otherYOff) {
+        	if (y + yOff >= otherY + otherYOff && y + yOff <= otherY + otherW - otherYOff) {
                 return true;
             }
             if (y + h - yOff >= otherY + otherYOff && y + h - yOff <= otherY + otherH - otherYOff) {

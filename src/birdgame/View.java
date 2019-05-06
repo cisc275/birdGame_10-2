@@ -91,8 +91,11 @@ public class View extends JPanel {
     BufferedImage[] miniMap3;
     BufferedImage[] miniMap4;
     Image thoughtBubble;
+
+    static JPanel thoughtbub;
     JFrame frameOsprey;
-    static JFrame frameHarrier;
+
+static JFrame frameHarrier;
     static JFrame frame2;
     static JPanel pane1;
     static JPanel pane2;
@@ -104,6 +107,7 @@ public class View extends JPanel {
     int x = 0;
     int health;
     int score;
+	private JLabel fact;
     static JButton osprey;
     static JButton harrier;
     static ImageIcon ospreyImg;
@@ -117,9 +121,8 @@ public class View extends JPanel {
     static JFrame frame3;
     static JLabel finalScore;
     static JLabel gameOver;
-    static boolean isOsprey;
+    static JLabel bubble;
     static boolean isDone;
-    
     static JFrame levelStartFrame;
     static JPanel levelStartPanel;
     static JLabel levelStartLabel;
@@ -185,8 +188,8 @@ public class View extends JPanel {
         for(int i = 0; i < planeFrameCount; i++){
             plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
         }
-//        thoughtBubble = createImage("images/bub.png").getScaledInstance
-//        		(300, 300, Image.SCALE_SMOOTH);
+      thoughtBubble = createImage("images/bub.png").getScaledInstance
+       		(300, 300, Image.SCALE_SMOOTH);
     }
     
 
@@ -218,7 +221,6 @@ public class View extends JPanel {
    		ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
    		ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
    		ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
-   		System.out.println(Model.getBird());
    		if(Model.getBird().equals(Sprite.OSPREY)) {
    			imgback = imgOsprey.getImage();
    			imgback2 = imgOsprey2.getImage();
@@ -253,9 +255,12 @@ public class View extends JPanel {
     	
         paintBackground(g);
         picNum = (picNum + 1) % frameCount;
+        if (Model.specialFoodEaten() ) {
+        	displayFacts(g);
+        }
+        
       
         g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
-        g.drawImage(thoughtBubble,playerXLoc + 100,playerYLoc,this);
         for(GamePiece gp : currentViewableGPs) {   
         	if (gp.isSpecialFood()) {
         		if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
@@ -357,7 +362,7 @@ public class View extends JPanel {
         x+=25;
         frameOsprey.repaint();
         try {
-            Thread.sleep(100);
+            Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -401,21 +406,22 @@ public class View extends JPanel {
         osprey.addActionListener(ae -> {
         	displayLevelStartScreen();
             frame2.dispose();
-
             Model.setBird(Sprite.OSPREY);
             Main.birdCount++;
-            
+            Main.isOsprey=true;
             new Timer(5000, ae2 -> {
         		levelStartFrame.dispose();
         		Main.started = true;
               }).start();
+
         });
         harrier.addActionListener(ae -> {
+
+            Main.isOsprey=false;
             frame2.dispose();
             Model.setBird(Sprite.NORTHERN_HARRIER);
             Main.birdCount++;
             Main.started = true;
-
             
         });
         pane1.add(osprey);
@@ -472,6 +478,19 @@ public class View extends JPanel {
     	frame3.setVisible(true);
     	
     }
+ public void displayFacts(Graphics g) {
+    	
+    	bubble = new JLabel(new ImageIcon(thoughtBubble));
+    	System.out.println(Model.getCurrentFact());
+    	fact = new JLabel(Model.getCurrentFact());
+    	fact.setFont(new Font("Times New Roman",1,60));
+    	g.drawImage(thoughtBubble, playerXLoc + 184, playerYLoc -200, this);
+    	
+    	
+   
+    	
+    	
+    }
     
     public static void displayLevelStartScreen(){
         levelStartFrame = new JFrame();
@@ -498,7 +517,7 @@ public class View extends JPanel {
     public static void displayLevel2Transition(){
         
     }
-    
+   
     public int getWidth(){
         return frameWidth;
     }
