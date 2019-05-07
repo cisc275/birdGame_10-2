@@ -90,12 +90,12 @@ public class HarrierView extends View{
 	            
 	        }
 	        g.setColor(Color.red);
-	        g.drawRect(10, 10, 100 * 2, 50);
-	        g.fillRect(10, 10, health * 2, 50);
+	        g.drawRect(frameWidth/105, frameHeight/75, 100 * 2, frameHeight/17);
+	        g.fillRect(frameWidth/105, frameHeight/75, health * 2, frameHeight/17);
 	        g.setColor(Color.white);
 	        g.setFont(new Font("Times New Roman", 1, 20));
-	        g.drawRect(frameWidth - 105, 20, 100, 50);
-	        g.drawString("Score: " + String.valueOf(score), frameWidth - 100, 50);
+	        g.drawRect(frameWidth - 105, frameHeight/30, 100, frameHeight/25);
+	        g.drawString("Score: " + String.valueOf(score), frameWidth - 103, frameHeight/17);
 
 	      
 
