@@ -18,12 +18,18 @@ public class OspreyModel extends Model{
         //background0:
             //land: 0-432px, 1776-2640px, 
         //int tempXLoc = (int)(Math.random() * 2639 + 1776);
+        
+        
         int tempXLoc = 500;
         int landHeight = 96;
         boolean flag = true;
         
         int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
     	int topHalfY = ((int) (Math.random()*(fHeight/2)));
+    	
+    	int halfOfScreen = fHeight/2;
+
+    	
     	int maxSpecialFood = 3;
 		while(numGamePieces < 10){
         	if (numSpecialFood < maxSpecialFood) {
@@ -44,18 +50,18 @@ public class OspreyModel extends Model{
         	
             if(Math.random() < .5){ //food
                 if(Math.random() < .5){//snakes
-                    gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.SNAKE));
+                    gamePieces.add(new Food(tempXLoc, ((int) (Math.random()*halfOfScreen) + halfOfScreen), Sprite.SNAKE));
                 }
                 else{//fish
-                    gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.FISH));
+                    gamePieces.add(new Food(tempXLoc, ((int) (Math.random()*halfOfScreen) + halfOfScreen), Sprite.FISH));
                 }
             }
             else{//enemy
                 if(Math.random() < 0.5){//eagles
-                    gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.EAGLE));
+                    gamePieces.add(new Enemy(tempXLoc, (int) ((Math.random()*halfOfScreen)), Sprite.EAGLE));
                 }
                 else{//planes
-                    gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.PLANE));
+                    gamePieces.add(new Enemy(tempXLoc, (int) ((Math.random()*halfOfScreen)), Sprite.PLANE));
                 }
             }
             numGamePieces++;

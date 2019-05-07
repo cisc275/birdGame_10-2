@@ -19,10 +19,11 @@ public class HarrierModel extends Model{
         //int tempXLoc = (int)(Math.random() * 2639 + 1776);
         int tempXLoc = 500;
         int landHeight = 96;
-        boolean flag = true;
         
-        int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
-    	int topHalfY = ((int) (Math.random()*(fHeight/2)));
+        
+        
+    	
+    	int halfOfScreen = fHeight/2;
     	int maxSpecialFood = 3;
 		 while(numGamePieces < 10){
          	if( numSpecialFood < 3) {
@@ -41,20 +42,20 @@ public class HarrierModel extends Model{
          	
              if(Math.random() < .5){ //food
                  if(Math.random() < .5){//bunny
-                 		gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.BUNNY));
+                 		gamePieces.add(new Food(tempXLoc, ((int) (Math.random()*halfOfScreen) + halfOfScreen), Sprite.BUNNY));
                  	}
                      
                  
                  else{//mouse
-                     gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.MOUSE));
+                     gamePieces.add(new Food(tempXLoc, ((int) (Math.random()*halfOfScreen) + halfOfScreen), Sprite.MOUSE));
                  }
              }
              else{//enemy
                  if(Math.random() < .5){//red fox
-                     gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.REDFOX));
+                     gamePieces.add(new Enemy(tempXLoc, ((int) (Math.random()*halfOfScreen) + halfOfScreen), Sprite.REDFOX));
                  }
                  else{//raccoon
-                     gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.RACCOON));
+                     gamePieces.add(new Enemy(tempXLoc, ((int) (Math.random()*halfOfScreen) + halfOfScreen), Sprite.RACCOON));
                  }
              }
              numGamePieces++;
