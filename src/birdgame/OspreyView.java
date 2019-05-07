@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 
 public class OspreyView extends View{
 	
+	Image imgback;
+	Image imgback2;
+	
 	public static void displayLevelStartScreen(){
         levelStartFrame = new JFrame();
         levelStartPanel = new JPanel();
@@ -41,12 +44,9 @@ public class OspreyView extends View{
     
  public void paintBackground(Graphics g) {
     	
-    	Image imgback;
-    	Image imgback2;
-   		ImageIcon imgOsprey = new ImageIcon("DNERRGameBackground.jpg");
-   		ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
-   		imgback = imgOsprey.getImage();
-   		imgback2 = imgOsprey2.getImage();
+
+   		imgback = View.imgOsprey.getImage();
+   		imgback2 = View.imgOsprey2.getImage();
 
 
    		Graphics2D g2d = (Graphics2D)g;

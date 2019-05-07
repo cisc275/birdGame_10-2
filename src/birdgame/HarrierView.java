@@ -10,16 +10,15 @@ import javax.swing.ImageIcon;
 
 public class HarrierView extends View{
 	
+	Image imgback;
+	Image imgback2;
+	
 	 public void displayMiniMap() {
 
 	    }
 	 
 	 public void paintBackground(Graphics g) {
 	    	
-	    	Image imgback;
-	    	Image imgback2;
-	   		ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
-	   		ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
 
 	   		imgback = imgHarrier.getImage();
 	   		imgback2 = imgHarrier2.getImage();

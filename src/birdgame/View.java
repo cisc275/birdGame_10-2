@@ -128,6 +128,12 @@ static JFrame frameHarrier;
     static JLabel levelStartLabel;
     static ImageIcon levelDisplayStart;
     
+    static ImageIcon imgOsprey;
+    static ImageIcon imgOsprey2;
+    
+    static ImageIcon imgHarrier;
+    static ImageIcon imgHarrier2;
+    
     
 
     /**
@@ -189,8 +195,13 @@ static JFrame frameHarrier;
         for(int i = 0; i < planeFrameCount; i++){
             plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
         }
-      thoughtBubble = createImage("images/bub.png").getScaledInstance
+        thoughtBubble = createImage("images/bub.png").getScaledInstance
        		(300, 300, Image.SCALE_SMOOTH);
+      
+      	imgOsprey = new ImageIcon("DNERRGameBackground.jpg");
+ 		imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
+ 		imgHarrier = new ImageIcon("nature2.jpg");
+   		imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
 
     }
     
