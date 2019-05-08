@@ -19,15 +19,14 @@ import java.util.List;
 public class SpecialFood extends Food {
 	//All of these static fields are defined in the generateFactsAndQuestions method!
 //	public static HashMap<String,HashMap<String,String[]>> factsAndQuestionsHarrier = new HashMap<>();
-	public static HashMap<String,HashMap<String,String[]>> factsAndQuestions;
+	
 //	public static ArrayList<String> avaliableFactsHarrier;
-	public static ArrayList<String> avaliableFacts;
 	protected String fact;
     public SpecialFood(int x, int y, Sprite foodType) {
 		super(x, y, foodType);
 		setSpecialFood(true);
 		setXIncr(45);
-		factsAndQuestions = new HashMap<>();
+		
 		
 	}
 //    public static void generateFactsAndQuestions() {

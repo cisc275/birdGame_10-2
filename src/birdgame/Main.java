@@ -35,6 +35,24 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
+//    	c1 = new OspreyController();
+//    	c2 = new HarrierController();
+//    	boolean test = true;
+//    	started =false;
+//    	c1.getView().frameOsprey.addKeyListener(c1);
+//    	c2.getView().frameOsprey.addKeyListener(c2);
+//    	c1.getView().displayStartScreen();
+//    	while(test) {
+//    		if(started=true) {
+//    			test=false;
+//    			c2.start();
+//    		}
+//    	}
+//    	c1.start();
+    	
+    	
+    	
+    	
         c1 = new OspreyController();
         c2 = new HarrierController();
         started = false;
@@ -71,11 +89,9 @@ public class Main {
 					c1.getView().frameOsprey.dispose(); 
 					
 					if(isOsprey==false) {
-						c2.getModel().setBird(Sprite.OSPREY);
 						c2.getView().harrier.setVisible(false);
 					}
 					else {
-						c2.getModel().setBird(Sprite.NORTHERN_HARRIER);
 						c2.getView().osprey.setVisible(false);
 					}
 					c2.getModel().getPlayer().reset();

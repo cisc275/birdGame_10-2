@@ -10,16 +10,15 @@ import javax.swing.ImageIcon;
 
 public class HarrierView extends View{
 	
+	Image imgback;
+	Image imgback2;
+	
 	 public void displayMiniMap() {
 
 	    }
 	 
 	 public void paintBackground(Graphics g) {
 	    	
-	    	Image imgback;
-	    	Image imgback2;
-	   		ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
-	   		ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
 
 	   		imgback = imgHarrier.getImage();
 	   		imgback2 = imgHarrier2.getImage();
@@ -37,70 +36,36 @@ public class HarrierView extends View{
 	   		
 	    }
 	 
+	 
 	    public void paint(Graphics g) {
 	    	
-	        paintBackground(g);
-	        picNum = (picNum + 1) % frameCount;
-	        if (Model.specialFoodEaten() ) {
-	        	displayFacts(g);
-	        }
-	        
-	      
-	        g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
-	        for(GamePiece gp : currentViewableGPs) {   
-	        	if (gp.isSpecialFood()) {
-	        		if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
-	                    //micePicNum = (micePicNum + 1) % miceFrameCount;
-	                    gp.setPicNum((gp.getPicNum() + 1)% miceFrameCount);
-	                    g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
-	                }
-	                else if(gp.getSprite().equals(Sprite.BUNNY)){ //bunny
-	                    //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
-	                    gp.setPicNum((gp.getPicNum() + 1)% bunnyFrameCount);
-	                    g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
-	                }
-	                
-	        	}
-	        	else if(gp.isFood()){
-	                if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
-	                    //micePicNum = (micePicNum + 1) % miceFrameCount;
-	                    gp.setPicNum((gp.getPicNum() + 1)% miceFrameCount);
-	                    g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(), this);
-	                }
-	                else if(gp.getSprite().equals(Sprite.BUNNY)){ //bunny
-	                    //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
-	                    gp.setPicNum((gp.getPicNum() + 1)% bunnyFrameCount);
-	                    g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(), this);
-	                }
-	                
-	            }
-	            else if (gp.isEnemy()){
-	                if(gp.getSprite().equals(Sprite.REDFOX)){ //red fox
-	                    //redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
-	                    gp.setPicNum((gp.getPicNum() + 1)% redFoxFrameCount);
-	                    g.drawImage(redFox[gp.getPicNum()], gp.getX(), gp.getY(), this);
-	                }
-	                else if(gp.getSprite().equals(Sprite.RACCOON)){ //raccoons
-	                    //raccoonPicNum = (raccoonPicNum + 1) % raccoonFrameCount;
-	                    gp.setPicNum((gp.getPicNum() + 1)% raccoonFrameCount);
-	                    g.drawImage(raccoon[gp.getPicNum()], gp.getX(), gp.getY(), this);
-	                }
-	                
-
-	            }   
-	            
-	        }
+	    	 paintBackground(g);
+	    	   if (updateImgPlayer % 2 == 0) {
+	    		   picNum = (picNum + 1) % frameCount;
+	    	   }
+	    	   updateImgPlayer++;
+	    	   
+	    	   if (Model.specialFoodEaten() ) {
+	    	   	displayFacts();
+	    	   	Model.setSpecialFoodEaten(false);
+	    	   }
+	    	   
+	    	 
+	    	   g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
+	    	   for(GamePiece gp : currentViewableGPs) {   
+	    	   		drawGamePiece(g, gp);
 	        g.setColor(Color.red);
-	        g.drawRect(10, 10, 100 * 2, 50);
-	        g.fillRect(10, 10, health * 2, 50);
+	        g.drawRect(frameWidth/105, frameHeight/75, 100 * 2, frameHeight/17);
+	        g.fillRect(frameWidth/105, frameHeight/75, health * 2, frameHeight/17);
 	        g.setColor(Color.white);
 	        g.setFont(new Font("Times New Roman", 1, 20));
-	        g.drawRect(frameWidth - 105, 20, 100, 50);
-	        g.drawString("Score: " + String.valueOf(score), frameWidth - 100, 50);
+	        g.drawRect(frameWidth - 105, frameHeight/30, 100, frameHeight/25);
+	        g.drawString("Score: " + String.valueOf(score), frameWidth - 103, frameHeight/17);
 
 	      
 
 	  }
 
 
+}
 }

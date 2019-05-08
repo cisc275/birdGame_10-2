@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 
 public class OspreyView extends View{
 	
+	Image imgback;
+	Image imgback2;
+	
 	public static void displayLevelStartScreen(){
         levelStartFrame = new JFrame();
         levelStartPanel = new JPanel();
@@ -31,6 +34,7 @@ public class OspreyView extends View{
         levelStartFrame.setUndecorated(true);
         levelStartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
     	levelStartFrame.setVisible(true);
+    	
     }
     public static void displayLevel1Transition(){
         
@@ -41,12 +45,9 @@ public class OspreyView extends View{
     
  public void paintBackground(Graphics g) {
     	
-    	Image imgback;
-    	Image imgback2;
-   		ImageIcon imgOsprey = new ImageIcon("DNERRGameBackground.jpg");
-   		ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
-   		imgback = imgOsprey.getImage();
-   		imgback2 = imgOsprey2.getImage();
+
+   		imgback = View.imgOsprey.getImage();
+   		imgback2 = View.imgOsprey2.getImage();
 
 
    		Graphics2D g2d = (Graphics2D)g;
@@ -66,64 +67,57 @@ public class OspreyView extends View{
  public void paint(Graphics g) {
  	
    paintBackground(g);
-   picNum = (picNum + 1) % frameCount;
+   if (updateImgPlayer % 2 == 0) {
+	   picNum = (picNum + 1) % frameCount;
+   }
+   updateImgPlayer++;
+   
    if (Model.specialFoodEaten() ) {
-   	displayFacts(g);
+   	displayFacts();
+   	Model.setSpecialFoodEaten(false);
    }
    
  
    g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
    for(GamePiece gp : currentViewableGPs) {   
-   	if (gp.isSpecialFood()) {
-
-           
-           if(gp.getSprite().equals(Sprite.SNAKE)){ //snake
-               //snakePicNum = (snakePicNum + 1) % snakeFrameCount;
-               gp.setPicNum((gp.getPicNum() + 1)% snakeFrameCount);
-               g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
-           }
-           else{// fish
-               //fishPicNum = (fishPicNum + 1) % fishFrameCount;
-               gp.setPicNum((gp.getPicNum() + 1)% fishFrameCount);
-               g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
-           } 
+   		drawGamePiece(g, gp);
    	}
-   	else if(gp.isFood()){
-
-           if(gp.getSprite().equals(Sprite.SNAKE)){ //snake
-               //snakePicNum = (snakePicNum + 1) % snakeFrameCount;
-               gp.setPicNum((gp.getPicNum() + 1)% snakeFrameCount);
-               g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(), this);
-           }
-           else{// fish
-               //fishPicNum = (fishPicNum + 1) % fishFrameCount;
-               gp.setPicNum((gp.getPicNum() + 1)% fishFrameCount);
-               g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(), this);
-           }  
-       }
-       else if (gp.isEnemy()){
-
-           if(gp.getSprite().equals(Sprite.EAGLE)){ //eagles
-               //eaglePicNum = (eaglePicNum + 1) % eagleFrameCount;
-               gp.setPicNum((gp.getPicNum() + 1)% eagleFrameCount);
-               g.drawImage(eagle[gp.getPicNum()], gp.getX(), gp.getY(), this);
-           }
-           else{ //planes
-               //planePicNum = (planePicNum + 1) % planeFrameCount;
-               gp.setPicNum((gp.getPicNum() + 1)% planeFrameCount);
-               g.drawImage(plane[gp.getPicNum()], gp.getX(), gp.getY(), this);
-           }
-
-       }   
-       
-   }
+//   	else if(gp.isFood()){
+//
+//           if(gp.getSprite().equals(Sprite.SNAKE)){ //snake
+//               //snakePicNum = (snakePicNum + 1) % snakeFrameCount;
+//               gp.setPicNum((gp.getPicNum() + 1)% snakeFrameCount);
+//               g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(), this);
+//           }
+//           else{// fish
+//               //fishPicNum = (fishPicNum + 1) % fishFrameCount;
+//               gp.setPicNum((gp.getPicNum() + 1)% fishFrameCount);
+//               g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(), this);
+//           }  
+//       }
+//       else if (gp.isEnemy()){
+//
+//           if(gp.getSprite().equals(Sprite.EAGLE)){ //eagles
+//               //eaglePicNum = (eaglePicNum + 1) % eagleFrameCount;
+//               gp.setPicNum((gp.getPicNum() + 1)% eagleFrameCount);
+//               g.drawImage(eagle[gp.getPicNum()], gp.getX(), gp.getY(), this);
+//           }
+//           else{ //planes
+//               //planePicNum = (planePicNum + 1) % planeFrameCount;
+//               gp.setPicNum((gp.getPicNum() + 1)% planeFrameCount);
+//               g.drawImage(plane[gp.getPicNum()], gp.getX(), gp.getY(), this);
+//           }
+//
+//       }   
+//       
+//   }
    g.setColor(Color.red);
-   g.drawRect(10, 10, 100 * 2, 50);
-   g.fillRect(10, 10, health * 2, 50);
+   g.drawRect(frameWidth/105, frameHeight/75, 100 * 2, frameHeight/17);
+   g.fillRect(frameWidth/105, frameHeight/75, health * 2, frameHeight/17);
    g.setColor(Color.white);
    g.setFont(new Font("Times New Roman", 1, 20));
-   g.drawRect(frameWidth - 105, 20, 100, 50);
-   g.drawString("Score: " + String.valueOf(score), frameWidth - 100, 50);
+   g.drawRect(frameWidth - 105, frameHeight/30, 100, frameHeight/25);
+   g.drawString("Score: " + String.valueOf(score), frameWidth - 103, frameHeight/17);
 
  
 
