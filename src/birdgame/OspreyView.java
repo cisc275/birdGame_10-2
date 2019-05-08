@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 
 public class OspreyView extends View{
 	
+	Image imgback;
+	Image imgback2;
+	
 	public static void displayLevelStartScreen(){
         levelStartFrame = new JFrame();
         levelStartPanel = new JPanel();
@@ -42,12 +45,9 @@ public class OspreyView extends View{
     
  public void paintBackground(Graphics g) {
     	
-    	Image imgback;
-    	Image imgback2;
-   		ImageIcon imgOsprey = new ImageIcon("DNERRGameBackground.jpg");
-   		ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
-   		imgback = imgOsprey.getImage();
-   		imgback2 = imgOsprey2.getImage();
+
+   		imgback = View.imgOsprey.getImage();
+   		imgback2 = View.imgOsprey2.getImage();
 
 
    		Graphics2D g2d = (Graphics2D)g;
@@ -112,12 +112,12 @@ public class OspreyView extends View{
 //       
 //   }
    g.setColor(Color.red);
-   g.drawRect(10, 10, 100 * 2, 50);
-   g.fillRect(10, 10, health * 2, 50);
+   g.drawRect(frameWidth/105, frameHeight/75, 100 * 2, frameHeight/17);
+   g.fillRect(frameWidth/105, frameHeight/75, health * 2, frameHeight/17);
    g.setColor(Color.white);
    g.setFont(new Font("Times New Roman", 1, 20));
-   g.drawRect(frameWidth - 105, 20, 100, 50);
-   g.drawString("Score: " + String.valueOf(score), frameWidth - 100, 50);
+   g.drawRect(frameWidth - 105, frameHeight/30, 100, frameHeight/25);
+   g.drawString("Score: " + String.valueOf(score), frameWidth - 103, frameHeight/17);
 
  
 
