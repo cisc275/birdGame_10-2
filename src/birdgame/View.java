@@ -356,7 +356,7 @@ static JFrame frameHarrier;
      */
 
     public void update(int xLoc, int yLoc, ArrayList<GamePiece> g, Direction dir, int h, int s) {
-    	
+        
         playerXLoc = xLoc;
         playerYLoc = yLoc;
         health=h;
