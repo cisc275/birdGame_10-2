@@ -456,7 +456,7 @@ static JFrame frameHarrier;
         x+=25;
         frameOsprey.repaint();
         try {
-            Thread.sleep(75);
+            Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
