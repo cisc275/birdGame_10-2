@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
@@ -12,6 +13,7 @@ public class HarrierView extends View{
 	
 	Image imgback;
 	Image imgback2;
+        BufferedImage[] miniMap;
 	
 	 public void displayMiniMap() {
 

@@ -14,10 +14,29 @@ import java.awt.event.KeyListener;
  */
 public class Controller implements KeyListener{
 
-//    protected Model model;
-//    protected View view;
+    protected Model model;
+    protected View view;
    
-
+public Controller(){
+    view = new View();
+    model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
+}
+public void start(){
+    view.displayStartScreen();
+    if(View.isOsprey){
+        OspreyController o = new OspreyController();
+        model = o.getModel();
+        view = o.getView();
+        o.start();
+    }
+    else{
+        HarrierController h = new HarrierController();
+        model = h.getModel();
+        view = h.getView();
+        h.start();
+    }
+    
+}
 //    public Controller() {
 //        view = new View();
 //        model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());

@@ -35,74 +35,54 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-//    	c1 = new OspreyController();
-//    	c2 = new HarrierController();
-//    	boolean test = true;
-//    	started =false;
-//    	c1.getView().frameOsprey.addKeyListener(c1);
-//    	c2.getView().frameOsprey.addKeyListener(c2);
-//    	c1.getView().displayStartScreen();
-//    	while(test) {
-//    		if(started=true) {
-//    			test=false;
-//    			c2.start();
-//    		}
-//    	}
-//    	c1.start();
-    	
-    	
-    	
-    	
-        c1 = new OspreyController();
-        c2 = new HarrierController();
-        started = false;
-        started2 = false;
-        boolean test = true;
-        playedBoth = false;
-        birdCount = 0;
-        isOsprey=false;
-        c1.getView().frameOsprey.addKeyListener(c1);
-        c2.getView().frameOsprey.addKeyListener(c2);
-        c1.getView().displayStartScreen();
-
-        while (test) {
-            if (started == true) {
-                test = false;
-                c1.start();
-            }
-            
-            //if you want only one game played
-//    		if (Player.getHealth()<=0) {
-//    			c1.getView().displayEndScreen();
-//				c1.getView().frameOsprey.dispose(); 
-//    		}
-            //if you want both games played
-            while(Player.getHealth()<=0) {
-
-    			if(birdCount ==2) {
-    				c2.getView().displayEndScreen();
-					c2.getView().frameOsprey.dispose(); 
-					break;
-    			}
-    			else {
-					c2.getView().displayStartScreen();
-					c1.getView().frameOsprey.dispose(); 
-					
-					if(isOsprey==false) {
-						c2.getView().harrier.setVisible(false);
-					}
-					else {
-						c2.getView().osprey.setVisible(false);
-					}
-					c2.getModel().getPlayer().reset();
-    				c2.start();
-    			}
-
-    		}
-
-            System.out.print("");
-        }
-
+        Controller c = new Controller();
+        c.start();
     }
+//        c1 = new OspreyController();
+//        c2 = new HarrierController();
+//        started = false;
+//        started2 = false;
+//        boolean test = true;
+//        playedBoth = false;
+//        birdCount = 0;
+//        isOsprey=false;
+//        c1.getView().frame.addKeyListener(c1);
+//        c2.getView().frame.addKeyListener(c2);
+//        c1.getView().displayStartScreen();
+//
+//        while (test) {
+//            if (started == true) {
+//                test = false;
+//                c1.start();
+//            }
+//            
+// 
+//            while(Player.getHealth()<=0) {
+//
+//    			if(birdCount ==2) {
+//    				c2.getView().displayEndScreen();
+//					c2.getView().frame.dispose(); 
+//					break;
+//    			}
+//    			else {
+//					c2.getView().displayStartScreen();
+//					c1.getView().frame.dispose(); 
+//					
+//					if(isOsprey==false) {
+//						c2.getView().harrier.setVisible(false);
+//					}
+//					else {
+//						c2.getView().osprey.setVisible(false);
+//					}
+//					c2.getModel().getPlayer().reset();
+//    				c2.start();
+//    			}
+//
+//    		}
+//
+//            System.out.print("");
+//        }
+//
+//    }
 
 }

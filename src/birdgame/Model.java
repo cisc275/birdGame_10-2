@@ -50,7 +50,7 @@ public class Model {
      */
 
     public Model(int fwidth, int fheight, int imageWidth, int imageHeight) {
-    	gamePieces = new ArrayList<>();
+    	//gamePieces = new ArrayList<>();
     	fWidth = fwidth;
     	fHeight = fheight;
     	setImgWidth(imageWidth);

@@ -85,18 +85,11 @@ public class View extends JPanel {
     BufferedImage[] plane = new BufferedImage[1];
     BufferedImage[] eagle = new BufferedImage[6];
     //don't forget below
-    BufferedImage[] catchPrey;
-    BufferedImage[] crash;
     BufferedImage[] enterNest;
-    BufferedImage[] exitNest;
-    BufferedImage[] miniMap1;
-    BufferedImage[] miniMap2;
-    BufferedImage[] miniMap3;
-    BufferedImage[] miniMap4;
     Image thoughtBubble;
 
     static JPanel thoughtbub;
-    JFrame frameOsprey;
+    JFrame frame;
 
 static JFrame frameHarrier;
     static JFrame frame2;
@@ -137,7 +130,7 @@ static JFrame frameHarrier;
     static ImageIcon imgHarrier;
     static ImageIcon imgHarrier2;
     
-    
+    static boolean isOsprey;
     
 
     /**
@@ -146,15 +139,15 @@ static JFrame frameHarrier;
 
     public View() {
     	setLayout(null);
-        frameOsprey = new JFrame();
-        frameOsprey.setContentPane(this);
-        frameOsprey.setBackground(Color.white);
-        frameOsprey.setSize(frameWidth, frameHeight);
+        frame = new JFrame();
+        frame.setContentPane(this);
+        frame.setBackground(Color.white);
+        frame.setSize(frameWidth, frameHeight);
         loadImages();
-        frameOsprey.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        frameOsprey.setUndecorated(true);
-        frameOsprey.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
-        frameOsprey.setVisible(false); 
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        frame.setUndecorated(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+        frame.setVisible(false); 
 //        frameHarrier = new JFrame();
 //        frameHarrier.setContentPane(this);
 //        frameHarrier.setBackground(Color.white);
@@ -454,7 +447,7 @@ static JFrame frameHarrier;
         currentViewableGPs = g;
         direction = dir;
         x+=25;
-        frameOsprey.repaint();
+        frame.repaint();
         try {
             Thread.sleep(50);
         } catch (InterruptedException e) {
@@ -476,7 +469,6 @@ static JFrame frameHarrier;
         harrier = new JButton("Play as Northern Harrier");
         harrier.setFont(new Font("Agency FB", Font.BOLD, frameWidth/65));
 
-
     	osprey.setBounds(frameWidth/10,(frameHeight*84)/100,frameWidth/4,frameHeight/15);
     	harrier.setBounds((frameWidth*6)/10,(frameHeight*37)/100,frameWidth/4,frameHeight/15);
 
@@ -487,39 +479,28 @@ static JFrame frameHarrier;
         pane1 = new JPanel();
         pane1.setLayout(null);
         osprey.addActionListener(ae -> {
-        	OspreyView.displayLevelStartScreen();
+            isOsprey = true;
+            OspreyView.displayLevelStartScreen();
             frame2.dispose();
-//            Model.setBird(Sprite.OSPREY);
-            Main.birdCount++;
-            Main.isOsprey=true;
-            new Timer(5000, ae2 -> {
+           new Timer(5000, ae2 -> {
         		levelStartFrame.dispose();
-        		Main.started = true;
               }).start();
 
         });
         harrier.addActionListener(ae -> {
-
-            Main.isOsprey=false;
+            isOsprey = false;
             frame2.dispose();
-//            Model.setBird(Sprite.NORTHERN_HARRIER);
-            Main.birdCount++;
-            Main.started = true;
             
         });
         pane1.add(osprey);
         pane1.add(harrier);
-//        pane1.add(ospreyPic);
-//        pane1.add(harrierPic);
-//        pane1.add(ospreyFact1);
-//        pane1.add(harrierFact1);
         pane1.add(naturePic);
         frame2.add(pane1);
         frame2.setSize(frameWidth, frameHeight);
         frame2.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         frame2.setUndecorated(true);
         frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
-        frameOsprey.setVisible(true);
+        frame.setVisible(true);
         frame2.setVisible(true);
     }
 
@@ -569,7 +550,7 @@ static JFrame frameHarrier;
 	 	JLabel img = new JLabel(new ImageIcon(thoughtBubble));
 	 	bubble.add(img);
 	 	bubble.setVisible(true);
-	 	frameOsprey.add(bubble);
+	 	frame.add(bubble);
 	 	
 	 	
 	 	
