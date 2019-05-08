@@ -5,7 +5,8 @@
  */
 package birdgame;
 
-import java.util.ArrayList;    
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -15,6 +16,7 @@ import java.util.Iterator;
  * @author crnis
  */
 public class Model {
+	public static HashMap<String,HashMap<String,String[]>> factsAndQuestions;
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
     static int level;
     protected int fWidth;
@@ -37,6 +39,7 @@ public class Model {
     private ArrayList<GamePiece> currentGPs = new ArrayList<>();
     private GamePiece furthestGP;
     private static boolean specialFoodEaten = false;
+    static ArrayList<String> avaliableFacts;
     
     /**
      * Model constructor will take in four variables defined below
@@ -128,6 +131,9 @@ public class Model {
     	player.setX(player.getX() + player.getXIncr());
 
     }
+    public static ArrayList<String> getAvaliableFacts(){
+		return avaliableFacts;
+	}
 
     /**
      * spawnGamePieces() will randomly generate an obstacle on the screen, including
@@ -297,6 +303,9 @@ public class Model {
      }
     public static boolean specialFoodEaten() {
     	return specialFoodEaten;
+    }
+    public static void setSpecialFoodEaten(boolean bool) {
+    	specialFoodEaten = bool;
     }
     
     

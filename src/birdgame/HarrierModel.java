@@ -1,12 +1,16 @@
 package birdgame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HarrierModel extends Model{
 
 	public HarrierModel(int fwidth, int fheight, int imageWidth, int imageHeight) {
 		super(fwidth, fheight, imageWidth, imageHeight);
 		gamePieces = new ArrayList<>();
+		 factsAndQuestions = new HashMap<>();
+		 avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
+		 generateFactsAndQuestions();
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -71,5 +75,24 @@ public class HarrierModel extends Model{
 	        }
 		 
 	}
+	public static void generateFactsAndQuestions() {
+    	HashMap<String,String[]> QandAsHarrier1 = new HashMap<>();
+    	String[] harrierFood = {"rodents", "fish", "eagles","plants", "rodents"};
+    	QandAsHarrier1.put("What do Northern Harriers eat?",harrierFood);
+    	factsAndQuestions.put("Northern Harriers Like to eat rodents like mice and bunnies", QandAsHarrier1);
+    	
+    	HashMap<String,String[]> QandAsHarrier2 = new HashMap<>();
+    	String[] harrierMigrate = {"They migrate to South America","They migrate to California", "They don't migrate", "They migrate to canada", "They don't migrate"};
+    	QandAsHarrier2.put("Where do Harriers migrate", harrierMigrate);
+    	factsAndQuestions.put("Northern Harriers are non-migratory birds",QandAsHarrier2);
+    	
+    	HashMap<String,String[]> QandAsHarrier3 = new HashMap<>();
+    	String[] harrierPred = {"Foxes", "Snakes","Cats","Humans","Foxes"};
+    	QandAsHarrier3.put("What is a major predator of Northern Harriers", harrierPred);
+    	factsAndQuestions.put("Foxes are a common predator on Northern Harriers", QandAsHarrier3);
+    	
+    	avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
+    }
+	
 
 }

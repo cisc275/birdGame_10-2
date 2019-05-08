@@ -14,6 +14,7 @@ package birdgame;
  * @author crnis
  */
 public class GamePiece {
+	
     private int xLocation;
     private int yLocation;
     private int xincr;
@@ -25,6 +26,7 @@ public class GamePiece {
     private int yOffset;
     private int picNum;
     private boolean isSpecialFood;
+    private int imgCount = 0;
 
     /**
      * the move() method will call upon the methods in the Model class to update 
@@ -162,4 +164,10 @@ public class GamePiece {
     public void setSpecialFood(boolean bool) {
 		isSpecialFood = bool;
 	}
+    public void incrImgCount() {
+    	imgCount++;
+    }
+    public int getImgCount() {
+    	return imgCount;
+    }
 }

@@ -37,59 +37,24 @@ public class HarrierView extends View{
 	   		
 	    }
 	 
+	 
 	    public void paint(Graphics g) {
 	    	
-	        paintBackground(g);
-	        picNum = (picNum + 1) % frameCount;
-	        if (Model.specialFoodEaten() ) {
-	        	displayFacts(g);
-	        }
-	        
-	      
-	        g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
-	        for(GamePiece gp : currentViewableGPs) {   
-	        	if (gp.isSpecialFood()) {
-	        		if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
-	                    //micePicNum = (micePicNum + 1) % miceFrameCount;
-	                    gp.setPicNum((gp.getPicNum() + 1)% miceFrameCount);
-	                    g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
-	                }
-	                else if(gp.getSprite().equals(Sprite.BUNNY)){ //bunny
-	                    //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
-	                    gp.setPicNum((gp.getPicNum() + 1)% bunnyFrameCount);
-	                    g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
-	                }
-	                
-	        	}
-	        	else if(gp.isFood()){
-	                if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
-	                    //micePicNum = (micePicNum + 1) % miceFrameCount;
-	                    gp.setPicNum((gp.getPicNum() + 1)% miceFrameCount);
-	                    g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(), this);
-	                }
-	                else if(gp.getSprite().equals(Sprite.BUNNY)){ //bunny
-	                    //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
-	                    gp.setPicNum((gp.getPicNum() + 1)% bunnyFrameCount);
-	                    g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(), this);
-	                }
-	                
-	            }
-	            else if (gp.isEnemy()){
-	                if(gp.getSprite().equals(Sprite.REDFOX)){ //red fox
-	                    //redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
-	                    gp.setPicNum((gp.getPicNum() + 1)% redFoxFrameCount);
-	                    g.drawImage(redFox[gp.getPicNum()], gp.getX(), gp.getY(), this);
-	                }
-	                else if(gp.getSprite().equals(Sprite.RACCOON)){ //raccoons
-	                    //raccoonPicNum = (raccoonPicNum + 1) % raccoonFrameCount;
-	                    gp.setPicNum((gp.getPicNum() + 1)% raccoonFrameCount);
-	                    g.drawImage(raccoon[gp.getPicNum()], gp.getX(), gp.getY(), this);
-	                }
-	                
-
-	            }   
-	            
-	        }
+	    	 paintBackground(g);
+	    	   if (updateImgPlayer % 2 == 0) {
+	    		   picNum = (picNum + 1) % frameCount;
+	    	   }
+	    	   updateImgPlayer++;
+	    	   
+	    	   if (Model.specialFoodEaten() ) {
+	    	   	displayFacts();
+	    	   	Model.setSpecialFoodEaten(false);
+	    	   }
+	    	   
+	    	 
+	    	   g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
+	    	   for(GamePiece gp : currentViewableGPs) {   
+	    	   		drawGamePiece(g, gp);
 	        g.setColor(Color.red);
 	        g.drawRect(10, 10, 100 * 2, 50);
 	        g.fillRect(10, 10, health * 2, 50);
@@ -103,4 +68,5 @@ public class HarrierView extends View{
 	  }
 
 
+}
 }

@@ -33,10 +33,12 @@ import javax.swing.JButton;
 import java.awt.event.*;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 /**
  * View contains all the methods and attributes related directly to the display 
@@ -72,6 +74,7 @@ public class View extends JPanel {
     int playerYLoc = 0;
     int gpXLoc;
     int gpYLoc;
+    int updateImgPlayer = 0;
     BufferedImage[] flyForward = new BufferedImage[6];
     BufferedImage[] mice = new BufferedImage[2];
     BufferedImage[] bunny = new BufferedImage[4]; 
@@ -97,6 +100,7 @@ public class View extends JPanel {
 
 static JFrame frameHarrier;
     static JFrame frame2;
+    
     static JPanel pane1;
     static JPanel pane2;
     Direction direction;
@@ -121,12 +125,12 @@ static JFrame frameHarrier;
     static JFrame frame3;
     static JLabel finalScore;
     static JLabel gameOver;
-    static JLabel bubble;
     static boolean isDone;
     static JFrame levelStartFrame;
     static JPanel levelStartPanel;
     static JLabel levelStartLabel;
     static ImageIcon levelDisplayStart;
+    
     
     
 
@@ -135,7 +139,7 @@ static JFrame frameHarrier;
      */
 
     public View() {
-    	
+    	setLayout(null);
         frameOsprey = new JFrame();
         frameOsprey.setContentPane(this);
         frameOsprey.setBackground(Color.white);
@@ -161,6 +165,8 @@ static JFrame frameHarrier;
      * loadImages() will load the BufferedImages into arrays.
      */
 
+    
+    
     public void loadImages() {
         for(int i = 0; i < frameCount; i++){
             flyForward[i] = createImage("images/BirdImages/Bird" + i + ".png");
@@ -212,7 +218,80 @@ static JFrame frameHarrier;
         return null;
         
     }
+    
+    public BufferedImage[] getImgArray(Sprite sprite) {
+    	if (sprite.equals(Sprite.EAGLE)) {
+    		return eagle;
+    	}
+    	else if (sprite.equals(Sprite.BUNNY)) {
+    		return bunny;
+    	}
+    	else if (sprite.equals(Sprite.FISH)) {
+    		return fish;
+    	}
+    	else if (sprite.equals(Sprite.MOUSE)) {
+    		return mice;
+    	}
+    	else if (sprite.equals(Sprite.PLANE)) {
+    		return plane;
+    	}
+    	else if (sprite.equals(Sprite.RACCOON)) {
+    		return raccoon;
+    	}
+    	else if (sprite.equals(Sprite.REDFOX)) {
+    		return redFox;
+    	}
+    	else if (sprite.equals(Sprite.SNAKE)) {
+    		return snake;
+    	}
+    	else {
+    		return null;
+    	}
+    	
+    }
+    public int getFrameCount(Sprite sprite) {
+    	if (sprite.equals(Sprite.EAGLE)) {
+    		return eagleFrameCount;
+    	}
+    	else if (sprite.equals(Sprite.BUNNY)) {
+    		return bunnyFrameCount;
+    	}
+    	else if (sprite.equals(Sprite.FISH)) {
+    		return fishFrameCount;
+    	}
+    	else if (sprite.equals(Sprite.MOUSE)) {
+    		return miceFrameCount;
+    	}
+    	else if (sprite.equals(Sprite.PLANE)) {
+    		return planeFrameCount;
+    	}
+    	else if (sprite.equals(Sprite.RACCOON)) {
+    		return raccoonFrameCount;
+    	}
+    	else if (sprite.equals(Sprite.REDFOX)) {
+    		return redFoxFrameCount;
+    	}
+    	else if (sprite.equals(Sprite.SNAKE)) {
+    		return snakeFrameCount;
+    	}
+    	else {
+    		return 0;
+    	}
+    	
+    }
 
+    public void drawGamePiece(Graphics g,GamePiece gp) {
+		 if (gp.getImgCount() % 2 == 0) {
+			 gp.setPicNum((gp.getPicNum() + 1) % getFrameCount(gp.getSprite()) );
+		 }
+		 gp.incrImgCount();
+		 if (gp.isSpecialFood()) {
+		 g.drawImage(getImgArray(gp.getSprite())[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+		 }
+		 else {
+			 g.drawImage(getImgArray(gp.getSprite())[gp.getPicNum()], gp.getX(), gp.getY(), this);
+		 }
+	 }
     
     
 //    public void paintBackground(Graphics g) {
@@ -471,27 +550,45 @@ static JFrame frameHarrier;
     	frame3.setVisible(true);
     	
     }
- public void displayFacts(Graphics g) {
-    	
-    	bubble = new JLabel(new ImageIcon(thoughtBubble));
-    	System.out.println(Model.getCurrentFact());
-    	fact = new JLabel(Model.getCurrentFact());
-    	fact.setFont(new Font("Times New Roman",1,60));
-    	g.drawImage(thoughtBubble, playerXLoc + 184, playerYLoc -200, this);
+ public void displayFacts() {
+	 	
+	 	JPanel bubble = new JPanel();
+	 	bubble.setLayout(null);
+	 	bubble.setBounds(playerXLoc + 300,playerYLoc ,300,300);
+	 	JLabel img = new JLabel(new ImageIcon(thoughtBubble));
+	 	bubble.add(img);
+	 	bubble.setVisible(true);
+	 	frameOsprey.add(bubble);
+	 	
+	 	
+	 	
+		//bubble.add(text);
+		
+		System.out.println("here");
+//    	SwingWorker sw = new SwingWorker() {
+//    		@Override
+//    		
+//    		protected void doInBackground() throws Exception{
+//    			
+//    			
+    			
+
     	
     	
    
     	
+   
     	
-    }
+ 
+ }
     
 //    public static void displayLevelStartScreen(){
 //        levelStartFrame = new JFrame();
 //        levelStartPanel = new JPanel();
 //        levelStartLabel = new JLabel();
-//        levelDisplayStart = new ImageIcon("images/BirdImages/OspreyLevelScreen0.png");
+//         new ImageIcon("images/BirdImages/OspreyLevelScreen0.png");
 //        //add JLabel to JPanel
-//        levelStartLabel.setIcon(new ImageIcon(levelDisplayStart.getImage().getScaledInstance(frameWidth,frameHeight, Image.SCALE_SMOOTH)));
+//        levelStartLlevelDisplayStart =abel.setIcon(new ImageIcon(levelDisplayStart.getImage().getScaledInstance(frameWidth,frameHeight, Image.SCALE_SMOOTH)));
 //        levelStartLabel.setBounds(0,0,frameWidth,frameHeight);
 //        levelStartPanel.setLayout(null);
 //        levelStartPanel.add(levelStartLabel);
