@@ -34,7 +34,7 @@ public class GamePiece {
      */
     
     public String toString(){
-    	return " " + sprite;
+    	return " " + sprite + " "+ xLocation + ", " + yLocation;
     }
     
     public void move() {

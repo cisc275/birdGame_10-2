@@ -8,9 +8,10 @@ public class OspreyModel extends Model{
 
 	public OspreyModel(int fwidth, int fheight, int imageWidth, int imageHeight) {
 		super(fwidth, fheight, imageWidth, imageHeight);
-		gamePieces = new ArrayList<>();
+		spawnGamePieces();
 		factsAndQuestions = new HashMap<>();
 		generateFactsAndQuestions();
+		
 		// TODO Auto-generated constructor stub
 	}
 	

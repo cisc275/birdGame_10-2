@@ -101,12 +101,12 @@ public class Player extends GamePiece {
 		Player.score = score;
 	}
 	
-	public static int getHealth() {
+	public  int getHealth() {
 		return health;
 	}
 
 
-	public static void setHealth(int health) {
+	public  void setHealth(int health) {
 		Player.health = health;
 	}
 	public int getXOffset() {

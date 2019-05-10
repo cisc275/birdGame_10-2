@@ -26,9 +26,9 @@ public class Main {
     public static int birdCount;
     public static boolean playedBoth;
 	public static boolean isOsprey;
-	public static OspreyController c1;
-	public static HarrierController c2;
-	
+//	public static OspreyController c1;
+//	public static HarrierController c2;
+//	
     /**
      * will call the start() method in Controller
      *
@@ -36,6 +36,7 @@ public class Main {
      */
     public static void main(String[] args) {
         Controller c = new Controller();
+        c.getView().frame.addKeyListener(c);
         c.start();
     }
 //        c1 = new OspreyController();
@@ -51,7 +52,7 @@ public class Main {
 //        c1.getView().displayStartScreen();
 //
 //        while (test) {
-//            if (started == true) {
+//            if (started =g= true) {
 //                test = false;
 //                c1.start();
 //            }

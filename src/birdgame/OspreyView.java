@@ -16,7 +16,7 @@ public class OspreyView extends View{
 	Image imgback;
 	Image imgback2;
 	
-	public static void displayLevelStartScreen(){
+	public void displayLevelStartScreen(){
         levelStartFrame = new JFrame();
         levelStartPanel = new JPanel();
         levelStartLabel = new JLabel();

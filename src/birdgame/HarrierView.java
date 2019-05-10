@@ -14,7 +14,10 @@ public class HarrierView extends View{
 	Image imgback;
 	Image imgback2;
         BufferedImage[] miniMap;
-	
+	public HarrierView(){
+            super();
+            System.out.println("hv constructor");
+        }
 	 public void displayMiniMap() {
 
 	    }
@@ -56,6 +59,7 @@ public class HarrierView extends View{
 	    	   g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
 	    	   for(GamePiece gp : currentViewableGPs) {   
 	    	   		drawGamePiece(g, gp);
+	    	   }
 	        g.setColor(Color.red);
 	        g.drawRect(frameWidth/105, frameHeight/75, 100 * 2, frameHeight/17);
 	        g.fillRect(frameWidth/105, frameHeight/75, health * 2, frameHeight/17);
@@ -70,4 +74,4 @@ public class HarrierView extends View{
 
 
 }
-}
+

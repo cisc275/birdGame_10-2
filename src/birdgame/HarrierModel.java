@@ -7,7 +7,8 @@ public class HarrierModel extends Model{
 
 	public HarrierModel(int fwidth, int fheight, int imageWidth, int imageHeight) {
 		super(fwidth, fheight, imageWidth, imageHeight);
-		gamePieces = new ArrayList<>();
+		spawnGamePieces();
+
 		 factsAndQuestions = new HashMap<>();
 		 avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
 		 generateFactsAndQuestions();

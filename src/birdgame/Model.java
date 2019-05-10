@@ -25,7 +25,7 @@ public class Model {
     private int imgWidth;
     protected int groundLevel;
     private int sceneNum;
-    protected ArrayList<GamePiece> gamePieces;
+    protected ArrayList<GamePiece> gamePieces = new ArrayList<>();;
     private int progress;
     private int enemyFrequency;
     private int foodFrequency;
@@ -40,6 +40,8 @@ public class Model {
     private GamePiece furthestGP;
     private static boolean specialFoodEaten = false;
     static ArrayList<String> avaliableFacts;
+
+ 
     
     /**
      * Model constructor will take in four variables defined below
@@ -141,7 +143,9 @@ public class Model {
      */
 
     //randomize the location of the GamePieces (1 every screen)
-//    public void spawnGamePieces() {
+    public void spawnGamePieces() {
+    	System.out.println("wrong spawn");
+    }
 //    	SpecialFood.generateFactsAndQuestions();
 //        int numGamePieces = 0;
 //        int numSpecialFood = 0;
@@ -338,7 +342,7 @@ public class Model {
 		return imgHeight;
 	}
 	
-	public static Player getPlayer() {
+	public Player getPlayer() {
 		return player;
 	}
 	
