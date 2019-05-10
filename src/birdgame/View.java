@@ -85,20 +85,21 @@ public class View {
     private JPanel currentPanel;
     private JPanel startScreen;
     private JPanel initialMap;
-    private JPanel OspreyRound1;
-    private JPanel Map1to2;
-    private JPanel OspreyRound2;
-    private JPanel Map2to3;
-    private JPanel OspreyNest;
-    private JPanel HarrierRound;
-    private JPanel Quiz;
-    private JPanel GameOver;
+    private JPanel ospreyRound1;
+    private JPanel map1to2;
+    private JPanel ospreyRound2;
+    private JPanel map2to3;
+    private JPanel ospreyNest;
+    private JPanel harrierRound;
+    private JPanel quiz;
+    private JPanel gameOver;
     
     private Direction direction;
     private ArrayList<GamePiece> currentViewableGPs = new ArrayList<>();
     private int health;
     private int score;
     private JLabel fact;
+    private int backgroundLocation;
     
     public View(Controller c){
         frame = new JFrame();
@@ -126,13 +127,14 @@ public class View {
     } 
     
     void createStartScreen(Controller c){
-        ImageIcon startScreenImg = new ImageIcon("images/BirdImages/StartScreen.png");
+        BufferedImage startScreenImg = createImage("images/BirdImages/StartScreen.png");
         startScreen = new JPanel();
         startScreen.setLayout(null);
         c.getOspreyButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/55));
         c.getHarrierButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/55));
         c.getOspreyButton().setBounds(FRAME_WIDTH/10,(FRAME_HEIGHT*84)/100,FRAME_WIDTH/4,FRAME_HEIGHT/15);
         c.getHarrierButton().setBounds((FRAME_WIDTH*6)/10,(FRAME_HEIGHT*37)/100,FRAME_WIDTH/4,FRAME_HEIGHT/15);
+        
         startScreen.add(c.getOspreyButton());
         startScreen.add(c.getHarrierButton());
     }
@@ -145,9 +147,12 @@ public class View {
         createOspreyNestPanel();
     }
     void createInitialMapPanel(){
-        
+        initialMap = new JPanel();
+        BufferedImage mapImg = createImage("images/BirdImages/OspreyLevelScreen0.png");
     }
     void createOspreyRound1Panel(){
+        ospreyRound1 =new JPanel();
+        BufferedImage background = createImage("DNERRGameBackground.jpg");
         
     }
     void createOspreyMap1to2(){
@@ -171,5 +176,168 @@ public class View {
     void createGameOverPanel(){
         
     }
+    public void paint(Graphics g) {
+    	
+        paintBackground(g);
+        picNum = (picNum + 1) % frameCount;
+        if (Model.specialFoodEaten() ) {
+        	//displayFacts(g);
+        }
+        
+      
+        g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
+        for(GamePiece gp : currentViewableGPs) {   
+        	if (gp.isSpecialFood()) {
+        		if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
+                    //micePicNum = (micePicNum + 1) % miceFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% miceFrameCount);
+                    g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                }
+                else if(gp.getSprite().equals(Sprite.BUNNY)){ //bunny
+                    //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% bunnyFrameCount);
+                    g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                }
+                else if(gp.getSprite().equals(Sprite.SNAKE)){ //snake
+                    //snakePicNum = (snakePicNum + 1) % snakeFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% snakeFrameCount);
+                    g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                }
+                else{// fish
+                    //fishPicNum = (fishPicNum + 1) % fishFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% fishFrameCount);
+                    g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                } 
+        	}
+        	else if(gp.isFood()){
+                if(gp.getSprite().equals(Sprite.MOUSE)){ //mice
+                    //micePicNum = (micePicNum + 1) % miceFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% miceFrameCount);
+                    g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                }
+                else if(gp.getSprite().equals(Sprite.BUNNY)){ //bunny
+                    //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% bunnyFrameCount);
+                    g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                }
+                else if(gp.getSprite().equals(Sprite.SNAKE)){ //snake
+                    //snakePicNum = (snakePicNum + 1) % snakeFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% snakeFrameCount);
+                    g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                }
+                else{// fish
+                    //fishPicNum = (fishPicNum + 1) % fishFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% fishFrameCount);
+                    g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                }  
+            }
+            else if (gp.isEnemy()){
+                if(gp.getSprite().equals(Sprite.REDFOX)){ //red fox
+                    //redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% redFoxFrameCount);
+                    g.drawImage(redFox[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                }
+                else if(gp.getSprite().equals(Sprite.RACCOON)){ //raccoons
+                    //raccoonPicNum = (raccoonPicNum + 1) % raccoonFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% raccoonFrameCount);
+                    g.drawImage(raccoon[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                }
+                else if(gp.getSprite().equals(Sprite.EAGLE)){ //eagles
+                    //eaglePicNum = (eaglePicNum + 1) % eagleFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% eagleFrameCount);
+                    g.drawImage(eagle[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                }
+                else{ //planes
+                    //planePicNum = (planePicNum + 1) % planeFrameCount;
+                    gp.setPicNum((gp.getPicNum() + 1)% planeFrameCount);
+                    g.drawImage(plane[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                }
+
+            }   
+            
+        }
+        g.setColor(Color.red);
+        g.drawRect(10, 10, 100 * 2, 50);
+        g.fillRect(10, 10, health * 2, 50);
+        g.setColor(Color.white);
+        g.setFont(new Font("Times New Roman", 1, 20));
+        g.drawRect(frameWidth - 105, 20, 100, 50);
+        g.drawString("Score: " + String.valueOf(score), frameWidth - 100, 50);
+
+      
+
+  }
+    public void setPanel(String s){
+        if(s.equals("START")){
+            currentPanel = startScreen;
+        }
+        else if(s.equals("INITIAL_MAP")){
+            currentPanel = initialMap;
+        }
+        else if(s.equals("OSPREY_ROUND_ONE")){
+            currentPanel = ospreyRound1;
+        }
+        else if(s.equals("MAP_1_TO_2")){
+            currentPanel = map1to2;
+        }
+        else if(s.equals("OSPREY_ROUND_TWO")){
+            currentPanel = ospreyRound2;
+        }
+        else if(s.equals("MAP_2_TO_3")){
+            currentPanel = map2to3;
+        }
+        else if(s.equals("OSPREY_NEST")){
+            currentPanel = ospreyNest;
+        }
+        else if(s.equals("HARRIER_ROUND")){
+            currentPanel = harrierRound;
+        }
+        else if(s.equals("QUIZ")){
+            currentPanel = quiz;
+        }
+        else if(s.equals("GAME_OVER")){
+            currentPanel = gameOver;
+        }
+        
+    }
+    public BufferedImage createImage(String path) {
+    	
+        BufferedImage buff;
+        try {
+            buff = ImageIO.read(new File(path));
+            return buff;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+        
+    }
+    public void update(int xLoc, int yLoc, ArrayList<GamePiece> g, Direction dir, int h, int s) {
+        playerXLoc = xLoc;
+        playerYLoc = yLoc;
+        health=h;
+        score=s;
+        currentViewableGPs = g;
+        direction = dir;
+        backgroundLocation+=25;
+        frame.repaint();
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     
+    public int getBirdWidth(){
+        return BIRD_WIDTH;
+    }
+    public int getBirdHeight(){
+        return BIRD_HEIGHT;
+    }
+    public int getFrameHeight(){
+        return FRAME_HEIGHT;
+    }
+    public int getFrameWidth(){
+        return FRAME_WIDTH;
+    }
 }

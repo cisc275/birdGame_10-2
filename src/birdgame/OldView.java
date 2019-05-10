@@ -137,7 +137,7 @@ static JFrame frameHarrier;
      * constructor will initialize JFrame and other components that will be on it.
      */
 
-    public View() {
+    public OldView() {
     	setLayout(null);
         frame = new JFrame();
         frame.setContentPane(this);

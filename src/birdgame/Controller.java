@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
+import javax.swing.AbstractAction;
 
 /**
  * Controller class will handle flow of game and will take user input.
@@ -23,6 +24,7 @@ public class Controller implements KeyListener, ActionListener {
     protected Model model;
     private JButton OspreyButton;
     private JButton HarrierButton;
+    private AbstractAction arrowKeyAction;
 
 //    protected Model OspreyModel;
 //    protected View OspreyView;
@@ -35,46 +37,36 @@ public class Controller implements KeyListener, ActionListener {
         HarrierButton.addActionListener(this);
         view = new View(this);
         model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
-    }
-
-    public void start() {
-
-        view.displayStartScreen();
-
-        View.osprey.addActionListener(ae -> {
-
-            System.out.println("you clicked osprey");
-            View previousView = view;
-            view = new OspreyView();
-            model = new OspreyModel(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
-            System.out.println("osprey view/model made");
-            //previousView.frame2.dispose();
-            view.displayLevelStartScreen();
-
-            previousView.frame2.dispose();
-
-        });
-        View.harrier.addActionListener(ae -> {
-
-            System.out.println("you clicked harrier");
-            View previousView = view;
-            view = new HarrierView();
-            model = new HarrierModel(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
-            System.out.println("Harrier view/model made");
-
-            previousView.frame2.dispose();
-
-        });
-
+        view.setPanel("START");
+        arrowKeyAction = new AbstractAction(){
+            public void actionPerformed(ActionEvent e){
+                while(model.getPlayer().isAlive()){
+                    model.handleTicks();
+                    view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
+                        model.getCurrentGPs(), model.getDirection(), 
+                        model.getPlayer().getHealth(), model.getPlayer().getScore());
+                }
+            }
+        };
         model.spawnGamePieces();
-
-        while (model.getPlayer().isAlive()) {
-            model.handleTicks();
-            view.update(model.getPlayer().getX(), model.getPlayer().getY(), model.getCurrentGPs(), model.getDirection(), model.getPlayer().getHealth(), model.getPlayer().getScore());
-
-        }
-
     }
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource() == OspreyButton){
+            model = new OspreyModel(view.getFrameWidth(), view.getFrameHeight(),
+            view.getBirdWidth(), view.getBirdHeight());
+            view = new OspreyView();
+            view.setPanel("OSPREY");
+        }
+        else if(e.getSource() == HarrierButton){
+            model = new HarrierModel(view.getFrameWidth(), view.getFrameHeight(),
+            view.getBirdWidth(), view.getBirdHeight());
+            view = new HarrierView();
+            view.setPanel("HARRIER");
+        }
+    }
+//    public void start() {
+//        model.spawnGamePieces();
+//    }
 
 //    public Controller() {
 //        view = new View();
@@ -128,27 +120,11 @@ public class Controller implements KeyListener, ActionListener {
         Model.setDirection(null);
     }
 
-    public void getClick() {
-
-        View.osprey.addActionListener(ae -> {
-            System.out.println("you clicked osprey");
-            view = new OspreyView();
-            model = new OspreyModel(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
-            System.out.println("osprey view/model made");
-            view.displayLevelStartScreen();
-
-            view.frame2.dispose();
-
-        });
-        View.harrier.addActionListener(ae -> {
-            System.out.println("you clicked harrier");
-            view = new HarrierView();
-            model = new HarrierModel(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
-            System.out.println("Harrier view/model made");
-
-            view.frame2.dispose();
-
-        });
+    public JButton getOspreyButton(){
+        return OspreyButton;
+    }
+    public JButton getHarrierButton(){
+        return HarrierButton;
     }
 
     public View getView() {
