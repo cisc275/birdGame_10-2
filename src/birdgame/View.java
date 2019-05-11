@@ -145,6 +145,7 @@ public class View extends JPanel{
     void createStartScreen(Controller c){
         startScreen = new StartScreenPanel();
         startScreenImg = createImage("images/BirdImages/StartScreen.png");
+        
         startScreen.setLayout(null);
         c.getOspreyButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/55));
         c.getHarrierButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/55));
@@ -367,9 +368,8 @@ public class View extends JPanel{
     }
     class StartScreenPanel extends JPanel {
         protected void paintComponent(Graphics g){
-            Graphics2D 2dg = (Graphics2D) g;
             super.paintComponent(g);
-            g.drawImage(startScreenImg, 0, 0, this);
+            g.drawImage(startScreenImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
     }
     
