@@ -212,7 +212,7 @@ public class View extends JPanel {
 
     void createOspreyRound1Panel() {
         ospreyRound1 = new OspreyPanel();
-        BufferedImage background = createImage("DNERRGameBackground.jpg");
+        
 
     }
 

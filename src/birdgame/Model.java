@@ -95,6 +95,7 @@ public class Model {
      * conditions.
      */
     public void handleTicks() {
+        System.out.println(player.getX() + ", " + player.getY());
         updateLocationAndDirection();
         //for(GamePiece g: gamePieces){
         Iterator<GamePiece> it = gamePieces.iterator();
@@ -116,15 +117,15 @@ public class Model {
         clearCurrentGP();
         seeCurrentGP();
 
-        if (furthestGP == null || furthestGP.getX() < 0) {
-            endOfLevel();
-        }
+//        if (furthestGP.getX() < 0) {
+//            endOfLevel();
+//        }
 
         if (player.getX() > (fWidth - imgWidth)) {
             //TODO
             //MAKE IT SO TRANSITIONS TO NEXT LEVEL SCREEN
         }
-        System.out.println(gamePieces);
+        //System.out.println(gamePieces);
     }
 
     public void endOfLevel() {
