@@ -46,21 +46,30 @@ public class Controller implements KeyListener, ActionListener {
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
         view.setPanel("START");
-        arrowKeyAction = new AbstractAction(){
-            public void actionPerformed(ActionEvent e){
-                while(model.getPlayer().isAlive()){
-                    model.handleTicks();
-                    view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
-                        model.getCurrentGPs(), model.getDirection(), 
-                        model.getPlayer().getHealth(), model.getPlayer().getScore());
-                }
-            }
-        };
+        if(view.getPanel().equals("OSPREY_ROUND_ONE")){
+            start();
+        }
+        
+//        arrowKeyAction = new AbstractAction(){
+//            public void actionPerformed(ActionEvent e){
+//                while(model.getPlayer().isAlive()){
+//                    model.handleTicks();
+//                    view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
+//                        model.getCurrentGPs(), model.getDirection(), 
+//                        model.getPlayer().getHealth(), model.getPlayer().getScore());
+//                }
+//            }
+//        };
     }
     
     
-    public void start() {
-    	//model.spawnGamePieces();
+    void start() {
+    	while(model.getPlayer().isAlive()){
+            model.handleTicks();
+            view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
+                       model.getCurrentGPs(), model.getDirection(), 
+                       model.getPlayer().getHealth(), model.getPlayer().getScore());
+        }
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == OspreyButton){

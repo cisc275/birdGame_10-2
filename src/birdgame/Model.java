@@ -124,6 +124,7 @@ public class Model {
             //TODO
             //MAKE IT SO TRANSITIONS TO NEXT LEVEL SCREEN
         }
+        System.out.println(gamePieces);
     }
 
     public void endOfLevel() {
