@@ -73,7 +73,7 @@ public class Controller implements KeyListener, ActionListener {
             System.out.println("Harrier");
             model.spawnHarrierGamePieces();
             view.setBackground(imgHarrier, imgHarrier2);
-            view.setPanel("HARRIER");
+            view.setPanel("HARRIER_ROUND");
         }
         
         if(e.getSource() == Round1Button){

@@ -126,7 +126,7 @@ public class View extends JPanel {
 //        cards.add(ospreyRound2, "OSPREY_ROUND_TWO");
 //        cards.add(map2to3, "MAP_2_TO_3");
 //        cards.add(ospreyNest, "OSPREY_NEST");
-//        cards.add(harrierRound, "HARRIER_ROUND");
+        cards.add(harrierRound, "HARRIER_ROUND");
 //        cards.add(quiz, "QUIZ");
 //        cards.add(gameOver, "GAME_OVER");
 
@@ -492,7 +492,8 @@ public class View extends JPanel {
             g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 100, 50);
         }
     }
-    class HarrierPanel extends JPanel(){
+    class HarrierPanel extends JPanel{
+    
         protected void paintComponent(Graphics g) {
             paintBackground(g);
             picNum = (picNum + 1) % FRAME_COUNT;
