@@ -130,15 +130,14 @@ public class View extends JPanel{
     }
     
     void createFrame(Controller c){
-        System.out.println(1);
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.add(cards);
         frame.setFocusable(true);
         frame.addKeyListener(c);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        frame.setResizable(false);
         frame.pack();
+        frame.setResizable(false);
         frame.setVisible(true);
     } 
     
@@ -154,10 +153,8 @@ public class View extends JPanel{
         
         startScreen.add(c.getOspreyButton());
         startScreen.add(c.getHarrierButton());
-        System.out.println(2);
     }
     void createOspreyPanels(){
-        System.out.println(3);
         createInitialMapPanel();
         createOspreyRound1Panel();
         createOspreyMap1to2();
@@ -166,36 +163,34 @@ public class View extends JPanel{
         createOspreyNestPanel();
     }
     void createInitialMapPanel(){
-        System.out.println(4);
         initialMap = new JPanel();
         BufferedImage mapImg = createImage("images/BirdImages/OspreyLevelScreen0.png");
     }
     void createOspreyRound1Panel(){
-        System.out.println(5);
         ospreyRound1 =new JPanel();
         BufferedImage background = createImage("DNERRGameBackground.jpg");
         
     }
     void createOspreyMap1to2(){
-        System.out.println(6);
+        
     }
     void createOspreyRound2Panel(){
-        System.out.println(7);
+        
     }
     void createOspreyMap2to3(){
-        System.out.println(8);
+        
     }
     void createOspreyNestPanel(){
-        System.out.println(9);
+        
     }
     void createHarrierRound(){
-        System.out.println(10);
+        
     }
     void createQuizPanel(){
-        System.out.println(11);
+        
     }
     void createGameOverPanel(){
-        System.out.println(12);
+        
     }
     public void paint(Graphics g) {
     	

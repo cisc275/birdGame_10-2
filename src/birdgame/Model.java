@@ -196,6 +196,7 @@ public class Model {
 
             }
         }
+        
     }
 
     public void spawnOspreyGamePieces() {
@@ -242,6 +243,7 @@ public class Model {
 
             }
         }
+        System.out.println(gamePieces);
     }
 
     public void clearCurrentGP() {
