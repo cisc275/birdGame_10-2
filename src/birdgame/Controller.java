@@ -49,17 +49,6 @@ public class Controller implements KeyListener, ActionListener {
         if(view.getPanel().equals("OSPREY_ROUND_ONE")){
             start();
         }
-        
-//        arrowKeyAction = new AbstractAction(){
-//            public void actionPerformed(ActionEvent e){
-//                while(model.getPlayer().isAlive()){
-//                    model.handleTicks();
-//                    view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
-//                        model.getCurrentGPs(), model.getDirection(), 
-//                        model.getPlayer().getHealth(), model.getPlayer().getScore());
-//                }
-//            }
-//        };
     }
     
     
