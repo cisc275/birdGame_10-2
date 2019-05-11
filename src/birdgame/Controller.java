@@ -25,6 +25,7 @@ public class Controller implements KeyListener, ActionListener {
     private Model model;
     private JButton OspreyButton;
     private JButton HarrierButton;
+    private JButton Round1Button;
     private AbstractAction arrowKeyAction;
     private ImageIcon imgOsprey = new ImageIcon("DNERRGameBackground.jpg");
     private ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
@@ -38,8 +39,10 @@ public class Controller implements KeyListener, ActionListener {
     public Controller(){
         OspreyButton = new JButton("Play as Osprey");
         HarrierButton = new JButton("Play as Harrier");
+        Round1Button = new JButton("Ready to Play Level 1");
         OspreyButton.addActionListener(this);
         HarrierButton.addActionListener(this);
+        Round1Button.addActionListener(this);
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
         view.setPanel("START");
@@ -64,7 +67,7 @@ public class Controller implements KeyListener, ActionListener {
             System.out.println("Osprey");
             model.spawnOspreyGamePieces();
             view.setBackground(imgOsprey, imgOsprey2);
-            view.setPanel("OSPREY");
+            view.setPanel("INITIAL_MAP");
             
         }
         else if(e.getSource() == HarrierButton){
@@ -72,6 +75,11 @@ public class Controller implements KeyListener, ActionListener {
             model.spawnHarrierGamePieces();
             view.setBackground(imgHarrier, imgHarrier2);
             view.setPanel("HARRIER");
+        }
+        
+        if(e.getSource() == Round1Button){
+            System.out.println("Round 1 start");
+            view.setPanel("OSPREY_ROUND_ONE");
         }
     }
 //    public void start() {
@@ -135,6 +143,9 @@ public class Controller implements KeyListener, ActionListener {
     }
     public JButton getHarrierButton(){
         return HarrierButton;
+    }
+    public JButton getRound1Button(){
+        return Round1Button;
     }
 
     public View getView() {

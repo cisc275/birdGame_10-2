@@ -104,13 +104,14 @@ public class View extends JPanel{
     private Image backgroundImage;
     private Image backgroundImageFlipped;
     private Image startScreenImg;
+    private Image initialMapImg;
     
     public View(Controller c){
         frame = new JFrame();
         cards = new JPanel(new CardLayout());
         
         createStartScreen(c);
-        createOspreyPanels();
+        createOspreyPanels(c);
         createHarrierRound();
         createQuizPanel();
         createGameOverPanel();
@@ -155,17 +156,23 @@ public class View extends JPanel{
         startScreen.add(c.getOspreyButton());
         startScreen.add(c.getHarrierButton());
     }
-    void createOspreyPanels(){
-        createInitialMapPanel();
+    void createOspreyPanels(Controller c){
+        createInitialMapPanel(c);
         createOspreyRound1Panel();
         createOspreyMap1to2();
         createOspreyRound2Panel();
         createOspreyMap2to3();
         createOspreyNestPanel();
     }
-    void createInitialMapPanel(){
-        initialMap = new JPanel();
-        BufferedImage mapImg = createImage("images/BirdImages/OspreyLevelScreen0.png");
+    void createInitialMapPanel(Controller c){
+        initialMap = new InitialMapPanel();
+        initialMapImg = createImage("images/BirdImages/OspreyLevelScreen0.png");
+        
+        initialMap.setLayout(null);
+        c.getRound1Button().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/55));
+        c.getRound1Button().setBounds((FRAME_WIDTH*7)/10,(FRAME_HEIGHT*84)/100,FRAME_WIDTH/4,FRAME_HEIGHT/15);
+        
+        initialMap.add(c.getRound1Button());
     }
     void createOspreyRound1Panel(){
         ospreyRound1 =new JPanel();
@@ -370,6 +377,12 @@ public class View extends JPanel{
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
             g.drawImage(startScreenImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
+        }
+    }
+    class InitialMapPanel extends JPanel {
+        protected void paintComponent(Graphics g){
+            super.paintComponent(g);
+            g.drawImage(initialMapImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
     }
     
