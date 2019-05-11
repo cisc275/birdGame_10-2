@@ -36,7 +36,7 @@ public class Controller implements KeyListener, ActionListener {
         OspreyButton.addActionListener(this);
         HarrierButton.addActionListener(this);
         view = new View(this);
-        model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
+        model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
         view.setPanel("START");
         arrowKeyAction = new AbstractAction(){
             public void actionPerformed(ActionEvent e){
@@ -48,7 +48,11 @@ public class Controller implements KeyListener, ActionListener {
                 }
             }
         };
-        model.spawnGamePieces();
+    }
+    
+    
+    public void start() {
+    	model.spawnGamePieces();
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == OspreyButton){

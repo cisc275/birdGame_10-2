@@ -36,7 +36,7 @@ public class Main {
      */
     public static void main(String[] args) {
         Controller c = new Controller();
-        c.getView().frame.addKeyListener(c);
+        //c.getView().frame.addKeyListener(c);
         c.start();
     }
 //        c1 = new OspreyController();
