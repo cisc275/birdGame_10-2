@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 
 /**
  * Controller class will handle flow of game and will take user input.
@@ -20,11 +21,15 @@ import javax.swing.AbstractAction;
  */
 public class Controller implements KeyListener, ActionListener {
 
-    protected View view;
-    protected Model model;
+    private View view;
+    private Model model;
     private JButton OspreyButton;
     private JButton HarrierButton;
     private AbstractAction arrowKeyAction;
+    private ImageIcon imgOsprey = new ImageIcon("DNERRGameBackground.jpg");
+    private ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
+    private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
+    private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
 
 //    protected Model OspreyModel;
 //    protected View OspreyView;
@@ -52,18 +57,19 @@ public class Controller implements KeyListener, ActionListener {
     
     
     public void start() {
-    	model.spawnGamePieces();
+    	//model.spawnGamePieces();
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == OspreyButton){
-            model = new OspreyModel(view.getFrameWidth(), view.getFrameHeight(),
-            view.getBirdWidth(), view.getBirdHeight());
+            model.spawnOspreyGamePieces();
+            view.setBackground(imgOsprey, imgOsprey2);
             view = new OspreyView();
             view.setPanel("OSPREY");
+            
         }
         else if(e.getSource() == HarrierButton){
-            model = new HarrierModel(view.getFrameWidth(), view.getFrameHeight(),
-            view.getBirdWidth(), view.getBirdHeight());
+            model.spawnHarrierGamePieces();
+            view.setBackground(imgHarrier, imgHarrier2);
             view = new HarrierView();
             view.setPanel("HARRIER");
         }

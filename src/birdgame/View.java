@@ -42,7 +42,7 @@ import java.awt.CardLayout;
  *
  * @author crnis
  */
-public class View {
+public class View extends JPanel{
     static Rectangle rect = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
     final static int FRAME_WIDTH = (int) rect.getWidth();
     final static int FRAME_HEIGHT = (int) rect.getHeight();
@@ -100,6 +100,9 @@ public class View {
     private int score;
     private JLabel fact;
     private int backgroundLocation;
+    
+    private Image backgroundImage;
+    private Image backgroundImageFlipped;
     
     public View(Controller c){
         frame = new JFrame();
@@ -184,7 +187,6 @@ public class View {
         	//displayFacts(g);
         }
         
-      
         g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
         for(GamePiece gp : currentViewableGPs) {   
         	if (gp.isSpecialFood()) {
@@ -270,21 +272,6 @@ public class View {
     
     
     public void paintBackground(Graphics g) {
-    	
-    	Image backgroundImage;
-    	Image backgroundImageFlipped;
-   		ImageIcon imgOsprey = new ImageIcon("DNERRGameBackground.jpg");
-   		ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
-   		ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
-   		ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
-   		if(Model.getBird().equals(Sprite.OSPREY)) {
-   			backgroundImage = imgOsprey.getImage();
-   			backgroundImageFlipped = imgOsprey2.getImage();
-   		}
-   		else {
-   			backgroundImage = imgHarrier.getImage();
-   			backgroundImageFlipped = imgHarrier2.getImage();
-   		}
    		Graphics2D g2d = (Graphics2D)g;
    		g2d.drawImage(backgroundImage, -backgroundLocation, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
    		g2d.drawImage(backgroundImageFlipped, FRAME_WIDTH-backgroundLocation, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
@@ -297,6 +284,11 @@ public class View {
    			}
    		}
    		
+    }
+    
+    public void setBackground(ImageIcon i1, ImageIcon i2){
+        backgroundImage = i1.getImage();
+        backgroundImageFlipped = i2.getImage();
     }
     
     public void setPanel(String s){
