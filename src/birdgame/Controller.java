@@ -63,14 +63,12 @@ public class Controller implements KeyListener, ActionListener {
         if(e.getSource() == OspreyButton){
             model.spawnOspreyGamePieces();
             view.setBackground(imgOsprey, imgOsprey2);
-            view = new OspreyView();
             view.setPanel("OSPREY");
             
         }
         else if(e.getSource() == HarrierButton){
             model.spawnHarrierGamePieces();
             view.setBackground(imgHarrier, imgHarrier2);
-            view = new HarrierView();
             view.setPanel("HARRIER");
         }
     }
