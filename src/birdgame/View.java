@@ -233,7 +233,7 @@ public class View extends JPanel {
     }
 
     void createHarrierRound() {
-
+        harrierRound = new HarrierPanel();
     }
 
     void createQuizPanel() {
@@ -492,6 +492,84 @@ public class View extends JPanel {
             g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 100, 50);
         }
     }
+    class HarrierPanel extends JPanel(){
+        protected void paintComponent(Graphics g) {
+            paintBackground(g);
+            picNum = (picNum + 1) % FRAME_COUNT;
+            if (Model.specialFoodEaten()) {
+                //displayFacts(g);
+            }
+
+            g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
+            for (GamePiece gp : currentViewableGPs) {
+                if (gp.isSpecialFood()) {
+                    if (gp.getSprite().equals(Sprite.MOUSE)) { //mice
+                        //micePicNum = (micePicNum + 1) % miceFrameCount;
+                        gp.setPicNum((gp.getPicNum() + 1) % MICE_FRAME_COUNT);
+                        g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
+                    } else if (gp.getSprite().equals(Sprite.BUNNY)) { //bunny
+                        //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
+                        gp.setPicNum((gp.getPicNum() + 1) % BUNNY_FRAME_COUNT);
+                        g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
+                    } else if (gp.getSprite().equals(Sprite.SNAKE)) { //snake
+                        //snakePicNum = (snakePicNum + 1) % snakeFrameCount;
+                        gp.setPicNum((gp.getPicNum() + 1) % snakeFrameCount);
+                        g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
+                    } else {// fish
+                        //fishPicNum = (fishPicNum + 1) % fishFrameCount;
+                        gp.setPicNum((gp.getPicNum() + 1) % fishFrameCount);
+                        g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
+                    }
+                } else if (gp.isFood()) {
+                    if (gp.getSprite().equals(Sprite.MOUSE)) { //mice
+                        //micePicNum = (micePicNum + 1) % miceFrameCount;
+                        gp.setPicNum((gp.getPicNum() + 1) % MICE_FRAME_COUNT);
+                        g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                    } else if (gp.getSprite().equals(Sprite.BUNNY)) { //bunny
+                        //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
+                        gp.setPicNum((gp.getPicNum() + 1) % BUNNY_FRAME_COUNT);
+                        g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                    } else if (gp.getSprite().equals(Sprite.SNAKE)) { //snake
+                        //snakePicNum = (snakePicNum + 1) % snakeFrameCount;
+                        gp.setPicNum((gp.getPicNum() + 1) % snakeFrameCount);
+                        g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                    } else {// fish
+                        //fishPicNum = (fishPicNum + 1) % fishFrameCount;
+                        gp.setPicNum((gp.getPicNum() + 1) % fishFrameCount);
+                        g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                    }
+                } else if (gp.isEnemy()) {
+                    if (gp.getSprite().equals(Sprite.REDFOX)) { //red fox
+                        //redFoxPicNum = (redFoxPicNum + 1) % redFoxFrameCount;
+                        gp.setPicNum((gp.getPicNum() + 1) % redFoxFrameCount);
+                        g.drawImage(redFox[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                    } else if (gp.getSprite().equals(Sprite.RACCOON)) { //raccoons
+                        //raccoonPicNum = (raccoonPicNum + 1) % raccoonFrameCount;
+                        gp.setPicNum((gp.getPicNum() + 1) % raccoonFrameCount);
+                        g.drawImage(raccoon[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                    } else if (gp.getSprite().equals(Sprite.EAGLE)) { //eagles
+                        //eaglePicNum = (eaglePicNum + 1) % eagleFrameCount;
+                        gp.setPicNum((gp.getPicNum() + 1) % eagleFrameCount);
+                        g.drawImage(eagle[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                    } else { //planes
+                        //planePicNum = (planePicNum + 1) % planeFrameCount;
+                        gp.setPicNum((gp.getPicNum() + 1) % planeFrameCount);
+                        g.drawImage(plane[gp.getPicNum()], gp.getX(), gp.getY(), this);
+                    }
+
+                }
+
+            }
+            g.setColor(Color.red);
+            g.drawRect(10, 10, 100 * 2, 50);
+            g.fillRect(10, 10, health * 2, 50);
+            g.setColor(Color.white);
+            g.setFont(new Font("Times New Roman", 1, 20));
+            g.drawRect(FRAME_WIDTH - 105, 20, 100, 50);
+            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 100, 50);
+        }
+    }
+
 
     public int getBirdWidth() {
         return BIRD_WIDTH;

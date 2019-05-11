@@ -46,9 +46,10 @@ public class Controller implements KeyListener, ActionListener {
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
         view.setPanel("START");
-        if(view.getPanel().equals("OSPREY_ROUND_ONE")){
+        if(view.getPanel().equals("OSPREY_ROUND_ONE") || view.getPanel().equals("HARRIER_ROUND")){
             start();
         }
+        
     }
     
     
