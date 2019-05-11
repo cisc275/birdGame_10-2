@@ -103,6 +103,7 @@ public class View extends JPanel{
     
     private Image backgroundImage;
     private Image backgroundImageFlipped;
+    private Image startScreenImg;
     
     public View(Controller c){
         frame = new JFrame();
@@ -142,9 +143,8 @@ public class View extends JPanel{
     } 
     
     void createStartScreen(Controller c){
-        
-        BufferedImage startScreenImg = createImage("images/BirdImages/StartScreen.png");
-        startScreen = new JPanel();
+        startScreen = new StartScreenPanel();
+        startScreenImg = createImage("images/BirdImages/StartScreen.png");
         startScreen.setLayout(null);
         c.getOspreyButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/55));
         c.getHarrierButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/55));
@@ -193,7 +193,6 @@ public class View extends JPanel{
         
     }
     public void paint(Graphics g) {
-    	
         paintBackground(g);
         picNum = (picNum + 1) % FRAME_COUNT;
         if (Model.specialFoodEaten() ) {
@@ -350,6 +349,7 @@ public class View extends JPanel{
         return null;
         
     }
+    
     public void update(int xLoc, int yLoc, ArrayList<GamePiece> g, Direction dir, int h, int s) {
         playerXLoc = xLoc;
         playerYLoc = yLoc;
@@ -363,6 +363,13 @@ public class View extends JPanel{
             Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+    class StartScreenPanel extends JPanel {
+        protected void paintComponent(Graphics g){
+            Graphics2D 2dg = (Graphics2D) g;
+            super.paintComponent(g);
+            g.drawImage(startScreenImg, 0, 0, this);
         }
     }
     
