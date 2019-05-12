@@ -53,6 +53,8 @@ public class View extends JPanel {
     final static int BIRD_HEIGHT = 165;
     final static int FRAME_COUNT = 6;
     final static int TICKS_PER_FRAME_UPDATE = 5;
+    final static int MILLISECONDS_PER_SECOND = 1000;
+    final static int FRAMES_PER_SECOND = 50;
     private int runningFrameCount = 0;
     private int picNum = 0;
     final static int MICE_FRAME_COUNT = 2;
@@ -394,7 +396,7 @@ public class View extends JPanel {
         backgroundLocation += 8;
         frame.repaint();
         try {
-            Thread.sleep(20);
+            Thread.sleep(MILLISECONDS_PER_SECOND / FRAMES_PER_SECOND);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
