@@ -95,7 +95,7 @@ public class Model {
      * conditions.
      */
     public void handleTicks() {
-        System.out.println(player.getX() + ", " + player.getY());
+        //System.out.println(player.getX() + ", " + player.getY());
         updateLocationAndDirection();
         //for(GamePiece g: gamePieces){
         Iterator<GamePiece> it = gamePieces.iterator();
@@ -276,10 +276,10 @@ public class Model {
      */
     public void eat(Food f) {
         player.setScore(player.getScore() + f.getFoodValue());
-        if (player.getHealth() > 90) {
-            player.setHealth(100);
+        if (player.getHealth() > 225) {
+            player.setHealth(250);
         } else {
-            player.setHealth(player.getHealth() + 10);
+            player.setHealth(player.getHealth() + 25);
         }
     }
 
@@ -288,10 +288,10 @@ public class Model {
         specialFoodEaten = true;
         currentFact = sf.getFact();
         player.setScore(player.getScore() + sf.getFoodValue());
-        if (player.getHealth() > 90) {
-            player.setHealth(100);
+        if (player.getHealth() > 225) {
+            player.setHealth(250);
         } else {
-            player.setHealth(player.getHealth() + 10);
+            player.setHealth(player.getHealth() + 25);
         }
     }
 
@@ -309,10 +309,10 @@ public class Model {
      */
     public void obstacleHit(Enemy e) {
         player.setScore(player.getScore() - e.getDamage());
-        if (player.getHealth() < 20) {
+        if (player.getHealth() < 50) {
             player.setHealth(0);
         } else {
-            player.setHealth(player.getHealth() - 20);
+            player.setHealth(player.getHealth() - 50);
         }
     }
 

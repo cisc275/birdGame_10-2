@@ -17,12 +17,12 @@ public class Player extends GamePiece {
         private Sprite bird;
 
 	public Player(){
-            setYIncr(20);
+            setYIncr(8);
             setX(30);
             setY(300);
             setWidth(184);
             setHeight(100);
-            health = 100;
+            health = 250;
             xOffset = 30;
             yOffset = 30;
 	}
@@ -117,6 +117,6 @@ public class Player extends GamePiece {
 	}
 	
 	public void reset() {
-		setHealth(100);
+		setHealth(250);
 	}
 }

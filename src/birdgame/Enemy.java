@@ -18,7 +18,7 @@ public class Enemy extends GamePiece {
     	setSpecialFood(false);
         setX(x);
         setY(y);
-        setXIncr(25);
+        setXIncr(10);
     	setYIncr(0);
     	setWidth(165);
     	setHeight(165);
