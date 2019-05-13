@@ -25,8 +25,10 @@ public class SpecialFood extends Food {
     public SpecialFood(int x, int y, Sprite foodType) {
 		super(x, y, foodType);
 		setSpecialFood(true);
-		setXIncr(25);
+
 		setFact();
+		setXIncr(15);
+
 		
 		
 	}
