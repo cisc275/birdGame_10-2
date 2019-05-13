@@ -8,6 +8,7 @@ package birdgame;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Model contains and deals with the basic logic of the game, including updating
@@ -20,7 +21,8 @@ public class Model {
 
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
-    static int level;
+    private static int round;
+    private int numGamePiecesInRoundLeft = 10;
     protected int fWidth;
     protected int fHeight;
     private int imgHeight;
@@ -28,7 +30,7 @@ public class Model {
     protected int groundLevel;
     private int sceneNum;
     protected ArrayList<GamePiece> gamePieces = new ArrayList<>();
-    ;
+    
     private int progress;
     private int enemyFrequency;
     private int foodFrequency;
@@ -39,8 +41,8 @@ public class Model {
     //GamePiece currentGP;
     private int indexOfGP;
     private static String currentFact;
-    private ArrayList<GamePiece> currentGPs = new ArrayList<>();
-    private GamePiece furthestGP;
+    private CopyOnWriteArrayList<GamePiece> currentGPs = new CopyOnWriteArrayList<>();
+    private GamePiece furthestGP = new GamePiece();
     private static boolean specialFoodEaten = false;
     static ArrayList<String> avaliableFacts;
 
@@ -117,14 +119,27 @@ public class Model {
         clearCurrentGP();
         seeCurrentGP();
 
-//        if (furthestGP.getX() < 0) {
-//            endOfLevel();
-//        }
-
-        if (player.getX() > (fWidth - imgWidth)) {
-            //TODO
-            //MAKE IT SO TRANSITIONS TO NEXT LEVEL SCREEN
+        //if (furthestGP.getX() < 0) {
+        if(numGamePiecesInRoundLeft == 0){
+            if(round == 1){
+                View.setIsOspreyRound1Over(true);
+            }
+//            else if(round == 2){
+//                View.setIsOspreyRound2Over(true);
+//                round = 0;
+//            }
         }
+
+//        if (player.getX() > (fWidth - imgWidth)) {
+//            if(round == 1){
+//                View.setIsOspreyRound1Over(true);
+//                round = 2;
+//            }
+//            else if(round == 2){
+//                View.setIsOspreyRound2Over(true);
+//                round = 0;
+//            }
+//        }
         //System.out.println(gamePieces);
     }
 
@@ -159,7 +174,7 @@ public class Model {
         //int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
         //int topHalfY = ((int) (Math.random()*(fHeight/2)));
         int maxSpecialFood = 3;
-        while (numGamePieces < 10) {
+        while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
                 if (Math.random() < .2) {
                     if (Math.random() < .5) {
@@ -195,7 +210,6 @@ public class Model {
             if (gp.getX() > furthestGPLoc) {
                 furthestGPLoc = gp.getX();
                 setFurthestGP(gp);
-
             }
         }
         
@@ -206,7 +220,7 @@ public class Model {
         int numSpecialFood = 0;
         int tempXLoc = 500;
         int maxSpecialFood = 3;
-        while (numGamePieces < 10) {
+        while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
                 if (Math.random() < .2) {
                     if (Math.random() < .5) {
@@ -332,7 +346,7 @@ public class Model {
         return player;
     }
 
-    public ArrayList<GamePiece> getCurrentGPs() {
+    public CopyOnWriteArrayList<GamePiece> getCurrentGPs() {
         return currentGPs;
     }
 
@@ -443,6 +457,12 @@ public class Model {
 
     public static String getCurrentFact() {
         return currentFact;
+    }
+    public void setRound(int r){
+        round = r;
+    }
+    public int getRound(){
+        return round;
     }
 
 }

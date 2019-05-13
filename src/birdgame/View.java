@@ -23,7 +23,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-
+import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -34,7 +34,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
-
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.TimerTask;
 
@@ -65,6 +65,7 @@ public class View extends JPanel {
     final static int SNAKE_FRAME_COUNT = 4;
     final static int EAGLE_FRAME_COUNT = 6;
     final static int PLANE_FRAME_COUNT = 1;
+    final static int MAP_1_2_TRANSITION_COUNT = 6;
     private int micePicNum = 0;
     private int bunnyPicNum = 0;
     private int redFoxPicNum = 0;
@@ -75,6 +76,7 @@ public class View extends JPanel {
     private int planePicNum = 0;
     private int playerXLoc = 0;
     private int playerYLoc = 0;
+    private int map1To2TransitionPicNum = 0;
     private BufferedImage[] flyForward = new BufferedImage[6];
     private BufferedImage[] mice = new BufferedImage[2];
     private BufferedImage[] bunny = new BufferedImage[4];
@@ -85,6 +87,7 @@ public class View extends JPanel {
     private BufferedImage[] plane = new BufferedImage[1];
     private BufferedImage[] eagle = new BufferedImage[6];
     private BufferedImage[] enterNest;
+    private BufferedImage[] map1to2transition = new BufferedImage[MAP_1_2_TRANSITION_COUNT];
     private Image thoughtBubble;
 
     private JFrame frame;
@@ -102,7 +105,7 @@ public class View extends JPanel {
     private JPanel gameOver;
 
     private Direction direction;
-    private ArrayList<GamePiece> currentViewableGPs = new ArrayList<>();
+    private CopyOnWriteArrayList<GamePiece> currentViewableGPs = new CopyOnWriteArrayList<>();
     private int health;
     private int score;
     private JLabel fact;
@@ -112,6 +115,9 @@ public class View extends JPanel {
     private Image backgroundImageFlipped;
     private Image startScreenImg;
     private Image initialMapImg;
+
+    private static boolean isOspreyRound1Over;
+    private static boolean isOspreyRound2Over;
 
     public View(Controller c) {
         frame = new JFrame();
@@ -126,7 +132,7 @@ public class View extends JPanel {
         cards.add(startScreen, "START");
         cards.add(initialMap, "INITIAL_MAP");
         cards.add(ospreyRound1, "OSPREY_ROUND_ONE");
-//        cards.add(map1to2, "MAP_1_TO_2");
+        cards.add(map1to2, "MAP_1_TO_2");
 //        cards.add(ospreyRound2, "OSPREY_ROUND_TWO");
 //        cards.add(map2to3, "MAP_2_TO_3");
 //        cards.add(ospreyNest, "OSPREY_NEST");
@@ -137,37 +143,41 @@ public class View extends JPanel {
         currentPanel = startScreen;
         createFrame(c);
     }
+
     void loadImages() {
-        for(int i = 0; i < FRAME_COUNT; i++){
+        for (int i = 0; i < FRAME_COUNT; i++) {
             flyForward[i] = createImage("images/BirdImages/Bird" + i + ".png");
         }
-        for(int i = 0; i < MICE_FRAME_COUNT; i++){
+        for (int i = 0; i < MICE_FRAME_COUNT; i++) {
             mice[i] = createImage("images/BirdImages/Mice" + i + ".png");
         }
-        for(int i = 0; i < BUNNY_FRAME_COUNT; i++){
+        for (int i = 0; i < BUNNY_FRAME_COUNT; i++) {
             bunny[i] = createImage("images/BirdImages/Bunny" + i + ".png");
         }
-        for(int i = 0; i < RED_FOX_FRAME_COUNT; i++){
+        for (int i = 0; i < RED_FOX_FRAME_COUNT; i++) {
             redFox[i] = createImage("images/BirdImages/RedFox" + i + ".png");
         }
-        for(int i = 0; i < RACCOON_FRAME_COUNT; i++){
+        for (int i = 0; i < RACCOON_FRAME_COUNT; i++) {
             raccoon[i] = createImage("images/BirdImages/Raccoon" + i + ".png");
         }
-        for(int i = 0; i < FISH_FRAME_COUNT; i++){
+        for (int i = 0; i < FISH_FRAME_COUNT; i++) {
             fish[i] = createImage("images/BirdImages/Fish" + i + ".png");
         }
-        for(int i = 0; i < SNAKE_FRAME_COUNT; i++){
+        for (int i = 0; i < SNAKE_FRAME_COUNT; i++) {
             snake[i] = createImage("images/BirdImages/Snake" + i + ".png");
         }
-        for(int i = 0; i < EAGLE_FRAME_COUNT; i++){
+        for (int i = 0; i < EAGLE_FRAME_COUNT; i++) {
             eagle[i] = createImage("images/BirdImages/Eagle" + i + ".png");
         }
-        for(int i = 0; i < PLANE_FRAME_COUNT; i++){
+        for (int i = 0; i < PLANE_FRAME_COUNT; i++) {
             plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
         }
-        thoughtBubble = createImage("images/bub.png").getScaledInstance
-       		(300, 300, Image.SCALE_SMOOTH);
+        for (int i = 0; i < MAP_1_2_TRANSITION_COUNT; i++) {
+            map1to2transition[i] = createImage("images/BirdImages/OspreyLevelScreen" + i + ".png");
+        }
+        thoughtBubble = createImage("images/bub.png").getScaledInstance(300, 300, Image.SCALE_SMOOTH);
     }
+
     void createFrame(Controller c) {
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.add(cards);
@@ -221,7 +231,7 @@ public class View extends JPanel {
     }
 
     void createOspreyMap1to2() {
-
+        map1to2 = new Map1to2Panel();
     }
 
     void createOspreyRound2Panel() {
@@ -245,16 +255,16 @@ public class View extends JPanel {
     }
 
     void createGameOverPanel(Controller c) {
-    	gameOver = new GameOverPanel();
-    	gameOver.setLayout( null);
-    	JLabel gameOverLabel = new JLabel("Game Over");
-    	gameOver.setFont(new Font("Times New Roman",1,70));
-    	gameOver.setBounds(FRAME_WIDTH/2-100,FRAME_HEIGHT/2,100,100);
-    	JLabel finalScore = new JLabel("Score: " + Player.getScore());
-    	finalScore.setFont(new Font("Times New Roman",1,70));
-    	finalScore.setBounds(FRAME_WIDTH/2-100,FRAME_HEIGHT/2,300,100);
-    	gameOver.add(gameOverLabel);
-    	gameOver.add(finalScore);
+        gameOver = new GameOverPanel();
+        gameOver.setLayout(null);
+        JLabel gameOverLabel = new JLabel("Game Over");
+        gameOver.setFont(new Font("Times New Roman", 1, 70));
+        gameOver.setBounds(FRAME_WIDTH / 2 - 100, FRAME_HEIGHT / 2, 100, 100);
+        JLabel finalScore = new JLabel("Score: " + Player.getScore());
+        finalScore.setFont(new Font("Times New Roman", 1, 70));
+        finalScore.setBounds(FRAME_WIDTH / 2 - 100, FRAME_HEIGHT / 2, 300, 100);
+        gameOver.add(gameOverLabel);
+        gameOver.add(finalScore);
 
     }
 
@@ -334,7 +344,6 @@ public class View extends JPanel {
 //        g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 100, 50);
 //
 //    }
-
     public void paintBackground(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(backgroundImage, -backgroundLocation, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
@@ -379,7 +388,8 @@ public class View extends JPanel {
         }
 
     }
-    public JPanel getPanel(){
+
+    public JPanel getPanel() {
         return currentPanel;
     }
 
@@ -396,7 +406,7 @@ public class View extends JPanel {
 
     }
 
-    public void update(int xLoc, int yLoc, ArrayList<GamePiece> g, Direction dir, int h, int s) {
+    public void update(int xLoc, int yLoc, CopyOnWriteArrayList<GamePiece> g, Direction dir, int h, int s) {
         playerXLoc = xLoc;
         playerYLoc = yLoc;
         health = h;
@@ -427,7 +437,7 @@ public class View extends JPanel {
             g.drawImage(initialMapImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
     }
-    
+
     class GameOverPanel extends JPanel {
 
         protected void paintComponent(Graphics g) {
@@ -439,93 +449,95 @@ public class View extends JPanel {
     class OspreyPanel extends JPanel {
 
         protected void paintComponent(Graphics g) {
-        	runningFrameCount++;
+            runningFrameCount++;
             paintBackground(g);
             if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-            	picNum = (picNum + 1) % FRAME_COUNT;
+                picNum = (picNum + 1) % FRAME_COUNT;
             }
             if (Model.specialFoodEaten()) {
                 //displayFacts(g);
             }
 
             g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
-            for (GamePiece gp : currentViewableGPs) {
+            Iterator<GamePiece> it = currentViewableGPs.iterator();
+            while (it.hasNext()) {
+                GamePiece gp = it.next();
                 if (gp.isSpecialFood()) {
                     if (gp.getSprite().equals(Sprite.MOUSE)) { //mice
                         //micePicNum = (micePicNum + 1) % miceFrameCount;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % MICE_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % MICE_FRAME_COUNT);
+                        }
                         g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
                     } else if (gp.getSprite().equals(Sprite.BUNNY)) { //bunny
                         //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % BUNNY_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % BUNNY_FRAME_COUNT);
+                        }
                         g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
                     } else if (gp.getSprite().equals(Sprite.SNAKE)) { //snake
                         //snakePicNum = (snakePicNum + 1) % SNAKE_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % SNAKE_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % SNAKE_FRAME_COUNT);
+                        }
                         g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
                     } else {// fish
                         //fishPicNum = (fishPicNum + 1) % FISH_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % FISH_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % FISH_FRAME_COUNT);
+                        }
                         g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
                     }
                 } else if (gp.isFood()) {
                     if (gp.getSprite().equals(Sprite.MOUSE)) { //mice
                         //micePicNum = (micePicNum + 1) % miceFrameCount;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % MICE_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % MICE_FRAME_COUNT);
+                        }
                         g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else if (gp.getSprite().equals(Sprite.BUNNY)) { //bunny
                         //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % BUNNY_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % BUNNY_FRAME_COUNT);
+                        }
                         g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else if (gp.getSprite().equals(Sprite.SNAKE)) { //snake
                         //snakePicNum = (snakePicNum + 1) % SNAKE_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % SNAKE_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % SNAKE_FRAME_COUNT);
+                        }
                         g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else {// fish
                         //fishPicNum = (fishPicNum + 1) % FISH_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % FISH_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % FISH_FRAME_COUNT);
+                        }
                         g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     }
                 } else if (gp.isEnemy()) {
                     if (gp.getSprite().equals(Sprite.REDFOX)) { //red fox
                         //redFoxPicNum = (redFoxPicNum + 1) % RED_FOX_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % RED_FOX_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % RED_FOX_FRAME_COUNT);
+                        }
                         g.drawImage(redFox[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else if (gp.getSprite().equals(Sprite.RACCOON)) { //raccoons
                         //raccoonPicNum = (raccoonPicNum + 1) % RACCOON_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % RACCOON_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % RACCOON_FRAME_COUNT);
+                        }
                         g.drawImage(raccoon[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else if (gp.getSprite().equals(Sprite.EAGLE)) { //eagles
                         //eaglePicNum = (eaglePicNum + 1) % EAGLE_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % EAGLE_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % EAGLE_FRAME_COUNT);
+                        }
                         g.drawImage(eagle[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else { //planes
                         //planePicNum = (planePicNum + 1) % PLANE_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % PLANE_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % PLANE_FRAME_COUNT);
+                        }
                         g.drawImage(plane[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     }
 
@@ -534,22 +546,23 @@ public class View extends JPanel {
             }
             g.setColor(Color.red);
 
-            g.drawRect(FRAME_WIDTH/105, FRAME_HEIGHT/75, 250 * 2, FRAME_HEIGHT/17);
-     	   	g.fillRect(FRAME_WIDTH/105, FRAME_HEIGHT/75, health * 2, FRAME_HEIGHT/17);
+            g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, 250 * 2, FRAME_HEIGHT / 17);
+            g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
             g.setColor(Color.white);
             g.setFont(new Font("Times New Roman", 1, 20));
-            g.drawRect(FRAME_WIDTH - 105, FRAME_HEIGHT/30, FRAME_WIDTH/14, FRAME_HEIGHT/25);
-     	   	g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 103, FRAME_HEIGHT/17);
+            g.drawRect(FRAME_WIDTH - 105, FRAME_HEIGHT / 30, FRAME_WIDTH / 14, FRAME_HEIGHT / 25);
+            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 103, FRAME_HEIGHT / 17);
 
         }
     }
-    class HarrierPanel extends JPanel{
-    
+
+    class HarrierPanel extends JPanel {
+
         protected void paintComponent(Graphics g) {
-        	runningFrameCount++;
+            runningFrameCount++;
             paintBackground(g);
             if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-            	picNum = (picNum + 1) % FRAME_COUNT;
+                picNum = (picNum + 1) % FRAME_COUNT;
             }
             if (Model.specialFoodEaten()) {
                 //displayFacts(g);
@@ -560,79 +573,79 @@ public class View extends JPanel {
                 if (gp.isSpecialFood()) {
                     if (gp.getSprite().equals(Sprite.MOUSE)) { //mice
                         //micePicNum = (micePicNum + 1) % miceFrameCount;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % MICE_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % MICE_FRAME_COUNT);
+                        }
                         g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
                     } else if (gp.getSprite().equals(Sprite.BUNNY)) { //bunny
                         //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % BUNNY_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % BUNNY_FRAME_COUNT);
+                        }
                         g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
                     } else if (gp.getSprite().equals(Sprite.SNAKE)) { //snake
                         //snakePicNum = (snakePicNum + 1) % SNAKE_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % SNAKE_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % SNAKE_FRAME_COUNT);
+                        }
                         g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
                     } else {// fish
                         //fishPicNum = (fishPicNum + 1) % FISH_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % FISH_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % FISH_FRAME_COUNT);
+                        }
                         g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
                     }
                 } else if (gp.isFood()) {
                     if (gp.getSprite().equals(Sprite.MOUSE)) { //mice
                         //micePicNum = (micePicNum + 1) % miceFrameCount;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % MICE_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % MICE_FRAME_COUNT);
+                        }
                         g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else if (gp.getSprite().equals(Sprite.BUNNY)) { //bunny
                         //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % BUNNY_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % BUNNY_FRAME_COUNT);
+                        }
                         g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else if (gp.getSprite().equals(Sprite.SNAKE)) { //snake
                         //snakePicNum = (snakePicNum + 1) % SNAKE_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % SNAKE_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % SNAKE_FRAME_COUNT);
+                        }
                         g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else {// fish
                         //fishPicNum = (fishPicNum + 1) % FISH_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % FISH_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % FISH_FRAME_COUNT);
+                        }
                         g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     }
                 } else if (gp.isEnemy()) {
                     if (gp.getSprite().equals(Sprite.REDFOX)) { //red fox
                         //redFoxPicNum = (redFoxPicNum + 1) % RED_FOX_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % RED_FOX_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % RED_FOX_FRAME_COUNT);
+                        }
                         g.drawImage(redFox[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else if (gp.getSprite().equals(Sprite.RACCOON)) { //raccoons
                         //raccoonPicNum = (raccoonPicNum + 1) % RACCOON_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % RACCOON_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % RACCOON_FRAME_COUNT);
+                        }
                         g.drawImage(raccoon[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else if (gp.getSprite().equals(Sprite.EAGLE)) { //eagles
                         //eaglePicNum = (eaglePicNum + 1) % EAGLE_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % EAGLE_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % EAGLE_FRAME_COUNT);
+                        }
                         g.drawImage(eagle[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else { //planes
                         //planePicNum = (planePicNum + 1) % PLANE_FRAME_COUNT;
-                    	if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                    		gp.setPicNum((gp.getPicNum() + 1) % PLANE_FRAME_COUNT);
-                    	}
+                        if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                            gp.setPicNum((gp.getPicNum() + 1) % PLANE_FRAME_COUNT);
+                        }
                         g.drawImage(plane[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     }
 
@@ -641,15 +654,22 @@ public class View extends JPanel {
             }
             g.setColor(Color.red);
 
-            g.drawRect(FRAME_WIDTH/105, FRAME_HEIGHT/75, 250 * 2, FRAME_HEIGHT/17);
-     	   	g.fillRect(FRAME_WIDTH/105, FRAME_HEIGHT/75, health * 2, FRAME_HEIGHT/17);
+            g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, 250 * 2, FRAME_HEIGHT / 17);
+            g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
             g.setColor(Color.white);
             g.setFont(new Font("Times New Roman", 1, 20));
-            g.drawRect(FRAME_WIDTH - 105, FRAME_HEIGHT/30, FRAME_WIDTH/14, FRAME_HEIGHT/25);
-     	   	g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 103, FRAME_HEIGHT/17);
+            g.drawRect(FRAME_WIDTH - 105, FRAME_HEIGHT / 30, FRAME_WIDTH / 14, FRAME_HEIGHT / 25);
+            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 103, FRAME_HEIGHT / 17);
         }
     }
 
+    class Map1to2Panel extends JPanel {
+        protected void paintComponent(Graphics g) {
+            while(map1To2TransitionPicNum < MAP_1_2_TRANSITION_COUNT) {
+                g.drawImage(map1to2transition[map1To2TransitionPicNum], 0,0,FRAME_WIDTH, FRAME_HEIGHT, this);
+            }
+        }
+    }
 
     public int getBirdWidth() {
         return BIRD_WIDTH;
@@ -666,8 +686,24 @@ public class View extends JPanel {
     public int getFrameWidth() {
         return FRAME_WIDTH;
     }
-    
+
     public JPanel getStartScreen() {
-    	return startScreen;
+        return startScreen;
+    }
+
+    public boolean getIsOspreyRound1Over() {
+        return isOspreyRound1Over;
+    }
+
+    public boolean getIsOspreyRound2Over() {
+        return isOspreyRound2Over;
+    }
+
+    public static void setIsOspreyRound1Over(boolean b) {
+        isOspreyRound1Over = b;
+    }
+
+    public static void setIsOspreyRound2Over(boolean b) {
+        isOspreyRound2Over = b;
     }
 }

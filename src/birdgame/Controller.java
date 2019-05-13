@@ -61,6 +61,9 @@ public class Controller implements KeyListener, ActionListener {
             view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
                        model.getCurrentGPs(), model.getDirection(), 
                        model.getPlayer().getHealth(), model.getPlayer().getScore());
+            if(view.getIsOspreyRound1Over()){
+                view.setPanel("MAP_1_TO_2");
+            }
         }        
     	if(model.getPlayer().getHealth()<=0) {
     		//comment these lines out for Game Over Screen after bird dies
@@ -94,7 +97,8 @@ public class Controller implements KeyListener, ActionListener {
         if(e.getSource() == Round1Button){
             System.out.println("Round 1 start");
             view.setPanel("OSPREY_ROUND_ONE");
-            
+            model.setRound(1);
+            System.out.println(model.getRound());
         }
 
     }
