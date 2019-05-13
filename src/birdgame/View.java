@@ -54,11 +54,10 @@ public class View extends JPanel {
     final static int FRAME_COUNT = 6;
     final static int MILLISECONDS_PER_SECOND = 1000;
 
-    final static int FRAMES_PER_SECOND = 50;
+    final static int FRAMES_PER_SECOND = 40;
     private static int runningFrameCount = 0;
 //changed runningframeCount to static, might be a problem
     final static int TICKS_PER_FRAME_UPDATE = FRAMES_PER_SECOND / 10;
-
 
     private int picNum = 0;
     final static int MICE_FRAME_COUNT = 2;
@@ -462,7 +461,7 @@ public class View extends JPanel {
             if (Model.specialFoodEaten()) {
                 displayFacts(g);
                 if (runningFrameCount > momentEaten + specialFoodDelay) {
-                	Model.setSpecialFoodEaten(false);
+                    Model.setSpecialFoodEaten(false);
                 }
             }
 
@@ -563,20 +562,20 @@ public class View extends JPanel {
 
         }
     }
-    
+
     void displayFacts(Graphics g) {
-    //	JLabel img = new JLabel(new ImageIcon(thoughtBubble));
-	// 	img.setBounds(playerXLoc + 300,playerYLoc ,300,300);
-	// 	getPanel().add(img);
-    	g.drawImage(thoughtBubble, playerXLoc + 300, playerYLoc -300, this);
+        //	JLabel img = new JLabel(new ImageIcon(thoughtBubble));
+        // 	img.setBounds(playerXLoc + 300,playerYLoc ,300,300);
+        // 	getPanel().add(img);
+        g.drawImage(thoughtBubble, playerXLoc + 300, playerYLoc - 300, this);
         g.setFont(new Font("Times New Roman", 1, 20));
         System.out.println(Model.getCurrentFact());
-    	g.drawString(Model.getCurrentFact(),playerXLoc + 300,playerYLoc -100 );
+        g.drawString(Model.getCurrentFact(), playerXLoc + 300, playerYLoc - 100);
 
     }
-    
-    
-    class HarrierPanel extends JPanel{
+
+    class HarrierPanel extends JPanel {
+
         protected void paintComponent(Graphics g) {
             runningFrameCount++;
             paintBackground(g);
@@ -683,9 +682,17 @@ public class View extends JPanel {
     }
 
     class Map1to2Panel extends JPanel {
+
         protected void paintComponent(Graphics g) {
-            while(map1To2TransitionPicNum < MAP_1_2_TRANSITION_COUNT) {
-                g.drawImage(map1to2transition[map1To2TransitionPicNum], 0,0,FRAME_WIDTH, FRAME_HEIGHT, this);
+            if (map1To2TransitionPicNum < MAP_1_2_TRANSITION_COUNT) {
+                g.drawImage(map1to2transition[map1To2TransitionPicNum], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
+                map1To2TransitionPicNum++;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                
             }
         }
     }
@@ -707,11 +714,13 @@ public class View extends JPanel {
     }
 
     public static int getFrameCount() {
-    	return runningFrameCount;
+        return runningFrameCount;
     }
+
     public static void setMomentEaten(int i) {
-    	momentEaten = i;
+        momentEaten = i;
     }
+
     public JPanel getStartScreen() {
         return startScreen;
     }

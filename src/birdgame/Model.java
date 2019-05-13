@@ -30,7 +30,7 @@ public class Model {
     protected int groundLevel;
     private int sceneNum;
     protected ArrayList<GamePiece> gamePieces = new ArrayList<>();
-    
+
     private int progress;
     private int enemyFrequency;
     private int foodFrequency;
@@ -65,7 +65,6 @@ public class Model {
         setGroundLevel(fHeight - imgHeight);
         setIndexOfGP(0);
         indexOfGP = 0;
-        
 
     }
 
@@ -121,10 +120,10 @@ public class Model {
         clearCurrentGP();
         seeCurrentGP();
 
-        //if (furthestGP.getX() < 0) {
-        if(numGamePiecesInRoundLeft == 0){
-            if(round == 1){
-                View.setIsOspreyRound1Over(true);
+        if (currentGPs.size() == 0 && totalLevelTicks != 0) {
+            if (round == 1) {
+                endOfLevel();
+                
             }
 //            else if(round == 2){
 //                View.setIsOspreyRound2Over(true);
@@ -132,23 +131,25 @@ public class Model {
 //            }
         }
 
-//        if (player.getX() > (fWidth - imgWidth)) {
-//            if(round == 1){
-//                View.setIsOspreyRound1Over(true);
-//                round = 2;
-//            }
-//            else if(round == 2){
-//                View.setIsOspreyRound2Over(true);
-//                round = 0;
-//            }
-//        }
+        if (player.getX() > (fWidth - imgWidth)) {
+            if(round == 1){
+                View.setIsOspreyRound1Over(true);
+                round = 2;
+            }
+            else if(round == 2){
+                View.setIsOspreyRound2Over(true);
+                round = 0;
+            }
+        }
         //System.out.println(gamePieces);
+        totalLevelTicks++;
     }
 
     public void endOfLevel() {
         player.setXIncr(40);
 //    	player.setXIncr((int)(fWidth * .5));
         player.setX(player.getX() + player.getXIncr());
+        
 
     }
 
@@ -214,7 +215,7 @@ public class Model {
                 setFurthestGP(gp);
             }
         }
-        
+
     }
 
     public void spawnOspreyGamePieces() {
@@ -270,7 +271,7 @@ public class Model {
 
     public void seeCurrentGP() {
         for (GamePiece g : gamePieces) {
-            if (g.getX() <= fWidth && g.getX() >= 0) {
+            if (g.getX() <= fWidth && g.getX() >= -500) {
                 currentGPs.add(g);
             }
         }
@@ -460,52 +461,54 @@ public class Model {
     public static String getCurrentFact() {
         return currentFact;
     }
-    public void setRound(int r){
+
+    public void setRound(int r) {
         round = r;
     }
-    public int getRound(){
+
+    public int getRound() {
         return round;
     }
 
-	public void generateHarrierQuestions() {
-		factsAndQuestions = new HashMap<>();
-		HashMap<String,String[]> QandAsHarrier1 = new HashMap<>();
-    	String[] harrierFood = {"rodents", "fish", "eagles","plants", "rodents"};
-    	QandAsHarrier1.put("What do Northern Harriers eat?",harrierFood);
-    	factsAndQuestions.put("Northern Harriers eat rodents", QandAsHarrier1);
-    	
-    	HashMap<String,String[]> QandAsHarrier2 = new HashMap<>();
-    	String[] harrierMigrate = {"They migrate to South America","They migrate to California", "They don't migrate", "They migrate to canada", "They don't migrate"};
-    	QandAsHarrier2.put("Where do Harriers migrate", harrierMigrate);
-    	factsAndQuestions.put("Northern Harriers are non-migratory birds",QandAsHarrier2);
-    	
-    	HashMap<String,String[]> QandAsHarrier3 = new HashMap<>();
-    	String[] harrierPred = {"Foxes", "Snakes","Cats","Humans","Foxes"};
-    	QandAsHarrier3.put("What is a major predator of Northern Harriers", harrierPred);
-    	factsAndQuestions.put("Foxes are a predator for Northern Harriers", QandAsHarrier3);
-    	
-    	avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
-		
-	}
+    public void generateHarrierQuestions() {
+        factsAndQuestions = new HashMap<>();
+        HashMap<String, String[]> QandAsHarrier1 = new HashMap<>();
+        String[] harrierFood = {"rodents", "fish", "eagles", "plants", "rodents"};
+        QandAsHarrier1.put("What do Northern Harriers eat?", harrierFood);
+        factsAndQuestions.put("Northern Harriers eat rodents", QandAsHarrier1);
 
-	public void generateOspreyQuestions() {
-		factsAndQuestions = new HashMap<>();
-	   	HashMap<String,String[]> QandAsOsprey1 = new HashMap<>();
-    	String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Sankes and Fish"};
-    	QandAsOsprey1.put("What do Ospreys eat?", OspreyFood);
-    	factsAndQuestions.put("Ospreys like to eat Snakes and Fish", QandAsOsprey1);
-    	
-    	HashMap<String,String[]> QandAsOsprey2 = new HashMap<>();
-    	String[] OspreyMigrate = {"They migrate to South America","They migrate to California", "They don't migrate", "They migrate to canada", "They migrate to South America"};
-    	QandAsOsprey2.put("Where do Ospreys migrate", OspreyMigrate);
-    	factsAndQuestions.put("Ospreys migrate to South America for the winter", QandAsOsprey2);
-    	
-    	HashMap<String,String[]> QandAsOsprey3 = new HashMap<>();
-    	String[] OspreyPred = {"Foxes", "Snakes", "Eagles", "Eagles"};
-    	QandAsOsprey3.put("What is a major predator of Ospreys", OspreyPred);
-    	factsAndQuestions.put("Eagles are a predator of Ospreys", QandAsOsprey3);
-    	avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
+        HashMap<String, String[]> QandAsHarrier2 = new HashMap<>();
+        String[] harrierMigrate = {"They migrate to South America", "They migrate to California", "They don't migrate", "They migrate to canada", "They don't migrate"};
+        QandAsHarrier2.put("Where do Harriers migrate", harrierMigrate);
+        factsAndQuestions.put("Northern Harriers are non-migratory birds", QandAsHarrier2);
 
-	}
+        HashMap<String, String[]> QandAsHarrier3 = new HashMap<>();
+        String[] harrierPred = {"Foxes", "Snakes", "Cats", "Humans", "Foxes"};
+        QandAsHarrier3.put("What is a major predator of Northern Harriers", harrierPred);
+        factsAndQuestions.put("Foxes are a predator for Northern Harriers", QandAsHarrier3);
+
+        avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
+
+    }
+
+    public void generateOspreyQuestions() {
+        factsAndQuestions = new HashMap<>();
+        HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
+        String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Sankes and Fish"};
+        QandAsOsprey1.put("What do Ospreys eat?", OspreyFood);
+        factsAndQuestions.put("Ospreys like to eat Snakes and Fish", QandAsOsprey1);
+
+        HashMap<String, String[]> QandAsOsprey2 = new HashMap<>();
+        String[] OspreyMigrate = {"They migrate to South America", "They migrate to California", "They don't migrate", "They migrate to canada", "They migrate to South America"};
+        QandAsOsprey2.put("Where do Ospreys migrate", OspreyMigrate);
+        factsAndQuestions.put("Ospreys migrate to South America for the winter", QandAsOsprey2);
+
+        HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();
+        String[] OspreyPred = {"Foxes", "Snakes", "Eagles", "Eagles"};
+        QandAsOsprey3.put("What is a major predator of Ospreys", OspreyPred);
+        factsAndQuestions.put("Eagles are a predator of Ospreys", QandAsOsprey3);
+        avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
+
+    }
 
 }

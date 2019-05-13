@@ -46,9 +46,9 @@ public class Controller implements KeyListener, ActionListener {
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
         view.setPanel("START");
-        if(view.getPanel().equals("OSPREY_ROUND_ONE") || view.getPanel().equals("HARRIER_ROUND")){
-            start();
-        }
+//        if(view.getPanel().equals("OSPREY_ROUND_ONE") || view.getPanel().equals("HARRIER_ROUND")){
+//            start();
+//        }
 
 
         
@@ -77,6 +77,7 @@ public class Controller implements KeyListener, ActionListener {
         }
     }
     public void actionPerformed(ActionEvent e){
+        System.out.println("Actionperformed");
         if(e.getSource() == OspreyButton){
             System.out.println("Osprey");
             model.generateOspreyQuestions();
