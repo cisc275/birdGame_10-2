@@ -121,7 +121,7 @@ public class View extends JPanel {
         createOspreyPanels(c);
         createHarrierRound();
         createQuizPanel();
-        createGameOverPanel();
+        createGameOverPanel(c);
         loadImages();
         cards.add(startScreen, "START");
         cards.add(initialMap, "INITIAL_MAP");
@@ -132,7 +132,7 @@ public class View extends JPanel {
 //        cards.add(ospreyNest, "OSPREY_NEST");
         cards.add(harrierRound, "HARRIER_ROUND");
 //        cards.add(quiz, "QUIZ");
-//        cards.add(gameOver, "GAME_OVER");
+        cards.add(gameOver, "GAME_OVER");
 
         currentPanel = startScreen;
         createFrame(c);
@@ -175,7 +175,8 @@ public class View extends JPanel {
         frame.addKeyListener(c);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.pack();
+        frame.setUndecorated(true); //added
+//      frame.pack(); //this makes it tiny
         frame.setResizable(false);
         frame.setVisible(true);
     }
@@ -201,6 +202,7 @@ public class View extends JPanel {
         createOspreyRound2Panel();
         createOspreyMap2to3();
         createOspreyNestPanel();
+        createGameOverPanel(c);
     }
 
     void createInitialMapPanel(Controller c) {
@@ -244,7 +246,17 @@ public class View extends JPanel {
 
     }
 
-    void createGameOverPanel() {
+    void createGameOverPanel(Controller c) {
+    	gameOver = new GameOverPanel();
+    	gameOver.setLayout( null);
+    	JLabel gameOverLabel = new JLabel("Game Over");
+    	gameOver.setFont(new Font("Times New Roman",1,70));
+    	gameOver.setBounds(FRAME_WIDTH/2-100,FRAME_HEIGHT/2,100,100);
+    	JLabel finalScore = new JLabel("Score: " + Player.getScore());
+    	finalScore.setFont(new Font("Times New Roman",1,70));
+    	finalScore.setBounds(FRAME_WIDTH/2-100,FRAME_HEIGHT/2,300,100);
+    	gameOver.add(gameOverLabel);
+    	gameOver.add(finalScore);
 
     }
 
@@ -417,6 +429,14 @@ public class View extends JPanel {
             g.drawImage(initialMapImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
     }
+    
+    class GameOverPanel extends JPanel {
+
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(startScreenImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
+        }
+    }
 
     class OspreyPanel extends JPanel {
 
@@ -515,12 +535,14 @@ public class View extends JPanel {
 
             }
             g.setColor(Color.red);
-            g.drawRect(10, 10, 250, 50);
-            g.fillRect(10, 10, health, 50);
+
+            g.drawRect(FRAME_WIDTH/105, FRAME_HEIGHT/75, 250 * 2, FRAME_HEIGHT/17);
+     	   	g.fillRect(FRAME_WIDTH/105, FRAME_HEIGHT/75, health * 2, FRAME_HEIGHT/17);
             g.setColor(Color.white);
             g.setFont(new Font("Times New Roman", 1, 20));
-            g.drawRect(FRAME_WIDTH - 105, 20, 250, 50);
-            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 100, 50);
+            g.drawRect(FRAME_WIDTH - 105, FRAME_HEIGHT/30, FRAME_WIDTH/14, FRAME_HEIGHT/25);
+     	   	g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 103, FRAME_HEIGHT/17);
+
         }
     }
     class HarrierPanel extends JPanel{
@@ -620,12 +642,13 @@ public class View extends JPanel {
 
             }
             g.setColor(Color.red);
-            g.drawRect(10, 10, 250, 50);
-            g.fillRect(10, 10, health, 50);
+
+            g.drawRect(FRAME_WIDTH/105, FRAME_HEIGHT/75, 250 * 2, FRAME_HEIGHT/17);
+     	   	g.fillRect(FRAME_WIDTH/105, FRAME_HEIGHT/75, health * 2, FRAME_HEIGHT/17);
             g.setColor(Color.white);
             g.setFont(new Font("Times New Roman", 1, 20));
-            g.drawRect(FRAME_WIDTH - 105, 20, 250, 50);
-            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 100, 50);
+            g.drawRect(FRAME_WIDTH - 105, FRAME_HEIGHT/30, FRAME_WIDTH/14, FRAME_HEIGHT/25);
+     	   	g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 103, FRAME_HEIGHT/17);
         }
     }
 
@@ -644,5 +667,9 @@ public class View extends JPanel {
 
     public int getFrameWidth() {
         return FRAME_WIDTH;
+    }
+    
+    public JPanel getStartScreen() {
+    	return startScreen;
     }
 }

@@ -31,7 +31,7 @@ public class Controller implements KeyListener, ActionListener {
     private ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
-
+    private int birdsPlayed=0;
 //    protected Model OspreyModel;
 //    protected View OspreyView;
 //    protected Model HarrierModel;
@@ -49,6 +49,8 @@ public class Controller implements KeyListener, ActionListener {
         if(view.getPanel().equals("OSPREY_ROUND_ONE") || view.getPanel().equals("HARRIER_ROUND")){
             start();
         }
+
+
         
     }
     
@@ -59,27 +61,42 @@ public class Controller implements KeyListener, ActionListener {
             view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
                        model.getCurrentGPs(), model.getDirection(), 
                        model.getPlayer().getHealth(), model.getPlayer().getScore());
+        }        
+    	if(model.getPlayer().getHealth()<=0) {
+    		//comment these lines out for Game Over Screen after bird dies
+    		if(birdsPlayed==2) { // <-comment this out
+    			view.setPanel("GAME_OVER");
+    		}//<-comment this out
+    		//comment this out below
+    		else {
+    			view.setPanel("START");
+    		}
         }
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == OspreyButton){
             System.out.println("Osprey");
+            birdsPlayed++;
             model.spawnOspreyGamePieces();
             view.setBackground(imgOsprey, imgOsprey2);
             view.setPanel("INITIAL_MAP");
-            
+            OspreyButton.setVisible(false);
         }
         else if(e.getSource() == HarrierButton){
             System.out.println("Harrier");
+            birdsPlayed++;
             model.spawnHarrierGamePieces();
             view.setBackground(imgHarrier, imgHarrier2);
             view.setPanel("HARRIER_ROUND");
+            HarrierButton.setVisible(false);
         }
         
         if(e.getSource() == Round1Button){
             System.out.println("Round 1 start");
             view.setPanel("OSPREY_ROUND_ONE");
+            
         }
+
     }
 //    public void start() {
 //        model.spawnGamePieces();
