@@ -53,9 +53,13 @@ public class View extends JPanel {
     final static int BIRD_HEIGHT = 165;
     final static int FRAME_COUNT = 6;
     final static int MILLISECONDS_PER_SECOND = 1000;
-    final static int FRAMES_PER_SECOND = 40;
+
+    final static int FRAMES_PER_SECOND = 50;
+    private static int runningFrameCount = 0;
+//changed runningframeCount to static, might be a problem
     final static int TICKS_PER_FRAME_UPDATE = FRAMES_PER_SECOND / 10;
-    private int runningFrameCount = 0;
+
+
     private int picNum = 0;
     final static int MICE_FRAME_COUNT = 2;
     final static int BUNNY_FRAME_COUNT = 4;
@@ -103,14 +107,14 @@ public class View extends JPanel {
     private JPanel harrierRound;
     private JPanel quiz;
     private JPanel gameOver;
+    private int specialFoodDelay = 300;
 
     private Direction direction;
     private CopyOnWriteArrayList<GamePiece> currentViewableGPs = new CopyOnWriteArrayList<>();
     private int health;
     private int score;
-    private JLabel fact;
     private int backgroundLocation;
-
+    private static int momentEaten;
     private Image backgroundImage;
     private Image backgroundImageFlipped;
     private Image startScreenImg;
@@ -175,7 +179,8 @@ public class View extends JPanel {
         for (int i = 0; i < MAP_1_2_TRANSITION_COUNT; i++) {
             map1to2transition[i] = createImage("images/BirdImages/OspreyLevelScreen" + i + ".png");
         }
-        thoughtBubble = createImage("images/bub.png").getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        thoughtBubble = createImage("images/bub.png").getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+
     }
 
     void createFrame(Controller c) {
@@ -455,7 +460,10 @@ public class View extends JPanel {
                 picNum = (picNum + 1) % FRAME_COUNT;
             }
             if (Model.specialFoodEaten()) {
-                //displayFacts(g);
+                displayFacts(g);
+                if (runningFrameCount > momentEaten + specialFoodDelay) {
+                	Model.setSpecialFoodEaten(false);
+                }
             }
 
             g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
@@ -555,9 +563,20 @@ public class View extends JPanel {
 
         }
     }
+    
+    void displayFacts(Graphics g) {
+    //	JLabel img = new JLabel(new ImageIcon(thoughtBubble));
+	// 	img.setBounds(playerXLoc + 300,playerYLoc ,300,300);
+	// 	getPanel().add(img);
+    	g.drawImage(thoughtBubble, playerXLoc + 300, playerYLoc -300, this);
+        g.setFont(new Font("Times New Roman", 1, 20));
+        System.out.println(Model.getCurrentFact());
+    	g.drawString(Model.getCurrentFact(),playerXLoc + 300,playerYLoc -100 );
 
-    class HarrierPanel extends JPanel {
-
+    }
+    
+    
+    class HarrierPanel extends JPanel{
         protected void paintComponent(Graphics g) {
             runningFrameCount++;
             paintBackground(g);
@@ -565,7 +584,7 @@ public class View extends JPanel {
                 picNum = (picNum + 1) % FRAME_COUNT;
             }
             if (Model.specialFoodEaten()) {
-                //displayFacts(g);
+                displayFacts(g);
             }
 
             g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
@@ -687,6 +706,12 @@ public class View extends JPanel {
         return FRAME_WIDTH;
     }
 
+    public static int getFrameCount() {
+    	return runningFrameCount;
+    }
+    public static void setMomentEaten(int i) {
+    	momentEaten = i;
+    }
     public JPanel getStartScreen() {
         return startScreen;
     }

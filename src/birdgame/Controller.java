@@ -79,6 +79,7 @@ public class Controller implements KeyListener, ActionListener {
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == OspreyButton){
             System.out.println("Osprey");
+            model.generateOspreyQuestions();
             birdsPlayed++;
             model.spawnOspreyGamePieces();
             view.setBackground(imgOsprey, imgOsprey2);
@@ -87,8 +88,10 @@ public class Controller implements KeyListener, ActionListener {
         }
         else if(e.getSource() == HarrierButton){
             System.out.println("Harrier");
+            model.generateHarrierQuestions();
             birdsPlayed++;
             model.spawnHarrierGamePieces();
+            
             view.setBackground(imgHarrier, imgHarrier2);
             view.setPanel("HARRIER_ROUND");
             HarrierButton.setVisible(false);

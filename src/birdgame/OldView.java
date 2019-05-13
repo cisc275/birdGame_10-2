@@ -548,8 +548,7 @@
 //	 	
 //	 	JPanel bubble = new JPanel();
 //	 	bubble.setLayout(null);
-//	 	bubble.setBounds(playerXLoc + 300,playerYLoc ,300,300);
-//	 	JLabel img = new JLabel(new ImageIcon(thoughtBubble));
+//	 	
 //	 	bubble.add(img);
 //	 	bubble.setVisible(true);
 //	 	frame.add(bubble);
