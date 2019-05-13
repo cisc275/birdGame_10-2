@@ -64,14 +64,18 @@ public class Controller implements KeyListener, ActionListener {
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == OspreyButton){
             System.out.println("Osprey");
+            model.generateOspreyQuestions();
             model.spawnOspreyGamePieces();
+           
             view.setBackground(imgOsprey, imgOsprey2);
             view.setPanel("INITIAL_MAP");
             
         }
         else if(e.getSource() == HarrierButton){
             System.out.println("Harrier");
+            model.generateHarrierQuestions();
             model.spawnHarrierGamePieces();
+            
             view.setBackground(imgHarrier, imgHarrier2);
             view.setPanel("HARRIER_ROUND");
         }

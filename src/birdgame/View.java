@@ -55,7 +55,7 @@ public class View extends JPanel {
     final static int TICKS_PER_FRAME_UPDATE = 5;
     final static int MILLISECONDS_PER_SECOND = 1000;
     final static int FRAMES_PER_SECOND = 50;
-    private int runningFrameCount = 0;
+    private static int runningFrameCount = 0;
     private int picNum = 0;
     final static int MICE_FRAME_COUNT = 2;
     final static int BUNNY_FRAME_COUNT = 4;
@@ -100,14 +100,14 @@ public class View extends JPanel {
     private JPanel harrierRound;
     private JPanel quiz;
     private JPanel gameOver;
+    private int specialFoodDelay = 300;
 
     private Direction direction;
     private ArrayList<GamePiece> currentViewableGPs = new ArrayList<>();
     private int health;
     private int score;
-    private JLabel fact;
     private int backgroundLocation;
-
+    private static int momentEaten;
     private Image backgroundImage;
     private Image backgroundImageFlipped;
     private Image startScreenImg;
@@ -166,7 +166,7 @@ public class View extends JPanel {
             plane[i] = createImage("images/BirdImages/Plane" + i + ".png");
         }
         thoughtBubble = createImage("images/bub.png").getScaledInstance
-       		(300, 300, Image.SCALE_SMOOTH);
+       		(400, 400, Image.SCALE_SMOOTH);
     }
     void createFrame(Controller c) {
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -427,7 +427,10 @@ public class View extends JPanel {
             	picNum = (picNum + 1) % FRAME_COUNT;
             }
             if (Model.specialFoodEaten()) {
-                //displayFacts(g);
+                displayFacts(g);
+                if (runningFrameCount > momentEaten + specialFoodDelay) {
+                	Model.setSpecialFoodEaten(false);
+                }
             }
 
             g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
@@ -523,6 +526,19 @@ public class View extends JPanel {
             g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 100, 50);
         }
     }
+    
+    void displayFacts(Graphics g) {
+    //	JLabel img = new JLabel(new ImageIcon(thoughtBubble));
+	// 	img.setBounds(playerXLoc + 300,playerYLoc ,300,300);
+	// 	getPanel().add(img);
+    	g.drawImage(thoughtBubble, playerXLoc + 300, playerYLoc -300, this);
+        g.setFont(new Font("Times New Roman", 1, 20));
+        System.out.println(Model.getCurrentFact());
+    	g.drawString(Model.getCurrentFact(),playerXLoc + 300,playerYLoc -100 );
+
+    }
+    
+    
     class HarrierPanel extends JPanel{
     
         protected void paintComponent(Graphics g) {
@@ -532,7 +548,7 @@ public class View extends JPanel {
             	picNum = (picNum + 1) % FRAME_COUNT;
             }
             if (Model.specialFoodEaten()) {
-                //displayFacts(g);
+                displayFacts(g);
             }
 
             g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
@@ -644,5 +660,11 @@ public class View extends JPanel {
 
     public int getFrameWidth() {
         return FRAME_WIDTH;
+    }
+    public static int getFrameCount() {
+    	return runningFrameCount;
+    }
+    public static void setMomentEaten(int i) {
+    	momentEaten = i;
     }
 }
