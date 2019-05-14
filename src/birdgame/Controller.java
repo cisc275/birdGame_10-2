@@ -26,7 +26,7 @@ public class Controller implements KeyListener, ActionListener {
     private JButton OspreyButton;
     private JButton HarrierButton;
     private JButton Round1Button;
-    private JButton Round2Button;
+    private static JButton Round2Button;
     private AbstractAction arrowKeyAction;
     private ImageIcon imgOsprey = new ImageIcon("DNERRGameBackground.jpg");
     private ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
@@ -64,6 +64,9 @@ public class Controller implements KeyListener, ActionListener {
             if(view.getIsOspreyRound1Over()){
                 view.setPanel("MAP_1_TO_2");
             }
+            else if(view.getIsOspreyRound2Over()){
+                view.setPanel("MAP_2_TO_3");
+            }
         }        
     	if(model.getPlayer().getHealth()<=0) {
     		//comment these lines out for Game Over Screen after bird dies
@@ -73,8 +76,15 @@ public class Controller implements KeyListener, ActionListener {
     		//comment this out below
     		else {
     			view.setPanel("START");
+                        reset();
     		}
         }
+    }
+    
+    void reset(){
+        view = new View(this);
+        model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
+        
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == OspreyButton){
@@ -170,7 +180,7 @@ public class Controller implements KeyListener, ActionListener {
     public JButton getRound1Button(){
         return Round1Button;
     }
-    public JButton getRound2Button(){
+    public static JButton getRound2Button(){
         return Round2Button;
     }
 

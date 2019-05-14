@@ -212,7 +212,7 @@ public class View extends JPanel {
     void createOspreyPanels(Controller c) {
         createInitialMapPanel(c);
         createOspreyRound1Panel();
-        createOspreyMap1to2(c);
+        createOspreyMap1to2();
         createOspreyRound2Panel();
         createOspreyMap2to3();
         createOspreyNestPanel();
@@ -234,13 +234,12 @@ public class View extends JPanel {
         ospreyRound1 = new OspreyPanel();
     }
 
-    void createOspreyMap1to2(Controller c) {
+    void createOspreyMap1to2() {
+
         map1to2 = new Map1to2Panel();
         map1to2.setLayout(null);
-        c.getRound2Button().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
-        c.getRound2Button().setBounds((FRAME_WIDTH * 7) / 10, 
-                (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-        map1to2.add(c.getRound2Button());
+        Controller.getRound2Button().setEnabled(true);
+        map1to2.add(Controller.getRound2Button());
     }
 
     void createOspreyRound2Panel() {
@@ -697,13 +696,16 @@ public class View extends JPanel {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                
-            }
-            else{
+
+            } else {
                 g.drawImage(map1to2transition[MAP_1_2_TRANSITION_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
+                setIsOspreyRound1Over(false);
+                Controller.getRound2Button().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+                Controller.getRound2Button().setBounds((FRAME_WIDTH * 7) / 10,
+                        (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+                add(Controller.getRound2Button());
             }
-            
-            
+
         }
     }
 
