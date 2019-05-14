@@ -98,7 +98,6 @@ public class Model {
      * conditions.
      */
     public void handleTicks() {
-        //System.out.println(player.getX() + ", " + player.getY());
         updateLocationAndDirection();
         //for(GamePiece g: gamePieces){
         Iterator<GamePiece> it = gamePieces.iterator();
@@ -146,7 +145,7 @@ public class Model {
     }
 
     public void endOfLevel() {
-        player.setXIncr(40);
+        player.setXIncr(30);
 //    	player.setXIncr((int)(fWidth * .5));
         player.setX(player.getX() + player.getXIncr());
         

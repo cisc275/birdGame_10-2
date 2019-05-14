@@ -73,8 +73,9 @@ public class Controller implements KeyListener, ActionListener {
                 view.setPanel("MAP_2_TO_3");
                 view.setIsOspreyRound2Over(false);
             }
-        }        
-    	if(model.getPlayer().getHealth()<=0) {
+        }
+    	if(model.getPlayer().getHealth()<=0 && model.getPlayer().getHealth() != -999) {
+    		System.out.println(model.getPlayer().getHealth());
     		//comment these lines out for Game Over Screen after bird dies
     		if(birdsPlayed==2) { // <-comment this out
     			view.setPanel("GAME_OVER");
@@ -84,6 +85,11 @@ public class Controller implements KeyListener, ActionListener {
     			view.setPanel("START");
     		}
         }
+    	resetAfterRound();
+    	System.out.println("start finished");
+    	if (birdsPlayed == 1) {
+    		start();
+    	}
     }
     
     void resetAfterRound(){
@@ -92,8 +98,6 @@ public class Controller implements KeyListener, ActionListener {
         model.getPlayer().setHealth(250);
         model.getPlayer().setX(30);
         model.getPlayer().setY(view.getFrameHeight()/2);
-        
-        start();
     }
     void resetAfterGameOver(){
         
@@ -128,9 +132,9 @@ public class Controller implements KeyListener, ActionListener {
             model.spawnOspreyGamePieces();
             view.setBackground(imgOsprey, imgOsprey2);
             model.setRound(2);
-            System.out.println("before");
-            resetAfterRound();
-            System.out.println("after");
+            model.getPlayer().setHealth(-999);
+            
+            //System.out.println("after");
         }
 
     }
