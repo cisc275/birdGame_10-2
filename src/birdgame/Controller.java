@@ -56,16 +56,22 @@ public class Controller implements KeyListener, ActionListener {
     
     
     void start() {
+        System.out.println("start reached");
     	while(model.getPlayer().isAlive()){
+            //System.out.println("enters while loop");
             model.handleTicks();
             view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
                        model.getCurrentGPs(), model.getDirection(), 
                        model.getPlayer().getHealth(), model.getPlayer().getScore());
             if(view.getIsOspreyRound1Over()){
+                System.out.println("before map 1 to 2");
                 view.setPanel("MAP_1_TO_2");
+                view.setIsOspreyRound1Over(false);
+                System.out.println("after map 1 to 2");
             }
             else if(view.getIsOspreyRound2Over()){
                 view.setPanel("MAP_2_TO_3");
+                view.setIsOspreyRound2Over(false);
             }
         }        
     	if(model.getPlayer().getHealth()<=0) {
@@ -76,18 +82,25 @@ public class Controller implements KeyListener, ActionListener {
     		//comment this out below
     		else {
     			view.setPanel("START");
-                        reset();
     		}
         }
     }
     
-    void reset(){
-        view = new View(this);
-        model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
+    void resetAfterRound(){
+        //view = new View(this);
+        //model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
+        model.getPlayer().setHealth(250);
+        model.getPlayer().setX(30);
+        model.getPlayer().setY(view.getFrameHeight()/2);
+        
+        start();
+    }
+    void resetAfterGameOver(){
         
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == OspreyButton){
+            
             model.generateOspreyQuestions();
             birdsPlayed++;
             model.spawnOspreyGamePieces();
@@ -111,7 +124,13 @@ public class Controller implements KeyListener, ActionListener {
         }
         else if(e.getSource() == Round2Button){
             view.setPanel("OSPREY_ROUND_TWO");
+            model.generateOspreyQuestions();
+            model.spawnOspreyGamePieces();
+            view.setBackground(imgOsprey, imgOsprey2);
             model.setRound(2);
+            System.out.println("before");
+            resetAfterRound();
+            System.out.println("after");
         }
 
     }

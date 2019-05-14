@@ -573,7 +573,7 @@ public class View extends JPanel {
         // 	getPanel().add(img);
         g.drawImage(thoughtBubble, playerXLoc + 300, playerYLoc - 300, this);
         g.setFont(new Font("Times New Roman", 1, 20));
-        System.out.println(Model.getCurrentFact());
+        //System.out.println(Model.getCurrentFact());
         g.drawString(Model.getCurrentFact(), playerXLoc + 300, playerYLoc - 100);
 
     }
