@@ -33,6 +33,7 @@ public class Controller implements KeyListener, ActionListener {
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
     private int birdsPlayed=0;
+    private boolean nextRound = false;
     
     public Controller(){
         OspreyButton = new JButton("Play as Osprey");
@@ -57,7 +58,7 @@ public class Controller implements KeyListener, ActionListener {
     
     void start() {
         System.out.println("start reached");
-    	while(model.getPlayer().isAlive()){
+    	while(model.getPlayer().isAlive() & !nextRound){
             //System.out.println("enters while loop");
             model.handleTicks();
             view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
@@ -70,11 +71,13 @@ public class Controller implements KeyListener, ActionListener {
                 System.out.println("after map 1 to 2");
             }
             else if(view.getIsOspreyRound2Over()){
+            	System.out.println("Hello");
+            	
                 view.setPanel("MAP_2_TO_3");
                 view.setIsOspreyRound2Over(false);
             }
         }
-    	if(model.getPlayer().getHealth()<=0 && model.getPlayer().getHealth() != -999) {
+    	if(model.getPlayer().getHealth()<=0 && !nextRound) {
     		System.out.println(model.getPlayer().getHealth());
     		//comment these lines out for Game Over Screen after bird dies
     		if(birdsPlayed==2) { // <-comment this out
@@ -86,7 +89,7 @@ public class Controller implements KeyListener, ActionListener {
     		}
         }
     	resetAfterRound();
-    	System.out.println("start finished");
+    	nextRound = false;
     	if (birdsPlayed == 1) {
     		start();
     	}
@@ -132,7 +135,7 @@ public class Controller implements KeyListener, ActionListener {
             model.spawnOspreyGamePieces();
             view.setBackground(imgOsprey, imgOsprey2);
             model.setRound(2);
-            model.getPlayer().setHealth(-999);
+            nextRound = true;
             
             //System.out.println("after");
         }
