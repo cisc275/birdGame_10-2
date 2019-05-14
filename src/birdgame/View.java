@@ -694,6 +694,11 @@ public class View extends JPanel {
                 }
                 
             }
+            else{
+                g.drawImage(map1to2transition[MAP_1_2_TRANSITION_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
+            }
+            
+            
         }
     }
 
