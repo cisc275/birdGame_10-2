@@ -124,10 +124,9 @@ public class Model {
                 endOfLevel();
                 
             }
-//            else if(round == 2){
-//                View.setIsOspreyRound2Over(true);
-//                round = 0;
-//            }
+            else if(round == 2){
+                endOfLevel();
+            }
         }
 
         if (player.getX() > (fWidth - imgWidth)) {
