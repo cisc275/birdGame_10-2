@@ -136,7 +136,7 @@ public class View extends JPanel {
         cards.add(initialMap, "INITIAL_MAP");
         cards.add(ospreyRound1, "OSPREY_ROUND_ONE");
         cards.add(map1to2, "MAP_1_TO_2");
-//        cards.add(ospreyRound2, "OSPREY_ROUND_TWO");
+        cards.add(ospreyRound2, "OSPREY_ROUND_TWO");
 //        cards.add(map2to3, "MAP_2_TO_3");
 //        cards.add(ospreyNest, "OSPREY_NEST");
         cards.add(harrierRound, "HARRIER_ROUND");
@@ -212,7 +212,7 @@ public class View extends JPanel {
     void createOspreyPanels(Controller c) {
         createInitialMapPanel(c);
         createOspreyRound1Panel();
-        createOspreyMap1to2();
+        createOspreyMap1to2(c);
         createOspreyRound2Panel();
         createOspreyMap2to3();
         createOspreyNestPanel();
@@ -234,12 +234,17 @@ public class View extends JPanel {
         ospreyRound1 = new OspreyPanel();
     }
 
-    void createOspreyMap1to2() {
+    void createOspreyMap1to2(Controller c) {
         map1to2 = new Map1to2Panel();
+        map1to2.setLayout(null);
+        c.getRound2Button().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+        c.getRound2Button().setBounds((FRAME_WIDTH * 7) / 10, 
+                (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        map1to2.add(c.getRound2Button());
     }
 
     void createOspreyRound2Panel() {
-
+        ospreyRound2 = new OspreyPanel();
     }
 
     void createOspreyMap2to3() {

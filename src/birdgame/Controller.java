@@ -26,23 +26,23 @@ public class Controller implements KeyListener, ActionListener {
     private JButton OspreyButton;
     private JButton HarrierButton;
     private JButton Round1Button;
+    private JButton Round2Button;
     private AbstractAction arrowKeyAction;
     private ImageIcon imgOsprey = new ImageIcon("DNERRGameBackground.jpg");
     private ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
     private int birdsPlayed=0;
-//    protected Model OspreyModel;
-//    protected View OspreyView;
-//    protected Model HarrierModel;
-//    protected View HarrierView;
+    
     public Controller(){
         OspreyButton = new JButton("Play as Osprey");
         HarrierButton = new JButton("Play as Harrier");
         Round1Button = new JButton("Ready to Play Level 1");
+        Round2Button = new JButton("Ready to Play Level 2");
         OspreyButton.addActionListener(this);
         HarrierButton.addActionListener(this);
         Round1Button.addActionListener(this);
+        Round2Button.addActionListener(this);
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
         view.setPanel("START");
@@ -77,9 +77,7 @@ public class Controller implements KeyListener, ActionListener {
         }
     }
     public void actionPerformed(ActionEvent e){
-        System.out.println("Actionperformed");
         if(e.getSource() == OspreyButton){
-            System.out.println("Osprey");
             model.generateOspreyQuestions();
             birdsPlayed++;
             model.spawnOspreyGamePieces();
@@ -88,7 +86,6 @@ public class Controller implements KeyListener, ActionListener {
             OspreyButton.setVisible(false);
         }
         else if(e.getSource() == HarrierButton){
-            System.out.println("Harrier");
             model.generateHarrierQuestions();
             birdsPlayed++;
             model.spawnHarrierGamePieces();
@@ -99,10 +96,12 @@ public class Controller implements KeyListener, ActionListener {
         }
         
         if(e.getSource() == Round1Button){
-            System.out.println("Round 1 start");
             view.setPanel("OSPREY_ROUND_ONE");
             model.setRound(1);
-            System.out.println(model.getRound());
+        }
+        else if(e.getSource() == Round2Button){
+            view.setPanel("OSPREY_ROUND_TWO");
+            model.setRound(2);
         }
 
     }
@@ -170,6 +169,9 @@ public class Controller implements KeyListener, ActionListener {
     }
     public JButton getRound1Button(){
         return Round1Button;
+    }
+    public JButton getRound2Button(){
+        return Round2Button;
     }
 
     public View getView() {
