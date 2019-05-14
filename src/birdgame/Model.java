@@ -125,8 +125,9 @@ public class Model {
                 
             }
             else if(round == 2){
-              endOfLevel();
-          }
+
+                endOfLevel();
+            }
         }
 
         if (player.getX() > (fWidth - imgWidth)) {
