@@ -58,7 +58,7 @@ public class Controller implements KeyListener, ActionListener {
     
     void start() {
         System.out.println("start reached");
-    	while(model.getPlayer().isAlive() & !nextRound){
+    	while(model.getPlayer().isAlive() && !nextRound){
             //System.out.println("enters while loop");
             model.handleTicks();
             view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
@@ -67,14 +67,14 @@ public class Controller implements KeyListener, ActionListener {
             if(view.getIsOspreyRound1Over()){
                 System.out.println("before map 1 to 2");
                 view.setPanel("MAP_1_TO_2");
-                view.setIsOspreyRound1Over(false);
-                System.out.println("after map 1 to 2");
+                //view.setIsOspreyRound1Over(false);
+                //System.out.println("after map 1 to 2");
             }
             else if(view.getIsOspreyRound2Over()){
             	System.out.println("Hello");
             	
                 view.setPanel("MAP_2_TO_3");
-                view.setIsOspreyRound2Over(false);
+                //view.setIsOspreyRound2Over(false);
             }
         }
     	if(model.getPlayer().getHealth()<=0 && !nextRound) {
@@ -130,12 +130,14 @@ public class Controller implements KeyListener, ActionListener {
             model.setRound(1);
         }
         else if(e.getSource() == Round2Button){
+            view.setIsOspreyRound1Over(false);
             view.setPanel("OSPREY_ROUND_TWO");
             model.generateOspreyQuestions();
             model.spawnOspreyGamePieces();
             view.setBackground(imgOsprey, imgOsprey2);
             model.setRound(2);
             nextRound = true;
+            
             
             //System.out.println("after");
         }

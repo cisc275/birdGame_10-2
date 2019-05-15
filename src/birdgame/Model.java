@@ -65,6 +65,7 @@ public class Model {
         setGroundLevel(fHeight - imgHeight);
         setIndexOfGP(0);
         indexOfGP = 0;
+        //round = 1;
 
     }
 
@@ -120,26 +121,24 @@ public class Model {
         seeCurrentGP();
 
         if (currentGPs.size() == 0 && totalLevelTicks != 0) {
-            if (round == 1) {
+            if(round == 1)
                 endOfLevel();
-                
-            }
-            else if(round == 2){
-
+            else if(round ==2)
                 endOfLevel();
-            }
         }
 
-        if (player.getX() > (fWidth - imgWidth)) {
-            if(round == 1){
-                View.setIsOspreyRound1Over(true);
-                round = 2;
-            }
-            else if(round == 2){
-                View.setIsOspreyRound2Over(true);
-                round = 0;
-            }
-        }
+//        if (player.getX() > (fWidth - imgWidth)) {
+//            if(round == 1){
+//                View.setIsOspreyRound1Over(true);
+//                round = 2;
+//                player.setX(30);
+//            }
+//            else if(round == 2){
+//                View.setIsOspreyRound2Over(true);
+//                round = 0;
+//                player.setX(30);
+//            }
+//        }
         //System.out.println(gamePieces);
         totalLevelTicks++;
     }
@@ -148,7 +147,14 @@ public class Model {
         player.setXIncr(30);
 //    	player.setXIncr((int)(fWidth * .5));
         player.setX(player.getX() + player.getXIncr());
-        
+        if (player.getX() > (fWidth - imgWidth)) {
+            if(round == 1){
+                View.setIsOspreyRound1Over(true);
+            }
+            else if(round == 2){
+                View.setIsOspreyRound2Over(true);
+            }
+        }
 
     }
 

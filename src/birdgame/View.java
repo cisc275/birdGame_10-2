@@ -122,8 +122,8 @@ public class View extends JPanel {
     private Image startScreenImg;
     private Image initialMapImg;
 
-    private static boolean isOspreyRound1Over;
-    private static boolean isOspreyRound2Over;
+    private static boolean isOspreyRound1Over = false;
+    private static boolean isOspreyRound2Over = false;
 
     public View(Controller c) {
         frame = new JFrame();
@@ -705,11 +705,12 @@ public class View extends JPanel {
 
             } else {
                 g.drawImage(map1to2transition[MAP_1_2_TRANSITION_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
-                setIsOspreyRound1Over(false);
+                
                 Controller.getRound2Button().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
                 Controller.getRound2Button().setBounds((FRAME_WIDTH * 7) / 10,
                         (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
                 add(Controller.getRound2Button());
+                //setIsOspreyRound1Over(false);
             }
 
         }
