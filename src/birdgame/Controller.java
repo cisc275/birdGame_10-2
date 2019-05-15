@@ -148,7 +148,9 @@ public class Controller implements KeyListener, ActionListener {
         }
         
         if(e.getSource() == ReturnToStart) {
+            view.setIsOspreyRound2Over(false);
             view.setPanel("START");
+            model.setRound(0);
         }
         
 

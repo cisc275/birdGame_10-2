@@ -735,7 +735,7 @@ public class View extends JPanel {
 
             } else {
                 g.drawImage(map2to3transition[MAP_2_3_TRANSITION_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
-                setIsOspreyRound2Over(false);
+                //setIsOspreyRound2Over(false);
                 Controller.getReturnToStartButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
                 Controller.getReturnToStartButton().setBounds((FRAME_WIDTH * 7) / 10,
                         (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
