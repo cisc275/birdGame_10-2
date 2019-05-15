@@ -114,7 +114,7 @@ public class Controller implements KeyListener, ActionListener {
             
             model.generateOspreyQuestions();
             birdsPlayed++;
-            model.spawnOspreyGamePieces();
+            
             view.setBackground(imgOsprey, imgOsprey2);
             view.setPanel("INITIAL_MAP");
             OspreyButton.setVisible(false);
@@ -131,6 +131,7 @@ public class Controller implements KeyListener, ActionListener {
         
         if(e.getSource() == Round1Button){
             view.setPanel("OSPREY_ROUND_ONE");
+            model.spawnOspreyGamePieces();
             model.setRound(1);
         }
         else if(e.getSource() == Round2Button){
