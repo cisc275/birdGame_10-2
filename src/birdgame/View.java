@@ -220,7 +220,7 @@ public class View extends JPanel {
         createOspreyRound1Panel();
         createOspreyMap1to2();
         createOspreyRound2Panel();
-        createOspreyMap2to3();
+        createOspreyMap2to3(c);
         createOspreyNestPanel();
         createGameOverPanel(c);
     }
@@ -252,8 +252,12 @@ public class View extends JPanel {
         ospreyRound2 = new OspreyPanel();
     }
 
-    void createOspreyMap2to3() {
+    void createOspreyMap2to3(Controller c) {
         map2to3 = new Map2to3Panel();
+        
+        map2to3.setLayout(null);
+        Controller.getReturnToStartButton().setEnabled(true);
+        map2to3.add(Controller.getReturnToStartButton());
     }
 
     void createOspreyNestPanel() {
@@ -434,6 +438,8 @@ public class View extends JPanel {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        
+        System.out.println(currentPanel);
     }
 
     class StartScreenPanel extends JPanel {
@@ -730,10 +736,10 @@ public class View extends JPanel {
             } else {
                 g.drawImage(map2to3transition[MAP_2_3_TRANSITION_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
                 setIsOspreyRound2Over(false);
-//                Controller.getRound2Button().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
-//                Controller.getRound2Button().setBounds((FRAME_WIDTH * 7) / 10,
-//                        (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-//                add(Controller.getRound2Button());
+                Controller.getReturnToStartButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+                Controller.getReturnToStartButton().setBounds((FRAME_WIDTH * 7) / 10,
+                        (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+                add(Controller.getReturnToStartButton());
             }
 
         }

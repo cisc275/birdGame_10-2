@@ -27,6 +27,7 @@ public class Controller implements KeyListener, ActionListener {
     private JButton HarrierButton;
     private JButton Round1Button;
     private static JButton Round2Button;
+    private static JButton ReturnToStart;
     private AbstractAction arrowKeyAction;
     private ImageIcon imgOsprey = new ImageIcon("DNERRGameBackground.jpg");
     private ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
@@ -40,10 +41,12 @@ public class Controller implements KeyListener, ActionListener {
         HarrierButton = new JButton("Play as Harrier");
         Round1Button = new JButton("Ready to Play Level 1");
         Round2Button = new JButton("Ready to Play Level 2");
+        ReturnToStart = new JButton("Return to Start Screen");
         OspreyButton.addActionListener(this);
         HarrierButton.addActionListener(this);
         Round1Button.addActionListener(this);
         Round2Button.addActionListener(this);
+        ReturnToStart.addActionListener(this);
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
         view.setPanel("START");
@@ -74,6 +77,7 @@ public class Controller implements KeyListener, ActionListener {
             	System.out.println("Hello");
             	
                 view.setPanel("MAP_2_TO_3");
+                //view.setPanel("START");
                 //view.setIsOspreyRound2Over(false);
             }
         }
@@ -141,6 +145,11 @@ public class Controller implements KeyListener, ActionListener {
             
             //System.out.println("after");
         }
+        
+        if(e.getSource() == ReturnToStart) {
+            view.setPanel("START");
+        }
+        
 
     }
 //    public void start() {
@@ -210,6 +219,10 @@ public class Controller implements KeyListener, ActionListener {
     }
     public static JButton getRound2Button(){
         return Round2Button;
+    }
+    
+    public static JButton getReturnToStartButton(){
+        return ReturnToStart;
     }
 
     public View getView() {
