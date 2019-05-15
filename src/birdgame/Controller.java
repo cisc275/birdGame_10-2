@@ -29,8 +29,10 @@ public class Controller implements KeyListener, ActionListener {
     private static JButton Round2Button;
     private static JButton ReturnToStart;
     private AbstractAction arrowKeyAction;
-    private ImageIcon imgOsprey = new ImageIcon("DNERRGameBackground.jpg");
-    private ImageIcon imgOsprey2 = new ImageIcon("DNERRGameBackgroundMirror.jpg");
+    private ImageIcon imgOsprey = new ImageIcon("OspreyBackground2.jpg");
+    private ImageIcon imgOsprey2 = new ImageIcon("OspreyBackground2Mirror.jpg");
+    private ImageIcon imgOsprey3 = new ImageIcon("OspreyBackground.png");
+    private ImageIcon imgOsprey4 = new ImageIcon("OspreyBackgroundMirror.png");
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
     private int birdsPlayed=0;
@@ -132,6 +134,7 @@ public class Controller implements KeyListener, ActionListener {
         
         if(e.getSource() == Round1Button){
             view.setPanel("OSPREY_ROUND_ONE");
+            view.setBackground(imgOsprey, imgOsprey2);
             model.spawnOspreyGamePieces();
             model.setRound(1);
         }
@@ -140,7 +143,7 @@ public class Controller implements KeyListener, ActionListener {
             view.setPanel("OSPREY_ROUND_TWO");
             model.generateOspreyQuestions();
             model.spawnOspreyGamePieces();
-            view.setBackground(imgOsprey, imgOsprey2);
+            view.setBackground(imgOsprey3, imgOsprey4);
             model.setRound(2);
             nextRound = true;
             
