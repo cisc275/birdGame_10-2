@@ -29,10 +29,10 @@ public class Controller implements KeyListener, ActionListener {
     private static JButton Round2Button;
     private static JButton ReturnToStart;
     private AbstractAction arrowKeyAction;
-    private ImageIcon imgOsprey = new ImageIcon("OspreyBackground2.jpg");
-    private ImageIcon imgOsprey2 = new ImageIcon("OspreyBackground2Mirror.jpg");
-    private ImageIcon imgOsprey3 = new ImageIcon("OspreyBackground.png");
-    private ImageIcon imgOsprey4 = new ImageIcon("OspreyBackgroundMirror.png");
+    private ImageIcon imgOsprey = new ImageIcon("images/BirdImages/OspreyBackground2.jpg");
+    private ImageIcon imgOsprey2 = new ImageIcon("images/BirdImages/OspreyBackground2Mirror.jpg");
+    private ImageIcon imgOsprey3 = new ImageIcon("images/BirdImages/OspreyBackground.png");
+    private ImageIcon imgOsprey4 = new ImageIcon("images/BirdImages/OspreyBackgroundMirror.png");
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
     private int birdsPlayed=0;
@@ -123,6 +123,7 @@ public class Controller implements KeyListener, ActionListener {
             OspreyButton.setVisible(false);
         }
         else if(e.getSource() == HarrierButton){
+        	resetAfterRound();
             model.generateHarrierQuestions();
             birdsPlayed++;
             model.spawnHarrierGamePieces();
