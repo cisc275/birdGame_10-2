@@ -168,7 +168,7 @@ public class Model {
      */
     //randomize the location of the GamePieces (1 every screen)
     public void spawnHarrierGamePieces() {
-        System.out.println("wrong spawn");
+        //System.out.println("wrong spawn");
 
         //SpecialFood.generateFactsAndQuestions();
         int numGamePieces = 0;
@@ -267,11 +267,14 @@ public class Model {
 
             }
         }
-        System.out.println(gamePieces);
+        //System.out.println(gamePieces);
     }
 
     public void clearCurrentGP() {
         currentGPs.clear();
+    }
+    public void clearGP(){
+        gamePieces.clear();
     }
 
     public void seeCurrentGP() {

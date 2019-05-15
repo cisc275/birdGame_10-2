@@ -59,7 +59,8 @@ public class View extends JPanel {
 //changed runningframeCount to static, might be a problem
     final static int TICKS_PER_FRAME_UPDATE = FRAMES_PER_SECOND / 10;
 
-    private int picNum = 0;
+    private int harrierPicNum = 0;
+    private int ospreyPicNum = 0;
     final static int MICE_FRAME_COUNT = 2;
     final static int BUNNY_FRAME_COUNT = 4;
     final static int RED_FOX_FRAME_COUNT = 4;
@@ -82,7 +83,8 @@ public class View extends JPanel {
     private int playerYLoc = 0;
     private int map1To2TransitionPicNum = 0;
     private int map2To3TransitionPicNum = 0;
-    private BufferedImage[] flyForward = new BufferedImage[6];
+    private BufferedImage[] harrierFly = new BufferedImage[FRAME_COUNT];
+    private BufferedImage[] ospreyFly = new BufferedImage[FRAME_COUNT];
     private BufferedImage[] mice = new BufferedImage[2];
     private BufferedImage[] bunny = new BufferedImage[4];
     private BufferedImage[] redFox = new BufferedImage[4];
@@ -100,6 +102,7 @@ public class View extends JPanel {
     private JPanel cards;
     private JPanel currentPanel;
     private JPanel startScreen;
+    private JPanel tutorialScreen;
     private JPanel initialMap;
     private JPanel ospreyRound1;
     private JPanel map1to2;
@@ -130,12 +133,14 @@ public class View extends JPanel {
         cards = new JPanel(new CardLayout());
 
         createStartScreen(c);
+        createTutorial();
         createOspreyPanels(c);
         createHarrierRound();
         createQuizPanel();
         createGameOverPanel(c);
         loadImages();
         cards.add(startScreen, "START");
+        //cards.add(tutorialScreen, "TUTORIAL");
         cards.add(initialMap, "INITIAL_MAP");
         cards.add(ospreyRound1, "OSPREY_ROUND_ONE");
         cards.add(map1to2, "MAP_1_TO_2");
@@ -152,7 +157,10 @@ public class View extends JPanel {
 
     void loadImages() {
         for (int i = 0; i < FRAME_COUNT; i++) {
-            flyForward[i] = createImage("images/BirdImages/Bird" + i + ".png");
+            harrierFly[i] = createImage("images/BirdImages/Harrier" + i + ".png");
+        }
+        for (int i = 0; i < FRAME_COUNT; i++){
+            ospreyFly[i] = createImage("images/BirdImages/Osprey" + i + ".png");
         }
         for (int i = 0; i < MICE_FRAME_COUNT; i++) {
             mice[i] = createImage("images/BirdImages/Mice" + i + ".png");
@@ -196,7 +204,7 @@ public class View extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //frame.setUndecorated(true); //added
-        frame.pack(); //this makes it tiny
+        //frame.pack(); //this makes it tiny
         frame.setResizable(false);
         frame.setVisible(true);
     }
@@ -214,7 +222,9 @@ public class View extends JPanel {
         startScreen.add(c.getOspreyButton());
         startScreen.add(c.getHarrierButton());
     }
-
+    void createTutorial(){
+        
+    }
     void createOspreyPanels(Controller c) {
         createInitialMapPanel(c);
         createOspreyRound1Panel();
@@ -288,12 +298,12 @@ public class View extends JPanel {
 
 //    public void paint(Graphics g) {
 //        paintBackground(g);
-//        picNum = (picNum + 1) % FRAME_COUNT;
+//        harrierPicNum = (harrierPicNum + 1) % FRAME_COUNT;
 //        if (Model.specialFoodEaten()) {
 //            //displayFacts(g);
 //        }
 //
-//        g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
+//        g.drawImage(harrierFly[harrierPicNum], playerXLoc, playerYLoc, this);
 //        for (GamePiece gp : currentViewableGPs) {
 //            if (gp.isSpecialFood()) {
 //                if (gp.getSprite().equals(Sprite.MOUSE)) { //mice
@@ -439,7 +449,7 @@ public class View extends JPanel {
             e.printStackTrace();
         }
         
-        System.out.println(currentPanel);
+        //System.out.println(currentPanel);
     }
 
     class StartScreenPanel extends JPanel {
@@ -472,7 +482,7 @@ public class View extends JPanel {
             runningFrameCount++;
             paintBackground(g);
             if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                picNum = (picNum + 1) % FRAME_COUNT;
+                ospreyPicNum = (ospreyPicNum + 1) % FRAME_COUNT;
             }
             if (Model.specialFoodEaten()) {
                 displayFacts(g);
@@ -481,7 +491,7 @@ public class View extends JPanel {
                 }
             }
 
-            g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
+            g.drawImage(ospreyFly[ospreyPicNum], playerXLoc, playerYLoc, this);
             Iterator<GamePiece> it = currentViewableGPs.iterator();
             while (it.hasNext()) {
                 GamePiece gp = it.next();
@@ -585,7 +595,7 @@ public class View extends JPanel {
         // 	getPanel().add(img);
         g.drawImage(thoughtBubble, playerXLoc + 300, playerYLoc - 300, this);
         g.setFont(new Font("Times New Roman", 1, 20));
-        //System.out.println(Model.getCurrentFact());
+        //(Model.getCurrentFact());
         g.drawString(Model.getCurrentFact(), playerXLoc + 300, playerYLoc - 100);
 
     }
@@ -596,13 +606,13 @@ public class View extends JPanel {
             runningFrameCount++;
             paintBackground(g);
             if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
-                picNum = (picNum + 1) % FRAME_COUNT;
+                harrierPicNum = (harrierPicNum + 1) % FRAME_COUNT;
             }
             if (Model.specialFoodEaten()) {
                 displayFacts(g);
             }
 
-            g.drawImage(flyForward[picNum], playerXLoc, playerYLoc, this);
+            g.drawImage(harrierFly[harrierPicNum], playerXLoc, playerYLoc, this);
             for (GamePiece gp : currentViewableGPs) {
                 if (gp.isSpecialFood()) {
                     if (gp.getSprite().equals(Sprite.MOUSE)) { //mice

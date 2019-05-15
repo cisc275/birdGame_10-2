@@ -60,7 +60,7 @@ public class Controller implements KeyListener, ActionListener {
     
     
     void start() {
-        System.out.println("start reached");
+        //System.out.println("start reached");
     	while(model.getPlayer().isAlive() && !nextRound){
             //System.out.println("enters while loop");
             model.handleTicks();
@@ -68,13 +68,13 @@ public class Controller implements KeyListener, ActionListener {
                        model.getCurrentGPs(), model.getDirection(), 
                        model.getPlayer().getHealth(), model.getPlayer().getScore());
             if(view.getIsOspreyRound1Over()){
-                System.out.println("before map 1 to 2");
+                //System.out.println("before map 1 to 2");
                 view.setPanel("MAP_1_TO_2");
                 //view.setIsOspreyRound1Over(false);
                 //System.out.println("after map 1 to 2");
             }
             else if(view.getIsOspreyRound2Over()){
-            	System.out.println("Hello");
+            	//System.out.println("Hello");
             	
                 view.setPanel("MAP_2_TO_3");
                 //view.setPanel("START");
@@ -82,7 +82,7 @@ public class Controller implements KeyListener, ActionListener {
             }
         }
     	if(model.getPlayer().getHealth()<=0 && !nextRound) {
-    		System.out.println(model.getPlayer().getHealth());
+    		//System.out.println(model.getPlayer().getHealth());
     		//comment these lines out for Game Over Screen after bird dies
     		if(birdsPlayed==2) { // <-comment this out
     			view.setPanel("GAME_OVER");
@@ -105,6 +105,7 @@ public class Controller implements KeyListener, ActionListener {
         model.getPlayer().setHealth(250);
         model.getPlayer().setX(30);
         model.getPlayer().setY(view.getFrameHeight()/2);
+        model.clearGP();
     }
     void resetAfterGameOver(){
         
