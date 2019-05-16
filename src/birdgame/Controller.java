@@ -7,7 +7,6 @@ package birdgame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//I love git!
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
@@ -21,13 +20,15 @@ import javax.swing.ImageIcon;
  */
 public class Controller implements KeyListener, ActionListener {
 
-    private View view;
+    private initialNumbers initNums = new initialNumbers();
+	private View view;
     private Model model;
     private JButton OspreyButton;
     private JButton HarrierButton;
     private JButton Round1Button;
     private static JButton Round2Button;
     private static JButton ReturnToStart;
+    private static JButton ospreyNestButton;
     private AbstractAction arrowKeyAction;
     private ImageIcon imgOsprey = new ImageIcon("images/BirdImages/OspreyBackground2.jpg");
     private ImageIcon imgOsprey2 = new ImageIcon("images/BirdImages/OspreyBackground2Mirror.jpg");
@@ -35,8 +36,11 @@ public class Controller implements KeyListener, ActionListener {
     private ImageIcon imgOsprey4 = new ImageIcon("images/BirdImages/OspreyBackgroundMirror.png");
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
-    private int birdsPlayed=0;
+    private int birdsPlayed= initNums.initialBirdsPlayed();
     private boolean nextRound = false;
+    private boolean ospreyNested = false;
+    private static boolean harrierNested = false;
+    private boolean tutorialTried = false;
     
     public Controller(){
         OspreyButton = new JButton("Play as Osprey");
@@ -44,25 +48,24 @@ public class Controller implements KeyListener, ActionListener {
         Round1Button = new JButton("Ready to Play Level 1");
         Round2Button = new JButton("Ready to Play Level 2");
         ReturnToStart = new JButton("Return to Start Screen");
+        ospreyNestButton = new JButton("Continue");
         OspreyButton.addActionListener(this);
         HarrierButton.addActionListener(this);
         Round1Button.addActionListener(this);
         Round2Button.addActionListener(this);
         ReturnToStart.addActionListener(this);
+        ospreyNestButton.addActionListener(this);
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
         view.setPanel("START");
-//        if(view.getPanel().equals("OSPREY_ROUND_ONE") || view.getPanel().equals("HARRIER_ROUND")){
-//            start();
-//        }
-
-
-        
     }
     
     
     void start() {
         //System.out.println("start reached");
+        if(!tutorialTried){
+            view.setPanel("TUTORIAL");
+        }
     	runGame();
     	if(model.getPlayer().getHealth()<=0 && !nextRound) {
     		//System.out.println(model.getPlayer().getHealth());
@@ -85,7 +88,6 @@ public class Controller implements KeyListener, ActionListener {
     
     void runGame() {
     	while(model.getPlayer().isAlive() && !nextRound){
-            //System.out.println("enters while loop");
             model.handleTicks();
             view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
                        model.getCurrentGPs(), model.getDirection(), 
@@ -95,35 +97,33 @@ public class Controller implements KeyListener, ActionListener {
         		view.setIsOspreyRound2Over(false);
         	}
             if(view.getIsOspreyRound1Over()){
-                //System.out.println("before map 1 to 2");
                 view.setPanel("MAP_1_TO_2");
-                //view.setIsOspreyRound1Over(false);
-                //System.out.println("after map 1 to 2");
             }
-            else if(view.getIsOspreyRound2Over()){
-            	//System.out.println("Hello");
-            	
+            else if(view.getIsOspreyRound2Over() && !ospreyNested){
                 view.setPanel("MAP_2_TO_3");
-                //view.setPanel("START");
-                //view.setIsOspreyRound2Over(false);
+                //view.setPanel("OSPREY_NEST");
+            }
+            else if(view.getIsHarrierRoundOver() && !harrierNested) {
+            	//might need some code in here later to stop this else from triggering
+            	//while playing osprey if you play harrier first
+            	System.out.println("harrier round over");
+            	//might need some code in here later 
+            	view.setPanel("HARRIER_NEST");
             }
         }
+
     }
     
     void resetAfterRound(){
-        //view = new View(this);
-        //model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
         model.getPlayer().setHealth(250);
         model.getPlayer().setX(30);
         model.getPlayer().setY(view.getFrameHeight()/2);
-        //model.clearGP();
     }
     void resetAfterGameOver(){
         
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == OspreyButton){
-            
             model.generateOspreyQuestions();
             birdsPlayed++;
             
@@ -140,6 +140,7 @@ public class Controller implements KeyListener, ActionListener {
             view.setBackground(imgHarrier, imgHarrier2);
             view.setPanel("HARRIER_ROUND");
             HarrierButton.setVisible(false);
+            model.setRound(3);
         }
         
         if(e.getSource() == Round1Button){
@@ -157,38 +158,24 @@ public class Controller implements KeyListener, ActionListener {
             view.setBackground(imgOsprey3, imgOsprey4);
             model.setRound(2);
             nextRound = true;
-            
-            
-            //System.out.println("after");
         }
         
         if(e.getSource() == ReturnToStart) {
-            view.setIsOspreyRound2Over(false);
+            //view.setIsOspreyRound2Over(false);
             view.setPanel("START");
             model.setRound(0);
+            model.getPlayer().setX(30);
+        }
+        
+        if(e.getSource() == ospreyNestButton){
+            view.setPanel("OSPREY_NEST");
+            view.setIsOspreyRound2Over(false);
+            ospreyNested = true;
         }
         
 
     }
-//    public void start() {
-//        model.spawnGamePieces();
-//    }
 
-//    public Controller() {
-//        view = new View();
-//        model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
-//    }
-//    /**
-//     *start() will be called from the main() method in the Main class and will 
-//     * have a loop to iterate through the game.
-//     */
-//    public void start() {
-//    	m.spawnGamePieces();
-//    	while(m.getPlayer().isAlive()){
-//            model.handleTicks();
-//            view.update(model.getPlayer().getX(), model.getPlayer().getY(),model.getCurrentGPs(), model.getDirection(),model.getPlayer().getHealth(), model.getPlayer().getScore());
-//        }
-//    }
     /**
      * keyTyped() will handle a KeyEvent that the user might perform.
      *
@@ -242,6 +229,9 @@ public class Controller implements KeyListener, ActionListener {
     public static JButton getReturnToStartButton(){
         return ReturnToStart;
     }
+    public static JButton getOspreyNestButton(){
+        return ospreyNestButton;
+    }
 
     public View getView() {
         return view;
@@ -249,5 +239,9 @@ public class Controller implements KeyListener, ActionListener {
 
     public Model getModel() {
         return model;
+    }
+    
+    public static void setHarrierNested(Boolean b){
+        harrierNested = b;
     }
 }
