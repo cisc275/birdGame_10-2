@@ -20,7 +20,7 @@ import javax.swing.ImageIcon;
  */
 public class Controller implements KeyListener, ActionListener {
 
-    private initialNumbers initNums;
+    private initialNumbers initNums = new initialNumbers();
 	private View view;
     private Model model;
     private JButton OspreyButton;
