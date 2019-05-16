@@ -95,9 +95,9 @@ public class Controller implements KeyListener, ActionListener {
                 view.setPanel("MAP_1_TO_2");
             }
             else if(view.getIsOspreyRound2Over() && !nested){
-                //view.setPanel("MAP_2_TO_3");
-                view.setPanel("OSPREY_NEST");
-                nested = true;
+                view.setPanel("MAP_2_TO_3");
+                //view.setPanel("OSPREY_NEST");
+                
             }
         }
 
@@ -156,8 +156,9 @@ public class Controller implements KeyListener, ActionListener {
         }
         
         if(e.getSource() == ospreyNestButton){
-            view.setPanel("MAP_2_TO_3");
+            view.setPanel("OSPREY_NEST");
             view.setIsOspreyRound2Over(false);
+            nested = true;
         }
         
 
