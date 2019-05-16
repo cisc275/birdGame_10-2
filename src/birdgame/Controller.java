@@ -97,7 +97,13 @@ public class Controller implements KeyListener, ActionListener {
             else if(view.getIsOspreyRound2Over() && !nested){
                 view.setPanel("MAP_2_TO_3");
                 //view.setPanel("OSPREY_NEST");
-                
+            }
+            else if(view.getIsHarrierRoundOver()) {
+            	//might need some code in here later to stop this else from triggering
+            	//while playing osprey if you play harrier first
+            	System.out.println("harrier round over");
+            	//might need some code in here later 
+            	//view.setPanel("START");
             }
         }
 
@@ -113,7 +119,6 @@ public class Controller implements KeyListener, ActionListener {
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == OspreyButton){
-            
             model.generateOspreyQuestions();
             birdsPlayed++;
             
@@ -130,6 +135,7 @@ public class Controller implements KeyListener, ActionListener {
             view.setBackground(imgHarrier, imgHarrier2);
             view.setPanel("HARRIER_ROUND");
             HarrierButton.setVisible(false);
+            model.setRound(3);
         }
         
         if(e.getSource() == Round1Button){
