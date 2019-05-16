@@ -7,7 +7,6 @@ package birdgame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//I love git!
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
@@ -21,7 +20,8 @@ import javax.swing.ImageIcon;
  */
 public class Controller implements KeyListener, ActionListener {
 
-    private View view;
+    private initialNumbers initNums = new initialNumbers();
+	private View view;
     private Model model;
     private JButton OspreyButton;
     private JButton HarrierButton;
@@ -36,7 +36,7 @@ public class Controller implements KeyListener, ActionListener {
     private ImageIcon imgOsprey4 = new ImageIcon("images/BirdImages/OspreyBackgroundMirror.png");
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
-    private int birdsPlayed=0;
+    private int birdsPlayed= initNums.initialBirdsPlayed();
     private boolean nextRound = false;
     private boolean nested = false;
     private boolean tutorialTried = false;
@@ -101,7 +101,13 @@ public class Controller implements KeyListener, ActionListener {
             else if(view.getIsOspreyRound2Over() && !nested){
                 view.setPanel("MAP_2_TO_3");
                 //view.setPanel("OSPREY_NEST");
-                
+            }
+            else if(view.getIsHarrierRoundOver()) {
+            	//might need some code in here later to stop this else from triggering
+            	//while playing osprey if you play harrier first
+            	System.out.println("harrier round over");
+            	//might need some code in here later 
+            	//view.setPanel("START");
             }
         }
 
@@ -117,7 +123,6 @@ public class Controller implements KeyListener, ActionListener {
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == OspreyButton){
-            
             model.generateOspreyQuestions();
             birdsPlayed++;
             
@@ -134,6 +139,7 @@ public class Controller implements KeyListener, ActionListener {
             view.setBackground(imgHarrier, imgHarrier2);
             view.setPanel("HARRIER_ROUND");
             HarrierButton.setVisible(false);
+            model.setRound(3);
         }
         
         if(e.getSource() == Round1Button){

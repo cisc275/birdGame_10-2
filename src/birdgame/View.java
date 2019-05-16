@@ -118,7 +118,7 @@ public class View extends JPanel {
     private JPanel harrierNest;
     private JPanel quiz;
     private JPanel gameOver;
-    private int specialFoodDelay = 300;
+    private int specialFoodDelay = 100;
 
     private Direction direction;
     private CopyOnWriteArrayList<GamePiece> currentViewableGPs = new CopyOnWriteArrayList<>();
@@ -133,6 +133,7 @@ public class View extends JPanel {
 
     private static boolean isOspreyRound1Over = false;
     private static boolean isOspreyRound2Over = false;
+    private static boolean isHarrierRoundOver = false;
 
     public View(Controller c) {
         frame = new JFrame();
@@ -437,6 +438,7 @@ public class View extends JPanel {
                 displayFacts(g);
                 if (runningFrameCount > momentEaten + specialFoodDelay) {
                     Model.setSpecialFoodEaten(false);
+                    Model.incrFactIndex();
                 }
             }
 
@@ -543,9 +545,14 @@ public class View extends JPanel {
         // 	img.setBounds(playerXLoc + 300,playerYLoc ,300,300);
         // 	getPanel().add(img);
         g.drawImage(thoughtBubble, playerXLoc + 300, playerYLoc - 300, this);
-        g.setFont(new Font("Times New Roman", 1, 20));
+        g.setFont(new Font("Times New Roman", 1, 30));
         //(Model.getCurrentFact());
-        g.drawString(Model.getCurrentFact(), playerXLoc + 300, playerYLoc - 100);
+        String[] lines = Model.getCurrentFact().split(",");
+        int yOffset = 0;
+        for (String line: lines) {
+        	yOffset +=g.getFontMetrics().getHeight();
+        g.drawString(line, playerXLoc + 375, playerYLoc - 175 + yOffset);
+        }
 
     }
 
@@ -557,8 +564,12 @@ public class View extends JPanel {
             if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
                 harrierPicNum = (harrierPicNum + 1) % FRAME_COUNT;
             }
-            if (Model.specialFoodEaten()) {
+            if (Model.specialFoodEaten() && Model.hasMoreFacts()) {
                 displayFacts(g);
+                if (runningFrameCount > momentEaten + specialFoodDelay) {
+                    Model.setSpecialFoodEaten(false);
+                    Model.incrFactIndex();
+                }
             }
 
             g.drawImage(harrierFly[harrierPicNum], playerXLoc, playerYLoc, this);
@@ -778,6 +789,10 @@ public class View extends JPanel {
     public boolean getIsOspreyRound2Over() {
         return isOspreyRound2Over;
     }
+    
+    public boolean getIsHarrierRoundOver() {
+        return isHarrierRoundOver;
+    }
 
     public static void setIsOspreyRound1Over(boolean b) {
         isOspreyRound1Over = b;
@@ -785,5 +800,9 @@ public class View extends JPanel {
 
     public static void setIsOspreyRound2Over(boolean b) {
         isOspreyRound2Over = b;
+    }
+    
+    public static void setIsHarrierRoundOver(boolean b) {
+    	isHarrierRoundOver = b;
     }
 }
