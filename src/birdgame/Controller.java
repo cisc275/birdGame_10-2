@@ -38,6 +38,7 @@ public class Controller implements KeyListener, ActionListener {
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
     private int birdsPlayed=0;
     private boolean nextRound = false;
+    private boolean nested = false;
     
     public Controller(){
         OspreyButton = new JButton("Play as Osprey");
@@ -93,9 +94,10 @@ public class Controller implements KeyListener, ActionListener {
             if(view.getIsOspreyRound1Over()){
                 view.setPanel("MAP_1_TO_2");
             }
-            else if(view.getIsOspreyRound2Over()){
+            else if(view.getIsOspreyRound2Over() && !nested){
                 //view.setPanel("MAP_2_TO_3");
                 view.setPanel("OSPREY_NEST");
+                nested = true;
             }
         }
 
@@ -148,13 +150,14 @@ public class Controller implements KeyListener, ActionListener {
         }
         
         if(e.getSource() == ReturnToStart) {
-            view.setIsOspreyRound2Over(false);
+            //view.setIsOspreyRound2Over(false);
             view.setPanel("START");
             model.setRound(0);
         }
         
         if(e.getSource() == ospreyNestButton){
             view.setPanel("MAP_2_TO_3");
+            view.setIsOspreyRound2Over(false);
         }
         
 

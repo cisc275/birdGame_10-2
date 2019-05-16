@@ -95,7 +95,6 @@ public class View extends JPanel {
     private BufferedImage[] snake = new BufferedImage[4];
     private BufferedImage[] plane = new BufferedImage[1];
     private BufferedImage[] eagle = new BufferedImage[6];
-    private BufferedImage[] enterNest;
     private BufferedImage[] map1to2transition = new BufferedImage[MAP_1_2_TRANSITION_COUNT];
     private BufferedImage[] map2to3transition = new BufferedImage[MAP_2_3_TRANSITION_COUNT];
     private BufferedImage[] ospreyNesting = new BufferedImage[OSPREY_NEST_COUNT];
