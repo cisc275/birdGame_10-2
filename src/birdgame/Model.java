@@ -128,8 +128,10 @@ public class Model {
         if (currentGPs.size() == 0 && totalLevelTicks != 0) {
             if(round == 1)
                 endOfLevel();
-            else if(round ==2)
+            else if(round == 2)
                 endOfLevel();
+            else if(round == 3)
+            	endOfLevel();
         }
 
 //        if (player.getX() > (fWidth - imgWidth)) {
@@ -158,6 +160,9 @@ public class Model {
             }
             else if(round == 2){
                 View.setIsOspreyRound2Over(true);
+            }
+            else if(round == 3) {
+            	View.setIsHarrierRoundOver(true);
             }
         }
 
