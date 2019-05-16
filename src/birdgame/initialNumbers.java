@@ -7,5 +7,10 @@ package birdgame;
  */
 
 public class initialNumbers {
-	//Main
+	//Controller
+	private int birdsPlayed = 0;
+	public int initialBirdsPlayed() {
+		return birdsPlayed;
+	}
+	
 }

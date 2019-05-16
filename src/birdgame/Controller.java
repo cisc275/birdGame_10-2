@@ -7,7 +7,6 @@ package birdgame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//I love git!
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
@@ -21,7 +20,8 @@ import javax.swing.ImageIcon;
  */
 public class Controller implements KeyListener, ActionListener {
 
-    private View view;
+    private initialNumbers initNums;
+	private View view;
     private Model model;
     private JButton OspreyButton;
     private JButton HarrierButton;
@@ -36,7 +36,7 @@ public class Controller implements KeyListener, ActionListener {
     private ImageIcon imgOsprey4 = new ImageIcon("images/BirdImages/OspreyBackgroundMirror.png");
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
-    private int birdsPlayed=0;
+    private int birdsPlayed= initNums.initialBirdsPlayed();
     private boolean nextRound = false;
     private boolean nested = false;
     
