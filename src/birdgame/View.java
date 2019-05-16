@@ -72,6 +72,7 @@ public class View extends JPanel {
     final static int MAP_1_2_TRANSITION_COUNT = 6;
     final static int MAP_2_3_TRANSITION_COUNT = 8;
     final static int OSPREY_NEST_COUNT = 17;
+    final static int HARRIER_NEST_COUNT = 17;
     private int micePicNum = 0;
     private int bunnyPicNum = 0;
     private int redFoxPicNum = 0;
@@ -85,6 +86,7 @@ public class View extends JPanel {
     private int map1To2TransitionPicNum = 0;
     private int map2To3TransitionPicNum = 0;
     private int ospreyNestPicNum = 0;
+    private int harrierNestPicNum = 0;
     private BufferedImage[] harrierFly = new BufferedImage[FRAME_COUNT];
     private BufferedImage[] ospreyFly = new BufferedImage[FRAME_COUNT];
     private BufferedImage[] mice = new BufferedImage[2];
@@ -98,6 +100,7 @@ public class View extends JPanel {
     private BufferedImage[] map1to2transition = new BufferedImage[MAP_1_2_TRANSITION_COUNT];
     private BufferedImage[] map2to3transition = new BufferedImage[MAP_2_3_TRANSITION_COUNT];
     private BufferedImage[] ospreyNesting = new BufferedImage[OSPREY_NEST_COUNT];
+    private BufferedImage[] harrierNesting = new BufferedImage[HARRIER_NEST_COUNT];
     private Image thoughtBubble;
 
     private JFrame frame;
@@ -112,6 +115,7 @@ public class View extends JPanel {
     private JPanel map2to3;
     private JPanel ospreyNest;
     private JPanel harrierRound;
+    private JPanel harrierNest;
     private JPanel quiz;
     private JPanel gameOver;
     private int specialFoodDelay = 300;
@@ -149,6 +153,7 @@ public class View extends JPanel {
         cards.add(ospreyRound2, "OSPREY_ROUND_TWO");
         cards.add(map2to3, "MAP_2_TO_3");
         cards.add(ospreyNest, "OSPREY_NEST");
+        cards.add(harrierNest,"HARRIER_NEST");
         cards.add(harrierRound, "HARRIER_ROUND");
 //        cards.add(quiz, "QUIZ");
         cards.add(gameOver, "GAME_OVER");
@@ -196,6 +201,9 @@ public class View extends JPanel {
         }
         for (int i = 0; i < OSPREY_NEST_COUNT; i++){
             ospreyNesting[i] = createImage("images/BirdImages/OspreyNesting/OspreyNest" + i + ".png");
+        }
+        for (int i = 0; i < HARRIER_NEST_COUNT; i++){
+            harrierNesting[i] = createImage("images/BirdImages/HarrierNesting/HarrierNest" + i + ".png");
         }
         thoughtBubble = createImage("images/bub.png").getScaledInstance(400, 400, Image.SCALE_SMOOTH);
 
@@ -281,6 +289,9 @@ public class View extends JPanel {
     void createHarrierRound() {
         harrierRound = new HarrierPanel();
     }
+    void createHarrierNestPanel(Controller c){
+        harrierNest = new HarrierNestPanel();
+    }
 
     void createQuizPanel() {
 
@@ -339,6 +350,8 @@ public class View extends JPanel {
             currentPanel = ospreyNest;
         } else if (s.equals("HARRIER_ROUND")) {
             currentPanel = harrierRound;
+        } else if (s.equals("HARRIER_NEST")){
+            currentPanel = harrierNest;
         } else if (s.equals("QUIZ")) {
             currentPanel = quiz;
         } else if (s.equals("GAME_OVER")) {
@@ -702,6 +715,26 @@ public class View extends JPanel {
                 }
             } else {
                 g.drawImage(ospreyNesting[OSPREY_NEST_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
+                Controller.getReturnToStartButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+                Controller.getReturnToStartButton().setBounds((FRAME_WIDTH) / 10,
+                        (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+                add(Controller.getReturnToStartButton());
+            }
+        }
+    }
+    
+    class HarrierNestPanel extends JPanel{
+        protected void paintComponent(Graphics g){
+            if(harrierNestPicNum < HARRIER_NEST_COUNT){
+                g.drawImage(harrierNesting[harrierNestPicNum], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
+                harrierNestPicNum++;
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                g.drawImage(harrierNesting[HARRIER_NEST_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
                 Controller.getReturnToStartButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
                 Controller.getReturnToStartButton().setBounds((FRAME_WIDTH) / 10,
                         (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
