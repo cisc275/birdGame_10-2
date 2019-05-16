@@ -71,6 +71,7 @@ public class View extends JPanel {
     final static int PLANE_FRAME_COUNT = 1;
     final static int MAP_1_2_TRANSITION_COUNT = 6;
     final static int MAP_2_3_TRANSITION_COUNT = 8;
+    final static int DE_FRAME_COUNT=33;
     private int micePicNum = 0;
     private int bunnyPicNum = 0;
     private int redFoxPicNum = 0;
@@ -79,6 +80,7 @@ public class View extends JPanel {
     private int snakePicNum = 0;
     private int eaglePicNum = 0;
     private int planePicNum = 0;
+    private int dePicNum=0;
     private int playerXLoc = 0;
     private int playerYLoc = 0;
     private int map1To2TransitionPicNum = 0;
@@ -96,6 +98,8 @@ public class View extends JPanel {
     private BufferedImage[] enterNest;
     private BufferedImage[] map1to2transition = new BufferedImage[MAP_1_2_TRANSITION_COUNT];
     private BufferedImage[] map2to3transition = new BufferedImage[MAP_2_3_TRANSITION_COUNT];
+    private BufferedImage[] delaware = new BufferedImage[33];
+
     private Image thoughtBubble;
 
     private JFrame frame;
@@ -127,6 +131,7 @@ public class View extends JPanel {
 
     private static boolean isOspreyRound1Over = false;
     private static boolean isOspreyRound2Over = false;
+    
 
     public View(Controller c) {
         frame = new JFrame();
@@ -193,7 +198,11 @@ public class View extends JPanel {
             map2to3transition[i] = createImage("images/BirdImages/OspreyLevelScreen" + (i+5) + ".png");
         }
         thoughtBubble = createImage("images/bub.png").getScaledInstance(400, 400, Image.SCALE_SMOOTH);
-
+        for (int i = 0; i < DE_FRAME_COUNT; i++) {
+            delaware[i] = createImage("images/MiniMapImages/delaware" + i + ".jpg");
+        }
+//        delaware = createImage("delaware.jpg").getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH);
+        
     }
 
     void createFrame(Controller c) {
@@ -577,8 +586,8 @@ public class View extends JPanel {
                 }
 
             }
+            
             g.setColor(Color.red);
-
             g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, 250 * 2, FRAME_HEIGHT / 17);
             g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
             g.setColor(Color.white);
@@ -696,14 +705,19 @@ public class View extends JPanel {
                 }
 
             }
+//            g.drawImage(delaware, FRAME_WIDTH-150, FRAME_HEIGHT-350, 150, 350, this);
+            
             g.setColor(Color.red);
-
             g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, 250 * 2, FRAME_HEIGHT / 17);
             g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
             g.setColor(Color.white);
             g.setFont(new Font("Times New Roman", 1, 20));
             g.drawRect(FRAME_WIDTH - 105, FRAME_HEIGHT / 30, FRAME_WIDTH / 14, FRAME_HEIGHT / 25);
             g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 103, FRAME_HEIGHT / 17);
+            if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+            	dePicNum = (dePicNum + 1) % DE_FRAME_COUNT;
+            }
+           	g.drawImage(delaware[dePicNum], FRAME_WIDTH-150, FRAME_HEIGHT-350, 150, 350, this);
         }
     }
 
