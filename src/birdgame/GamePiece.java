@@ -139,7 +139,7 @@ public class GamePiece {
 		}
 		if (getSprite().equals(Sprite.FISH)) {
 			xOffset = 10;
-			yOffset = 20;
+			yOffset = 0;
 		}
 		if (getSprite().equals(Sprite.RACCOON)) {
 			xOffset = 30;

@@ -59,6 +59,28 @@ public class Controller implements KeyListener, ActionListener {
     
     
     void start() {
+        //System.out.println("start reached");
+    	runGame();
+    	if(model.getPlayer().getHealth()<=0 && !nextRound) {
+    		//System.out.println(model.getPlayer().getHealth());
+    		//comment these lines out for Game Over Screen after bird dies
+    		if(birdsPlayed==2) { // <-comment this out
+    			view.setPanel("GAME_OVER");
+    		}//<-comment this out
+    		//comment this out below
+    		else {
+    			view.setPanel("START");
+    		}
+        }
+    	resetAfterRound();
+    	nextRound = false;
+    	if (birdsPlayed == 1) {
+    		start();
+    	}
+    }
+
+    
+    void runGame() {
     	while(model.getPlayer().isAlive() && !nextRound){
             model.handleTicks();
             view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
@@ -76,23 +98,8 @@ public class Controller implements KeyListener, ActionListener {
                 view.setPanel("OSPREY_NEST");
             }
         }
-    	if(model.getPlayer().getHealth()<=0 && !nextRound) {
-    		//comment these lines out for Game Over Screen after bird dies
-    		if(birdsPlayed==2) { // <-comment this out
-    			view.setPanel("GAME_OVER");
-    		}//<-comment this out
-    		//comment this out below
-    		else {
-    			view.setPanel("START");
-    		}
-        }
-    	resetAfterRound();
-    	nextRound = false;
-    	if (birdsPlayed == 1) {
-    		start();
-    	}
-    }
 
+    }
     
     void resetAfterRound(){
         model.getPlayer().setHealth(250);
