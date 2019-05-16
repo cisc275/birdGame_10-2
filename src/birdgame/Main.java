@@ -21,11 +21,6 @@ import javax.swing.Timer;
  */
 public class Main {
 
-    public static boolean started;
-    public static boolean started2;
-    public static int birdCount;
-    public static boolean playedBoth;
-	public static boolean isOsprey;
 //	public static OspreyController c1;
 //	public static HarrierController c2;
 //	
