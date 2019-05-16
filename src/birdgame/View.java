@@ -71,6 +71,7 @@ public class View extends JPanel {
     final static int PLANE_FRAME_COUNT = 1;
     final static int MAP_1_2_TRANSITION_COUNT = 6;
     final static int MAP_2_3_TRANSITION_COUNT = 8;
+    final static int OSPREY_NEST_COUNT = 17;
     private int micePicNum = 0;
     private int bunnyPicNum = 0;
     private int redFoxPicNum = 0;
@@ -83,6 +84,7 @@ public class View extends JPanel {
     private int playerYLoc = 0;
     private int map1To2TransitionPicNum = 0;
     private int map2To3TransitionPicNum = 0;
+    private int ospreyNestPicNum = 0;
     private BufferedImage[] harrierFly = new BufferedImage[FRAME_COUNT];
     private BufferedImage[] ospreyFly = new BufferedImage[FRAME_COUNT];
     private BufferedImage[] mice = new BufferedImage[2];
@@ -96,6 +98,7 @@ public class View extends JPanel {
     private BufferedImage[] enterNest;
     private BufferedImage[] map1to2transition = new BufferedImage[MAP_1_2_TRANSITION_COUNT];
     private BufferedImage[] map2to3transition = new BufferedImage[MAP_2_3_TRANSITION_COUNT];
+    private BufferedImage[] ospreyNesting = new BufferedImage[OSPREY_NEST_COUNT];
     private Image thoughtBubble;
 
     private JFrame frame;
@@ -146,7 +149,7 @@ public class View extends JPanel {
         cards.add(map1to2, "MAP_1_TO_2");
         cards.add(ospreyRound2, "OSPREY_ROUND_TWO");
         cards.add(map2to3, "MAP_2_TO_3");
-//        cards.add(ospreyNest, "OSPREY_NEST");
+        cards.add(ospreyNest, "OSPREY_NEST");
         cards.add(harrierRound, "HARRIER_ROUND");
 //        cards.add(quiz, "QUIZ");
         cards.add(gameOver, "GAME_OVER");
@@ -192,6 +195,9 @@ public class View extends JPanel {
         for (int i = 0; i < MAP_2_3_TRANSITION_COUNT; i++){
             map2to3transition[i] = createImage("images/BirdImages/OspreyLevelScreen" + (i+5) + ".png");
         }
+        for (int i = 0; i < OSPREY_NEST_COUNT; i++){
+            ospreyNesting[i] = createImage("images/BirdImages/OspreyNesting/OspreyNest" + i + ".png");
+        }
         thoughtBubble = createImage("images/bub.png").getScaledInstance(400, 400, Image.SCALE_SMOOTH);
 
     }
@@ -231,7 +237,7 @@ public class View extends JPanel {
         createOspreyMap1to2();
         createOspreyRound2Panel();
         createOspreyMap2to3(c);
-        createOspreyNestPanel();
+        createOspreyNestPanel(c);
         createGameOverPanel(c);
     }
 
@@ -264,14 +270,13 @@ public class View extends JPanel {
 
     void createOspreyMap2to3(Controller c) {
         map2to3 = new Map2to3Panel();
-        
         map2to3.setLayout(null);
         Controller.getReturnToStartButton().setEnabled(true);
         map2to3.add(Controller.getReturnToStartButton());
     }
 
-    void createOspreyNestPanel() {
-
+    void createOspreyNestPanel(Controller c) {
+        ospreyNest = new OspreyNestPanel();
     }
 
     void createHarrierRound() {
@@ -752,6 +757,25 @@ public class View extends JPanel {
                 add(Controller.getReturnToStartButton());
             }
 
+        }
+    }
+    class OspreyNestPanel extends JPanel{
+        protected void paintComponent(Graphics g){
+            if(ospreyNestPicNum < OSPREY_NEST_COUNT){
+                g.drawImage(ospreyNesting[ospreyNestPicNum], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
+                ospreyNestPicNum++;
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                g.drawImage(ospreyNesting[OSPREY_NEST_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
+                Controller.getOspreyNestButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+                Controller.getOspreyNestButton().setBounds((FRAME_WIDTH) / 10,
+                        (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+                add(Controller.getOspreyNestButton());
+            }
         }
     }
 

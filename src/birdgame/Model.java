@@ -22,7 +22,7 @@ public class Model {
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
     private static int round;
-    private int numGamePiecesInRoundLeft = 15;
+    private int numGamePiecesInRoundLeft = 3;
     protected int fWidth;
     protected int fHeight;
     private int imgHeight;
@@ -172,15 +172,10 @@ public class Model {
      */
     //randomize the location of the GamePieces (1 every screen)
     public void spawnHarrierGamePieces() {
-        //System.out.println("wrong spawn");
-
         //SpecialFood.generateFactsAndQuestions();
         int numGamePieces = 0;
         int numSpecialFood = 0;
 
-        //background0:
-        //land: 0-432px, 1776-2640px, 
-        //int tempXLoc = (int)(Math.random() * 2639 + 1776);
         int tempXLoc = 500;
 
         //int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));

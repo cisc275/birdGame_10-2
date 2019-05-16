@@ -28,6 +28,7 @@ public class Controller implements KeyListener, ActionListener {
     private JButton Round1Button;
     private static JButton Round2Button;
     private static JButton ReturnToStart;
+    private static JButton ospreyNestButton;
     private AbstractAction arrowKeyAction;
     private ImageIcon imgOsprey = new ImageIcon("images/BirdImages/OspreyBackground2.jpg");
     private ImageIcon imgOsprey2 = new ImageIcon("images/BirdImages/OspreyBackground2Mirror.jpg");
@@ -44,27 +45,21 @@ public class Controller implements KeyListener, ActionListener {
         Round1Button = new JButton("Ready to Play Level 1");
         Round2Button = new JButton("Ready to Play Level 2");
         ReturnToStart = new JButton("Return to Start Screen");
+        ospreyNestButton = new JButton("Continue");
         OspreyButton.addActionListener(this);
         HarrierButton.addActionListener(this);
         Round1Button.addActionListener(this);
         Round2Button.addActionListener(this);
         ReturnToStart.addActionListener(this);
+        ospreyNestButton.addActionListener(this);
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
         view.setPanel("START");
-//        if(view.getPanel().equals("OSPREY_ROUND_ONE") || view.getPanel().equals("HARRIER_ROUND")){
-//            start();
-//        }
-
-
-        
     }
     
     
     void start() {
-        //System.out.println("start reached");
     	while(model.getPlayer().isAlive() && !nextRound){
-            //System.out.println("enters while loop");
             model.handleTicks();
             view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
                        model.getCurrentGPs(), model.getDirection(), 
@@ -74,21 +69,14 @@ public class Controller implements KeyListener, ActionListener {
         		view.setIsOspreyRound2Over(false);
         	}
             if(view.getIsOspreyRound1Over()){
-                //System.out.println("before map 1 to 2");
                 view.setPanel("MAP_1_TO_2");
-                //view.setIsOspreyRound1Over(false);
-                //System.out.println("after map 1 to 2");
             }
             else if(view.getIsOspreyRound2Over()){
-            	//System.out.println("Hello");
-            	
-                view.setPanel("MAP_2_TO_3");
-                //view.setPanel("START");
-                //view.setIsOspreyRound2Over(false);
+                //view.setPanel("MAP_2_TO_3");
+                view.setPanel("OSPREY_NEST");
             }
         }
     	if(model.getPlayer().getHealth()<=0 && !nextRound) {
-    		//System.out.println(model.getPlayer().getHealth());
     		//comment these lines out for Game Over Screen after bird dies
     		if(birdsPlayed==2) { // <-comment this out
     			view.setPanel("GAME_OVER");
@@ -107,12 +95,9 @@ public class Controller implements KeyListener, ActionListener {
 
     
     void resetAfterRound(){
-        //view = new View(this);
-        //model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
         model.getPlayer().setHealth(250);
         model.getPlayer().setX(30);
         model.getPlayer().setY(view.getFrameHeight()/2);
-        //model.clearGP();
     }
     void resetAfterGameOver(){
         
@@ -153,9 +138,6 @@ public class Controller implements KeyListener, ActionListener {
             view.setBackground(imgOsprey3, imgOsprey4);
             model.setRound(2);
             nextRound = true;
-            
-            
-            //System.out.println("after");
         }
         
         if(e.getSource() == ReturnToStart) {
@@ -164,27 +146,13 @@ public class Controller implements KeyListener, ActionListener {
             model.setRound(0);
         }
         
+        if(e.getSource() == ospreyNestButton){
+            view.setPanel("MAP_2_TO_3");
+        }
+        
 
     }
-//    public void start() {
-//        model.spawnGamePieces();
-//    }
 
-//    public Controller() {
-//        view = new View();
-//        model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
-//    }
-//    /**
-//     *start() will be called from the main() method in the Main class and will 
-//     * have a loop to iterate through the game.
-//     */
-//    public void start() {
-//    	m.spawnGamePieces();
-//    	while(m.getPlayer().isAlive()){
-//            model.handleTicks();
-//            view.update(model.getPlayer().getX(), model.getPlayer().getY(),model.getCurrentGPs(), model.getDirection(),model.getPlayer().getHealth(), model.getPlayer().getScore());
-//        }
-//    }
     /**
      * keyTyped() will handle a KeyEvent that the user might perform.
      *
@@ -237,6 +205,9 @@ public class Controller implements KeyListener, ActionListener {
     
     public static JButton getReturnToStartButton(){
         return ReturnToStart;
+    }
+    public static JButton getOspreyNestButton(){
+        return ospreyNestButton;
     }
 
     public View getView() {
