@@ -39,6 +39,7 @@ public class Controller implements KeyListener, ActionListener {
     private int birdsPlayed=0;
     private boolean nextRound = false;
     private boolean nested = false;
+    private boolean tutorialTried = false;
     
     public Controller(){
         OspreyButton = new JButton("Play as Osprey");
@@ -61,6 +62,9 @@ public class Controller implements KeyListener, ActionListener {
     
     void start() {
         //System.out.println("start reached");
+        if(!tutorialTried){
+            view.setPanel("TUTORIAL");
+        }
     	runGame();
     	if(model.getPlayer().getHealth()<=0 && !nextRound) {
     		//System.out.println(model.getPlayer().getHealth());
