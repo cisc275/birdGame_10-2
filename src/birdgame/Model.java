@@ -176,7 +176,7 @@ public class Model {
         int numGamePieces = 0;
         int numSpecialFood = 0;
 
-        int tempXLoc = 500;
+        int tempXLoc = 1200;
 
         //int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
         //int topHalfY = ((int) (Math.random()*(fHeight/2)));
