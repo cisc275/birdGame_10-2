@@ -750,10 +750,10 @@ public class View extends JPanel {
             } else {
                 g.drawImage(map2to3transition[MAP_2_3_TRANSITION_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
                 //setIsOspreyRound2Over(false);
-                Controller.getReturnToStartButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
-                Controller.getReturnToStartButton().setBounds((FRAME_WIDTH * 7) / 10,
+                Controller.getOspreyNestButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+                Controller.getOspreyNestButton().setBounds((FRAME_WIDTH * 7) / 10,
                         (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-                add(Controller.getReturnToStartButton());
+                add(Controller.getOspreyNestButton());
             }
 
         }
@@ -770,10 +770,10 @@ public class View extends JPanel {
                 }
             } else {
                 g.drawImage(ospreyNesting[OSPREY_NEST_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
-                Controller.getOspreyNestButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
-                Controller.getOspreyNestButton().setBounds((FRAME_WIDTH) / 10,
+                Controller.getReturnToStartButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+                Controller.getReturnToStartButton().setBounds((FRAME_WIDTH) / 10,
                         (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-                add(Controller.getOspreyNestButton());
+                add(Controller.getReturnToStartButton());
             }
         }
     }
