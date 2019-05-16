@@ -30,7 +30,7 @@ public class Model {
     protected int groundLevel;
     private int sceneNum;
     protected ArrayList<GamePiece> gamePieces = new ArrayList<>();
-
+    String[] facts;
     private int progress;
     private int enemyFrequency;
     private int foodFrequency;
@@ -476,6 +476,7 @@ public class Model {
     }
 
     public void generateHarrierQuestions() {
+    	facts = new String[] {"Northern Harriers eat rodents","Northern Harriers are non-migratory birds","Foxes are a predator for Northern Harriers"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsHarrier1 = new HashMap<>();
         String[] harrierFood = {"rodents", "fish", "eagles", "plants", "rodents"};
@@ -497,6 +498,7 @@ public class Model {
     }
 
     public void generateOspreyQuestions() {
+    	facts = new String[] {"Ospreys like to eat Snakes and Fish","Ospreys migrate to South America for the winter","Eagles are a predator of Ospreys"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
         String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Sankes and Fish"};
