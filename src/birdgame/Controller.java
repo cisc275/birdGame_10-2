@@ -69,6 +69,10 @@ public class Controller implements KeyListener, ActionListener {
             view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
                        model.getCurrentGPs(), model.getDirection(), 
                        model.getPlayer().getHealth(), model.getPlayer().getScore());
+            if(model.getPlayer().alive==false) {
+        		view.setIsOspreyRound1Over(false);
+        		view.setIsOspreyRound2Over(false);
+        	}
             if(view.getIsOspreyRound1Over()){
                 //System.out.println("before map 1 to 2");
                 view.setPanel("MAP_1_TO_2");
@@ -100,6 +104,7 @@ public class Controller implements KeyListener, ActionListener {
     		start();
     	}
     }
+
     
     void resetAfterRound(){
         //view = new View(this);

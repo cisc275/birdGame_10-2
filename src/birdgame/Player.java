@@ -18,6 +18,7 @@ public class Player extends GamePiece {
     private int xOffset;
     private int yOffset;
     private Sprite bird;
+    public static boolean alive=true;
 
     public Player() {
         setYIncr(8);

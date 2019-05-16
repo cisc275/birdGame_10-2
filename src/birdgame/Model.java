@@ -22,7 +22,7 @@ public class Model {
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
     private static int round;
-    private int numGamePiecesInRoundLeft = 25;
+    private int numGamePiecesInRoundLeft = 15;
     protected int fWidth;
     protected int fHeight;
     private int imgHeight;
@@ -45,6 +45,8 @@ public class Model {
     private GamePiece furthestGP = new GamePiece();
     private static boolean specialFoodEaten = false;
     static ArrayList<String> avaliableFacts;
+    
+    
 
     /**
      * Model constructor will take in four variables defined below
@@ -116,7 +118,9 @@ public class Model {
                 it.remove();
             }
         }
-        player.isAlive();
+        if (player.isAlive()==false) {
+        	player.alive=false;
+        }
         clearCurrentGP();
         seeCurrentGP();
 
