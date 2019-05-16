@@ -114,7 +114,7 @@ public class View extends JPanel {
     private JPanel harrierRound;
     private JPanel quiz;
     private JPanel gameOver;
-    private int specialFoodDelay = 300;
+    private int specialFoodDelay = 400;
 
     private Direction direction;
     private CopyOnWriteArrayList<GamePiece> currentViewableGPs = new CopyOnWriteArrayList<>();
@@ -492,6 +492,7 @@ public class View extends JPanel {
                 displayFacts(g);
                 if (runningFrameCount > momentEaten + specialFoodDelay) {
                     Model.setSpecialFoodEaten(false);
+                    Model.incrFactIndex();
                 }
             }
 
@@ -601,6 +602,7 @@ public class View extends JPanel {
         g.setFont(new Font("Times New Roman", 1, 20));
         //(Model.getCurrentFact());
         g.drawString(Model.getCurrentFact(), playerXLoc + 300, playerYLoc - 100);
+        
 
     }
 
@@ -612,8 +614,12 @@ public class View extends JPanel {
             if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
                 harrierPicNum = (harrierPicNum + 1) % FRAME_COUNT;
             }
-            if (Model.specialFoodEaten()) {
+            if (Model.specialFoodEaten() && Model.hasMoreFacts()) {
                 displayFacts(g);
+                if (runningFrameCount > momentEaten + specialFoodDelay) {
+                    Model.setSpecialFoodEaten(false);
+                    Model.incrFactIndex();
+                }
             }
 
             g.drawImage(harrierFly[harrierPicNum], playerXLoc, playerYLoc, this);

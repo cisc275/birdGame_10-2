@@ -30,12 +30,13 @@ public class Model {
     protected int groundLevel;
     private int sceneNum;
     protected ArrayList<GamePiece> gamePieces = new ArrayList<>();
-    String[] facts;
+    static String[] facts;
     private int progress;
     private int enemyFrequency;
     private int foodFrequency;
     private int specialfoodFrequency;
     private int totalLevelTicks;
+    private static int currentFactIndex = 0;
     private static Direction direction;
     private static Player player;
     //GamePiece currentGP;
@@ -231,7 +232,7 @@ public class Model {
         int maxSpecialFood = 3;
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
-                if (Math.random() < .2) {
+                if (Math.random() < 1) {
                     if (Math.random() < .5) {
                         gamePieces.add(new SpecialFood(2 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.SNAKE));
                     } else {
@@ -312,8 +313,7 @@ public class Model {
     public void eatSpecial(SpecialFood sf) {
         specialFoodEaten = true;
         View.setMomentEaten(View.getFrameCount());
-        currentFact = sf.getFact();
-        player.setScore(player.getScore() + sf.getFoodValue());
+        currentFact = facts[currentFactIndex];
         player.setHealth(250);
     }
 
@@ -446,6 +446,9 @@ public class Model {
     public void setFHeight(int h) {
         this.fHeight = h;
     }
+    public static void incrFactIndex() {
+    	currentFactIndex++;
+    }
 
     public void setProgress(int h) {
         this.progress = h;
@@ -464,7 +467,7 @@ public class Model {
     }
 
     public static String getCurrentFact() {
-        return currentFact;
+        return facts[currentFactIndex];
     }
 
     public void setRound(int r) {
@@ -476,6 +479,7 @@ public class Model {
     }
 
     public void generateHarrierQuestions() {
+    	currentFactIndex = 0;
     	facts = new String[] {"Northern Harriers eat rodents","Northern Harriers are non-migratory birds","Foxes are a predator for Northern Harriers"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsHarrier1 = new HashMap<>();
@@ -498,6 +502,7 @@ public class Model {
     }
 
     public void generateOspreyQuestions() {
+    	currentFactIndex = 0;
     	facts = new String[] {"Ospreys like to eat Snakes and Fish","Ospreys migrate to South America for the winter","Eagles are a predator of Ospreys"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
@@ -517,5 +522,9 @@ public class Model {
         avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
 
     }
+    public static boolean hasMoreFacts() {
+    	return currentFactIndex < facts.length;
+    }
+  
 
 }
