@@ -181,7 +181,7 @@ public class Model {
         //background0:
         //land: 0-432px, 1776-2640px, 
         //int tempXLoc = (int)(Math.random() * 2639 + 1776);
-        int tempXLoc = 500;
+        int tempXLoc = 1200;
 
         //int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
         //int topHalfY = ((int) (Math.random()*(fHeight/2)));
@@ -190,9 +190,9 @@ public class Model {
             if (numSpecialFood < maxSpecialFood) {
                 if (Math.random() < .5) {
                     if (Math.random() < .5) {
-                        gamePieces.add(new SpecialFood(3 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.BUNNY));
+                        gamePieces.add(new SpecialFood(2 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.BUNNY));
                     } else {
-                        gamePieces.add(new SpecialFood(3 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.MOUSE));
+                        gamePieces.add(new SpecialFood(2 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.MOUSE));
 
                     }
                     numSpecialFood++;
@@ -230,15 +230,15 @@ public class Model {
     public void spawnOspreyGamePieces() {
         int numGamePieces = 0;
         int numSpecialFood = 0;
-        int tempXLoc = 500;
+        int tempXLoc = 1200;
         int maxSpecialFood = 3;
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
                 if (Math.random() < .2) {
                     if (Math.random() < .5) {
-                        gamePieces.add(new SpecialFood(3 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.SNAKE));
+                        gamePieces.add(new SpecialFood(2 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.SNAKE));
                     } else {
-                        gamePieces.add(new SpecialFood(3 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.FISH));
+                        gamePieces.add(new SpecialFood(2 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.FISH));
 
                     }
                     numSpecialFood++;
@@ -317,11 +317,7 @@ public class Model {
         View.setMomentEaten(View.getFrameCount());
         currentFact = sf.getFact();
         player.setScore(player.getScore() + sf.getFoodValue());
-        if (player.getHealth() > 225) {
-            player.setHealth(250);
-        } else {
-            player.setHealth(player.getHealth() + 25);
-        }
+        player.setHealth(250);
     }
 
     public static boolean specialFoodEaten() {
@@ -338,10 +334,10 @@ public class Model {
      */
     public void obstacleHit(Enemy e) {
         player.setScore(player.getScore() - e.getDamage());
-        if (player.getHealth() < 50) {
+        if (player.getHealth() < e.getDamage()) {
             player.setHealth(0);
         } else {
-            player.setHealth(player.getHealth() - 50);
+            player.setHealth(player.getHealth() - e.getDamage());
         }
     }
 

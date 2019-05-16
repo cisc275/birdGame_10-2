@@ -27,7 +27,7 @@ public class SpecialFood extends Food {
 		setSpecialFood(true);
 
 		setFact();
-		setXIncr(15);
+		setXIncr(18);
 
 		
 		
