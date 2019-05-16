@@ -114,7 +114,7 @@ public class View extends JPanel {
     private JPanel harrierRound;
     private JPanel quiz;
     private JPanel gameOver;
-    private int specialFoodDelay = 400;
+    private int specialFoodDelay = 100;
 
     private Direction direction;
     private CopyOnWriteArrayList<GamePiece> currentViewableGPs = new CopyOnWriteArrayList<>();
@@ -599,10 +599,14 @@ public class View extends JPanel {
         // 	img.setBounds(playerXLoc + 300,playerYLoc ,300,300);
         // 	getPanel().add(img);
         g.drawImage(thoughtBubble, playerXLoc + 300, playerYLoc - 300, this);
-        g.setFont(new Font("Times New Roman", 1, 20));
+        g.setFont(new Font("Times New Roman", 1, 30));
         //(Model.getCurrentFact());
-        g.drawString(Model.getCurrentFact(), playerXLoc + 300, playerYLoc - 100);
-        
+        String[] lines = Model.getCurrentFact().split(",");
+        int yOffset = 0;
+        for (String line: lines) {
+        	yOffset +=g.getFontMetrics().getHeight();
+        g.drawString(line, playerXLoc + 375, playerYLoc - 175 + yOffset);
+        }
 
     }
 

@@ -22,7 +22,7 @@ public class Model {
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
     private static int round;
-    private int numGamePiecesInRoundLeft = 3;
+    private int numGamePiecesInRoundLeft = 50;
     protected int fWidth;
     protected int fHeight;
     private int imgHeight;
@@ -186,7 +186,7 @@ public class Model {
         int maxSpecialFood = 5;
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
-                if (Math.random() < .5) {
+                if (Math.random() < .3) {
                     if (Math.random() < .5) {
                         gamePieces.add(new SpecialFood(2 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.BUNNY));
                     } else {
@@ -232,7 +232,7 @@ public class Model {
         int maxSpecialFood = 3;
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
-                if (Math.random() < 1) {
+                if (Math.random() < .3) {
                     if (Math.random() < .5) {
                         gamePieces.add(new SpecialFood(2 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.SNAKE));
                     } else {
@@ -313,7 +313,9 @@ public class Model {
     public void eatSpecial(SpecialFood sf) {
         specialFoodEaten = true;
         View.setMomentEaten(View.getFrameCount());
+        if (hasMoreFacts()) {
         currentFact = facts[currentFactIndex];
+        }
         player.setHealth(250);
     }
 
@@ -480,7 +482,7 @@ public class Model {
 
     public void generateHarrierQuestions() {
     	currentFactIndex = 0;
-    	facts = new String[] {"Northern Harriers eat rodents","Northern Harriers are non-migratory birds","Foxes are a predator for Northern Harriers"};
+    	facts = new String[] {"Northern Harriers, eat rodents","Northern Harriers are, non-migratory birds","Foxes are a predator, for Northern Harriers"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsHarrier1 = new HashMap<>();
         String[] harrierFood = {"rodents", "fish", "eagles", "plants", "rodents"};
@@ -503,7 +505,7 @@ public class Model {
 
     public void generateOspreyQuestions() {
     	currentFactIndex = 0;
-    	facts = new String[] {"Ospreys like to eat Snakes and Fish","Ospreys migrate to South America for the winter","Eagles are a predator of Ospreys"};
+    	facts = new String[] {"Ospreys like to,eat Snakes and Fish","Ospreys migrate to, South America for, the winter","Eagles are a, predator of Ospreys"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
         String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Sankes and Fish"};
