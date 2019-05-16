@@ -143,6 +143,7 @@ public class View extends JPanel {
         createTutorial();
         createOspreyPanels(c);
         createHarrierRound();
+        createHarrierNestPanel(c);
         createQuizPanel();
         createGameOverPanel(c);
         loadImages();
@@ -750,6 +751,7 @@ public class View extends JPanel {
                 Controller.getReturnToStartButton().setBounds((FRAME_WIDTH) / 10,
                         (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
                 add(Controller.getReturnToStartButton());
+                Controller.setHarrierNested(true);
             }
         }
     }
