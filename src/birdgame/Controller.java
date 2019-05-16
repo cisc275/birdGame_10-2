@@ -116,7 +116,7 @@ public class Controller implements KeyListener, ActionListener {
         model.getPlayer().setHealth(250);
         model.getPlayer().setX(30);
         model.getPlayer().setY(view.getFrameHeight()/2);
-        model.clearGP();
+        //model.clearGP();
     }
     void resetAfterGameOver(){
         
@@ -150,6 +150,7 @@ public class Controller implements KeyListener, ActionListener {
         }
         else if(e.getSource() == Round2Button){
             view.setIsOspreyRound1Over(false);
+            model.clearGP();
             view.setPanel("OSPREY_ROUND_TWO");
             model.generateOspreyQuestions();
             model.spawnOspreyGamePieces();
