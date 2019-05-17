@@ -603,7 +603,7 @@ public class View extends JPanel {
             g.setFont(new Font("Times New Roman", 1, 20));
             g.drawRect(FRAME_WIDTH - 105, FRAME_HEIGHT / 30, FRAME_WIDTH / 14, FRAME_HEIGHT / 25);
             g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 103, FRAME_HEIGHT / 17);
-            if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+            if (runningFrameCount % 30 == 0) {
             	dePicNum = (dePicNum + 1) % DE_FRAME_COUNT;
             }
            	g.drawImage(delaware[dePicNum], FRAME_WIDTH-150, FRAME_HEIGHT-350, 150, 350, this);
