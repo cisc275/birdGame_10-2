@@ -18,8 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author crnis
  */
 public class Model {
-
-	private initialNumbers initNums = new initialNumbers();
+    private initialNumbers initNums = new initialNumbers();
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
     private int maxBirdHealth = initNums.birdHealth();
@@ -127,9 +126,9 @@ public class Model {
                 it.remove();
             }
         }
-        if (player.isAlive()==false) {
-        	player.alive=false;
-        }
+//        if (player.isAlive()==false) {
+//        	player.alive=false;
+//        }
         clearCurrentGP();
         seeCurrentGP();
 

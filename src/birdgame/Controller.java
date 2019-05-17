@@ -63,19 +63,22 @@ public class Controller implements KeyListener, ActionListener {
     
     void start() {
         //System.out.println("start reached");
-        if(!tutorialTried){
-            view.setPanel("TUTORIAL");
-        }
+//        if(!tutorialTried){
+//            view.setPanel("TUTORIAL");
+//        }
     	runGame();
-    	if(model.getPlayer().getHealth()<=0 && !nextRound) {
+    	if(!model.getPlayer().isAlive() && !nextRound) {
+            System.out.println("reached first if");
     		//System.out.println(model.getPlayer().getHealth());
     		//comment these lines out for Game Over Screen after bird dies
     		if(birdsPlayed==2) { // <-comment this out
+                    System.out.println("reached second if");
     			view.setPanel("GAME_OVER");
     		}//<-comment this out
     		//comment this out below
     		else {
-    			view.setPanel("START");
+                    System.out.println("else reached");
+                    view.setPanel("START");
     		}
         }
     	resetAfterRound();
@@ -92,9 +95,10 @@ public class Controller implements KeyListener, ActionListener {
             view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
                        model.getCurrentGPs(), model.getDirection(), 
                        model.getPlayer().getHealth(), model.getPlayer().getScore());
-            if(model.getPlayer().alive==false) {
+            if(model.getPlayer().isAlive()==false) {
         		view.setIsOspreyRound1Over(false);
         		view.setIsOspreyRound2Over(false);
+                        view.setIsHarrierRoundOver(false);
         	}
             if(view.getIsOspreyRound1Over()){
                 view.setPanel("MAP_1_TO_2");
@@ -124,6 +128,7 @@ public class Controller implements KeyListener, ActionListener {
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == OspreyButton){
+            resetAfterRound();
             model.generateOspreyQuestions();
             birdsPlayed++;
             
@@ -132,7 +137,8 @@ public class Controller implements KeyListener, ActionListener {
             OspreyButton.setVisible(false);
         }
         else if(e.getSource() == HarrierButton){
-        	resetAfterRound();
+            resetAfterRound();
+            model.clearGP();
             model.generateHarrierQuestions();
             birdsPlayed++;
             model.spawnHarrierGamePieces();
@@ -145,19 +151,22 @@ public class Controller implements KeyListener, ActionListener {
         
         if(e.getSource() == Round1Button){
             view.setPanel("OSPREY_ROUND_ONE");
+            model.clearGP();
             view.setBackground(imgOsprey, imgOsprey2);
             model.spawnOspreyGamePieces();
             model.setRound(1);
         }
         else if(e.getSource() == Round2Button){
+            resetAfterRound();
             view.setIsOspreyRound1Over(false);
+            model.setTotalLevelTicks(0);
             model.clearGP();
             view.setPanel("OSPREY_ROUND_TWO");
             model.generateOspreyQuestions();
             model.spawnOspreyGamePieces();
             view.setBackground(imgOsprey3, imgOsprey4);
             model.setRound(2);
-            nextRound = true;
+            //nextRound = true;
         }
         
         if(e.getSource() == ReturnToStart) {

@@ -18,7 +18,7 @@ public class Player extends GamePiece {
     private int xOffset;
     private int yOffset;
     private Sprite bird;
-    public static boolean alive=true;
+    private static boolean alive=true;
 
     public Player() {
         setYIncr(12);
@@ -42,6 +42,8 @@ public class Player extends GamePiece {
         }
         return true;
     }
+    
+    
 
     /**
      * checks if the Player collides with a GamePiece
