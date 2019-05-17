@@ -19,7 +19,7 @@ public class initialNumbers {
 	}
 	
 	//Model
-	private int obstaclesPerLevel = 3;
+	private int obstaclesPerLevel = 10;
 	public int obstaclesPerLevel() {
 		return obstaclesPerLevel;
 	}

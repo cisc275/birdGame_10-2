@@ -102,7 +102,6 @@ public class View extends JPanel {
     private BufferedImage[] map1to2transition = new BufferedImage[MAP_1_2_TRANSITION_COUNT];
     private BufferedImage[] map2to3transition = new BufferedImage[MAP_2_3_TRANSITION_COUNT];
     private BufferedImage[] delaware = new BufferedImage[33];
-
     private BufferedImage[] ospreyNesting = new BufferedImage[OSPREY_NEST_COUNT];
     private BufferedImage[] harrierNesting = new BufferedImage[HARRIER_NEST_COUNT];
     private Image thoughtBubble;
@@ -121,7 +120,8 @@ public class View extends JPanel {
     private JPanel harrierRound;
     private JPanel harrierNest;
     private JPanel quiz;
-    private JPanel gameOver;
+    private JPanel gameOverWin;
+    private JPanel gameOverLose;
     private int specialFoodDelay = 100;
 
     private Direction direction;
@@ -134,6 +134,8 @@ public class View extends JPanel {
     private Image backgroundImageFlipped;
     private Image startScreenImg;
     private Image initialMapImg;
+    private Image gameOverWinImg;
+    private Image gameOverLoseImg;
 
     private static boolean isOspreyRound1Over = false;
     private static boolean isOspreyRound2Over = false;
@@ -150,7 +152,7 @@ public class View extends JPanel {
         createHarrierRound();
         createHarrierNestPanel(c);
         createQuizPanel();
-        createGameOverPanel(c);
+        createGameOverPanels();
         loadImages();
         cards.add(startScreen, "START");
         //cards.add(tutorialScreen, "TUTORIAL");
@@ -163,7 +165,8 @@ public class View extends JPanel {
         cards.add(harrierNest,"HARRIER_NEST");
         cards.add(harrierRound, "HARRIER_ROUND");
 //        cards.add(quiz, "QUIZ");
-        cards.add(gameOver, "GAME_OVER");
+        cards.add(gameOverWin, "GAME_OVER_WIN");
+        cards.add(gameOverLose, "GAME_OVER_LOSE");
 
         currentPanel = startScreen;
         createFrame(c);
@@ -251,12 +254,11 @@ public class View extends JPanel {
     }
     void createOspreyPanels(Controller c) {
         createInitialMapPanel(c);
-        createOspreyRound1Panel();
+        createOspreyRound1Panel(c);
         createOspreyMap1to2();
         createOspreyRound2Panel();
         createOspreyMap2to3(c);
         createOspreyNestPanel(c);
-        createGameOverPanel(c);
     }
 
     void createInitialMapPanel(Controller c) {
@@ -270,8 +272,11 @@ public class View extends JPanel {
         initialMap.add(c.getRound1Button());
     }
 
-    void createOspreyRound1Panel() {
+    void createOspreyRound1Panel(Controller c) {
         ospreyRound1 = new OspreyPanel();
+        c.getSaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+        c.getSaveGameButton().setBounds(FRAME_WIDTH/10, (FRAME_HEIGHT *84)/100, FRAME_WIDTH/4, FRAME_HEIGHT);
+        ospreyRound1.add(c.getSaveGameButton());
     }
 
     void createOspreyMap1to2() {
@@ -308,18 +313,28 @@ public class View extends JPanel {
 
     }
 
-    void createGameOverPanel(Controller c) {
-        gameOver = new GameOverPanel();
-        gameOver.setLayout(null);
-        JLabel gameOverLabel = new JLabel("Game Over");
-        gameOver.setFont(new Font("Times New Roman", 1, 70));
-        gameOver.setBounds(FRAME_WIDTH / 2 - 100, FRAME_HEIGHT / 2, 100, 100);
-        JLabel finalScore = new JLabel("Score: " + Player.getScore());
-        finalScore.setFont(new Font("Times New Roman", 1, 70));
-        finalScore.setBounds(FRAME_WIDTH / 2 - 100, FRAME_HEIGHT / 2, 300, 100);
-        gameOver.add(gameOverLabel);
-        gameOver.add(finalScore);
+    void createGameOverPanels() {
+        createGameOverWin();
+        createGameOverLose();
+//        gameOver = new GameOverPanel();
+//        gameOver.setLayout(null);
+//        JLabel gameOverLabel = new JLabel("Game Over");
+//        gameOver.setFont(new Font("Times New Roman", 1, 70));
+//        gameOver.setBounds(FRAME_WIDTH / 2 - 100, FRAME_HEIGHT / 2, 100, 100);
+//        JLabel finalScore = new JLabel("Score: " + Player.getScore());
+//        finalScore.setFont(new Font("Times New Roman", 1, 70));
+//        finalScore.setBounds(FRAME_WIDTH / 2 - 100, FRAME_HEIGHT / 2, 300, 100);
+//        gameOver.add(gameOverLabel);
+//        gameOver.add(finalScore);
 
+    }
+    void createGameOverWin(){
+        gameOverWinImg = createImage("images/BirdImages/GameOverWin.png");
+        gameOverWin = new GameOverWinPanel();
+    }
+    void createGameOverLose(){
+        gameOverLoseImg = createImage("images/BirdImages/GameOverLose.png");
+        gameOverLose = new GameOverLosePanel();
     }
 
     public void paintBackground(Graphics g) {
@@ -365,8 +380,10 @@ public class View extends JPanel {
             currentPanel = harrierNest;
         } else if (s.equals("QUIZ")) {
             currentPanel = quiz;
-        } else if (s.equals("GAME_OVER")) {
-            currentPanel = gameOver;
+        } else if (s.equals("GAME_OVER_WIN")) {
+            currentPanel = gameOverWin;
+        } else if (s.equals("GAME_OVER_LOSE")){
+            currentPanel = gameOverLose;
         }
 
     }
@@ -425,14 +442,6 @@ public class View extends JPanel {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(initialMapImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
-        }
-    }
-
-    class GameOverPanel extends JPanel {
-
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawImage(startScreenImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
     }
 
@@ -695,6 +704,20 @@ public class View extends JPanel {
                 add(Controller.getReturnToStartButton());
                 Controller.setHarrierNested(true);
             }
+        }
+    }
+    
+    class GameOverWinPanel extends JPanel{
+        protected void paintComponent(Graphics g){
+            super.paintComponent(g);
+            g.drawImage(gameOverWinImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
+        }
+    }
+    
+    class GameOverLosePanel extends JPanel{
+        protected void paintComponent(Graphics g){
+            super.paintComponent(g);
+            g.drawImage(gameOverLoseImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
     }
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.io.Serializable;
 
 /**
  * Model contains and deals with the basic logic of the game, including updating
@@ -17,7 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @author crnis
  */
-public class Model {
+public class Model implements Serializable{
     private initialNumbers initNums = new initialNumbers();
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!

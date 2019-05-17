@@ -12,13 +12,19 @@ import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import java.io.Serializable;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * Controller class will handle flow of game and will take user input.
  *
  * @author crnis
  */
-public class Controller implements KeyListener, ActionListener {
+public class Controller implements KeyListener, ActionListener, Serializable {
 
     private initialNumbers initNums = new initialNumbers();
 	private View view;
@@ -29,6 +35,7 @@ public class Controller implements KeyListener, ActionListener {
     private static JButton Round2Button;
     private static JButton ReturnToStart;
     private static JButton ospreyNestButton;
+    private static JButton saveGameButton;
     private AbstractAction arrowKeyAction;
     private ImageIcon imgOsprey = new ImageIcon("images/BirdImages/OspreyBackground2.jpg");
     private ImageIcon imgOsprey2 = new ImageIcon("images/BirdImages/OspreyBackground2Mirror.jpg");
@@ -49,12 +56,14 @@ public class Controller implements KeyListener, ActionListener {
         Round2Button = new JButton("Ready to Play Level 2");
         ReturnToStart = new JButton("Return to Start Screen");
         ospreyNestButton = new JButton("Continue");
+        saveGameButton = new JButton("Save Game");
         OspreyButton.addActionListener(this);
         HarrierButton.addActionListener(this);
         Round1Button.addActionListener(this);
         Round2Button.addActionListener(this);
         ReturnToStart.addActionListener(this);
         ospreyNestButton.addActionListener(this);
+        saveGameButton.addActionListener(this);
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
         view.setPanel("START");
@@ -73,7 +82,7 @@ public class Controller implements KeyListener, ActionListener {
     		//comment these lines out for Game Over Screen after bird dies
     		if(birdsPlayed==2) { // <-comment this out
                     System.out.println("reached second if");
-    			view.setPanel("GAME_OVER");
+    			view.setPanel("GAME_OVER_LOSE");
     		}//<-comment this out
     		//comment this out below
     		else {
@@ -182,6 +191,14 @@ public class Controller implements KeyListener, ActionListener {
             ospreyNested = true;
         }
         
+        if(e.getSource() == saveGameButton){
+            try{
+                saveGame();
+            } catch (Exception d){
+                d.printStackTrace();
+            }
+        }
+        
 
     }
 
@@ -252,5 +269,16 @@ public class Controller implements KeyListener, ActionListener {
     
     public static void setHarrierNested(Boolean b){
         harrierNested = b;
+    }
+    
+    public void saveGame() throws Exception{
+        FileOutputStream in = new FileOutputStream("gameState.txt");
+        ObjectOutputStream ois = new ObjectOutputStream(in);
+        
+        ois.writeObject(model);
+    }
+    
+    public JButton getSaveGameButton(){
+        return saveGameButton;
     }
 }
