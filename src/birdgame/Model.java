@@ -20,6 +20,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Model {
 
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
+    public static HashMap<String,String[]> questionsToAsk;
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
     private static int round;
     private int numGamePiecesInRoundLeft = 50;
@@ -352,6 +353,7 @@ public class Model {
     public void nest() {
 
     }
+    public 
 
     public int getImgHeight() {
         return imgHeight;

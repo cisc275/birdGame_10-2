@@ -15,6 +15,9 @@ import javax.swing.JScrollPane;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -151,10 +154,10 @@ public class View extends JPanel {
         cards.add(map2to3, "MAP_2_TO_3");
         cards.add(ospreyNest, "OSPREY_NEST");
         cards.add(harrierRound, "HARRIER_ROUND");
-//        cards.add(quiz, "QUIZ");
+       cards.add(quiz, "QUIZ");
         cards.add(gameOver, "GAME_OVER");
-
         currentPanel = startScreen;
+      //  currentPanel = startScreen;
         createFrame(c);
     }
 
@@ -284,7 +287,23 @@ public class View extends JPanel {
     }
 
     void createQuizPanel() {
-
+    	quiz = new QuizPanel();
+    	quiz.setLayout(new GridLayout(3,2,75,75));
+    	//quiz.setSize(1000,1000);
+    	JLabel question = new JLabel("Fuck Me");
+    	JLabel blank = new JLabel();
+    	question.setFont(new Font("Times New Roman", 1, 70));
+    	question.setPreferredSize(new Dimension(300,300));
+       // question.setBounds(FRAME_WIDTH / 2 - 100, FRAME_HEIGHT / 2, 100, 100);
+     //   quiz.add(question, GridBagConstraints.PAGE_START);
+    	
+        quiz.add(question);
+        quiz.add(blank);
+    	quiz.add(Controller.getOptionAButton());
+    	quiz.add(Controller.getOptionBButton());
+    	quiz.add(Controller.getOptionCButton());
+    	quiz.add(Controller.getOptionDButton());
+    	
     }
 
     void createGameOverPanel(Controller c) {
@@ -455,6 +474,14 @@ public class View extends JPanel {
         }
         
         //System.out.println(currentPanel);
+    }
+
+    class QuizPanel extends JPanel{
+    	
+    	protected void paintComponent(Graphics g) {
+	super.paintComponent(g);
+}
+    
     }
 
     class StartScreenPanel extends JPanel {

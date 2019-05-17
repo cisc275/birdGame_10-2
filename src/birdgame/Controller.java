@@ -5,6 +5,7 @@
  */
 package birdgame;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -26,6 +27,10 @@ public class Controller implements KeyListener, ActionListener {
     private JButton OspreyButton;
     private JButton HarrierButton;
     private JButton Round1Button;
+    private static JButton QuizOptionA;
+    private static JButton QuizOptionB;
+    private static JButton QuizOptionC;
+    private static JButton QuizOptionD;
     private static JButton Round2Button;
     private static JButton ReturnToStart;
     private static JButton ospreyNestButton;
@@ -41,6 +46,17 @@ public class Controller implements KeyListener, ActionListener {
     private boolean nested = false;
     
     public Controller(){
+    	QuizOptionA = new JButton("A");
+    	QuizOptionB = new JButton("B");
+    	QuizOptionC = new JButton("C");
+    	QuizOptionD = new JButton("D");
+    	QuizOptionA.setBackground(Color.BLUE);
+    	QuizOptionB.setBackground(Color.RED);
+    	QuizOptionC.setBackground(Color.YELLOW);
+
+    	QuizOptionD.setBackground(Color.GREEN);
+
+    	
         OspreyButton = new JButton("Play as Osprey");
         HarrierButton = new JButton("Play as Harrier");
         Round1Button = new JButton("Ready to Play Level 1");
@@ -60,6 +76,8 @@ public class Controller implements KeyListener, ActionListener {
     
     
     void start() {
+    	view.setPanel("QUIZ");
+    	System.out.println(view.getPanel());
         //System.out.println("start reached");
     	runGame();
     	if(model.getPlayer().getHealth()<=0 && !nextRound) {
@@ -71,6 +89,7 @@ public class Controller implements KeyListener, ActionListener {
     		//comment this out below
     		else {
     			view.setPanel("START");
+    			//view.setPanel("QUIZ");
     		}
         }
     	resetAfterRound();
@@ -118,6 +137,19 @@ public class Controller implements KeyListener, ActionListener {
         
     }
     public void actionPerformed(ActionEvent e){
+    	if (e.getSource() == QuizOptionA) {
+    		//TODO
+    	}
+    	if (e.getSource() == QuizOptionB) {
+    		//TODO
+    	}
+    	if (e.getSource() == QuizOptionC) {
+    		//TODO
+    	}
+    	if (e.getSource() == QuizOptionD) {
+    		//TODO
+    	}
+    	
         if(e.getSource() == OspreyButton){
             model.generateOspreyQuestions();
             birdsPlayed++;
@@ -233,5 +265,17 @@ public class Controller implements KeyListener, ActionListener {
 
     public Model getModel() {
         return model;
+    }
+    public static JButton getOptionAButton() {
+    	return QuizOptionA;
+    }
+    public static JButton getOptionBButton() {
+    	return QuizOptionB;
+    }
+    public static JButton getOptionCButton() {
+    	return QuizOptionC;
+    }
+    public static JButton getOptionDButton() {
+    	return QuizOptionD;
     }
 }
