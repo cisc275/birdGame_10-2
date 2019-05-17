@@ -38,7 +38,9 @@ public class Controller implements KeyListener, ActionListener {
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
     private int birdsPlayed = 0;
     private boolean nextRound = false;
-    private boolean nested = false;
+    private boolean ospreyNested = false;
+    private static boolean harrierNested = false;
+    private boolean tutorialTried = false;
     
     public Controller(){
         OspreyButton = new JButton("Play as Osprey");
@@ -61,6 +63,9 @@ public class Controller implements KeyListener, ActionListener {
     
     void start() {
         //System.out.println("start reached");
+        if(!tutorialTried){
+            view.setPanel("TUTORIAL");
+        }
     	runGame();
     	if(model.getPlayer().getHealth()<=0 && !nextRound) {
     		//System.out.println(model.getPlayer().getHealth());
@@ -94,16 +99,16 @@ public class Controller implements KeyListener, ActionListener {
             if(view.getIsOspreyRound1Over()){
                 view.setPanel("MAP_1_TO_2");
             }
-            else if(view.getIsOspreyRound2Over() && !nested){
+            else if(view.getIsOspreyRound2Over() && !ospreyNested){
                 view.setPanel("MAP_2_TO_3");
                 //view.setPanel("OSPREY_NEST");
             }
-            else if(view.getIsHarrierRoundOver()) {
+            else if(view.getIsHarrierRoundOver() && !harrierNested) {
             	//might need some code in here later to stop this else from triggering
             	//while playing osprey if you play harrier first
             	System.out.println("harrier round over");
             	//might need some code in here later 
-            	//view.setPanel("START");
+            	view.setPanel("HARRIER_NEST");
             }
         }
 
@@ -159,12 +164,13 @@ public class Controller implements KeyListener, ActionListener {
             //view.setIsOspreyRound2Over(false);
             view.setPanel("START");
             model.setRound(0);
+            model.getPlayer().setX(30);
         }
         
         if(e.getSource() == ospreyNestButton){
             view.setPanel("OSPREY_NEST");
             view.setIsOspreyRound2Over(false);
-            nested = true;
+            ospreyNested = true;
         }
         
 
@@ -233,5 +239,9 @@ public class Controller implements KeyListener, ActionListener {
 
     public Model getModel() {
         return model;
+    }
+    
+    public static void setHarrierNested(Boolean b){
+        harrierNested = b;
     }
 }

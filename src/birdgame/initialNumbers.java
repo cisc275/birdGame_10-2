@@ -19,7 +19,7 @@ public class initialNumbers {
 	}
 	
 	//Model
-	private int obstaclesPerLevel = 3;
+	private int obstaclesPerLevel = 15;
 	public int obstaclesPerLevel() {
 		return obstaclesPerLevel;
 	}
@@ -44,7 +44,7 @@ public class initialNumbers {
 		return additionalXLocationForSpecialFood;
 	}
 	
-	private double chanceSpecialFoodSpawns = 0.2;
+	private double chanceSpecialFoodSpawns = 0.3;
 	public double chanceSpecialFoodSpawns() {
 		return chanceSpecialFoodSpawns;
 	}
