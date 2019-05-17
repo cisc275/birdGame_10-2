@@ -36,7 +36,7 @@ public class Controller implements KeyListener, ActionListener {
     private ImageIcon imgOsprey4 = new ImageIcon("images/BirdImages/OspreyBackgroundMirror.png");
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
-    private int birdsPlayed= initNums.initialBirdsPlayed();
+    private int birdsPlayed = 0;
     private boolean nextRound = false;
     private boolean nested = false;
     
@@ -110,8 +110,8 @@ public class Controller implements KeyListener, ActionListener {
     }
     
     void resetAfterRound(){
-        model.getPlayer().setHealth(250);
-        model.getPlayer().setX(30);
+        model.getPlayer().setHealth(initNums.birdHealth());
+        model.getPlayer().setX(initNums.birdXLocation());
         model.getPlayer().setY(view.getFrameHeight()/2);
     }
     void resetAfterGameOver(){

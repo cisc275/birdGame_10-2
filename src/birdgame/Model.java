@@ -19,10 +19,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Model {
 
+	private initialNumbers initNums = new initialNumbers();
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
+    private int maxBirdHealth = initNums.birdHealth();
     private static int round;
-    private int numGamePiecesInRoundLeft = 3;
+    private int numGamePiecesInRoundLeft = initNums.obstaclesPerLevel();
     protected int fWidth;
     protected int fHeight;
     private int imgHeight;
@@ -31,10 +33,13 @@ public class Model {
     private int sceneNum;
     protected ArrayList<GamePiece> gamePieces = new ArrayList<>();
 
-    private int progress;
-    private int enemyFrequency;
-    private int foodFrequency;
-    private int specialfoodFrequency;
+    private double chanceSpecialFoodSpawns = initNums.chanceSpecialFoodSpawns();
+    private double chanceHarrierFoodIsBunny = initNums.chanceHarrierFoodIsBunny();
+    private double chanceFoodSpawnsInsteadOfEnemy = initNums.chanceFoodSpawnsInsteadOfEnemy();
+    private double chanceHarrierEnemyIsFox = initNums.chanceFoodSpawnsInsteadOfEnemy();
+    private double chanceOspreyFoodIsSnake = initNums.chanceOspreyFoodIsSnake();
+    private double chanceOspreyEnemyIsEagle = initNums.chanceOspreyEnemyIsEagle();
+    
     private int totalLevelTicks;
     private static Direction direction;
     private static Player player;
@@ -42,6 +47,7 @@ public class Model {
     private int indexOfGP;
     private static String currentFact;
     private CopyOnWriteArrayList<GamePiece> currentGPs = new CopyOnWriteArrayList<>();
+    private int xLocationWhereGPsAreNoLongerCurrent = initNums.xLocationWhereGPsAreNoLongerCurrent();
     private GamePiece furthestGP = new GamePiece();
     private static boolean specialFoodEaten = false;
     static ArrayList<String> avaliableFacts;
@@ -150,7 +156,7 @@ public class Model {
     }
 
     public void endOfLevel() {
-        player.setXIncr(30);
+        player.setXIncr(initNums.xIncreaseAtEndOfLevel());
 //    	player.setXIncr((int)(fWidth * .5));
         player.setX(player.getX() + player.getXIncr());
         if (player.getX() > (fWidth - imgWidth)) {
@@ -183,18 +189,19 @@ public class Model {
         //background0:
         //land: 0-432px, 1776-2640px, 
         //int tempXLoc = (int)(Math.random() * 2639 + 1776);
-        int tempXLoc = 1200;
+        int tempXLoc = initNums.xLocationForObstacles();
+        int additionalXLocationForSpecialFood = initNums.additionalXLocatitionForSpecialFood();
 
         //int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
         //int topHalfY = ((int) (Math.random()*(fHeight/2)));
-        int maxSpecialFood = 5;
+        int maxSpecialFood = 3;
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
-                if (Math.random() < .5) {
-                    if (Math.random() < .5) {
-                        gamePieces.add(new SpecialFood(2 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.BUNNY));
+                if (Math.random() < chanceSpecialFoodSpawns) {
+                    if (Math.random() < chanceHarrierFoodIsBunny) {
+                        gamePieces.add(new SpecialFood(tempXLoc + additionalXLocationForSpecialFood, (int) (Math.random() * groundLevel), Sprite.BUNNY));
                     } else {
-                        gamePieces.add(new SpecialFood(2 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.MOUSE));
+                        gamePieces.add(new SpecialFood(tempXLoc + additionalXLocationForSpecialFood, (int) (Math.random() * groundLevel), Sprite.MOUSE));
 
                     }
                     numSpecialFood++;
@@ -202,16 +209,16 @@ public class Model {
                 }
             }
 
-            if (Math.random() < .5) { //food
-                if (Math.random() < .5) {//bunny
+            if (Math.random() < chanceFoodSpawnsInsteadOfEnemy) {
+                if (Math.random() < chanceHarrierFoodIsBunny) {
                     gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.BUNNY));
-                } else {//mouse
+                } else {
                     gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.MOUSE));
                 }
-            } else {//enemy
-                if (Math.random() < .5) {//red fox
+            } else {
+                if (Math.random() < chanceHarrierEnemyIsFox) {
                     gamePieces.add(new Enemy(tempXLoc, (int) (Math.random() * groundLevel), Sprite.REDFOX));
-                } else {//raccoon
+                } else {
                     gamePieces.add(new Enemy(tempXLoc, (int) (Math.random() * groundLevel), Sprite.RACCOON));
                 }
             }
@@ -232,15 +239,16 @@ public class Model {
     public void spawnOspreyGamePieces() {
         int numGamePieces = 0;
         int numSpecialFood = 0;
-        int tempXLoc = 1200;
-        int maxSpecialFood = 3;
+        int tempXLoc = initNums.xLocationForObstacles();
+        int additionalXLocationForSpecialFood = initNums.additionalXLocatitionForSpecialFood();
+        int maxSpecialFood = initNums.maxSpecialFood();
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
-                if (Math.random() < .2) {
-                    if (Math.random() < .5) {
-                        gamePieces.add(new SpecialFood(2 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.SNAKE));
+                if (Math.random() < chanceSpecialFoodSpawns) {
+                    if (Math.random() < chanceOspreyFoodIsSnake) {
+                        gamePieces.add(new SpecialFood(tempXLoc + additionalXLocationForSpecialFood, (int) (Math.random() * groundLevel), Sprite.SNAKE));
                     } else {
-                        gamePieces.add(new SpecialFood(2 * tempXLoc, (int) (Math.random() * groundLevel), Sprite.FISH));
+                        gamePieces.add(new SpecialFood(tempXLoc + additionalXLocationForSpecialFood, (int) (Math.random() * groundLevel), Sprite.FISH));
 
                     }
                     numSpecialFood++;
@@ -248,16 +256,16 @@ public class Model {
                 }
             }
 
-            if (Math.random() < .5) { //food
-                if (Math.random() < .5) {//snakes
+            if (Math.random() < chanceFoodSpawnsInsteadOfEnemy) {
+                if (Math.random() < chanceOspreyFoodIsSnake) {
                     gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.SNAKE));
-                } else {//fish
+                } else {
                     gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.FISH));
                 }
-            } else {//enemy
-                if (Math.random() < 0.5) {//eagles
+            } else {
+                if (Math.random() < chanceOspreyEnemyIsEagle) {
                     gamePieces.add(new Enemy(tempXLoc, (int) (Math.random() * groundLevel), Sprite.EAGLE));
-                } else {//planes
+                } else {
                     gamePieces.add(new Enemy(tempXLoc, (int) (Math.random() * groundLevel), Sprite.PLANE));
                 }
             }
@@ -285,7 +293,7 @@ public class Model {
 
     public void seeCurrentGP() {
         for (GamePiece g : gamePieces) {
-            if (g.getX() <= fWidth && g.getX() >= -500) {
+            if (g.getX() <= fWidth && g.getX() >= xLocationWhereGPsAreNoLongerCurrent) {
                 currentGPs.add(g);
             }
         }
@@ -298,19 +306,17 @@ public class Model {
      *
      * @return an int value that describes the progress of the user
      */
-    public int getProgress() {
-        return progress;
-    }
+
 
     /**
      * eat() will increment the player's score based off of what is eaten.
      */
     public void eat(Food f) {
         player.setScore(player.getScore() + f.getFoodValue());
-        if (player.getHealth() > 225) {
-            player.setHealth(250);
+        if (player.getHealth() > maxBirdHealth - f.getFoodValue()) {
+            player.setHealth(maxBirdHealth);
         } else {
-            player.setHealth(player.getHealth() + 25);
+            player.setHealth(player.getHealth() + f.getFoodValue());
         }
     }
 
@@ -319,7 +325,7 @@ public class Model {
         View.setMomentEaten(View.getFrameCount());
         currentFact = sf.getFact();
         player.setScore(player.getScore() + sf.getFoodValue());
-        player.setHealth(250);
+        player.setHealth(maxBirdHealth);
     }
 
     public static boolean specialFoodEaten() {
@@ -404,30 +410,6 @@ public class Model {
         this.sceneNum = sceneNum;
     }
 
-    public int getEnemyFrequency() {
-        return enemyFrequency;
-    }
-
-    public void setEnemyFrequency(int enemyFrequency) {
-        this.enemyFrequency = enemyFrequency;
-    }
-
-    public int getFoodFrequency() {
-        return foodFrequency;
-    }
-
-    public void setFoodFrequency(int foodFrequency) {
-        this.foodFrequency = foodFrequency;
-    }
-
-    public int getSpecialfoodFrequency() {
-        return specialfoodFrequency;
-    }
-
-    public void setSpecialfoodFrequency(int specialfoodFrequency) {
-        this.specialfoodFrequency = specialfoodFrequency;
-    }
-
     public int getTotalLevelTicks() {
         return totalLevelTicks;
     }
@@ -450,10 +432,6 @@ public class Model {
 
     public void setFHeight(int h) {
         this.fHeight = h;
-    }
-
-    public void setProgress(int h) {
-        this.progress = h;
     }
 
     public void setFurthestGP(GamePiece gP) {
