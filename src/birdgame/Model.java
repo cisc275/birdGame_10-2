@@ -22,7 +22,7 @@ public class Model {
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
     private static int round;
-    private int numGamePiecesInRoundLeft = 3;
+    private int numGamePiecesInRoundLeft = 15;
     protected int fWidth;
     protected int fHeight;
     private int imgHeight;
