@@ -18,13 +18,13 @@ public class Food extends GamePiece {
     	setSpecialFood(false);
         setX(x);
         setY(y);
-        setXIncr(10);
+        setXIncr(14);
     	setYIncr(0);
     	setWidth(165);
     	setHeight(165);
     	setSprite(foodType);
         setPicNum(0);
-    	setFoodValue(25);
+    	setFoodValue(40);
     	setOffsets(); //MIGHT NOT WORK
     }
 

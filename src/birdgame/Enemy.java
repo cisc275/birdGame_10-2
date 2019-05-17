@@ -18,7 +18,7 @@ public class Enemy extends GamePiece {
     	setSpecialFood(false);
         setX(x);
         setY(y);
-        setXIncr(10);
+        setXIncr(14);
     	setYIncr(0);
     	setWidth(165);
     	setHeight(165);
@@ -33,7 +33,7 @@ public class Enemy extends GamePiece {
 //        else{
 //            setPicNum(4);
 //        }
-    	setDamage(20);
+    	setDamage(50);
     	setOffsets(); //MIGHT NOT WORK
 
     }

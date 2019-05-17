@@ -18,16 +18,17 @@ public class Player extends GamePiece {
     private int xOffset;
     private int yOffset;
     private Sprite bird;
+    private static boolean alive=true;
 
     public Player() {
-        setYIncr(8);
+        setYIncr(12);
         setX(30);
         setY(300);
         setWidth(184);
         setHeight(100);
         health = 250;
         xOffset = 30;
-        yOffset = 30;
+        yOffset = 5;
     }
 
     /**
@@ -41,6 +42,8 @@ public class Player extends GamePiece {
         }
         return true;
     }
+    
+    
 
     /**
      * checks if the Player collides with a GamePiece
@@ -48,10 +51,10 @@ public class Player extends GamePiece {
      * @return true if player collides with GamePiece and false otherwise
      */
     public boolean checkCollision(GamePiece piece) {
-        int x = getX();
-        int y = getY();
-        int w = getWidth();
-        int h = getHeight();
+        int xLocation = getX();
+        int yLocation = getY();
+        int width = getWidth();
+        int height = getHeight();
         int xOff = getXOffset();
         int yOff = getYOffset();
         int otherX = piece.getX();
@@ -62,17 +65,17 @@ public class Player extends GamePiece {
         int otherXOff = piece.getXOffset();
 
         //probably bugged, should test more
-        if (x + w - xOff >= otherX + otherXOff && x + w - xOff <= otherX + otherW - otherXOff) {
-            if (y + yOff >= otherY + otherYOff && y + yOff <= otherY + otherW - otherYOff) {
+        if (xLocation + width - xOff >= otherX + otherXOff && xLocation + width - xOff <= otherX + otherW - otherXOff) {
+            if (yLocation + yOff >= otherY + otherYOff && yLocation + yOff <= otherY + otherW - otherYOff) {
                 return true;
-            } else if (y + h - yOff >= otherY + otherYOff && y + h - yOff <= otherY + otherH - otherYOff) {
-                return true;
-            }
-        } else if (x + xOff >= otherX + otherXOff && x + xOff <= otherX + otherH - otherXOff) {
-            if (y + yOff >= otherY + otherYOff && y + yOff <= otherY + otherW - otherYOff) {
+            } else if (yLocation + height - yOff >= otherY + otherYOff && yLocation + height - yOff <= otherY + otherH - otherYOff) {
                 return true;
             }
-            if (y + h - yOff >= otherY + otherYOff && y + h - yOff <= otherY + otherH - otherYOff) {
+        } else if (xLocation + xOff >= otherX + otherXOff && xLocation + xOff <= otherX + otherH - otherXOff) {
+            if (yLocation + yOff >= otherY + otherYOff && yLocation + yOff <= otherY + otherW - otherYOff) {
+                return true;
+            }
+            if (yLocation + height - yOff >= otherY + otherYOff && yLocation + height - yOff <= otherY + otherH - otherYOff) {
                 return true;
             }
         }
