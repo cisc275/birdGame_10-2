@@ -35,6 +35,8 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     private JButton OspreyButton;
     private JButton HarrierButton;
     private JButton Round1Button;
+    private JButton TutorialButton;
+    private static JButton TutorialMovingButton;
     private static JButton QuizOptionA;
     private static JButton QuizOptionB;
     private static JButton QuizOptionC;
@@ -58,6 +60,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     private boolean ospreyNested = false;
     private static boolean harrierNested = false;
     private boolean tutorialTried = false;
+    private static int upArrowKeyTried = 0;
+    private static int downArrowKeyTried = 0;
+    
     
     public Controller(){
     	QuizOptionA = new JButton("A");
@@ -76,6 +81,8 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     	QuizOptionB.addActionListener(this);
     	QuizOptionC.addActionListener(this);
     	QuizOptionD.addActionListener(this);
+
+
     	
         OspreyButton = new JButton("Play as Osprey");
         HarrierButton = new JButton("Play as Harrier");
@@ -86,6 +93,8 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         saveGameButton = new JButton("Save Game");
         restartGameButton = new JButton("Restart");
         exitGameButton = new JButton("Exit");
+        TutorialButton = new JButton("Click Here for the Tutorial");
+        TutorialMovingButton = new JButton("Ready to Play?");
         OspreyButton.addActionListener(this);
         HarrierButton.addActionListener(this);
         Round1Button.addActionListener(this);
@@ -95,9 +104,12 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         saveGameButton.addActionListener(this);
         restartGameButton.addActionListener(this);
         exitGameButton.addActionListener(this);
+        TutorialButton.addActionListener(this);
+        TutorialMovingButton.addActionListener(this);
+
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
-        view.setPanel("START");
+        view.setPanel("TUTORIAL");
     }
 
     void start() {
@@ -249,6 +261,15 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     	if (e.getSource() == QuizOptionD) {
     		handleQuizButtonClick("D");
     	}
+    	if(e.getSource() == TutorialButton) {
+    		view.setBackground(imgOsprey, imgOsprey2);
+    		view.setPanel("MOVING_SCREEN");
+
+    	}
+    	if(e.getSource() == TutorialMovingButton) {
+    		view.setPanel("START");
+    		
+    	}
     	
         if(e.getSource() == OspreyButton){
             resetAfterRound();
@@ -347,10 +368,18 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_UP) {
+        if (key == KeyEvent.VK_UP) {        	
             Model.setDirection(Direction.UP);
+        	view.getUpLabel().setVisible(false);
+        	upArrowKeyTried++;
+
         } else if (key == KeyEvent.VK_DOWN) {
             Model.setDirection(Direction.DOWN);
+            view.getDownLabel().setVisible(false);
+        	downArrowKeyTried++;
+        }
+        if(upArrowKeyTried>=1&&downArrowKeyTried>=1 && view.draw) {
+        	view.getFoodLabel().setVisible(true);
         }
     }
 
@@ -451,5 +480,19 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     public JButton getSaveGameButton() {
         return saveGameButton;
     }
-
+    public static int getUpArrowKeyTried() {
+    	return upArrowKeyTried;
+    }
+    
+    public static int getDownArrowKeyTried() {
+    	return downArrowKeyTried;
+    }
+    public static JButton getTutorialMovingButton() {
+    	return TutorialMovingButton;
+    }
+    public JButton getTutorialButton() {
+    	return TutorialButton;
+    }
 }
+
+
