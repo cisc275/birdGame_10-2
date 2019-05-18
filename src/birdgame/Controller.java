@@ -53,13 +53,16 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
     private int birdsPlayed = 0;
-    boolean answered = false;
+    private boolean answered = false;
     private boolean nextRound = false;
     private boolean ospreyNested = false;
     private static boolean harrierNested = false;
     private boolean tutorialTried = false;
-    boolean userDone = false;
-    boolean userResponse = false;
+    private boolean userDone = false;
+    private boolean userResponse = false;
+    private boolean reachedHarrierEnd = false;
+    private boolean reachedOspreyEnd = false;
+    
     public Controller(){
     	QuizOptionA = new JButton("A");
     	QuizOptionB = new JButton("B");
@@ -118,8 +121,6 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                 while (!userResponse) {
                 	System.out.println("here!");
                 }
-                
-                
             }//<-comment this out
             //comment this out below
             else {
@@ -127,7 +128,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 
             }
         }
-
+        
         resetAfterRound();
         nextRound = false;
         if (birdsPlayed == 1) {
@@ -164,7 +165,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         while (model.getPlayer().isAlive() && !nextRound) {
             model.handleTicks();
 
-            Model.setNumberOfQuestions();
+            model.setNumberOfQuestions();
             view.update(model.getPlayer().getX(), model.getPlayer().getY(), 
                        model.getCurrentGPs(), model.getDirection(), 
                        model.getPlayer().getHealth(), model.getPlayer().getScore());
@@ -178,7 +179,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             	view.set1To2Transition(true);
             	view.setPanel("QUIZ");
             	runQuiz();
-            	Model.setIsQuiz1Done(true);	
+            	model.setIsQuiz1Done(true);	
             }
             	
             if (view.is1To2Transition()) {
@@ -189,7 +190,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             	view.setPanel("QUIZ");
             	runQuiz();
             	view.set2To3Transition(true);
-                Model.setIsQuiz2Done(true);
+                model.setIsQuiz2Done(true);
                 
                 //view.setPanel("OSPREY_NEST");
             }
@@ -201,7 +202,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             	//while playing osprey if you play harrier first
             	view.setPanel("QUIZ");
             	runQuiz();
-            	Model.setIsQuiz3Done(true);
+            	model.setIsQuiz3Done(true);
             	System.out.println("harrier round over");
             	//might need some code in here later 
             	
@@ -299,13 +300,16 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         }
 
         if (e.getSource() == ReturnToStart) {
+            reachedHarrierEnd = true;
             //view.setIsOspreyRound2Over(false);
             view.setPanel("START");
             model.setRound(0);
             model.getPlayer().setX(30);
+
         }
 
         if (e.getSource() == ospreyNestButton) {
+            reachedOspreyEnd = true;
             view.setPanel("OSPREY_NEST");
             view.setIsOspreyRound2Over(false);
             view.set2To3Transition(false);
@@ -321,8 +325,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         }
         
         if(e.getSource() == restartGameButton){
-
-        	userDone = false;
+            userDone = false;
             birdsPlayed = 0;
             model.getPlayer().setScore(0);
             userResponse = true;
@@ -362,9 +365,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_UP) {
-            Model.setDirection(Direction.UP);
+            model.setDirection(Direction.UP);
         } else if (key == KeyEvent.VK_DOWN) {
-            Model.setDirection(Direction.DOWN);
+            model.setDirection(Direction.DOWN);
         }
     }
 
@@ -376,7 +379,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
-        Model.setDirection(null);
+        model.setDirection(null);
     }
     
     void restartGame(){
