@@ -116,6 +116,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                 System.out.println("reached second if");
                 view.setPanel("GAME_OVER_LOSE");
                 while (!userResponse) {
+                	
                 	System.out.println("here!");
                 }
                 

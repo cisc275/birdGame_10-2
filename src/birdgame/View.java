@@ -42,7 +42,7 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TimerTask;
-
+import java.awt.AlphaComposite;
 import java.awt.CardLayout;
 
 /**
@@ -97,11 +97,15 @@ public class View extends JPanel {
     private BufferedImage[] harrierFly = new BufferedImage[FRAME_COUNT];
     private BufferedImage[] ospreyFly = new BufferedImage[FRAME_COUNT];
     private BufferedImage[] mice = new BufferedImage[2];
+    private BufferedImage[] specialMice = new BufferedImage[2];
     private BufferedImage[] bunny = new BufferedImage[4];
+    private BufferedImage[] specialBunny = new BufferedImage[4];
     private BufferedImage[] redFox = new BufferedImage[4];
     private BufferedImage[] raccoon = new BufferedImage[4];
     private BufferedImage[] fish = new BufferedImage[4];
+    private BufferedImage[] specialFish = new BufferedImage[4];
     private BufferedImage[] snake = new BufferedImage[4];
+    private BufferedImage[] specialSnake = new BufferedImage[4];
     private BufferedImage[] plane = new BufferedImage[1];
     private BufferedImage[] eagle = new BufferedImage[6];
     private BufferedImage[] map1to2transition = new BufferedImage[MAP_1_2_TRANSITION_COUNT];
@@ -143,7 +147,8 @@ public class View extends JPanel {
     private Image gameOverWinImg;
     private Image gameOverLoseImg;
 	private static boolean is2To3Transition;
-
+	Color yellow = new Color(255,255,0,100);
+	Color snakeYellow = new Color(255,255,0,175);
     private static boolean isOspreyRound1Over = false;
     private static boolean isOspreyRound2Over = false;
     private static boolean is1To2Transition = false;
@@ -191,9 +196,11 @@ public class View extends JPanel {
         }
         for (int i = 0; i < MICE_FRAME_COUNT; i++) {
             mice[i] = createImage("images/BirdImages/Mice" + i + ".png");
+            specialMice[i] = dye(mice[i],yellow);
         }
         for (int i = 0; i < BUNNY_FRAME_COUNT; i++) {
             bunny[i] = createImage("images/BirdImages/Bunny" + i + ".png");
+            specialBunny[i] = dye(bunny[i],yellow);
         }
         for (int i = 0; i < RED_FOX_FRAME_COUNT; i++) {
             redFox[i] = createImage("images/BirdImages/RedFox" + i + ".png");
@@ -203,9 +210,12 @@ public class View extends JPanel {
         }
         for (int i = 0; i < FISH_FRAME_COUNT; i++) {
             fish[i] = createImage("images/BirdImages/Fish" + i + ".png");
+            
+            specialFish[i] = dye(fish[i],yellow);
         }
         for (int i = 0; i < SNAKE_FRAME_COUNT; i++) {
             snake[i] = createImage("images/BirdImages/Snake" + i + ".png");
+            specialSnake[i] = dye(snake[i],snakeYellow);
         }
         for (int i = 0; i < EAGLE_FRAME_COUNT; i++) {
             eagle[i] = createImage("images/BirdImages/Eagle" + i + ".png");
@@ -231,6 +241,18 @@ public class View extends JPanel {
         }
 //        delaware = createImage("delaware.jpg").getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH);
 
+    }
+    private static BufferedImage dye(BufferedImage image, Color color) {
+        int w = image.getWidth();
+        int h = image.getHeight();
+        BufferedImage dyed = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = dyed.createGraphics();
+        g.drawImage(image, 0, 0, null);
+        g.setComposite(AlphaComposite.SrcAtop);
+        g.setColor(color);
+        g.fillRect(0, 0, w, h);
+        g.dispose();
+        return dyed;
     }
 
     void createFrame(Controller c) {
@@ -583,13 +605,13 @@ public class View extends JPanel {
                         if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
                             gp.setPicNum((gp.getPicNum() + 1) % SNAKE_FRAME_COUNT);
                         }
-                        g.drawImage(snake[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
+                        g.drawImage(specialSnake[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else {// fish
                         //fishPicNum = (fishPicNum + 1) % FISH_FRAME_COUNT;
                         if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
                             gp.setPicNum((gp.getPicNum() + 1) % FISH_FRAME_COUNT);
                         }
-                        g.drawImage(fish[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
+                        g.drawImage(specialFish[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
                     }
                 } else if (gp.isFood()) {
                     if (gp.getSprite().equals(Sprite.SNAKE)) { //snake
@@ -675,13 +697,13 @@ public class View extends JPanel {
                         if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
                             gp.setPicNum((gp.getPicNum() + 1) % MICE_FRAME_COUNT);
                         }
-                        g.drawImage(mice[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
+                        g.drawImage(specialMice[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     } else { //bunny
                         //bunnyPicNum = (bunnyPicNum + 1) % bunnyFrameCount;
                         if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
                             gp.setPicNum((gp.getPicNum() + 1) % BUNNY_FRAME_COUNT);
                         }
-                        g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(), Color.RED, this);
+                        g.drawImage(specialBunny[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     }
                 } else if (gp.isFood()) {
                     if (gp.getSprite().equals(Sprite.MOUSE)) { //mice
