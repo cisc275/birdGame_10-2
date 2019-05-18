@@ -165,13 +165,11 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         		view.setIsOspreyRound2Over(false);
                         view.setIsHarrierRoundOver(false);
         	}
-            if(view.getIsOspreyRound1Over()){
-            	System.out.println(view.getIsOspreyRound1Over());
-            	view.setPanel("QUIZ");
-            	System.out.println("running quiz");
+            if(view.getIsOspreyRound1Over() && !Model.isQuiz1Done()){
             	view.setIsOspreyRound1Over(false);
             	view.set1To2Transition(true);
             	runQuiz();
+            	Model.setIsQuiz1Done(true);
             	
             	
             	
@@ -205,34 +203,39 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     void resetAfterGameOver(){
         
     }
+    public void handleQuizButtonClick(String choice) {
+    	answered = true;
+		 if (Model.getCorrectAnswer().equals(choice)){
+			 view.answeredCorrectly(true);
+		 }
+		 
+		 else {
+			 view.answeredCorrectly(false);
+		 }
+    }
     public void actionPerformed(ActionEvent e){
     	if (e.getSource() == QuizOptionA) {
-    		answered = true;
-    		 if (Model.getCorrectAnswer().equals("A")){
-    			 view.answeredCorrectly(true);
-    		 }
-    		 
-    		 else {
-    			 view.answeredCorrectly(false);
-    		 }
-    		 if (Model.quizOver()) {
-    			 System.out.println("Are we here?");
-    			 view.setIsOspreyRound1Over(false);
-    			 view.setPanel("MAP_1_TO_2");
-    		 }
-    		 
-    		System.out.println("A clicked");
+//    		answered = true;
+//    		 if (Model.getCorrectAnswer().equals("A")){
+//    			 view.answeredCorrectly(true);
+//    		 }
+//    		 
+//    		 else {
+//    			 view.answeredCorrectly(false);
+//    		 }
+    		handleQuizButtonClick("A");
     	
     	}
     
     	if (e.getSource() == QuizOptionB) {
-    		//TODO
+    		handleQuizButtonClick("B");
+    		
     	}
     	if (e.getSource() == QuizOptionC) {
-    		//TODO
+    		handleQuizButtonClick("C");
     	}
     	if (e.getSource() == QuizOptionD) {
-    		//TODO
+    		handleQuizButtonClick("D");
     	}
     	
         if(e.getSource() == OspreyButton){

@@ -58,7 +58,7 @@ public class Model implements Serializable{
     private GamePiece furthestGP = new GamePiece();
     private static boolean specialFoodEaten = false;
     static ArrayList<String> avaliableFacts;
-    
+    private static boolean quiz1Done;
     
 
     /**
@@ -556,5 +556,11 @@ public static int getNumberOfQuestions() {
 }
 public static void resetQuestionNum() {
 	questionNum = 0;
+}
+public static boolean isQuiz1Done() {
+	return quiz1Done;
+}
+public static void setIsQuiz1Done(boolean b) {
+	quiz1Done = b;
 }
 }
