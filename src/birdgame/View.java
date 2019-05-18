@@ -142,6 +142,7 @@ public class View extends JPanel {
     private Image initialMapImg;
     private Image gameOverWinImg;
     private Image gameOverLoseImg;
+	private static boolean is2To3Transition;
 
     private static boolean isOspreyRound1Over = false;
     private static boolean isOspreyRound2Over = false;
@@ -333,7 +334,7 @@ public class View extends JPanel {
 		for (int i = 0; i < temp.length;i++) {
 			questions[i] = temp[i].toString();
 		}
-		Model.setNumberOfQuestions(temp.length -1);
+		//Model.setNumberOfQuestions(temp.length -1);
 		quiz.setQuestion(questions[Model.getQuestionNum()]);
 		Controller.setAnswers(questionsToAsk.get(questions[Model.getQuestionNum()]));
 	
@@ -865,4 +866,15 @@ public class View extends JPanel {
     public static void set1To2Transition(boolean b) {
     	is1To2Transistion = b;
     }
+
+
+	public static boolean is2To3Transition() {
+		return is2To3Transition;
+	}
+
+
+	public static void set2To3Transition(boolean b) {
+		is2To3Transition = b;
+		
+	}
 }

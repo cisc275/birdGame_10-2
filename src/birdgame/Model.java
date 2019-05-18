@@ -22,7 +22,7 @@ import java.io.Serializable;
 public class Model implements Serializable{
     private initialNumbers initNums = new initialNumbers();
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
-    public static HashMap<String,String[]> questionsToAsk;
+    public static HashMap<String,String[]> questionsToAsk = new HashMap<>();
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
     private int maxBirdHealth = initNums.birdHealth();
     private static int round;
@@ -59,6 +59,8 @@ public class Model implements Serializable{
     private static boolean specialFoodEaten = false;
     static ArrayList<String> avaliableFacts;
     private static boolean quiz1Done;
+	private static boolean quiz2Done;
+	private static boolean quiz3Done;
     
 
     /**
@@ -542,8 +544,14 @@ public static void incrQuestionNum() {
 public static int getQuestionNum() {
 	return questionNum;
 }
-public static void setNumberOfQuestions(int x) {
-	numberOfQuestions = x;
+public static void setNumberOfQuestions() {
+	//numberOfQuestions = x;
+	if (Model.getQuestionToAsk().equals(null)){
+		numberOfQuestions = -1;
+	}
+	else {
+		numberOfQuestions = getQuestionToAsk().size() - 1;
+	}
 }
 public static boolean quizOver() {
 	return questionNum > numberOfQuestions;
@@ -558,9 +566,42 @@ public static void resetQuestionNum() {
 	questionNum = 0;
 }
 public static boolean isQuiz1Done() {
-	return quiz1Done;
+	if (numberOfQuestions == -1) {
+		View.set1To2Transition(true);
+		return true;
+	}
+		else {
+			return quiz1Done;
+		}
 }
 public static void setIsQuiz1Done(boolean b) {
 	quiz1Done = b;
+}
+
+public static boolean isQuiz2Done() {
+	if (numberOfQuestions == -1) {
+		View.set2To3Transition(true);
+		return true;
+	}
+		else {
+			return quiz2Done;
+		}
+}
+
+public static void setIsQuiz2Done(boolean b) {
+	quiz2Done = b;
+	
+}
+
+public static boolean isQuiz3Done() {
+	if (getNumberOfQuestions() == -1) {
+		return true;
+	}
+	else {
+	return quiz3Done;
+	}
+}
+public static void setIsQuiz3Done(boolean b) {
+	quiz3Done = b;
 }
 }
