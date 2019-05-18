@@ -583,7 +583,7 @@ public class Model implements Serializable {
         clearGP();
         totalLevelTicks = 0;
         currentFactIndex = 0;
-        player.setHealth(250);
+        player.setHealth(maxBirdHealth);
         indexOfGP = 0;
         currentGPs.clear();
         specialFoodEaten = false;

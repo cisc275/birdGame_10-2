@@ -8,6 +8,7 @@ package birdgame;
 
 public class initialNumbers {
 	//Controller	
+	
 	private int birdHealth = 250;//250;
 	public int birdHealth() {
 		return birdHealth;
@@ -82,5 +83,36 @@ public class initialNumbers {
 	}
 	
 	//View
+			//some of the constants are left in view because 
+	private int framesPerSecond = 40;
+	public int framesPerSecond() {
+		return framesPerSecond;
+	}
+	
+	private int specialFoodDelay = 100;
+	public int specialFoodDelay() {
+		return specialFoodDelay;
+	}
+	
+	private int thoughtBubbleSize = 400;
+	public int thoughtBubbleSize() {
+		return thoughtBubbleSize;
+	}
+	
+	private int defaultButtonFontSizeRatio = 55;
+	public int defaultButtonFontSizeRatio() {
+		return defaultButtonFontSizeRatio;
+	}
+	
+	private int defaultButtonFrameWidthRatio = 10;
+	public int defaultButtonFrameWidthRatio() {
+		return defaultButtonFrameWidthRatio;
+	}
+	
+	private int defaultButtonFrameHeightRatio = 100;
+	public int defaultButtonFrameHeightRatio() {
+		return defaultButtonFrameHeightRatio;
+	}
+	
 	
 }
