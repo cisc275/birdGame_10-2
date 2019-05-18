@@ -729,7 +729,7 @@ public class View extends JPanel {
                         if (runningFrameCount % ticksPerFrameUpdate == 0) {
                             gp.setPicNum((gp.getPicNum() + 1) % FISH_FRAME_COUNT);
                         }
-                        g.drawImage(specialFish[gp.getPicNum()], gp.getX(), gp.getY(),Color.RED, this);
+                        g.drawImage(specialFish[gp.getPicNum()], gp.getX(), gp.getY(), this);
                     }
                 } else if (gp.isFood()) {
                     if (gp.getSprite().equals(Sprite.SNAKE)) { //snake
