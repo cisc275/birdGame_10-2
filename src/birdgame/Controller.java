@@ -119,6 +119,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 //        if(!tutorialTried){
 //            view.setPanel("TUTORIAL");
 //        }
+
             runGame();
             if (!model.getPlayer().isAlive() && !nextRound) {
                 System.out.println("reached first if");
@@ -128,22 +129,18 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                     System.out.println("reached second if");
                     view.setPanel("GAME_OVER_LOSE");
                     while (!userResponse) {
+
                         System.out.println("here!");
                     }
-                }//<-comment this out
-                //comment this out below
-                else {
-                    view.setPanel("START");
-
+                } else if (reachedHarrierEnd && reachedOspreyEnd) {
+                    view.setPanel("GAME_OVER_WIN");
                 }
-            } else if (reachedHarrierEnd && reachedOspreyEnd) {
-                view.setPanel("GAME_OVER_WIN");
-            }
 
-            resetAfterRound();
-            nextRound = false;
-            if (birdsPlayed == 1) {
-                start();
+                resetAfterRound();
+                nextRound = false;
+                if (birdsPlayed == 1) {
+                    start();
+                }
             }
         }
     }
