@@ -67,10 +67,10 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     	QuizOptionA.setBackground(Color.BLUE);
     	QuizOptionB.setBackground(Color.RED);
     	QuizOptionC.setBackground(Color.YELLOW);
-    	QuizOptionA.setFont(new Font("Agency FB", Font.BOLD, 75));
-    	QuizOptionB.setFont(new Font("Agency FB", Font.BOLD, 75));
-    	QuizOptionC.setFont(new Font("Agency FB", Font.BOLD, 75));
-    	QuizOptionD.setFont(new Font("Agency FB", Font.BOLD, 75));
+    	QuizOptionA.setFont(new Font("Agency FB", Font.BOLD, view.FRAME_WIDTH/33));
+    	QuizOptionB.setFont(new Font("Agency FB", Font.BOLD, view.FRAME_WIDTH/33));
+    	QuizOptionC.setFont(new Font("Agency FB", Font.BOLD, view.FRAME_WIDTH/33));
+    	QuizOptionD.setFont(new Font("Agency FB", Font.BOLD, view.FRAME_WIDTH/33));
     	QuizOptionD.setBackground(Color.GREEN);
     	QuizOptionA.addActionListener(this);
     	QuizOptionB.addActionListener(this);
