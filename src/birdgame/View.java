@@ -142,6 +142,7 @@ public class View extends JPanel {
     private Image initialMapImg;
     private Image gameOverWinImg;
     private Image gameOverLoseImg;
+	private static boolean is2To3Transition;
 
     private static boolean isOspreyRound1Over = false;
     private static boolean isOspreyRound2Over = false;
@@ -327,19 +328,21 @@ public class View extends JPanel {
     }
 
     public void prepareQuiz() {
-        HashMap<String, String[]> questionsToAsk = Model.getQuestionToAsk();
-        Set<String> strings = questionsToAsk.keySet();
-        Object[] temp = strings.toArray();
-        String[] questions = new String[temp.length];
-        for (int i = 0; i < temp.length; i++) {
-            questions[i] = temp[i].toString();
-        }
-        Model.setNumberOfQuestions(temp.length - 1);
-        quiz.setQuestion(questions[Model.getQuestionNum()]);
-        Controller.setAnswers(questionsToAsk.get(questions[Model.getQuestionNum()]));
 
-        Model.setCorrectAnswer(questionsToAsk.get(questions[Model.getQuestionNum()])[4]);
-        //quiz.
+    	HashMap<String,String[]> questionsToAsk = Model.getQuestionToAsk();
+		Set<String> strings = questionsToAsk.keySet();
+		Object[] temp = strings.toArray();
+		String[] questions = new String[temp.length];
+		for (int i = 0; i < temp.length;i++) {
+			questions[i] = temp[i].toString();
+		}
+		//Model.setNumberOfQuestions(temp.length -1);
+		quiz.setQuestion(questions[Model.getQuestionNum()]);
+		Controller.setAnswers(questionsToAsk.get(questions[Model.getQuestionNum()]));
+	
+		
+		Model.setCorrectAnswer(questionsToAsk.get(questions[Model.getQuestionNum()])[4]);
+		//quiz.
     }
 
     public void answeredCorrectly(boolean bool) {
@@ -926,4 +929,15 @@ public class View extends JPanel {
         isHarrierRoundOver = false;
         System.out.println("resetView reached");
     }
+
+
+	public static boolean is2To3Transition() {
+		return is2To3Transition;
+	}
+
+
+	public static void set2To3Transition(boolean b) {
+		is2To3Transition = b;
+		
+	}
 }
