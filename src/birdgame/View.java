@@ -504,16 +504,18 @@ public class View extends JPanel {
         QuizPanel() {
             setLayout(new GridLayout(3, 2));
 //    		
-            ButtonA = Controller.getOptionAButton();
-            ButtonB = Controller.getOptionBButton();
-            ButtonC = Controller.getOptionCButton();
-            ButtonD = Controller.getOptionDButton();
-            question = new JLabel("Blank");
-            blank = new JLabel();
-            question.setFont(new Font("Times New Roman", 1, 70));
-            question.setPreferredSize(new Dimension(300, 300));
+    		ButtonA = Controller.getOptionAButton();
+    		ButtonB = Controller.getOptionBButton();
+    		ButtonC = Controller.getOptionCButton();
+    		ButtonD = Controller.getOptionDButton();
+    		question = new JLabel("Blank");
+    		blank = new JLabel();
+    		question.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/33));
+        	question.setPreferredSize(new Dimension(FRAME_WIDTH/3,FRAME_HEIGHT/4));
+        	blank.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/40));
+        	blank.setPreferredSize(new Dimension(FRAME_WIDTH/3,FRAME_HEIGHT/4));
 
-            add(question);
+        	add(question);
             add(blank);
             add(Controller.getOptionAButton());
             add(Controller.getOptionBButton());
