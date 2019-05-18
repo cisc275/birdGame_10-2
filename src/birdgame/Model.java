@@ -19,7 +19,8 @@ import java.io.Serializable;
  *
  * @author crnis
  */
-public class Model implements Serializable{
+public class Model implements Serializable {
+
     private initialNumbers initNums = new initialNumbers();
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
     public static HashMap<String,String[]> questionsToAsk = new HashMap<>();
@@ -37,14 +38,14 @@ public class Model implements Serializable{
     private static String correctAnswer;
     private int sceneNum;
     protected ArrayList<GamePiece> gamePieces = new ArrayList<>();
-    
+
     private double chanceSpecialFoodSpawns = initNums.chanceSpecialFoodSpawns();
     private double chanceHarrierFoodIsBunny = initNums.chanceHarrierFoodIsBunny();
     private double chanceFoodSpawnsInsteadOfEnemy = initNums.chanceFoodSpawnsInsteadOfEnemy();
     private double chanceHarrierEnemyIsFox = initNums.chanceFoodSpawnsInsteadOfEnemy();
     private double chanceOspreyFoodIsSnake = initNums.chanceOspreyFoodIsSnake();
     private double chanceOspreyEnemyIsEagle = initNums.chanceOspreyEnemyIsEagle();
-    
+
     static String[] facts;
     private int totalLevelTicks;
     private static int currentFactIndex = 0;
@@ -57,11 +58,10 @@ public class Model implements Serializable{
     private int xLocationWhereGPsAreNoLongerCurrent = initNums.xLocationWhereGPsAreNoLongerCurrent();
     private GamePiece furthestGP = new GamePiece();
     private static boolean specialFoodEaten = false;
-    static ArrayList<String> avaliableFacts;
+    static ArrayList<String> availableFacts;
     private static boolean quiz1Done;
 	private static boolean quiz2Done;
 	private static boolean quiz3Done;
-    
 
     /**
      * Model constructor will take in four variables defined below
@@ -140,12 +140,13 @@ public class Model implements Serializable{
         seeCurrentGP();
 
         if (currentGPs.size() == 0 && totalLevelTicks != 0) {
-            if(round == 1)
+            if (round == 1) {
                 endOfLevel();
-            else if(round == 2)
+            } else if (round == 2) {
                 endOfLevel();
-            else if(round == 3)
-            	endOfLevel();
+            } else if (round == 3) {
+                endOfLevel();
+            }
         }
 
 //        if (player.getX() > (fWidth - imgWidth)) {
@@ -169,21 +170,19 @@ public class Model implements Serializable{
 //    	player.setXIncr((int)(fWidth * .5));
         player.setX(player.getX() + player.getXIncr());
         if (player.getX() > (fWidth - imgWidth)) {
-            if(round == 1){
+            if (round == 1) {
                 View.setIsOspreyRound1Over(true);
-            }
-            else if(round == 2){
+            } else if (round == 2) {
                 View.setIsOspreyRound2Over(true);
-            }
-            else if(round == 3) {
-            	View.setIsHarrierRoundOver(true);
+            } else if (round == 3) {
+                View.setIsHarrierRoundOver(true);
             }
         }
 
     }
 
     public static ArrayList<String> getAvaliableFacts() {
-        return avaliableFacts;
+        return availableFacts;
     }
 
     /**
@@ -195,7 +194,7 @@ public class Model implements Serializable{
         //SpecialFood.generateFactsAndQuestions();
         int numGamePieces = 0;
         int numSpecialFood = 0;
-        questionsToAsk = new HashMap<String,String[]>();
+        questionsToAsk = new HashMap<String, String[]>();
         //background0:
         //land: 0-432px, 1776-2640px, 
         //int tempXLoc = (int)(Math.random() * 2639 + 1776);
@@ -247,7 +246,7 @@ public class Model implements Serializable{
     }
 
     public void spawnOspreyGamePieces() {
-    	questionsToAsk = new HashMap<String,String[]>();
+        questionsToAsk = new HashMap<String, String[]>();
         int numGamePieces = 0;
         int numSpecialFood = 0;
         int tempXLoc = initNums.xLocationForObstacles();
@@ -255,7 +254,7 @@ public class Model implements Serializable{
         int maxSpecialFood = initNums.maxSpecialFood();
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
-            	// instead of 1
+                // instead of 1
                 if (Math.random() < chanceSpecialFoodSpawns) {
                     if (Math.random() < chanceOspreyFoodIsSnake) {
                         gamePieces.add(new SpecialFood(tempXLoc + additionalXLocationForSpecialFood, (int) (Math.random() * groundLevel), Sprite.SNAKE));
@@ -299,7 +298,8 @@ public class Model implements Serializable{
     public void clearCurrentGP() {
         currentGPs.clear();
     }
-    public void clearGP(){
+
+    public void clearGP() {
         gamePieces.clear();
     }
 
@@ -310,6 +310,13 @@ public class Model implements Serializable{
             }
         }
     }
+    
+    void clearQuestionsToAsk(){
+        questionsToAsk.clear();
+    }
+    void clearFactsAndQuestions(){
+        factsAndQuestions.clear();
+    }
 
     //minimap
     /**
@@ -318,8 +325,6 @@ public class Model implements Serializable{
      *
      * @return an int value that describes the progress of the user
      */
-
-
     /**
      * eat() will increment the player's score based off of what is eaten.
      */
@@ -335,20 +340,20 @@ public class Model implements Serializable{
     public void eatSpecial(SpecialFood sf) {
         specialFoodEaten = true;
         View.setMomentEaten(View.getFrameCount());
-		if (hasMoreFacts()) {
-			currentFact = facts[currentFactIndex];
-			HashMap<String, String[]> associatedFactandQuestion = factsAndQuestions.get(currentFact);
-			questionsToAsk.putAll(associatedFactandQuestion);
-			//String[] associatedQuestion
-			
-			
-		//	questionsToAsk.add()
-		}
+        if (hasMoreFacts()) {
+            currentFact = facts[currentFactIndex];
+            HashMap<String, String[]> associatedFactandQuestion = factsAndQuestions.get(currentFact);
+            questionsToAsk.putAll(associatedFactandQuestion);
+            //String[] associatedQuestion
+
+            //	questionsToAsk.add()
+        }
         player.setScore(player.getScore() + sf.getFoodValue());
         player.setHealth(maxBirdHealth);
     }
-    public static HashMap<String,String[]> getQuestionToAsk(){
-    	return questionsToAsk;
+
+    public static HashMap<String, String[]> getQuestionToAsk() {
+        return questionsToAsk;
     }
 
     public static boolean specialFoodEaten() {
@@ -378,7 +383,7 @@ public class Model implements Serializable{
      */
     public void nest() {
 
-    } 
+    }
 
     public int getImgHeight() {
         return imgHeight;
@@ -456,8 +461,9 @@ public class Model implements Serializable{
     public void setFHeight(int h) {
         this.fHeight = h;
     }
+
     public static void incrFactIndex() {
-    	currentFactIndex++;
+        currentFactIndex++;
     }
 
     public void setFurthestGP(GamePiece gP) {
@@ -485,65 +491,128 @@ public class Model implements Serializable{
     }
 
     public void generateHarrierQuestions() {
-    	currentFactIndex = 0;
-    	facts = new String[] {"Northern Harriers, eat rodents","Northern Harriers are, non-migratory birds","Foxes are a predator, for Northern Harriers"};
+        currentFactIndex = 0;
+        facts = new String[]{"Northern Harriers, eat rodents", "Northern Harriers are, non-migratory birds", "Foxes are a predator, for Northern Harriers"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsHarrier1 = new HashMap<>();
-        String[] harrierFood = {"rodents", "fish", "eagles", "plants", "rodents"};
+        String[] harrierFood = {"rodents", "fish", "eagles", "plants", "A"};
         QandAsHarrier1.put("What do Northern Harriers eat?", harrierFood);
         factsAndQuestions.put("Northern Harriers, eat rodents", QandAsHarrier1);
 
         HashMap<String, String[]> QandAsHarrier2 = new HashMap<>();
-        String[] harrierMigrate = {"They migrate to South America", "They migrate to California", "They don't migrate", "They migrate to canada", "They don't migrate"};
-        QandAsHarrier2.put("Where do Harriers migrate", harrierMigrate);
+        String[] harrierMigrate = { "They migrate to California","They migrate to South America", "They don't migrate", "They migrate to canada", "C"};
+        QandAsHarrier2.put("Where do Harriers migrate?", harrierMigrate);
         factsAndQuestions.put("Northern Harriers are, non-migratory birds", QandAsHarrier2);
 
         HashMap<String, String[]> QandAsHarrier3 = new HashMap<>();
-        String[] harrierPred = {"Foxes", "Snakes", "Cats", "Humans", "Foxes"};
+        String[] harrierPred = {"Foxes", "Snakes", "Cats", "Humans", "A"};
         QandAsHarrier3.put("What is a major predator of Northern Harriers", harrierPred);
         factsAndQuestions.put("Foxes are a predator, for Northern Harriers", QandAsHarrier3);
 
-        avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
+        availableFacts = new ArrayList<String>(factsAndQuestions.keySet());
 
     }
 
     public void generateOspreyQuestions() {
-    	currentFactIndex = 0;
-    	facts = new String[] {"Ospreys like to,eat Snakes and Fish","Ospreys migrate to, South America for, the winter","Eagles are a, predator of Ospreys"};
+        currentFactIndex = 0;
+        facts = new String[]{"Ospreys like to,eat Snakes and Fish", "Ospreys migrate to, South America for, the winter", "Eagles are a, predator of Ospreys"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
-        String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Eagles","A"};
+        String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Eagles","B"};
         QandAsOsprey1.put("What do Ospreys eat?", OspreyFood);
         factsAndQuestions.put("Ospreys like to,eat Snakes and Fish", QandAsOsprey1);
 
         HashMap<String, String[]> QandAsOsprey2 = new HashMap<>();
         String[] OspreyMigrate = {"They migrate to South America", "They migrate to California", "They don't migrate", "They migrate to canada", "A"};
-        QandAsOsprey2.put("Where do Ospreys migrate", OspreyMigrate);
+        QandAsOsprey2.put("Where do Ospreys migrate for winter?", OspreyMigrate);
         factsAndQuestions.put("Ospreys migrate to, South America for, the winter", QandAsOsprey2);
 
         HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();
-        String[] OspreyPred = {"Foxes", "Snakes", "Eagles","Cats and Dogs", "C"};
+        String[] OspreyPred = {"Foxes", "Snakes", "Eagles", "Cats and Dogs", "C"};
         QandAsOsprey3.put("What is a major predator of Ospreys?", OspreyPred);
         factsAndQuestions.put("Eagles are a, predator of Ospreys", QandAsOsprey3);
-        avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
+        availableFacts = new ArrayList<String>(factsAndQuestions.keySet());
 
     }
-    public static boolean hasMoreFacts() {
-    	return currentFactIndex < facts.length;
+
+    public void generateOspreyQuestions2() {
+    	currentFactIndex = 0;
+    	facts = new String[] {"Ospreys nest in, North America","Ospreys nest in, trees","Airplanes are a,threat to Ospreys"};
+        factsAndQuestions = new HashMap<>();
+        HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
+        String[] OspreyNest = {"South America", "Asia", "Antartica", "North America","D"};
+        QandAsOsprey1.put("Where do Ospreys nest?", OspreyNest);
+        factsAndQuestions.put("Ospreys nest in, North America", QandAsOsprey1);
+
+        HashMap<String, String[]> QandAsOsprey2 = new HashMap<>();
+        String[] OspreyLoc = {"on the floor", "in trees", "on mountains", "in caves", "B"};
+        QandAsOsprey2.put("Where do Ospreys nest?", OspreyLoc);
+        factsAndQuestions.put("Ospreys nest in, trees", QandAsOsprey2);
+
+        HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();
+        String[] OspreyThreat = {"Airplanes", "Hunters", "Radio waves","Drones", "A"};
+        QandAsOsprey3.put("Which is a common threat to Ospreys", OspreyThreat);
+        factsAndQuestions.put("Airplanes are a,threat to Ospreys", QandAsOsprey3);
+        availableFacts = new ArrayList<String>(factsAndQuestions.keySet());
+
     }
-  
-public static void setCorrectAnswer(String answer) {
-	correctAnswer = answer;
-}
-public static String getCorrectAnswer() {
-	return correctAnswer;
-}
-public static void incrQuestionNum() {
-	questionNum++;
-}
-public static int getQuestionNum() {
-	return questionNum;
-}
+
+    public static boolean hasMoreFacts() {
+        return currentFactIndex < facts.length;
+    }
+
+    public static void setCorrectAnswer(String answer) {
+        correctAnswer = answer;
+    }
+
+    public static String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public static void incrQuestionNum() {
+        questionNum++;
+    }
+
+    public static int getQuestionNum() {
+        return questionNum;
+    }
+
+    public static void setNumberOfQuestions(int x) {
+        numberOfQuestions = x;
+    }
+
+    public static boolean quizOver() {
+        return questionNum > numberOfQuestions;
+    }
+
+    public static boolean lastQuestion() {
+        return questionNum == numberOfQuestions;
+    }
+
+    public static int getNumberOfQuestions() {
+        return numberOfQuestions;
+    }
+
+    public static void resetQuestionNum() {
+        questionNum = 0;
+    }
+    
+    public void resetModel(){
+        round = 0;
+        questionNum = 0;
+        clearFactsAndQuestions();
+        clearQuestionsToAsk();
+        clearGP();
+        totalLevelTicks = 0;
+        currentFactIndex = 0;
+        player.setHealth(250);
+        indexOfGP = 0;
+        currentGPs.clear();
+        specialFoodEaten = false;
+        availableFacts.clear();
+        System.out.println("resetModel reached");
+    }
+    
 public static void setNumberOfQuestions() {
 	//numberOfQuestions = x;
 	if (Model.getQuestionToAsk().equals(null)){
@@ -553,18 +622,7 @@ public static void setNumberOfQuestions() {
 		numberOfQuestions = getQuestionToAsk().size() - 1;
 	}
 }
-public static boolean quizOver() {
-	return questionNum > numberOfQuestions;
-}
-public static boolean lastQuestion() {
-	return questionNum == numberOfQuestions;
-}
-public static int getNumberOfQuestions() {
-	return numberOfQuestions;
-}
-public static void resetQuestionNum() {
-	questionNum = 0;
-}
+
 public static boolean isQuiz1Done() {
 	if (numberOfQuestions == -1) {
 		View.set1To2Transition(true);
