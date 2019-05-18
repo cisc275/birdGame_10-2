@@ -76,7 +76,7 @@ public class View extends JPanel {
     final static int PLANE_FRAME_COUNT = 1;
     final static int MAP_1_2_TRANSITION_COUNT = 6;
     final static int MAP_2_3_TRANSITION_COUNT = 8;
-    final static int DE_FRAME_COUNT=33;
+    final static int DE_FRAME_COUNT = 33;
     final static int OSPREY_NEST_COUNT = 17;
     final static int HARRIER_NEST_COUNT = 17;
     private int micePicNum = 0;
@@ -87,7 +87,7 @@ public class View extends JPanel {
     private int snakePicNum = 0;
     private int eaglePicNum = 0;
     private int planePicNum = 0;
-    private int dePicNum=0;
+    private int dePicNum = 0;
     private int playerXLoc = 0;
     private int playerYLoc = 0;
     private int map1To2TransitionPicNum = 0;
@@ -145,7 +145,7 @@ public class View extends JPanel {
 
     private static boolean isOspreyRound1Over = false;
     private static boolean isOspreyRound2Over = false;
-    private static boolean is1To2Transistion = false;
+    private static boolean is1To2Transition = false;
     private static boolean isHarrierRoundOver = false;
 
     public View(Controller c) {
@@ -168,25 +168,24 @@ public class View extends JPanel {
         cards.add(ospreyRound2, "OSPREY_ROUND_TWO");
         cards.add(map2to3, "MAP_2_TO_3");
         cards.add(ospreyNest, "OSPREY_NEST");
-        cards.add(harrierNest,"HARRIER_NEST");
+        cards.add(harrierNest, "HARRIER_NEST");
         cards.add(harrierRound, "HARRIER_ROUND");
 
-       cards.add(quiz, "QUIZ");
+        cards.add(quiz, "QUIZ");
 
         cards.add(gameOverWin, "GAME_OVER_WIN");
         cards.add(gameOverLose, "GAME_OVER_LOSE");
 
         currentPanel = startScreen;
-      //  currentPanel = startScreen;
+        //  currentPanel = startScreen;
         createFrame(c);
     }
-    
 
     void loadImages() {
         for (int i = 0; i < FRAME_COUNT; i++) {
             harrierFly[i] = createImage("images/BirdImages/Harrier" + i + ".png");
         }
-        for (int i = 0; i < FRAME_COUNT; i++){
+        for (int i = 0; i < FRAME_COUNT; i++) {
             ospreyFly[i] = createImage("images/BirdImages/Osprey" + i + ".png");
         }
         for (int i = 0; i < MICE_FRAME_COUNT; i++) {
@@ -216,13 +215,13 @@ public class View extends JPanel {
         for (int i = 0; i < MAP_1_2_TRANSITION_COUNT; i++) {
             map1to2transition[i] = createImage("images/BirdImages/OspreyLevelScreen" + i + ".png");
         }
-        for (int i = 0; i < MAP_2_3_TRANSITION_COUNT; i++){
-            map2to3transition[i] = createImage("images/BirdImages/OspreyLevelScreen" + (i+5) + ".png");
+        for (int i = 0; i < MAP_2_3_TRANSITION_COUNT; i++) {
+            map2to3transition[i] = createImage("images/BirdImages/OspreyLevelScreen" + (i + 5) + ".png");
         }
-        for (int i = 0; i < OSPREY_NEST_COUNT; i++){
+        for (int i = 0; i < OSPREY_NEST_COUNT; i++) {
             ospreyNesting[i] = createImage("images/BirdImages/OspreyNesting/OspreyNest" + i + ".png");
         }
-        for (int i = 0; i < HARRIER_NEST_COUNT; i++){
+        for (int i = 0; i < HARRIER_NEST_COUNT; i++) {
             harrierNesting[i] = createImage("images/BirdImages/HarrierNesting/HarrierNest" + i + ".png");
         }
         thoughtBubble = createImage("images/bub.png").getScaledInstance(400, 400, Image.SCALE_SMOOTH);
@@ -230,7 +229,7 @@ public class View extends JPanel {
             delaware[i] = createImage("images/MiniMapImages/delaware" + i + ".jpg");
         }
 //        delaware = createImage("delaware.jpg").getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH);
-        
+
     }
 
     void createFrame(Controller c) {
@@ -245,7 +244,6 @@ public class View extends JPanel {
         frame.setResizable(false);
         frame.setVisible(true);
     }
-    
 
     void createStartScreen(Controller c) {
         startScreen = new StartScreenPanel();
@@ -260,9 +258,11 @@ public class View extends JPanel {
         startScreen.add(c.getOspreyButton());
         startScreen.add(c.getHarrierButton());
     }
-    void createTutorial(){
+
+    void createTutorial() {
         tutorialScreen = new TutorialScreenPanel();
     }
+
     void createOspreyPanels(Controller c) {
         createInitialMapPanel(c);
         createOspreyRound1Panel(c);
@@ -286,7 +286,7 @@ public class View extends JPanel {
     void createOspreyRound1Panel(Controller c) {
         ospreyRound1 = new OspreyPanel();
         c.getSaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
-        c.getSaveGameButton().setBounds(FRAME_WIDTH/10, (FRAME_HEIGHT *84)/100, FRAME_WIDTH/4, FRAME_HEIGHT);
+        c.getSaveGameButton().setBounds(FRAME_WIDTH / 10, (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT);
         ospreyRound1.add(c.getSaveGameButton());
     }
 
@@ -316,40 +316,39 @@ public class View extends JPanel {
     void createHarrierRound() {
         harrierRound = new HarrierPanel();
     }
-    void createHarrierNestPanel(Controller c){
+
+    void createHarrierNestPanel(Controller c) {
         harrierNest = new HarrierNestPanel();
     }
 
     void createQuizPanel() {
-    	quiz = new QuizPanel();
-    
-    	
+        quiz = new QuizPanel();
+
     }
+
     public void prepareQuiz() {
-    	HashMap<String,String[]> questionsToAsk = Model.getQuestionToAsk();
-		Set<String> strings = questionsToAsk.keySet();
-		Object[] temp = strings.toArray();
-		String[] questions = new String[temp.length];
-		for (int i = 0; i < temp.length;i++) {
-			questions[i] = temp[i].toString();
-		}
-		Model.setNumberOfQuestions(temp.length -1);
-		quiz.setQuestion(questions[Model.getQuestionNum()]);
-		Controller.setAnswers(questionsToAsk.get(questions[Model.getQuestionNum()]));
-	
-		
-		Model.setCorrectAnswer(questionsToAsk.get(questions[Model.getQuestionNum()])[4]);
-		//quiz.
+        HashMap<String, String[]> questionsToAsk = Model.getQuestionToAsk();
+        Set<String> strings = questionsToAsk.keySet();
+        Object[] temp = strings.toArray();
+        String[] questions = new String[temp.length];
+        for (int i = 0; i < temp.length; i++) {
+            questions[i] = temp[i].toString();
+        }
+        Model.setNumberOfQuestions(temp.length - 1);
+        quiz.setQuestion(questions[Model.getQuestionNum()]);
+        Controller.setAnswers(questionsToAsk.get(questions[Model.getQuestionNum()]));
+
+        Model.setCorrectAnswer(questionsToAsk.get(questions[Model.getQuestionNum()])[4]);
+        //quiz.
     }
+
     public void answeredCorrectly(boolean bool) {
-    	if (bool) {
-    		quiz.blank.setText("Correct! Nice Job");
-    	}
-    	else {
-    		quiz.blank.setText("Incorrect");
-    	}
+        if (bool) {
+            quiz.blank.setText("Correct! Nice Job");
+        } else {
+            quiz.blank.setText("Incorrect");
+        }
     }
-    
 
     void createGameOverPanels() {
         createGameOverWin();
@@ -366,13 +365,33 @@ public class View extends JPanel {
 //        gameOver.add(finalScore);
 
     }
-    void createGameOverWin(){
+
+    void createGameOverWin() {
         gameOverWinImg = createImage("images/BirdImages/GameOverWin.png");
         gameOverWin = new GameOverWinPanel();
+
+        gameOverWin.setLayout(null);
+        Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+        Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / 10, (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / 10, (FRAME_HEIGHT * 37) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        
+        gameOverWin.add(Controller.getRestartGameButton());
+        gameOverWin.add(Controller.getExitGameButton());
     }
-    void createGameOverLose(){
+
+    void createGameOverLose() {
         gameOverLoseImg = createImage("images/BirdImages/GameOverLose.png");
         gameOverLose = new GameOverLosePanel();
+        
+        gameOverLose.setLayout(null);
+        Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+        Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / 10, (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / 10, (FRAME_HEIGHT * 37) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        
+        gameOverLose.add(Controller.getRestartGameButton());
+        gameOverLose.add(Controller.getExitGameButton());
     }
 
     public void paintBackground(Graphics g) {
@@ -398,7 +417,7 @@ public class View extends JPanel {
         ((CardLayout) cards.getLayout()).show(cards, s);
         if (s.equals("START")) {
             currentPanel = startScreen;
-        } else if(s.equals("TUTORIAL")){
+        } else if (s.equals("TUTORIAL")) {
             currentPanel = tutorialScreen;
         } else if (s.equals("INITIAL_MAP")) {
             currentPanel = initialMap;
@@ -414,13 +433,13 @@ public class View extends JPanel {
             currentPanel = ospreyNest;
         } else if (s.equals("HARRIER_ROUND")) {
             currentPanel = harrierRound;
-        } else if (s.equals("HARRIER_NEST")){
+        } else if (s.equals("HARRIER_NEST")) {
             currentPanel = harrierNest;
         } else if (s.equals("QUIZ")) {
             currentPanel = quiz;
         } else if (s.equals("GAME_OVER_WIN")) {
             currentPanel = gameOverWin;
-        } else if (s.equals("GAME_OVER_LOSE")){
+        } else if (s.equals("GAME_OVER_LOSE")) {
             currentPanel = gameOverLose;
         }
 
@@ -457,57 +476,49 @@ public class View extends JPanel {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        
+
         //System.out.println(currentPanel);
     }
 
-    class QuizPanel extends JPanel{
-    	String[] questions;
-    	JButton ButtonA;
-    	JButton ButtonB;
-    	JButton ButtonC;
-    	JButton ButtonD;
-    	JLabel question;
-    	JLabel blank;
- 
-    	QuizPanel(){
-    		setLayout(new GridLayout(3,2));
+    class QuizPanel extends JPanel {
+
+        String[] questions;
+        JButton ButtonA;
+        JButton ButtonB;
+        JButton ButtonC;
+        JButton ButtonD;
+        JLabel question;
+        JLabel blank;
+
+        QuizPanel() {
+            setLayout(new GridLayout(3, 2));
 //    		
-    		 ButtonA = Controller.getOptionAButton();
-    		 ButtonB = Controller.getOptionBButton();
-    		 ButtonC = Controller.getOptionCButton();
-    		 ButtonD = Controller.getOptionDButton();
-    		 question = new JLabel("Blank");
-    		blank = new JLabel();
-    		question.setFont(new Font("Times New Roman", 1, 70));
-        	question.setPreferredSize(new Dimension(300,300));
-        
-    		add(question);
-        	add(blank);
-        	add(Controller.getOptionAButton());
-        	add(Controller.getOptionBButton());
-        	add(Controller.getOptionCButton());
-        	add(Controller.getOptionDButton());
-    	}
-    	
-		public void setQuestion(String text) {
-    		question.setText(text);
-    	
-    	}
-	
-    	
-    	
-    	
-    	
-    	
-    		
-    		
-    		
-    	
-    	protected void paintComponent(Graphics g) {
-	super.paintComponent(g);
-}
-    
+            ButtonA = Controller.getOptionAButton();
+            ButtonB = Controller.getOptionBButton();
+            ButtonC = Controller.getOptionCButton();
+            ButtonD = Controller.getOptionDButton();
+            question = new JLabel("Blank");
+            blank = new JLabel();
+            question.setFont(new Font("Times New Roman", 1, 70));
+            question.setPreferredSize(new Dimension(300, 300));
+
+            add(question);
+            add(blank);
+            add(Controller.getOptionAButton());
+            add(Controller.getOptionBButton());
+            add(Controller.getOptionCButton());
+            add(Controller.getOptionDButton());
+        }
+
+        public void setQuestion(String text) {
+            question.setText(text);
+
+        }
+
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+        }
+
     }
 
     class StartScreenPanel extends JPanel {
@@ -517,10 +528,11 @@ public class View extends JPanel {
             g.drawImage(startScreenImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
     }
-    
+
     class TutorialScreenPanel extends JPanel {
-        protected void paintComponent(Graphics g){
-            
+
+        protected void paintComponent(Graphics g) {
+
         }
     }
 
@@ -598,7 +610,7 @@ public class View extends JPanel {
                 }
 
             }
-            
+
             g.setColor(Color.red);
             g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, 250 * 2, FRAME_HEIGHT / 17);
             g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
@@ -619,9 +631,9 @@ public class View extends JPanel {
         //(Model.getCurrentFact());
         String[] lines = Model.getCurrentFact().split(",");
         int yOffset = 0;
-        for (String line: lines) {
-        	yOffset +=g.getFontMetrics().getHeight();
-        g.drawString(line, playerXLoc + 375, playerYLoc - 175 + yOffset);
+        for (String line : lines) {
+            yOffset += g.getFontMetrics().getHeight();
+            g.drawString(line, playerXLoc + 375, playerYLoc - 175 + yOffset);
         }
 
     }
@@ -671,7 +683,7 @@ public class View extends JPanel {
                             gp.setPicNum((gp.getPicNum() + 1) % BUNNY_FRAME_COUNT);
                         }
                         g.drawImage(bunny[gp.getPicNum()], gp.getX(), gp.getY(), this);
-                    } 
+                    }
                 } else if (gp.isEnemy()) {
                     if (gp.getSprite().equals(Sprite.REDFOX)) { //red fox
                         //redFoxPicNum = (redFoxPicNum + 1) % RED_FOX_FRAME_COUNT;
@@ -685,13 +697,13 @@ public class View extends JPanel {
                             gp.setPicNum((gp.getPicNum() + 1) % RACCOON_FRAME_COUNT);
                         }
                         g.drawImage(raccoon[gp.getPicNum()], gp.getX(), gp.getY(), this);
-                    } 
+                    }
 
                 }
 
             }
 //            g.drawImage(delaware, FRAME_WIDTH-150, FRAME_HEIGHT-350, 150, 350, this);
-            
+
             g.setColor(Color.red);
             g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, 250 * 2, FRAME_HEIGHT / 17);
             g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
@@ -700,9 +712,9 @@ public class View extends JPanel {
             g.drawRect(FRAME_WIDTH - 105, FRAME_HEIGHT / 30, FRAME_WIDTH / 14, FRAME_HEIGHT / 25);
             g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 103, FRAME_HEIGHT / 17);
             if (runningFrameCount % 30 == 0) {
-            	dePicNum = (dePicNum + 1) % DE_FRAME_COUNT;
+                dePicNum = (dePicNum + 1) % DE_FRAME_COUNT;
             }
-           	g.drawImage(delaware[dePicNum], FRAME_WIDTH-150, FRAME_HEIGHT-350, 150, 350, this);
+            g.drawImage(delaware[dePicNum], FRAME_WIDTH - 150, FRAME_HEIGHT - 350, 150, 350, this);
         }
     }
 
@@ -720,7 +732,7 @@ public class View extends JPanel {
 
             } else {
                 g.drawImage(map1to2transition[MAP_1_2_TRANSITION_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
-                
+
                 Controller.getRound2Button().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
                 Controller.getRound2Button().setBounds((FRAME_WIDTH * 7) / 10,
                         (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
@@ -730,6 +742,7 @@ public class View extends JPanel {
 
         }
     }
+
     class Map2to3Panel extends JPanel {
 
         protected void paintComponent(Graphics g) {
@@ -753,9 +766,11 @@ public class View extends JPanel {
 
         }
     }
-    class OspreyNestPanel extends JPanel{
-        protected void paintComponent(Graphics g){
-            if(ospreyNestPicNum < OSPREY_NEST_COUNT){
+
+    class OspreyNestPanel extends JPanel {
+
+        protected void paintComponent(Graphics g) {
+            if (ospreyNestPicNum < OSPREY_NEST_COUNT) {
                 g.drawImage(ospreyNesting[ospreyNestPicNum], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
                 ospreyNestPicNum++;
                 try {
@@ -772,10 +787,11 @@ public class View extends JPanel {
             }
         }
     }
-    
-    class HarrierNestPanel extends JPanel{
-        protected void paintComponent(Graphics g){
-            if(harrierNestPicNum < HARRIER_NEST_COUNT){
+
+    class HarrierNestPanel extends JPanel {
+
+        protected void paintComponent(Graphics g) {
+            if (harrierNestPicNum < HARRIER_NEST_COUNT) {
                 g.drawImage(harrierNesting[harrierNestPicNum], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
                 harrierNestPicNum++;
                 try {
@@ -793,16 +809,18 @@ public class View extends JPanel {
             }
         }
     }
-    
-    class GameOverWinPanel extends JPanel{
-        protected void paintComponent(Graphics g){
+
+    class GameOverWinPanel extends JPanel {
+
+        protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(gameOverWinImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
     }
-    
-    class GameOverLosePanel extends JPanel{
-        protected void paintComponent(Graphics g){
+
+    class GameOverLosePanel extends JPanel {
+
+        protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(gameOverLoseImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
@@ -843,7 +861,7 @@ public class View extends JPanel {
     public boolean getIsOspreyRound2Over() {
         return isOspreyRound2Over;
     }
-    
+
     public boolean getIsHarrierRoundOver() {
         return isHarrierRoundOver;
     }
@@ -855,14 +873,48 @@ public class View extends JPanel {
     public static void setIsOspreyRound2Over(boolean b) {
         isOspreyRound2Over = b;
     }
-    
+
     public static void setIsHarrierRoundOver(boolean b) {
-    	isHarrierRoundOver = b;
+        isHarrierRoundOver = b;
     }
+
     public static boolean is1To2Transition() {
-    	return is1To2Transistion;
+        return is1To2Transition;
     }
+
     public static void set1To2Transition(boolean b) {
-    	is1To2Transistion = b;
+        is1To2Transition = b;
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public void resetView() {
+        runningFrameCount = 0;
+        harrierPicNum = 0;
+        ospreyPicNum = 0;
+        micePicNum = 0;
+        bunnyPicNum = 0;
+        redFoxPicNum = 0;
+        raccoonPicNum = 0;
+        fishPicNum = 0;
+        snakePicNum = 0;
+        eaglePicNum = 0;
+        planePicNum = 0;
+        dePicNum = 0;
+        map1To2TransitionPicNum = 0;
+        map2To3TransitionPicNum = 0;
+        ospreyNestPicNum = 0;
+        harrierNestPicNum = 0;
+        currentViewableGPs.clear();
+        health = 0;
+        score = 0;
+        backgroundLocation = 0;
+        momentEaten = 0;
+        isOspreyRound1Over = false;
+        isOspreyRound2Over = false;
+        is1To2Transition = false;
+        isHarrierRoundOver = false;
     }
 }
