@@ -62,8 +62,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     private boolean tutorialTried = false;
     private static int upArrowKeyTried = 0;
     private static int downArrowKeyTried = 0;
-    
-    
+
+    boolean userDone = false;
+    boolean userResponse = false;
     public Controller(){
     	QuizOptionA = new JButton("A");
     	QuizOptionB = new JButton("B");
@@ -113,8 +114,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     }
 
     void start() {
-        //	view.setPanel("QUIZ");
-        System.out.println(view.getPanel());
+    	while (!userDone) {
         //System.out.println("start reached");
 //        if(!tutorialTried){
 //            view.setPanel("TUTORIAL");
@@ -127,10 +127,14 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             if (birdsPlayed == 2) { // <-comment this out
                 System.out.println("reached second if");
                 view.setPanel("GAME_OVER_LOSE");
+                while (!userResponse) {
+                	System.out.println("here!");
+                }
+                
+                
             }//<-comment this out
             //comment this out below
             else {
-
                 view.setPanel("START");
 
             }
@@ -141,6 +145,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         if (birdsPlayed == 1) {
             start();
         }
+    }
     }
 
     void runQuiz() {
@@ -337,13 +342,22 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         }
         
         if(e.getSource() == restartGameButton){
-            System.out.println(birdsPlayed);
+
+        	userDone = false;
             birdsPlayed = 0;
+            model.getPlayer().setScore(0);
+            userResponse = true;
             view.setPanel("START");
-            restartGame();
+            OspreyButton.setEnabled(true);
+            HarrierButton.setEnabled(true);
+            OspreyButton.setVisible(true);
+            HarrierButton.setVisible(true);
+          //  restartGame();
             
         }
         if(e.getSource() == exitGameButton){
+        	userDone = true;
+        	userResponse = true;
             view.getFrame().dispose();
         }
 
@@ -395,10 +409,11 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     }
     
     void restartGame(){
-        OspreyButton.setEnabled(true);
-        HarrierButton.setEnabled(true);
+        //OspreyButton.setEnabled(true);
+        //HarrierButton.setEnabled(true);
         OspreyButton.setVisible(true);
         HarrierButton.setVisible(true);
+        birdsPlayed = 0;
         model.resetModel();
         view.resetView();
         start();

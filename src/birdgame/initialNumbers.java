@@ -8,7 +8,7 @@ package birdgame;
 
 public class initialNumbers {
 	//Controller	
-	private int birdHealth = 250;//250;
+	private int birdHealth = 0;//250;
 	public int birdHealth() {
 		return birdHealth;
 	}
