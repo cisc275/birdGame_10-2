@@ -38,7 +38,9 @@ import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TimerTask;
 
 import java.awt.CardLayout;
@@ -123,7 +125,7 @@ public class View extends JPanel {
     private JPanel ospreyNest;
     private JPanel harrierRound;
     private JPanel harrierNest;
-    private JPanel quiz;
+    private QuizPanel quiz;
     private JPanel gameOver;
     private int specialFoodDelay = 100;
 
@@ -140,7 +142,7 @@ public class View extends JPanel {
 
     private static boolean isOspreyRound1Over = false;
     private static boolean isOspreyRound2Over = false;
-
+    private static boolean is1To2Transistion = false;
     private static boolean isHarrierRoundOver = false;
 
     public View(Controller c) {
@@ -171,6 +173,7 @@ public class View extends JPanel {
       //  currentPanel = startScreen;
         createFrame(c);
     }
+    
 
     void loadImages() {
         for (int i = 0; i < FRAME_COUNT; i++) {
@@ -235,6 +238,7 @@ public class View extends JPanel {
         frame.setResizable(false);
         frame.setVisible(true);
     }
+    
 
     void createStartScreen(Controller c) {
         startScreen = new StartScreenPanel();
@@ -309,23 +313,34 @@ public class View extends JPanel {
 
     void createQuizPanel() {
     	quiz = new QuizPanel();
-    	quiz.setLayout(new GridLayout(3,2,75,75));
-    	//quiz.setSize(1000,1000);
-    	JLabel question = new JLabel("Fuck Me");
-    	JLabel blank = new JLabel();
-    	question.setFont(new Font("Times New Roman", 1, 70));
-    	question.setPreferredSize(new Dimension(300,300));
-       // question.setBounds(FRAME_WIDTH / 2 - 100, FRAME_HEIGHT / 2, 100, 100);
-     //   quiz.add(question, GridBagConstraints.PAGE_START);
-    	
-        quiz.add(question);
-        quiz.add(blank);
-    	quiz.add(Controller.getOptionAButton());
-    	quiz.add(Controller.getOptionBButton());
-    	quiz.add(Controller.getOptionCButton());
-    	quiz.add(Controller.getOptionDButton());
+    
     	
     }
+    public void prepareQuiz() {
+    	HashMap<String,String[]> questionsToAsk = Model.getQuestionToAsk();
+		Set<String> strings = questionsToAsk.keySet();
+		Object[] temp = strings.toArray();
+		String[] questions = new String[temp.length];
+		for (int i = 0; i < temp.length;i++) {
+			questions[i] = temp[i].toString();
+		}
+		Model.setNumberOfQuestions(temp.length -1);
+		quiz.setQuestion(questions[Model.getQuestionNum()]);
+		Controller.setAnswers(questionsToAsk.get(questions[Model.getQuestionNum()]));
+	
+		
+		Model.setCorrectAnswer(questionsToAsk.get(questions[Model.getQuestionNum()])[4]);
+		//quiz.
+    }
+    public void answeredCorrectly(boolean bool) {
+    	if (bool) {
+    		quiz.blank.setText("Correct! Nice Job");
+    	}
+    	else {
+    		quiz.blank.setText("Incorrect");
+    	}
+    }
+    
 
     void createGameOverPanel(Controller c) {
         gameOver = new GameOverPanel();
@@ -426,6 +441,47 @@ public class View extends JPanel {
     }
 
     class QuizPanel extends JPanel{
+    	String[] questions;
+    	JButton ButtonA;
+    	JButton ButtonB;
+    	JButton ButtonC;
+    	JButton ButtonD;
+    	JLabel question;
+    	JLabel blank;
+ 
+    	QuizPanel(){
+    		setLayout(new GridLayout(3,2));
+//    		
+    		 ButtonA = Controller.getOptionAButton();
+    		 ButtonB = Controller.getOptionBButton();
+    		 ButtonC = Controller.getOptionCButton();
+    		 ButtonD = Controller.getOptionDButton();
+    		 question = new JLabel("Blank");
+    		blank = new JLabel();
+    		question.setFont(new Font("Times New Roman", 1, 70));
+        	question.setPreferredSize(new Dimension(300,300));
+        
+    		add(question);
+        	add(blank);
+        	add(Controller.getOptionAButton());
+        	add(Controller.getOptionBButton());
+        	add(Controller.getOptionCButton());
+        	add(Controller.getOptionDButton());
+    	}
+    	
+		public void setQuestion(String text) {
+    		question.setText(text);
+    	
+    	}
+	
+    	
+    	
+    	
+    	
+    	
+    		
+    		
+    		
     	
     	protected void paintComponent(Graphics g) {
 	super.paintComponent(g);
@@ -775,5 +831,11 @@ public class View extends JPanel {
     
     public static void setIsHarrierRoundOver(boolean b) {
     	isHarrierRoundOver = b;
+    }
+    public static boolean is1To2Transition() {
+    	return is1To2Transistion;
+    }
+    public static void set1To2Transition(boolean b) {
+    	is1To2Transistion = b;
     }
 }

@@ -8,6 +8,7 @@ package birdgame;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -25,16 +26,18 @@ public class Model {
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
     private int maxBirdHealth = initNums.birdHealth();
     private static int round;
-
+    private static int questionNum;
+    private static int numberOfQuestions;
     private int numGamePiecesInRoundLeft = initNums.obstaclesPerLevel();
     protected int fWidth;
     protected int fHeight;
     private int imgHeight;
     private int imgWidth;
     protected int groundLevel;
+    private static String correctAnswer;
     private int sceneNum;
     protected ArrayList<GamePiece> gamePieces = new ArrayList<>();
-
+    
     private double chanceSpecialFoodSpawns = initNums.chanceSpecialFoodSpawns();
     private double chanceHarrierFoodIsBunny = initNums.chanceHarrierFoodIsBunny();
     private double chanceFoodSpawnsInsteadOfEnemy = initNums.chanceFoodSpawnsInsteadOfEnemy();
@@ -190,6 +193,7 @@ public class Model {
         //SpecialFood.generateFactsAndQuestions();
         int numGamePieces = 0;
         int numSpecialFood = 0;
+        questionsToAsk = new HashMap<String,String[]>();
         //background0:
         //land: 0-432px, 1776-2640px, 
         //int tempXLoc = (int)(Math.random() * 2639 + 1776);
@@ -241,6 +245,7 @@ public class Model {
     }
 
     public void spawnOspreyGamePieces() {
+    	questionsToAsk = new HashMap<String,String[]>();
         int numGamePieces = 0;
         int numSpecialFood = 0;
         int tempXLoc = initNums.xLocationForObstacles();
@@ -248,6 +253,7 @@ public class Model {
         int maxSpecialFood = initNums.maxSpecialFood();
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
+            	// instead of 1
                 if (Math.random() < chanceSpecialFoodSpawns) {
                     if (Math.random() < chanceOspreyFoodIsSnake) {
                         gamePieces.add(new SpecialFood(tempXLoc + additionalXLocationForSpecialFood, (int) (Math.random() * groundLevel), Sprite.SNAKE));
@@ -329,9 +335,18 @@ public class Model {
         View.setMomentEaten(View.getFrameCount());
 		if (hasMoreFacts()) {
 			currentFact = facts[currentFactIndex];
+			HashMap<String, String[]> associatedFactandQuestion = factsAndQuestions.get(currentFact);
+			questionsToAsk.putAll(associatedFactandQuestion);
+			//String[] associatedQuestion
+			
+			
+		//	questionsToAsk.add()
 		}
         player.setScore(player.getScore() + sf.getFoodValue());
         player.setHealth(maxBirdHealth);
+    }
+    public static HashMap<String,String[]> getQuestionToAsk(){
+    	return questionsToAsk;
     }
 
     public static boolean specialFoodEaten() {
@@ -474,17 +489,17 @@ public class Model {
         HashMap<String, String[]> QandAsHarrier1 = new HashMap<>();
         String[] harrierFood = {"rodents", "fish", "eagles", "plants", "rodents"};
         QandAsHarrier1.put("What do Northern Harriers eat?", harrierFood);
-        factsAndQuestions.put("Northern Harriers eat rodents", QandAsHarrier1);
+        factsAndQuestions.put("Northern Harriers, eat rodents", QandAsHarrier1);
 
         HashMap<String, String[]> QandAsHarrier2 = new HashMap<>();
         String[] harrierMigrate = {"They migrate to South America", "They migrate to California", "They don't migrate", "They migrate to canada", "They don't migrate"};
         QandAsHarrier2.put("Where do Harriers migrate", harrierMigrate);
-        factsAndQuestions.put("Northern Harriers are non-migratory birds", QandAsHarrier2);
+        factsAndQuestions.put("Northern Harriers are, non-migratory birds", QandAsHarrier2);
 
         HashMap<String, String[]> QandAsHarrier3 = new HashMap<>();
         String[] harrierPred = {"Foxes", "Snakes", "Cats", "Humans", "Foxes"};
         QandAsHarrier3.put("What is a major predator of Northern Harriers", harrierPred);
-        factsAndQuestions.put("Foxes are a predator for Northern Harriers", QandAsHarrier3);
+        factsAndQuestions.put("Foxes are a predator, for Northern Harriers", QandAsHarrier3);
 
         avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
 
@@ -495,19 +510,19 @@ public class Model {
     	facts = new String[] {"Ospreys like to,eat Snakes and Fish","Ospreys migrate to, South America for, the winter","Eagles are a, predator of Ospreys"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
-        String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Sankes and Fish"};
+        String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Eagles","A"};
         QandAsOsprey1.put("What do Ospreys eat?", OspreyFood);
-        factsAndQuestions.put("Ospreys like to eat Snakes and Fish", QandAsOsprey1);
+        factsAndQuestions.put("Ospreys like to,eat Snakes and Fish", QandAsOsprey1);
 
         HashMap<String, String[]> QandAsOsprey2 = new HashMap<>();
-        String[] OspreyMigrate = {"They migrate to South America", "They migrate to California", "They don't migrate", "They migrate to canada", "They migrate to South America"};
+        String[] OspreyMigrate = {"They migrate to South America", "They migrate to California", "They don't migrate", "They migrate to canada", "A"};
         QandAsOsprey2.put("Where do Ospreys migrate", OspreyMigrate);
-        factsAndQuestions.put("Ospreys migrate to South America for the winter", QandAsOsprey2);
+        factsAndQuestions.put("Ospreys migrate to, South America for, the winter", QandAsOsprey2);
 
         HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();
-        String[] OspreyPred = {"Foxes", "Snakes", "Eagles", "Eagles"};
-        QandAsOsprey3.put("What is a major predator of Ospreys", OspreyPred);
-        factsAndQuestions.put("Eagles are a predator of Ospreys", QandAsOsprey3);
+        String[] OspreyPred = {"Foxes", "Snakes", "Eagles","Cats and Dogs", "C"};
+        QandAsOsprey3.put("What is a major predator of Ospreys?", OspreyPred);
+        factsAndQuestions.put("Eagles are a, predator of Ospreys", QandAsOsprey3);
         avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
 
     }
@@ -515,5 +530,31 @@ public class Model {
     	return currentFactIndex < facts.length;
     }
   
-
+public static void setCorrectAnswer(String answer) {
+	correctAnswer = answer;
+}
+public static String getCorrectAnswer() {
+	return correctAnswer;
+}
+public static void incrQuestionNum() {
+	questionNum++;
+}
+public static int getQuestionNum() {
+	return questionNum;
+}
+public static void setNumberOfQuestions(int x) {
+	numberOfQuestions = x;
+}
+public static boolean quizOver() {
+	return questionNum > numberOfQuestions;
+}
+public static boolean lastQuestion() {
+	return questionNum == numberOfQuestions;
+}
+public static int getNumberOfQuestions() {
+	return numberOfQuestions;
+}
+public static void resetQuestionNum() {
+	questionNum = 0;
+}
 }

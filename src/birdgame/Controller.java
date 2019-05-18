@@ -6,11 +6,15 @@
 package birdgame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
+
+
+
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 
@@ -42,6 +46,7 @@ public class Controller implements KeyListener, ActionListener {
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
     private int birdsPlayed = 0;
+    boolean answered = false;
     private boolean nextRound = false;
     private boolean ospreyNested = false;
     private static boolean harrierNested = false;
@@ -55,9 +60,15 @@ public class Controller implements KeyListener, ActionListener {
     	QuizOptionA.setBackground(Color.BLUE);
     	QuizOptionB.setBackground(Color.RED);
     	QuizOptionC.setBackground(Color.YELLOW);
-
+    	QuizOptionA.setFont(new Font("Agency FB", Font.BOLD, 75));
+    	QuizOptionB.setFont(new Font("Agency FB", Font.BOLD, 75));
+    	QuizOptionC.setFont(new Font("Agency FB", Font.BOLD, 75));
+    	QuizOptionD.setFont(new Font("Agency FB", Font.BOLD, 75));
     	QuizOptionD.setBackground(Color.GREEN);
-
+    	QuizOptionA.addActionListener(this);
+    	QuizOptionB.addActionListener(this);
+    	QuizOptionC.addActionListener(this);
+    	QuizOptionD.addActionListener(this);
     	
         OspreyButton = new JButton("Play as Osprey");
         HarrierButton = new JButton("Play as Harrier");
@@ -78,7 +89,7 @@ public class Controller implements KeyListener, ActionListener {
     
     
     void start() {
-    	view.setPanel("QUIZ");
+    //	view.setPanel("QUIZ");
     	System.out.println(view.getPanel());
         //System.out.println("start reached");
         if(!tutorialTried){
@@ -97,11 +108,36 @@ public class Controller implements KeyListener, ActionListener {
     			//view.setPanel("QUIZ");
     		}
         }
+    	
     	resetAfterRound();
     	nextRound = false;
     	if (birdsPlayed == 1) {
     		start();
     	}
+    }
+    void runQuiz() {
+    	view.prepareQuiz();
+    	while (!Model.quizOver()) {
+    	//	System.out.println(Model.getQuestionNum());
+    	//	System.out.println(Model.getNumberOfQuestions());
+    		 try {
+                 Thread.sleep(50);
+             } catch (InterruptedException e) {
+                 e.printStackTrace();
+             }
+    		if (answered) {
+    			answered = false;
+    			if (!Model.quizOver() && !Model.lastQuestion()) {
+    				Model.incrQuestionNum();
+    				view.prepareQuiz();
+    			}
+    			else {
+    				Model.incrQuestionNum();
+    			}
+    		}
+    	}
+    	Model.resetQuestionNum();
+    	
     }
 
     
@@ -116,9 +152,23 @@ public class Controller implements KeyListener, ActionListener {
         		view.setIsOspreyRound2Over(false);
         	}
             if(view.getIsOspreyRound1Over()){
-                view.setPanel("MAP_1_TO_2");
+            	System.out.println(view.getIsOspreyRound1Over());
+            	view.setPanel("QUIZ");
+            	System.out.println("running quiz");
+            	view.setIsOspreyRound1Over(false);
+            	view.set1To2Transition(true);
+            	runQuiz();
+            	
+            	
+            	
             }
+            if (view.is1To2Transition()) {
+            	view.setPanel("MAP_1_TO_2");
+            }
+           
             else if(view.getIsOspreyRound2Over() && !ospreyNested){
+            	view.setPanel("QUIZ");
+            	runQuiz();
                 view.setPanel("MAP_2_TO_3");
                 //view.setPanel("OSPREY_NEST");
             }
@@ -143,8 +193,24 @@ public class Controller implements KeyListener, ActionListener {
     }
     public void actionPerformed(ActionEvent e){
     	if (e.getSource() == QuizOptionA) {
-    		//TODO
+    		answered = true;
+    		 if (Model.getCorrectAnswer().equals("A")){
+    			 view.answeredCorrectly(true);
+    		 }
+    		 
+    		 else {
+    			 view.answeredCorrectly(false);
+    		 }
+    		 if (Model.quizOver()) {
+    			 System.out.println("Are we here?");
+    			 view.setIsOspreyRound1Over(false);
+    			 view.setPanel("MAP_1_TO_2");
+    		 }
+    		 
+    		System.out.println("A clicked");
+    	
     	}
+    
     	if (e.getSource() == QuizOptionB) {
     		//TODO
     	}
@@ -183,6 +249,7 @@ public class Controller implements KeyListener, ActionListener {
         }
         else if(e.getSource() == Round2Button){
             view.setIsOspreyRound1Over(false);
+            view.set1To2Transition(false);
             model.clearGP();
             view.setPanel("OSPREY_ROUND_TWO");
             model.generateOspreyQuestions();
@@ -290,4 +357,11 @@ public class Controller implements KeyListener, ActionListener {
         harrierNested = b;
 
     }
+    public static void setAnswers(String[] answers) {
+    	QuizOptionA.setText(answers[0]);
+    	QuizOptionB.setText(answers[1]);
+    	QuizOptionC.setText(answers[2]);
+    	QuizOptionD.setText(answers[3]);
+    }
+    
 }
