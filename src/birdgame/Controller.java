@@ -315,8 +315,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         }
         
         if(e.getSource() == restartGameButton){
-            System.out.println(birdsPlayed);
-            birdsPlayed = 0;
+            //System.out.println(birdsPlayed);
             view.setPanel("START");
             restartGame();
             
@@ -365,10 +364,11 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     }
     
     void restartGame(){
-        OspreyButton.setEnabled(true);
-        HarrierButton.setEnabled(true);
+        //OspreyButton.setEnabled(true);
+        //HarrierButton.setEnabled(true);
         OspreyButton.setVisible(true);
         HarrierButton.setVisible(true);
+        birdsPlayed = 0;
         model.resetModel();
         view.resetView();
         start();
