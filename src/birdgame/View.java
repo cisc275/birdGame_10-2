@@ -371,6 +371,9 @@ public class View extends JPanel {
         gameOverWin = new GameOverWinPanel();
 
         gameOverWin.setLayout(null);
+        JLabel finalScore = new JLabel("Score: " + Player.getScore());
+        finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/25));
+        finalScore.setBounds((FRAME_WIDTH*4)/10, (FRAME_HEIGHT * 2)/10, FRAME_WIDTH/4, FRAME_HEIGHT/15);
         Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
         Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
         Controller.getRestartGameButton().setBounds(FRAME_WIDTH / 10, (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
@@ -378,6 +381,7 @@ public class View extends JPanel {
         
         gameOverWin.add(Controller.getRestartGameButton());
         gameOverWin.add(Controller.getExitGameButton());
+        gameOverWin.add(finalScore);
     }
 
     void createGameOverLose() {
@@ -920,5 +924,6 @@ public class View extends JPanel {
         isOspreyRound2Over = false;
         is1To2Transition = false;
         isHarrierRoundOver = false;
+        System.out.println("resetView reached");
     }
 }

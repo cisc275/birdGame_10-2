@@ -580,10 +580,11 @@ public class Model implements Serializable {
         clearGP();
         totalLevelTicks = 0;
         currentFactIndex = 0;
-        player = new Player();
+        player.setHealth(250);
         indexOfGP = 0;
         currentGPs.clear();
         specialFoodEaten = false;
         availableFacts.clear();
+        System.out.println("resetModel reached");
     }
 }
