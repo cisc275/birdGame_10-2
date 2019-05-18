@@ -8,7 +8,7 @@ package birdgame;
 
 public class initialNumbers {
 	//Controller	
-	private int birdHealth = 250;
+	private int birdHealth = 250;//250;
 	public int birdHealth() {
 		return birdHealth;
 	}
@@ -20,9 +20,7 @@ public class initialNumbers {
 	
 	//Model
 
-	private int obstaclesPerLevel = 20;
-
-
+	private int obstaclesPerLevel = 15;
 
 	public int obstaclesPerLevel() {
 		return obstaclesPerLevel;

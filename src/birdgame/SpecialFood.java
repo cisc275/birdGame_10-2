@@ -34,9 +34,9 @@ public class SpecialFood extends Food {
 	}
     public void setFact() {
 
-    	int randomIndex = new Random().nextInt(Model.avaliableFacts.size());
+    	int randomIndex = new Random().nextInt(Model.availableFacts.size());
     	//System.out.println(Model.avaliableFacts.size());
-   		fact = Model.avaliableFacts.get(randomIndex);
+   		fact = Model.availableFacts.get(randomIndex);
    		//needs a way to avoid repeats!
     }
 
