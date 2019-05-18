@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.io.Serializable;
 
 /**
  * Model contains and deals with the basic logic of the game, including updating
@@ -18,9 +19,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @author crnis
  */
-public class Model {
-
-	private initialNumbers initNums = new initialNumbers();
+public class Model implements Serializable{
+    private initialNumbers initNums = new initialNumbers();
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
     public static HashMap<String,String[]> questionsToAsk;
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
@@ -131,9 +131,9 @@ public class Model {
                 it.remove();
             }
         }
-        if (player.isAlive()==false) {
-        	player.alive=false;
-        }
+//        if (player.isAlive()==false) {
+//        	player.alive=false;
+//        }
         clearCurrentGP();
         seeCurrentGP();
 

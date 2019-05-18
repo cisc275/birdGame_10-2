@@ -19,7 +19,11 @@ public class initialNumbers {
 	}
 	
 	//Model
+<<<<<<< HEAD
 	private int obstaclesPerLevel = 20;
+=======
+	private int obstaclesPerLevel = 10;
+>>>>>>> c3d653caa6b68ff13cec1a71bd2c8140feea2e04
 	public int obstaclesPerLevel() {
 		return obstaclesPerLevel;
 	}
