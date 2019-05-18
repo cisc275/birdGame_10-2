@@ -613,7 +613,7 @@ public class Model implements Serializable {
         System.out.println("resetModel reached");
     }
     
-public static void setNumberOfQuestions() {
+public static void updateNumberOfQuestions() {
 	//numberOfQuestions = x;
 	if (Model.getQuestionToAsk().equals(null)){
 		numberOfQuestions = -1;
