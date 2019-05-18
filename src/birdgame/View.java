@@ -37,6 +37,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
+
+
 import java.util.Iterator;
 import java.util.Set;
 import java.util.ArrayList;
@@ -131,7 +133,13 @@ public class View extends JPanel {
     private QuizPanel quiz;
     private JPanel gameOverWin;
     private JPanel gameOverLose;
-
+    private JPanel movingScreen;
+    private JLabel downLabel;
+    private JLabel upLabel;
+    private JLabel foodLabel;
+    private JLabel enemyLabel;
+    private int foodX;
+    private int foodX2;
     private int specialFoodDelay = 100;
 
     private Direction direction;
@@ -153,13 +161,19 @@ public class View extends JPanel {
     private static boolean isOspreyRound2Over = false;
     private static boolean is1To2Transition = false;
     private static boolean isHarrierRoundOver = false;
+    boolean draw =true;
+    boolean drawPlane = true;
+    boolean drawEagle = true;
+    boolean hit = false;
+    boolean finished = false;
 
     public View(Controller c) {
         frame = new JFrame();
         cards = new JPanel(new CardLayout());
 
         createStartScreen(c);
-        createTutorial();
+        createTutorialStartScreen(c);
+        createTutorialMovingDemo(c);
         createOspreyPanels(c);
         createHarrierRound();
         createHarrierNestPanel(c);
@@ -167,7 +181,8 @@ public class View extends JPanel {
         createGameOverPanels();
         loadImages();
         cards.add(startScreen, "START");
-        //cards.add(tutorialScreen, "TUTORIAL");
+        cards.add(tutorialScreen, "TUTORIAL");
+        cards.add(movingScreen, "MOVING_SCREEN");
         cards.add(initialMap, "INITIAL_MAP");
         cards.add(ospreyRound1, "OSPREY_ROUND_ONE");
         cards.add(map1to2, "MAP_1_TO_2");
@@ -282,8 +297,47 @@ public class View extends JPanel {
         startScreen.add(c.getHarrierButton());
     }
 
-    void createTutorial() {
+    void createTutorialStartScreen(Controller c){
         tutorialScreen = new TutorialScreenPanel();
+        tutorialScreen.setLayout(null);
+        c.getTutorialButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+        c.getTutorialButton().setBounds((FRAME_WIDTH * 7) / 10, (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        
+        tutorialScreen.add(c.getTutorialButton());
+
+    }
+    
+    void createTutorialMovingDemo(Controller c) {
+    	movingScreen = new MovingScreenPanel();
+        movingScreen.setLayout(null);
+        upLabel = new JLabel("Use the UP arrow key to move up");
+        upLabel.setFont(new Font("Times New Roman", 1, 20));
+        upLabel.setBounds(0, 100, FRAME_WIDTH/4, 100);
+        downLabel = new JLabel("Use the DOWN arrow key to move down");
+        downLabel.setFont(new Font("Times New Roman", 1, 20));
+        downLabel.setBounds(0, FRAME_HEIGHT-200, FRAME_WIDTH/4, 100);
+        foodLabel = new JLabel("Now try to hit the moving food");
+        foodLabel.setFont(new Font("Times New Roman", 1, 20));
+        foodLabel.setBounds(800, 100, FRAME_WIDTH/4, 100);
+        enemyLabel = new JLabel("Now avoid the predators and obstacles");
+        enemyLabel.setFont(new Font("Times New Roman", 1, 20));
+        enemyLabel.setBounds(800, 100, FRAME_WIDTH/4, 100);
+        c.getTutorialMovingButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
+        c.getTutorialMovingButton().setBounds((FRAME_WIDTH * 7) / 10, (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        movingScreen.add(upLabel);
+        movingScreen.add(downLabel);
+        movingScreen.add(foodLabel);
+        movingScreen.add(enemyLabel);
+        movingScreen.add(c.getTutorialMovingButton());
+        foodX=playerXLoc + FRAME_WIDTH;
+        foodX2=playerXLoc + FRAME_WIDTH;
+
+        foodLabel.setVisible(false);
+        enemyLabel.setVisible(false);
+        c.getTutorialMovingButton().setVisible(false);
+        
+        
+
     }
 
     void createOspreyPanels(Controller c) {
@@ -474,6 +528,8 @@ public class View extends JPanel {
             currentPanel = gameOverWin;
         } else if (s.equals("GAME_OVER_LOSE")) {
             currentPanel = gameOverLose;
+        }else if(s.equals("MOVING_SCREEN")) {
+        	currentPanel = movingScreen;
         }
 
     }
@@ -568,6 +624,62 @@ public class View extends JPanel {
 
         protected void paintComponent(Graphics g) {
 
+        }
+    }
+    class MovingScreenPanel extends JPanel {
+
+        protected void paintComponent(Graphics g) {
+        	runningFrameCount++;
+            paintBackground(g);
+            if (runningFrameCount % TICKS_PER_FRAME_UPDATE == 0) {
+                ospreyPicNum = (ospreyPicNum + 1) % FRAME_COUNT;
+                fishPicNum = (fishPicNum + 1) % FISH_FRAME_COUNT;
+                eaglePicNum = (eaglePicNum + 1) % EAGLE_FRAME_COUNT;
+                planePicNum = (planePicNum + 1) % PLANE_FRAME_COUNT;
+
+            }
+            g.drawImage(ospreyFly[ospreyPicNum], playerXLoc, playerYLoc, this);
+            if(Controller.getUpArrowKeyTried() >=1 && Controller.getDownArrowKeyTried() >=1 && draw){
+            	foodX -= 14;
+            	if(draw) {
+            		g.drawImage(fish[fishPicNum], foodX, FRAME_HEIGHT/2, this);
+            	}
+            	if(playerXLoc >= foodX - 150 && (playerYLoc >= FRAME_HEIGHT/2-100  && playerYLoc <= FRAME_HEIGHT/2+100 )  ) {
+            		draw=false;
+            		foodLabel.setVisible(false);
+                    enemyLabel.setVisible(true);
+            	}
+            	else if (playerXLoc >= foodX+250 ){
+            		foodX=playerXLoc + FRAME_WIDTH;
+            	}
+            }
+            if(enemyLabel.isVisible()) {
+            	foodX2 -= 14;
+            	hit = false;
+            	if(drawEagle) {
+            		g.drawImage(eagle[eaglePicNum], foodX2, FRAME_HEIGHT/4, this);
+            	}
+            	
+            	if(playerXLoc >= foodX2 - 150 && (playerYLoc >= FRAME_HEIGHT/3-100  && playerYLoc <= FRAME_HEIGHT/3+100 )  ) {
+            		drawEagle=false;
+            		hit = true;
+            	}
+            	else if(playerXLoc >= foodX2+300) {
+            		hit=false;
+            		finished=true;
+            	}
+            	if(hit) {
+            		drawEagle = true;
+            		foodX2=playerXLoc + FRAME_WIDTH;
+            	}
+
+            }
+            if(!hit&&finished) {
+            	enemyLabel.setVisible(false);
+            	Controller.getTutorialMovingButton().setVisible(true);
+        	}
+            
+            
         }
     }
 
@@ -964,4 +1076,14 @@ public class View extends JPanel {
 		is2To3Transition = b;
 		
 	}
+    public JLabel getUpLabel() {
+    	return upLabel;
+    }
+    public JLabel getDownLabel() {
+    	return downLabel;
+    }
+    
+    public JLabel getFoodLabel() {
+    	return foodLabel;
+    }
 }

@@ -120,7 +120,8 @@ public class Player extends GamePiece {
         return yOffset;
     }
 
-    public void reset() {
+    public void resetPlayer() {
         setHealth(250);
+        System.out.println("resetPlayer reached");
     }
 }
