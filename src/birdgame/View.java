@@ -385,13 +385,17 @@ public class View extends JPanel {
         gameOverLose = new GameOverLosePanel();
         
         gameOverLose.setLayout(null);
+        JLabel finalScore = new JLabel("Score: " + Player.getScore());
+        finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/25));
+        finalScore.setBounds((FRAME_WIDTH*4)/10, (FRAME_HEIGHT * 2)/10, FRAME_WIDTH/4, FRAME_HEIGHT/15);
         Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
         Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
-        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / 10, (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-        Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / 10, (FRAME_HEIGHT * 37) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / 10, (FRAME_HEIGHT * 37) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / 10, (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
         
         gameOverLose.add(Controller.getRestartGameButton());
         gameOverLose.add(Controller.getExitGameButton());
+        gameOverLose.add(finalScore);
     }
 
     public void paintBackground(Graphics g) {
