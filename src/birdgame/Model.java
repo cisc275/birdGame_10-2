@@ -489,17 +489,17 @@ public class Model implements Serializable{
     	facts = new String[] {"Northern Harriers, eat rodents","Northern Harriers are, non-migratory birds","Foxes are a predator, for Northern Harriers"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsHarrier1 = new HashMap<>();
-        String[] harrierFood = {"rodents", "fish", "eagles", "plants", "rodents"};
+        String[] harrierFood = {"rodents", "fish", "eagles", "plants", "A"};
         QandAsHarrier1.put("What do Northern Harriers eat?", harrierFood);
         factsAndQuestions.put("Northern Harriers, eat rodents", QandAsHarrier1);
 
         HashMap<String, String[]> QandAsHarrier2 = new HashMap<>();
-        String[] harrierMigrate = {"They migrate to South America", "They migrate to California", "They don't migrate", "They migrate to canada", "They don't migrate"};
-        QandAsHarrier2.put("Where do Harriers migrate", harrierMigrate);
+        String[] harrierMigrate = { "They migrate to California","They migrate to South America", "They don't migrate", "They migrate to canada", "C"};
+        QandAsHarrier2.put("Where do Harriers migrate?", harrierMigrate);
         factsAndQuestions.put("Northern Harriers are, non-migratory birds", QandAsHarrier2);
 
         HashMap<String, String[]> QandAsHarrier3 = new HashMap<>();
-        String[] harrierPred = {"Foxes", "Snakes", "Cats", "Humans", "Foxes"};
+        String[] harrierPred = {"Foxes", "Snakes", "Cats", "Humans", "A"};
         QandAsHarrier3.put("What is a major predator of Northern Harriers", harrierPred);
         factsAndQuestions.put("Foxes are a predator, for Northern Harriers", QandAsHarrier3);
 
@@ -512,19 +512,40 @@ public class Model implements Serializable{
     	facts = new String[] {"Ospreys like to,eat Snakes and Fish","Ospreys migrate to, South America for, the winter","Eagles are a, predator of Ospreys"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
-        String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Eagles","A"};
+        String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Eagles","B"};
         QandAsOsprey1.put("What do Ospreys eat?", OspreyFood);
         factsAndQuestions.put("Ospreys like to,eat Snakes and Fish", QandAsOsprey1);
 
         HashMap<String, String[]> QandAsOsprey2 = new HashMap<>();
         String[] OspreyMigrate = {"They migrate to South America", "They migrate to California", "They don't migrate", "They migrate to canada", "A"};
-        QandAsOsprey2.put("Where do Ospreys migrate", OspreyMigrate);
+        QandAsOsprey2.put("Where do Ospreys migrate for winter?", OspreyMigrate);
         factsAndQuestions.put("Ospreys migrate to, South America for, the winter", QandAsOsprey2);
 
         HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();
         String[] OspreyPred = {"Foxes", "Snakes", "Eagles","Cats and Dogs", "C"};
         QandAsOsprey3.put("What is a major predator of Ospreys?", OspreyPred);
         factsAndQuestions.put("Eagles are a, predator of Ospreys", QandAsOsprey3);
+        avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
+
+    }
+    public void generateOspreyQuestions2() {
+    	currentFactIndex = 0;
+    	facts = new String[] {"Ospreys nest in, North America","Ospreys nest in, trees","Airplanes are a,threat to Ospreys"};
+        factsAndQuestions = new HashMap<>();
+        HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
+        String[] OspreyNest = {"South America", "Asia", "Antartica", "North America","D"};
+        QandAsOsprey1.put("Where do Ospreys nest?", OspreyNest);
+        factsAndQuestions.put("Ospreys nest in, North America", QandAsOsprey1);
+
+        HashMap<String, String[]> QandAsOsprey2 = new HashMap<>();
+        String[] OspreyLoc = {"on the floor", "in trees", "on mountains", "in caves", "B"};
+        QandAsOsprey2.put("Where do Ospreys nest?", OspreyLoc);
+        factsAndQuestions.put("Ospreys nest in, trees", QandAsOsprey2);
+
+        HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();
+        String[] OspreyThreat = {"Airplanes", "Hunters", "Radio waves","Drones", "A"};
+        QandAsOsprey3.put("Which is a common threat to Ospreys", OspreyThreat);
+        factsAndQuestions.put("Airplanes are a,threat to Ospreys", QandAsOsprey3);
         avaliableFacts = new ArrayList<String>(factsAndQuestions.keySet());
 
     }
