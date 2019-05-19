@@ -44,7 +44,10 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     private static JButton Round2Button;
     private static JButton ReturnToStart;
     private static JButton ospreyNestButton;
-    private static JButton saveGameButton;
+    private static JButton osprey1SaveGameButton;
+    private static JButton osprey2SaveGameButton;
+    private static JButton harrierSaveGameButton;
+
     private static JButton restartGameButton;
     private static JButton exitGameButton;
     private AbstractAction arrowKeyAction;
@@ -94,7 +97,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         Round2Button = new JButton("Ready to Play Level 2");
         ReturnToStart = new JButton("Return to Start Screen");
         ospreyNestButton = new JButton("Continue");
-        saveGameButton = new JButton("Save Game");
+        osprey1SaveGameButton = new JButton("Save Game");
+        osprey2SaveGameButton = new JButton("Save Game");
+        harrierSaveGameButton = new JButton("Save Game");
         restartGameButton = new JButton("Restart");
         exitGameButton = new JButton("Exit");
         TutorialButton = new JButton("Click Here for the Tutorial");
@@ -105,7 +110,10 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         Round2Button.addActionListener(this);
         ReturnToStart.addActionListener(this);
         ospreyNestButton.addActionListener(this);
-        saveGameButton.addActionListener(this);
+        osprey1SaveGameButton.addActionListener(this);
+        osprey2SaveGameButton.addActionListener(this);
+        harrierSaveGameButton.addActionListener(this);
+
         restartGameButton.addActionListener(this);
         exitGameButton.addActionListener(this);
         TutorialButton.addActionListener(this);
@@ -369,7 +377,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             ospreyNested = true;
         }
 
-        if (e.getSource() == saveGameButton) {
+        if (e.getSource() == osprey1SaveGameButton || e.getSource() == osprey2SaveGameButton || e.getSource() == harrierSaveGameButton) {
             try {
                 saveGame();
             } catch (Exception d) {
@@ -530,8 +538,14 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         ois.writeObject(model);
     }
 
-    public JButton getSaveGameButton() {
-        return saveGameButton;
+    public JButton getOsprey1SaveGameButton() {
+        return osprey1SaveGameButton;
+    }
+    public JButton getOsprey2SaveGameButton() {
+        return osprey2SaveGameButton;
+    }
+    public JButton getHarrierSaveGameButton() {
+        return harrierSaveGameButton;
     }
     public static int getUpArrowKeyTried() {
     	return upArrowKeyTried;

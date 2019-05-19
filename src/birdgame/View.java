@@ -183,7 +183,7 @@ public class View extends JPanel implements Serializable{
         createTutorialStartScreen(c);
         createTutorialMovingDemo(c);
         createOspreyPanels(c);
-        createHarrierRound();
+        createHarrierRound(c);
         createHarrierNestPanel(c);
         createQuizPanel();
         createGameOverPanels();
@@ -350,7 +350,7 @@ public class View extends JPanel implements Serializable{
         createInitialMapPanel(c);
         createOspreyRound1Panel(c);
         createOspreyMap1to2();
-        createOspreyRound2Panel();
+        createOspreyRound2Panel(c);
         createOspreyMap2to3(c);
         createOspreyNestPanel(c);
     }
@@ -368,9 +368,9 @@ public class View extends JPanel implements Serializable{
 
     void createOspreyRound1Panel(Controller c) {
         ospreyRound1 = new OspreyPanel();
-        c.getSaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        c.getSaveGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT);
-        ospreyRound1.add(c.getSaveGameButton());
+        c.getOsprey1SaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
+        c.getOsprey1SaveGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT);
+        ospreyRound1.add(c.getOsprey1SaveGameButton());
     }
 
     void createOspreyMap1to2() {
@@ -381,8 +381,11 @@ public class View extends JPanel implements Serializable{
         map1to2.add(Controller.getRound2Button());
     }
 
-    void createOspreyRound2Panel() {
+    void createOspreyRound2Panel(Controller c) {
         ospreyRound2 = new OspreyPanel();
+        c.getOsprey2SaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
+        c.getOsprey2SaveGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT);
+        ospreyRound2.add(c.getOsprey2SaveGameButton());
     }
 
     void createOspreyMap2to3(Controller c) {
@@ -396,8 +399,11 @@ public class View extends JPanel implements Serializable{
         ospreyNest = new OspreyNestPanel();
     }
 
-    void createHarrierRound() {
+    void createHarrierRound(Controller c) {
         harrierRound = new HarrierPanel();
+        c.getHarrierSaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
+        c.getHarrierSaveGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT);
+        harrierRound.add(c.getHarrierSaveGameButton());
     }
 
     void createHarrierNestPanel(Controller c) {
@@ -755,8 +761,10 @@ public class View extends JPanel implements Serializable{
                 }
 
             }
-
-            g.setColor(Color.red);
+            g.setColor(Color.green);
+            if(health < 125) {
+            	g.setColor(Color.red);
+            }
             g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, 250 * 2, FRAME_HEIGHT / 17);
             g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
             g.setColor(Color.white);
@@ -848,8 +856,11 @@ public class View extends JPanel implements Serializable{
 
             }
 //            g.drawImage(delaware, FRAME_WIDTH-150, FRAME_HEIGHT-350, 150, 350, this);
-
-            g.setColor(Color.red);
+            
+            g.setColor(Color.green);
+            if(health < 125) {
+            	g.setColor(Color.red);
+            }
             g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, 250 * 2, FRAME_HEIGHT / 17);
             g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
             g.setColor(Color.white);
