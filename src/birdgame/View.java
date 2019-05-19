@@ -510,18 +510,6 @@ public class View extends JPanel implements Serializable {
 
     void createGameOverPanel() {
         gameOver = new GameOverPanel();
-        gameOver.setLayout(null);
-        JLabel finalScore = new JLabel("Score: " + Player.getScore());
-        finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / FINALSCORE_DISPLAY_FONT_SIZE_RATIO));
-        finalScore.setBounds((FRAME_WIDTH*FINALSCORE_DISPLAY_X_MULTIPLIER)/DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * FINALSCORE_DISPLAY_Y_MULTIPLIER)/FINALSCORE_DISPLAY_Y_RATIO, FRAME_WIDTH/DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT/DEFAULT_BUTTON_Y_LOCATION_RATIO);
-        Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
-        Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
-        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * HARRIER_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);
-        Controller.getExitGameButton().setBounds((FRAME_WIDTH * HARRIER_BUTTON_X_MULTIPLIER) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * HARRIER_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);        
-        
-        gameOver.add(Controller.getRestartGameButton());
-        gameOver.add(Controller.getExitGameButton());
-        gameOver.add(finalScore);
     }
     
     public void paintBackground(Graphics g) {

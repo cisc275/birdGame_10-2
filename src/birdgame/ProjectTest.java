@@ -186,28 +186,28 @@ public class ProjectTest {
 	}
 		//setOffsets()
 	@Test
-	public void redfoxSetXOffsetis50() {
+	public void redfoxSetXOffsetis35() {
 		GamePiece g = new GamePiece();
 		Sprite s = Sprite.REDFOX;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getXOffset() == 50;
+		assert g.getXOffset() == 35;
 	}
 	@Test
-	public void redfoxSetYOffsetis50() {
+	public void redfoxSetYOffsetis0() {
 		GamePiece g = new GamePiece();
 		Sprite s = Sprite.REDFOX;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getYOffset() == 50;
+		assert g.getYOffset() == 0;
 	}
 	@Test
-	public void eagleSetXOffsetis30() {
+	public void eagleSetXOffsetis15() {
 		GamePiece g = new GamePiece();
 		Sprite s = Sprite.EAGLE;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getXOffset() == 30;
+		assert g.getXOffset() == 15;
 	}
 	@Test
 	public void eagleSetYOffsetis30() {
@@ -218,12 +218,12 @@ public class ProjectTest {
 		assert g.getYOffset() == 30;
 	}
 	@Test
-	public void planeSetXOffsetis40() {
+	public void planeSetXOffsetis25() {
 		GamePiece g = new GamePiece();
 		Sprite s = Sprite.PLANE;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getXOffset() == 40;
+		assert g.getXOffset() == 25;
 	}
 	@Test
 	public void planeSetYOffsetis20() {
