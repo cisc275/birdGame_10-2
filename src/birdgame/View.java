@@ -162,6 +162,7 @@ public class View extends JPanel implements Serializable {
     private Image startScreenImg;
     private Image initialMapImg;
     private Image gameOverImg;
+    private Image homeScreenImg;
     private static boolean is2To3Transition;
     Color yellow = new Color(255, 255, 0, 100);
     Color snakeYellow = new Color(255, 255, 0, 175);
@@ -263,6 +264,7 @@ public class View extends JPanel implements Serializable {
             delaware[i] = createImage("images/MiniMapImages/delaware" + i + ".jpg");
         }
         gameOverImg = createImage("images/BirdImages/GameOver.png");
+        homeScreenImg = createImage("images/BirdImages/HomeScreen.png");
     }
 
     private static BufferedImage dye(BufferedImage image, Color color) {
@@ -624,7 +626,7 @@ public class View extends JPanel implements Serializable {
 
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(startScreenImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
+            g.drawImage(homeScreenImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
 
     }
