@@ -662,15 +662,6 @@ public class View extends JPanel implements Serializable {
             		foodX3 -= 14;
             		if(drawSpecialSnake) {
             			g.drawImage(specialSnake[snakePicNum], foodX3, FRAME_HEIGHT/3, this);
-            			g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH/8, playerYLoc - FRAME_HEIGHT/3, this);
-            	        g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/57));
-            	        //(Model.getCurrentFact());
-            	        String[] lines = "Hitting a Special Food, will display a fact, and gives you full,        health".split(",");
-            	        int yOffset = 0;
-            	        for (String line : lines) {
-            	            yOffset += g.getFontMetrics().getHeight();
-            	            g.drawString(line, playerXLoc + FRAME_WIDTH/6, playerYLoc - 15*FRAME_HEIGHT/72 + yOffset);
-            	        }
             		}
             		if(playerXLoc >= foodX3 - 150 && (playerYLoc >= FRAME_HEIGHT/3-50  && playerYLoc <= FRAME_HEIGHT/3+50 )  ) {
             			drawSpecialSnake=false;
@@ -685,6 +676,15 @@ public class View extends JPanel implements Serializable {
             		foodX2 -= 14;
             		hit = false;
             		if(drawEagle) {
+            			g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH/8, playerYLoc - FRAME_HEIGHT/3, this);
+            	        g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/57));
+            	        //(Model.getCurrentFact());
+            	        String[] lines = "Hitting a Special Food, will display a fact, and gives you full,        health".split(",");
+            	        int yOffset = 0;
+            	        for (String line : lines) {
+            	            yOffset += g.getFontMetrics().getHeight();
+            	            g.drawString(line, playerXLoc + FRAME_WIDTH/6, playerYLoc - 15*FRAME_HEIGHT/72 + yOffset);
+            	        }
             			g.drawImage(eagle[eaglePicNum], foodX2, FRAME_HEIGHT/4, this);
             		}
             	
