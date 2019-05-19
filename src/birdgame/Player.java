@@ -133,6 +133,5 @@ public class Player extends GamePiece implements Serializable{
 
     public void resetPlayer() {
         setHealth(MAX_BIRD_HEALTH);
-        System.out.println("resetPlayer reached");
     }
 }
