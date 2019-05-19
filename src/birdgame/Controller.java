@@ -70,6 +70,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 	private boolean paused = false;
     private static int upArrowKeyTried = 0;
     private static int downArrowKeyTried = 0;
+    private int tutorialHealth=10000;
     private boolean startButton = true;
     public Controller(){
     	QuizOptionA = new JButton("A");
@@ -297,6 +298,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     	}
     	if(e.getSource() == TutorialButton) {
     		view.setBackground(imgOsprey, imgOsprey2);
+    		model.getPlayer().setHealth(tutorialHealth);
     		view.setPanel("MOVING_SCREEN");
 
     	}
