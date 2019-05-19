@@ -100,7 +100,11 @@ public class View extends JPanel implements Serializable{
     private int ospreyNestPicNum = 0;
     private int harrierNestPicNum = 0;
     private BufferedImage[] harrierFly = new BufferedImage[FRAME_COUNT];
+    private BufferedImage[] harrierRed = new BufferedImage[FRAME_COUNT];
+    private BufferedImage[] harrierGreen = new BufferedImage[FRAME_COUNT];
     private BufferedImage[] ospreyFly = new BufferedImage[FRAME_COUNT];
+    private BufferedImage[] ospreyRed = new BufferedImage[FRAME_COUNT];
+    private BufferedImage[] ospreyGreen = new BufferedImage[FRAME_COUNT];
     private BufferedImage[] mice = new BufferedImage[2];
     private BufferedImage[] specialMice = new BufferedImage[2];
     private BufferedImage[] bunny = new BufferedImage[4];
@@ -119,7 +123,10 @@ public class View extends JPanel implements Serializable{
     private BufferedImage[] ospreyNesting = new BufferedImage[OSPREY_NEST_COUNT];
     private BufferedImage[] harrierNesting = new BufferedImage[HARRIER_NEST_COUNT];
     private Image thoughtBubble;
-
+    private static int momentFoodEaten = 0;
+	private static int momentEnemyHit = 0;
+	private int enemyDelay = 25;
+	private int foodDelay = 25;
     private JFrame frame;
     private JPanel cards;
     private JPanel currentPanel;
@@ -167,6 +174,8 @@ public class View extends JPanel implements Serializable{
 	private static boolean is2To3Transition;
 	Color yellow = new Color(255,255,0,100);
 	Color snakeYellow = new Color(255,255,0,175);
+	Color green = new Color(0,255,0,100);
+	Color red = new Color(255,0,0,100);
     private static boolean isOspreyRound1Over = false;
     private static boolean isOspreyRound2Over = false;
     private static boolean is1To2Transition = false;
@@ -179,6 +188,7 @@ public class View extends JPanel implements Serializable{
     boolean finished = false;
     boolean fishDone =false;
     boolean notOver = true;
+	
 
     public View(Controller c) {
         frame = new JFrame();
@@ -215,9 +225,13 @@ public class View extends JPanel implements Serializable{
     void loadImages() {
         for (int i = 0; i < FRAME_COUNT; i++) {
             harrierFly[i] = createImage("images/BirdImages/Harrier" + i + ".png");
+            harrierRed[i] = dye(harrierFly[i],red);
+            harrierGreen[i] = dye(harrierFly[i],green);
         }
         for (int i = 0; i < FRAME_COUNT; i++) {
             ospreyFly[i] = createImage("images/BirdImages/Osprey" + i + ".png");
+            ospreyRed[i] = dye(ospreyFly[i],red);
+            ospreyGreen[i] = dye(ospreyFly[i],green);
         }
         for (int i = 0; i < MICE_FRAME_COUNT; i++) {
             mice[i] = createImage("images/BirdImages/Mice" + i + ".png");
@@ -414,6 +428,7 @@ public class View extends JPanel implements Serializable{
         c.getHarrierSaveGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT);
         harrierRound.add(c.getHarrierSaveGameButton());
     }
+    
 
     void createHarrierNestPanel(Controller c) {
         harrierNest = new HarrierNestPanel();
@@ -422,6 +437,9 @@ public class View extends JPanel implements Serializable{
     void createQuizPanel() {
         quiz = new QuizPanel();
 
+    }
+   void clearPreviousQuizResult(){
+    	quiz.blank.setText("");
     }
 
     public void prepareQuiz() {
@@ -710,7 +728,9 @@ public class View extends JPanel implements Serializable{
 
     class OspreyPanel extends JPanel {
 
-        protected void paintComponent(Graphics g) {
+       
+
+		protected void paintComponent(Graphics g) {
             runningFrameCount++;
             paintBackground(g);
             if (runningFrameCount % ticksPerFrameUpdate == 0) {
@@ -723,8 +743,26 @@ public class View extends JPanel implements Serializable{
                     Model.incrFactIndex();
                 }
             }
-
-            g.drawImage(ospreyFly[ospreyPicNum], playerXLoc, playerYLoc, this);
+            if (Model.enemyHit()) {
+            	g.drawImage(ospreyRed[ospreyPicNum], playerXLoc, playerYLoc, this);
+            }
+            else if (Model.foodHit()) {
+                g.drawImage(ospreyGreen[ospreyPicNum], playerXLoc, playerYLoc, this);
+                }
+            else {
+            	
+            	g.drawImage(ospreyFly[ospreyPicNum], playerXLoc, playerYLoc, this);
+            }
+            
+            
+            if (runningFrameCount > momentFoodEaten + foodDelay) {
+            	Model.setFoodHit(false);
+            }
+            if (runningFrameCount > momentEnemyHit + enemyDelay) {
+            	Model.setEnemyHit(false);
+            }
+            // NEED MORE CONDITIONALS!!
+            
             Iterator<GamePiece> it = currentViewableGPs.iterator();
             while (it.hasNext()) {
                 GamePiece gp = it.next();
@@ -818,8 +856,25 @@ public class View extends JPanel implements Serializable{
                     Model.incrFactIndex();
                 }
             }
-
-            g.drawImage(harrierFly[harrierPicNum], playerXLoc, playerYLoc, this);
+            if (Model.enemyHit()) {
+            	g.drawImage(harrierRed[harrierPicNum], playerXLoc, playerYLoc, this);
+            }
+            else if (Model.foodHit()) {
+                g.drawImage(harrierGreen[harrierPicNum], playerXLoc, playerYLoc, this);
+                }
+            else {
+            	
+            	g.drawImage(harrierFly[harrierPicNum], playerXLoc, playerYLoc, this);
+            }
+            
+            
+            if (runningFrameCount > momentFoodEaten + foodDelay) {
+            	Model.setFoodHit(false);
+            }
+            if (runningFrameCount > momentEnemyHit + enemyDelay) {
+            	Model.setEnemyHit(false);
+            }
+            
             for (GamePiece gp : currentViewableGPs) {
                 if (gp.isSpecialFood()) {
                     if (gp.getSprite().equals(Sprite.MOUSE)) { //mice
@@ -1100,4 +1155,15 @@ public class View extends JPanel implements Serializable{
     public JLabel getFoodLabel() {
     	return foodLabel;
     }
+
+	public static void setMomentFoodEaten(int frameCount) {
+		momentFoodEaten = frameCount;
+		
+	}
+
+	public static void setMomentEnemyHit(int frameCount) {
+		// TODO Auto-generated method stub
+		momentEnemyHit = frameCount;
+	}
+
 }

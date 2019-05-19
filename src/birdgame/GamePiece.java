@@ -120,15 +120,15 @@ public class GamePiece implements Serializable{
     
     public void setOffsets() {
 		if (getSprite().equals(Sprite.REDFOX)) {
-			xOffset = 50;
-			yOffset = 50;
+			xOffset = 35;
+			yOffset = 0;
 		}
 		if (getSprite().equals(Sprite.EAGLE)) {
-			xOffset = 30;
+			xOffset = 15;
 			yOffset = 30;
 		}
 		if(getSprite().equals(Sprite.PLANE)) {
-			xOffset = 40;
+			xOffset = 25;
 			yOffset = 20;
 		}
 		if (getSprite().equals(Sprite.BUNNY)) {
