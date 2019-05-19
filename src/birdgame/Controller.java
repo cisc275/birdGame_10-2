@@ -29,7 +29,9 @@ import java.io.ObjectOutputStream;
  */
 public class Controller implements KeyListener, ActionListener, Serializable {
 
-    private initialNumbers initNums = new initialNumbers();
+	final static int INITIAL_BIRD_HEALTH = 250;
+	final static int INITIAL_BIRD_X_LOCATION = 30;
+	
     private View view;
     private Model model;
     private JButton OspreyButton;
@@ -256,8 +258,8 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     }
 
     void resetAfterRound() {
-        model.getPlayer().setHealth(initNums.birdHealth());
-        model.getPlayer().setX(initNums.birdXLocation());
+        model.getPlayer().setHealth(INITIAL_BIRD_HEALTH);
+        model.getPlayer().setX(INITIAL_BIRD_X_LOCATION);
         model.getPlayer().setY(view.getFrameHeight() / 2);
     }
 
@@ -367,7 +369,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             //view.setIsOspreyRound2Over(false);
             view.setPanel("START");
             model.setRound(0);
-            model.getPlayer().setX(30);
+            model.getPlayer().setX(INITIAL_BIRD_X_LOCATION);
 
         }
 

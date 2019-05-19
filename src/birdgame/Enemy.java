@@ -15,15 +15,20 @@ import java.io.Serializable;
  */
 public class Enemy extends GamePiece implements Serializable{
 
+	final static int INITIAL_DAMAGE = 50;
+	final static int INITIAL_X_INCREASE = 14;
+	final static int INITIAL_ENEMY_WIDTH = 165;
+	final static int INITIAL_ENEMY_HEIGHT = 165;
+	
     private int damage;
     public Enemy(int x, int y, Sprite enemyType){
     	setSpecialFood(false);
         setX(x);
         setY(y);
-        setXIncr(14);
+        setXIncr(INITIAL_X_INCREASE);
     	setYIncr(0);
-    	setWidth(165);
-    	setHeight(165);
+    	setWidth(INITIAL_ENEMY_WIDTH);
+    	setHeight(INITIAL_ENEMY_HEIGHT);
     	setSprite(enemyType);
         setPicNum(0);
 //        if(enemyType.equals(Type.EAGLE)){
@@ -35,7 +40,7 @@ public class Enemy extends GamePiece implements Serializable{
 //        else{
 //            setPicNum(4);
 //        }
-    	setDamage(50);
+    	setDamage(INITIAL_DAMAGE);
     	setOffsets(); //MIGHT NOT WORK
 
     }

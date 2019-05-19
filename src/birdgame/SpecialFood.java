@@ -22,13 +22,16 @@ public class SpecialFood extends Food implements Serializable{
 //	public static HashMap<String,HashMap<String,String[]>> factsAndQuestionsHarrier = new HashMap<>();
 	
 //	public static ArrayList<String> avaliableFactsHarrier;
+	
+	final static int INITIAL_X_INCREASE = 18;
+	
 	protected String fact;
     public SpecialFood(int x, int y, Sprite foodType) {
 		super(x, y, foodType);
 		setSpecialFood(true);
 
 		setFact();
-		setXIncr(18);
+		setXIncr(INITIAL_X_INCREASE);
 
 		
 		
@@ -44,19 +47,5 @@ public class SpecialFood extends Food implements Serializable{
     public String getFact() {
 		return fact;
 	}
-    
-    
-    
-   
-  
-    	
-    	
-    	
 
-
-   }
-
-  
-   
-
- 
+}

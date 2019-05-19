@@ -21,15 +21,23 @@ import java.io.Serializable;
  */
 public class Model implements Serializable {
 
-    private initialNumbers initNums = new initialNumbers();
+	final static int TOTAL_OBSTACLES_PER_LEVEL = 30;
+	final static int MAX_BIRD_HEALTH = 250;
+	final static int MAX_SPECIAL_FOOD = 3;
+	final static double CHANCE_SPECIAL_FOOD_SPAWNS = 0.2;
+	final static double CHANCE_FOOD_SPAWNS_INSTEAD_OF_ENEMY = 0.5;
+	final static double EQUAL_CHANCE_BETWEEN_2 = 0.5;
+	final static int X_LOCATION_WHERE_GPS_ARE_NO_LONGER_CURRENT = -500;
+	final static int X_INCREASE_AT_END_OF_LEVEL = 30;
+	final static int X_LOCATION_FOR_OBSTACLE_SPAWNS = 1200;
+	final static int ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD = 800;
+	
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
     public static HashMap<String,String[]> questionsToAsk = new HashMap<>();
     private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
-    private int maxBirdHealth = initNums.birdHealth();
     private static int round;
     private static int questionNum;
     private static int numberOfQuestions;
-    private int numGamePiecesInRoundLeft = initNums.obstaclesPerLevel();
     protected int fWidth;
     protected int fHeight;
     private int imgHeight;
@@ -38,14 +46,7 @@ public class Model implements Serializable {
     private static String correctAnswer;
     private int sceneNum;
     protected ArrayList<GamePiece> gamePieces = new ArrayList<>();
-
-    private double chanceSpecialFoodSpawns = initNums.chanceSpecialFoodSpawns();
-    private double chanceHarrierFoodIsBunny = initNums.chanceHarrierFoodIsBunny();
-    private double chanceFoodSpawnsInsteadOfEnemy = initNums.chanceFoodSpawnsInsteadOfEnemy();
-    private double chanceHarrierEnemyIsFox = initNums.chanceFoodSpawnsInsteadOfEnemy();
-    private double chanceOspreyFoodIsSnake = initNums.chanceOspreyFoodIsSnake();
-    private double chanceOspreyEnemyIsEagle = initNums.chanceOspreyEnemyIsEagle();
-
+    
     static String[] facts;
     private int totalLevelTicks;
     private static int currentFactIndex = 0;
@@ -55,7 +56,7 @@ public class Model implements Serializable {
     private int indexOfGP;
     private static String currentFact;
     private CopyOnWriteArrayList<GamePiece> currentGPs = new CopyOnWriteArrayList<>();
-    private int xLocationWhereGPsAreNoLongerCurrent = initNums.xLocationWhereGPsAreNoLongerCurrent();
+    private int numGamePiecesInRoundLeft = TOTAL_OBSTACLES_PER_LEVEL;
     private GamePiece furthestGP = new GamePiece();
     private static boolean specialFoodEaten = false;
     static ArrayList<String> availableFacts;
@@ -166,7 +167,7 @@ public class Model implements Serializable {
     }
 
     public void endOfLevel() {
-        player.setXIncr(initNums.xIncreaseAtEndOfLevel());
+        player.setXIncr(X_INCREASE_AT_END_OF_LEVEL);
 //    	player.setXIncr((int)(fWidth * .5));
         player.setX(player.getX() + player.getXIncr());
         if (player.getX() > (fWidth - imgWidth)) {
@@ -198,19 +199,18 @@ public class Model implements Serializable {
         //background0:
         //land: 0-432px, 1776-2640px, 
         //int tempXLoc = (int)(Math.random() * 2639 + 1776);
-        int tempXLoc = initNums.xLocationForObstacles();
-        int additionalXLocationForSpecialFood = initNums.additionalXLocatitionForSpecialFood();
+        int tempXLoc = X_LOCATION_FOR_OBSTACLE_SPAWNS;
 
         //int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
         //int topHalfY = ((int) (Math.random()*(fHeight/2)));
         int maxSpecialFood = 3;
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
-                if (Math.random() < chanceSpecialFoodSpawns) {
-                    if (Math.random() < chanceHarrierFoodIsBunny) {
-                        gamePieces.add(new SpecialFood(tempXLoc + additionalXLocationForSpecialFood, (int) (Math.random() * groundLevel), Sprite.BUNNY));
+                if (Math.random() < CHANCE_SPECIAL_FOOD_SPAWNS) {
+                    if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
+                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD, (int) (Math.random() * groundLevel), Sprite.BUNNY));
                     } else {
-                        gamePieces.add(new SpecialFood(tempXLoc + additionalXLocationForSpecialFood, (int) (Math.random() * groundLevel), Sprite.MOUSE));
+                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD, (int) (Math.random() * groundLevel), Sprite.MOUSE));
 
                     }
                     numSpecialFood++;
@@ -218,14 +218,14 @@ public class Model implements Serializable {
                 }
             }
 
-            if (Math.random() < chanceFoodSpawnsInsteadOfEnemy) {
-                if (Math.random() < chanceHarrierFoodIsBunny) {
+            if (Math.random() < CHANCE_FOOD_SPAWNS_INSTEAD_OF_ENEMY) {
+                if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
                     gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.BUNNY));
                 } else {
                     gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.MOUSE));
                 }
             } else {
-                if (Math.random() < chanceHarrierEnemyIsFox) {
+                if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
                     gamePieces.add(new Enemy(tempXLoc, (int) (Math.random() * groundLevel), Sprite.REDFOX));
                 } else {
                     gamePieces.add(new Enemy(tempXLoc, (int) (Math.random() * groundLevel), Sprite.RACCOON));
@@ -249,17 +249,16 @@ public class Model implements Serializable {
         questionsToAsk = new HashMap<String, String[]>();
         int numGamePieces = 0;
         int numSpecialFood = 0;
-        int tempXLoc = initNums.xLocationForObstacles();
-        int additionalXLocationForSpecialFood = initNums.additionalXLocatitionForSpecialFood();
-        int maxSpecialFood = initNums.maxSpecialFood();
+        int tempXLoc = X_LOCATION_FOR_OBSTACLE_SPAWNS;
+        int maxSpecialFood = MAX_SPECIAL_FOOD;
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
                 // instead of 1
-                if (Math.random() < chanceSpecialFoodSpawns) {
-                    if (Math.random() < chanceOspreyFoodIsSnake) {
-                        gamePieces.add(new SpecialFood(tempXLoc + additionalXLocationForSpecialFood, (int) (Math.random() * groundLevel), Sprite.SNAKE));
+                if (Math.random() < CHANCE_SPECIAL_FOOD_SPAWNS) {
+                    if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
+                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD, (int) (Math.random() * groundLevel), Sprite.SNAKE));
                     } else {
-                        gamePieces.add(new SpecialFood(tempXLoc + additionalXLocationForSpecialFood, (int) (Math.random() * groundLevel), Sprite.FISH));
+                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD, (int) (Math.random() * groundLevel), Sprite.FISH));
 
                     }
                     numSpecialFood++;
@@ -267,14 +266,14 @@ public class Model implements Serializable {
                 }
             }
 
-            if (Math.random() < chanceFoodSpawnsInsteadOfEnemy) {
-                if (Math.random() < chanceOspreyFoodIsSnake) {
+            if (Math.random() < CHANCE_FOOD_SPAWNS_INSTEAD_OF_ENEMY) {
+                if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
                     gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.SNAKE));
                 } else {
                     gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.FISH));
                 }
             } else {
-                if (Math.random() < chanceOspreyEnemyIsEagle) {
+                if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
                     gamePieces.add(new Enemy(tempXLoc, (int) (Math.random() * groundLevel), Sprite.EAGLE));
                 } else {
                     gamePieces.add(new Enemy(tempXLoc, (int) (Math.random() * groundLevel), Sprite.PLANE));
@@ -305,7 +304,7 @@ public class Model implements Serializable {
 
     public void seeCurrentGP() {
         for (GamePiece g : gamePieces) {
-            if (g.getX() <= fWidth && g.getX() >= xLocationWhereGPsAreNoLongerCurrent) {
+            if (g.getX() <= fWidth && g.getX() >= X_LOCATION_WHERE_GPS_ARE_NO_LONGER_CURRENT) {
                 currentGPs.add(g);
             }
         }
@@ -330,8 +329,8 @@ public class Model implements Serializable {
      */
     public void eat(Food f) {
         player.setScore(player.getScore() + f.getFoodValue());
-        if (player.getHealth() > maxBirdHealth - f.getFoodValue()) {
-            player.setHealth(maxBirdHealth);
+        if (player.getHealth() > MAX_BIRD_HEALTH - f.getFoodValue()) {
+            player.setHealth(MAX_BIRD_HEALTH);
         } else {
             player.setHealth(player.getHealth() + f.getFoodValue());
         }
@@ -349,7 +348,7 @@ public class Model implements Serializable {
             //	questionsToAsk.add()
         }
         player.setScore(player.getScore() + sf.getFoodValue());
-        player.setHealth(maxBirdHealth);
+        player.setHealth(MAX_BIRD_HEALTH);
     }
 
     public static HashMap<String, String[]> getQuestionToAsk() {

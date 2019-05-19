@@ -17,6 +17,24 @@ import java.io.Serializable;
  */
 public class GamePiece implements Serializable{
 	
+	final static int FOX_X_OFFSET = 50;
+	final static int FOX_Y_OFFSET = 50;
+	final static int EAGLE_X_OFFSET = 30;
+	final static int EAGLE_Y_OFFSET = 30;
+	final static int PLANE_X_OFFSET = 40;
+	final static int PLANE_Y_OFFSET = 20;
+	final static int BUNNY_X_OFFSET = 20;
+	final static int BUNNY_Y_OFFSET = 20;
+	final static int MOUSE_X_OFFSET = 10;
+	final static int MOUSE_Y_OFFSET = 5;
+	final static int FISH_X_OFFSET = 10;
+	final static int FISH_Y_OFFSET = 0;
+	final static int RACCOON_X_OFFSET = 30;
+	final static int RACCOON_Y_OFFSET = 30;
+	final static int SNAKE_X_OFFSET = 30;
+	final static int SNAKE_Y_OFFSET = 30;
+	
+	
     private int xLocation;
     private int yLocation;
     private int xincr;
@@ -120,36 +138,36 @@ public class GamePiece implements Serializable{
     
     public void setOffsets() {
 		if (getSprite().equals(Sprite.REDFOX)) {
-			xOffset = 50;
-			yOffset = 50;
+			xOffset = FOX_X_OFFSET;
+			yOffset = FOX_Y_OFFSET;
 		}
 		if (getSprite().equals(Sprite.EAGLE)) {
-			xOffset = 30;
-			yOffset = 30;
+			xOffset = EAGLE_X_OFFSET;
+			yOffset = EAGLE_Y_OFFSET;
 		}
 		if(getSprite().equals(Sprite.PLANE)) {
-			xOffset = 40;
-			yOffset = 20;
+			xOffset = PLANE_X_OFFSET;
+			yOffset = PLANE_Y_OFFSET;
 		}
 		if (getSprite().equals(Sprite.BUNNY)) {
-			xOffset = 20;
-			yOffset = 20;
+			xOffset = BUNNY_X_OFFSET;
+			yOffset = BUNNY_Y_OFFSET;
 		}
 		if (getSprite().equals(Sprite.MOUSE)) {
-			xOffset = 10;
-			yOffset = 5;
+			xOffset = MOUSE_X_OFFSET;
+			yOffset = MOUSE_Y_OFFSET;
 		}
 		if (getSprite().equals(Sprite.FISH)) {
-			xOffset = 10;
-			yOffset = 0;
+			xOffset = FISH_X_OFFSET;
+			yOffset = FISH_Y_OFFSET;
 		}
 		if (getSprite().equals(Sprite.RACCOON)) {
-			xOffset = 30;
-			yOffset = 30;
+			xOffset = RACCOON_X_OFFSET;
+			yOffset = RACCOON_Y_OFFSET;
 		}
 		if (getSprite().equals(Sprite.SNAKE)) {
-			xOffset = 30;
-			yOffset = 30;
+			xOffset = SNAKE_X_OFFSET;
+			yOffset = SNAKE_Y_OFFSET;
 		}
 		
 	}

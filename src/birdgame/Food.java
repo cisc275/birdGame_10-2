@@ -15,18 +15,23 @@ import java.io.Serializable;
  */
 public class Food extends GamePiece implements Serializable{
 	
+	final static int INITIAL_FOOD_VALUE = 40;
+	final static int INITIAL_X_INCREASE = 14;
+	final static int INITIAL_ENEMY_WIDTH = 165;
+	final static int INITIAL_ENEMY_HEIGHT = 165;
+	
     private int foodValue;
     public Food(int x, int y, Sprite foodType){
     	setSpecialFood(false);
         setX(x);
         setY(y);
-        setXIncr(14);
+        setXIncr(INITIAL_X_INCREASE);
     	setYIncr(0);
-    	setWidth(165);
-    	setHeight(165);
+    	setWidth(INITIAL_ENEMY_WIDTH);
+    	setHeight(INITIAL_ENEMY_HEIGHT);
     	setSprite(foodType);
         setPicNum(0);
-    	setFoodValue(40);
+    	setFoodValue(INITIAL_FOOD_VALUE);
     	setOffsets(); //MIGHT NOT WORK
     }
 

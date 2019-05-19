@@ -55,7 +55,6 @@ import java.awt.CardLayout;
  */
 public class View extends JPanel implements Serializable{
 
-	private initialNumbers initNums = new initialNumbers();
     static Rectangle rect = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
     final static int FRAME_WIDTH = (int) rect.getWidth();
     final static int FRAME_HEIGHT = (int) rect.getHeight();
@@ -63,14 +62,26 @@ public class View extends JPanel implements Serializable{
     final static int BIRD_HEIGHT = 165;
     final static int FRAME_COUNT = 6;
     final static int MILLISECONDS_PER_SECOND = 1000;
-
-    final int framesPerSecond = initNums.framesPerSecond();
-    private static int runningFrameCount = 0;
-//changed runningframeCount to static, might be a problem
-    private int ticksPerFrameUpdate = framesPerSecond / 10;
-
-    private int harrierPicNum = 0;
-    private int ospreyPicNum = 0;
+    final static int FRAMES_PER_SECOND = 40;
+    final static int SPECIAL_FOOD_DELAY = 100;
+    final static Color YELLOW = new Color(255,255,0,100);
+	final static Color SNAKEYELLOW = new Color(255,255,0,175);
+	final static int DELAY_FOR_ANIMATION_UPDATES = 10;
+	final static int BACKGROUND_LOCATION_X_INCREASE = 8;
+	final static int MAX_NUM_BACKGROUNDS = 200;
+	final static int SECONDS_PER_MAP_FRAME = 1;
+	final static int MAX_BIRD_HEALTH = Model.MAX_BIRD_HEALTH;
+	final static int NEST_DELAY_MILLISECONDS = 50;
+	
+    final static int THOUGHT_BUBBLE_SIZE = 400;
+    final static int DEFAULT_BUTTON_FONT_SIZE_RATIO = 55;
+    final static int DEFAULT_BUTTON_FRAMEWIDTH_RATIO = 10;
+    final static int DEFAULT_BUTTON_FRAMEHEIGHT_RATIO = 100;
+    final static int DEFAULT_BUTTON_Y_MULTIPLIER = 84;
+    final static int HARRIER_BUTTON_Y_MULTIPLIER = 37;
+    final static int HARRIER_BUTTON_X_MULTIPLIER = 6;
+    final static int DEFAULT_BUTTON_X_LOCATION_RATIO = 4;
+    final static int DEFAULT_BUTTON_Y_LOCATION_RATIO = 15;
     final static int MICE_FRAME_COUNT = 2;
     final static int BUNNY_FRAME_COUNT = 4;
     final static int RED_FOX_FRAME_COUNT = 4;
@@ -84,6 +95,39 @@ public class View extends JPanel implements Serializable{
     final static int DE_FRAME_COUNT = 33;
     final static int OSPREY_NEST_COUNT = 17;
     final static int HARRIER_NEST_COUNT = 17;
+    final static int TUTORIAL_BUTTON_X_RATIO = 3;
+    final static int TUTORIAL_BUTTON_Y_MULTIPLIER = 4;
+    final static int TUTORIAL_BUTTON_Y_RATIO = 10;
+    final static int TUTORIAL_BUTTON_Y_LOCATION_RATIO = 14;
+    final static int TUTORIAL_LABEL_FONT_SIZE_RATIO = 30;
+    final static int TUTORIAL_LABEL_FONT_STYLE = 1;
+    final static int TUTORIAL_UP_DOWN_LABEL_X_RATIO = 50;
+    final static int TUTORIAL_FOOD_ENEMY_LABEL_X_RATIO = 12;
+    final static int TUTORIAL_FOOD_ENEMY_LABEL_X_MULTIPLIER = 5;
+    final static int TUTORIAL_LABEL_Y_RATIO = 8;
+    final static int TUTORIAL_LABEL_DOWN_Y_RATIO = 4;
+    final static int ROUND_BUTTON_X_MULTIPLIER = 7;
+    final static int FINALSCORE_DISPLAY_FONT_SIZE_RATIO = 25;
+    final static int FINALSCORE_DISPLAY_X_MULTIPLIER = 4;
+    final static int FINALSCORE_DISPLAY_Y_MULTIPLIER = 2;
+    final static int FINALSCORE_DISPLAY_Y_RATIO = 10;
+    
+	final static int GRID_WIDTH = 3;
+	final static int GRID_HEIGHT = 2;
+	final static int QUIZ_FONT_STYLE = 1;
+	final static int QUESTION_FONT_SIZE_RATIO = 33;
+	final static int BLANK_FONT_SIZE_RATIO = 40;
+	final static int QUIZ_DIMENSION_PREFERRED_X_RATIO = 3;
+	final static int QUIZ_DIMENSION_PREFERRED_Y_RATIO = 4;
+    
+	
+    private static int runningFrameCount = 0;
+//changed runningframeCount to static, might be a problem
+    private int ticksPerFrameUpdate = FRAMES_PER_SECOND / DELAY_FOR_ANIMATION_UPDATES;
+
+    private int harrierPicNum = 0;
+    private int ospreyPicNum = 0;
+
     private int micePicNum = 0;
     private int bunnyPicNum = 0;
     private int redFoxPicNum = 0;
@@ -136,12 +180,7 @@ public class View extends JPanel implements Serializable{
     private QuizPanel quiz;
     private JPanel gameOverWin;
     private JPanel gameOverLose;
-
-    private int specialFoodDelay = initNums.specialFoodDelay();
-    private int thoughtBubbleSize = initNums.thoughtBubbleSize();
-    private int defaultButtonFontSizeRatio = initNums.defaultButtonFontSizeRatio();
-    private int defaultButtonFrameWidthRatio = initNums.defaultButtonFrameWidthRatio();
-    private int defaultButtonFrameHeightRatio = initNums.defaultButtonFrameHeightRatio();
+    
     private JPanel movingScreen;
     private JLabel downLabel;
     private JLabel upLabel;
@@ -167,8 +206,6 @@ public class View extends JPanel implements Serializable{
     private Image gameOverWinImg;
     private Image gameOverLoseImg;
 	private static boolean is2To3Transition;
-	Color yellow = new Color(255,255,0,100);
-	Color snakeYellow = new Color(255,255,0,175);
     private static boolean isOspreyRound1Over = false;
     private static boolean isOspreyRound2Over = false;
     private static boolean is1To2Transition = false;
@@ -226,11 +263,11 @@ public class View extends JPanel implements Serializable{
         }
         for (int i = 0; i < MICE_FRAME_COUNT; i++) {
             mice[i] = createImage("images/BirdImages/Mice" + i + ".png");
-            specialMice[i] = dye(mice[i],yellow);
+            specialMice[i] = dye(mice[i],YELLOW);
         }
         for (int i = 0; i < BUNNY_FRAME_COUNT; i++) {
             bunny[i] = createImage("images/BirdImages/Bunny" + i + ".png");
-            specialBunny[i] = dye(bunny[i],yellow);
+            specialBunny[i] = dye(bunny[i],YELLOW);
         }
         for (int i = 0; i < RED_FOX_FRAME_COUNT; i++) {
             redFox[i] = createImage("images/BirdImages/RedFox" + i + ".png");
@@ -241,11 +278,11 @@ public class View extends JPanel implements Serializable{
         for (int i = 0; i < FISH_FRAME_COUNT; i++) {
             fish[i] = createImage("images/BirdImages/Fish" + i + ".png");
             
-            specialFish[i] = dye(fish[i],yellow);
+            specialFish[i] = dye(fish[i],YELLOW);
         }
         for (int i = 0; i < SNAKE_FRAME_COUNT; i++) {
             snake[i] = createImage("images/BirdImages/Snake" + i + ".png");
-            specialSnake[i] = dye(snake[i],snakeYellow);
+            specialSnake[i] = dye(snake[i],SNAKEYELLOW);
         }
         for (int i = 0; i < EAGLE_FRAME_COUNT; i++) {
             eagle[i] = createImage("images/BirdImages/Eagle" + i + ".png");
@@ -265,7 +302,7 @@ public class View extends JPanel implements Serializable{
         for (int i = 0; i < HARRIER_NEST_COUNT; i++) {
             harrierNesting[i] = createImage("images/BirdImages/HarrierNesting/HarrierNest" + i + ".png");
         }
-        thoughtBubble = createImage("images/bub.png").getScaledInstance(thoughtBubbleSize, thoughtBubbleSize, Image.SCALE_SMOOTH);
+        thoughtBubble = createImage("images/bub.png").getScaledInstance(THOUGHT_BUBBLE_SIZE, THOUGHT_BUBBLE_SIZE, Image.SCALE_SMOOTH);
         for (int i = 0; i < DE_FRAME_COUNT; i++) {
             delaware[i] = createImage("images/MiniMapImages/delaware" + i + ".jpg");
         }
@@ -301,10 +338,10 @@ public class View extends JPanel implements Serializable{
         startScreenImg = createImage("images/BirdImages/StartScreen.png");
 
         startScreen.setLayout(null);
-        c.getOspreyButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        c.getHarrierButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        c.getOspreyButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-        c.getHarrierButton().setBounds((FRAME_WIDTH * 6) / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 37) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        c.getOspreyButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+        c.getHarrierButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+        c.getOspreyButton().setBounds(FRAME_WIDTH / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * DEFAULT_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);
+        c.getHarrierButton().setBounds((FRAME_WIDTH * HARRIER_BUTTON_X_MULTIPLIER) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * HARRIER_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);
 
         startScreen.add(c.getOspreyButton());
         startScreen.add(c.getHarrierButton());
@@ -313,33 +350,34 @@ public class View extends JPanel implements Serializable{
     void createTutorialStartScreen(Controller c){
         tutorialScreen = new TutorialScreenPanel();
         tutorialScreen.setLayout(null);
-        c.getTutorialButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
-        c.getTutorialButton().setBounds(FRAME_WIDTH/3, 4*FRAME_HEIGHT/10, FRAME_WIDTH / 3, FRAME_HEIGHT / 14);
+        c.getTutorialButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+        c.getTutorialButton().setBounds(FRAME_WIDTH / TUTORIAL_BUTTON_X_RATIO, TUTORIAL_BUTTON_Y_MULTIPLIER * FRAME_HEIGHT/TUTORIAL_BUTTON_Y_RATIO, FRAME_WIDTH / TUTORIAL_BUTTON_X_RATIO, FRAME_HEIGHT / TUTORIAL_BUTTON_Y_LOCATION_RATIO);
         
         tutorialScreen.add(c.getTutorialButton());
 
     }
     
+    
     void createTutorialMovingDemo(Controller c) {
     	movingScreen = new MovingScreenPanel();
         movingScreen.setLayout(null);
         upLabel = new JLabel("Use the UP arrow key to move up");
-        upLabel.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/30));
-        upLabel.setBounds(FRAME_WIDTH/50, FRAME_HEIGHT/8, FRAME_WIDTH, FRAME_HEIGHT/8);
+        upLabel.setFont(new Font("Times New Roman", TUTORIAL_LABEL_FONT_STYLE, FRAME_WIDTH/TUTORIAL_LABEL_FONT_SIZE_RATIO));
+        upLabel.setBounds(FRAME_WIDTH/TUTORIAL_UP_DOWN_LABEL_X_RATIO, FRAME_HEIGHT/TUTORIAL_LABEL_Y_RATIO, FRAME_WIDTH, FRAME_HEIGHT/TUTORIAL_LABEL_Y_RATIO);
         downLabel = new JLabel("Use the DOWN arrow key to move down");
-        downLabel.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/30));
-        downLabel.setBounds(FRAME_WIDTH/50, FRAME_HEIGHT-FRAME_HEIGHT/4, FRAME_WIDTH, FRAME_HEIGHT/8);
+        downLabel.setFont(new Font("Times New Roman", TUTORIAL_LABEL_FONT_STYLE, FRAME_WIDTH/TUTORIAL_LABEL_FONT_SIZE_RATIO));
+        downLabel.setBounds(FRAME_WIDTH/TUTORIAL_UP_DOWN_LABEL_X_RATIO, FRAME_HEIGHT-FRAME_HEIGHT/TUTORIAL_LABEL_DOWN_Y_RATIO, FRAME_WIDTH, FRAME_HEIGHT/TUTORIAL_LABEL_Y_RATIO);
         foodLabel = new JLabel("Now try to hit the moving food");
-        foodLabel.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/30));
-        foodLabel.setBounds(5*FRAME_WIDTH/12, FRAME_HEIGHT/8, FRAME_WIDTH, FRAME_HEIGHT/8);
+        foodLabel.setFont(new Font("Times New Roman", TUTORIAL_LABEL_FONT_STYLE, FRAME_WIDTH/TUTORIAL_LABEL_FONT_SIZE_RATIO));
+        foodLabel.setBounds(TUTORIAL_FOOD_ENEMY_LABEL_X_MULTIPLIER*FRAME_WIDTH/TUTORIAL_FOOD_ENEMY_LABEL_X_RATIO, FRAME_HEIGHT/TUTORIAL_LABEL_Y_RATIO, FRAME_WIDTH, FRAME_HEIGHT/TUTORIAL_LABEL_Y_RATIO);
         specialFoodLabel = new JLabel("Now try to hit the golden moving food");
-        specialFoodLabel.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/30));
-        specialFoodLabel.setBounds(5*FRAME_WIDTH/12, FRAME_HEIGHT/8, FRAME_WIDTH, FRAME_HEIGHT/8);
+        specialFoodLabel.setFont(new Font("Times New Roman", TUTORIAL_LABEL_FONT_STYLE, FRAME_WIDTH/TUTORIAL_LABEL_FONT_SIZE_RATIO));
+        specialFoodLabel.setBounds(TUTORIAL_FOOD_ENEMY_LABEL_X_MULTIPLIER*FRAME_WIDTH/TUTORIAL_FOOD_ENEMY_LABEL_X_RATIO, FRAME_HEIGHT/TUTORIAL_LABEL_Y_RATIO, FRAME_WIDTH, FRAME_HEIGHT/TUTORIAL_LABEL_Y_RATIO);
         enemyLabel = new JLabel("Now avoid the predators and obstacles");
-        enemyLabel.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/30));
-        enemyLabel.setBounds(5*FRAME_WIDTH/12, FRAME_HEIGHT/8, FRAME_WIDTH, FRAME_HEIGHT/8);
-        c.getTutorialMovingButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
-        c.getTutorialMovingButton().setBounds(FRAME_WIDTH/3, 4*FRAME_HEIGHT/10, FRAME_WIDTH / 3, FRAME_HEIGHT / 14);
+        enemyLabel.setFont(new Font("Times New Roman", TUTORIAL_LABEL_FONT_STYLE, FRAME_WIDTH/TUTORIAL_LABEL_FONT_SIZE_RATIO));
+        enemyLabel.setBounds(TUTORIAL_FOOD_ENEMY_LABEL_X_MULTIPLIER*FRAME_WIDTH/TUTORIAL_FOOD_ENEMY_LABEL_X_RATIO, FRAME_HEIGHT/TUTORIAL_LABEL_Y_RATIO, FRAME_WIDTH, FRAME_HEIGHT/TUTORIAL_LABEL_Y_RATIO);
+        c.getTutorialMovingButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+        c.getTutorialMovingButton().setBounds(FRAME_WIDTH/TUTORIAL_BUTTON_X_RATIO, TUTORIAL_BUTTON_Y_MULTIPLIER*FRAME_HEIGHT/TUTORIAL_BUTTON_Y_RATIO, FRAME_WIDTH / TUTORIAL_BUTTON_X_RATIO, FRAME_HEIGHT / TUTORIAL_BUTTON_Y_LOCATION_RATIO);
         movingScreen.add(upLabel);
         movingScreen.add(downLabel);
         movingScreen.add(foodLabel);
@@ -367,22 +405,22 @@ public class View extends JPanel implements Serializable{
         createOspreyMap2to3(c);
         createOspreyNestPanel(c);
     }
-
+    
     void createInitialMapPanel(Controller c) {
         initialMap = new InitialMapPanel();
         initialMapImg = createImage("images/BirdImages/OspreyLevelScreen0.png");
 
         initialMap.setLayout(null);
-        c.getRound1Button().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        c.getRound1Button().setBounds((FRAME_WIDTH * 7) / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        c.getRound1Button().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+        c.getRound1Button().setBounds((FRAME_WIDTH * ROUND_BUTTON_X_MULTIPLIER) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * DEFAULT_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);
 
         initialMap.add(c.getRound1Button());
     }
 
     void createOspreyRound1Panel(Controller c) {
         ospreyRound1 = new OspreyPanel();
-        c.getOsprey1SaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        c.getOsprey1SaveGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT);
+        c.getOsprey1SaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+        c.getOsprey1SaveGameButton().setBounds(FRAME_WIDTH / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * DEFAULT_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT);
         ospreyRound1.add(c.getOsprey1SaveGameButton());
     }
 
@@ -396,8 +434,8 @@ public class View extends JPanel implements Serializable{
 
     void createOspreyRound2Panel(Controller c) {
         ospreyRound2 = new OspreyPanel();
-        c.getOsprey2SaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        c.getOsprey2SaveGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT);
+        c.getOsprey2SaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+        c.getOsprey2SaveGameButton().setBounds(FRAME_WIDTH / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * DEFAULT_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT);
         ospreyRound2.add(c.getOsprey2SaveGameButton());
     }
 
@@ -414,8 +452,8 @@ public class View extends JPanel implements Serializable{
 
     void createHarrierRound(Controller c) {
         harrierRound = new HarrierPanel();
-        c.getHarrierSaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        c.getHarrierSaveGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT);
+        c.getHarrierSaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+        c.getHarrierSaveGameButton().setBounds(FRAME_WIDTH / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * DEFAULT_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT);
         harrierRound.add(c.getHarrierSaveGameButton());
     }
 
@@ -458,19 +496,19 @@ public class View extends JPanel implements Serializable{
         createGameOverWin();
         createGameOverLose();
     }
-
+    
     void createGameOverWin() {
         gameOverWinImg = createImage("images/BirdImages/GameOverWin.png");
         gameOverWin = new GameOverWinPanel();
 
         gameOverWin.setLayout(null);
         JLabel finalScore = new JLabel("Score: " + Player.getScore());
-        finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/25));
-        finalScore.setBounds((FRAME_WIDTH*4)/defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 2)/10, FRAME_WIDTH/4, FRAME_HEIGHT/15);
-        Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-        Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 37) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/FINALSCORE_DISPLAY_FONT_SIZE_RATIO));
+        finalScore.setBounds((FRAME_WIDTH*FINALSCORE_DISPLAY_X_MULTIPLIER)/DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * FINALSCORE_DISPLAY_Y_MULTIPLIER)/FINALSCORE_DISPLAY_Y_RATIO, FRAME_WIDTH/DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT/DEFAULT_BUTTON_Y_LOCATION_RATIO);
+        Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+        Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * DEFAULT_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);
+        Controller.getExitGameButton().setBounds((FRAME_WIDTH * HARRIER_BUTTON_X_MULTIPLIER) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * HARRIER_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);
         
         gameOverWin.add(Controller.getRestartGameButton());
         gameOverWin.add(Controller.getExitGameButton());
@@ -483,23 +521,24 @@ public class View extends JPanel implements Serializable{
         
         gameOverLose.setLayout(null);
         JLabel finalScore = new JLabel("Score: " + Player.getScore());
-        finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 25));
-        finalScore.setBounds((FRAME_WIDTH*4)/defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 2)/10, FRAME_WIDTH/4, FRAME_HEIGHT/15);
-        Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 37) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-        Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / FINALSCORE_DISPLAY_FONT_SIZE_RATIO));
+        finalScore.setBounds((FRAME_WIDTH*FINALSCORE_DISPLAY_X_MULTIPLIER)/DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * FINALSCORE_DISPLAY_Y_MULTIPLIER)/FINALSCORE_DISPLAY_Y_RATIO, FRAME_WIDTH/DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT/DEFAULT_BUTTON_Y_LOCATION_RATIO);
+        Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+        Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * HARRIER_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);
+        Controller.getExitGameButton().setBounds((FRAME_WIDTH * HARRIER_BUTTON_X_MULTIPLIER) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * DEFAULT_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);
         
         gameOverLose.add(Controller.getRestartGameButton());
         gameOverLose.add(Controller.getExitGameButton());
         gameOverLose.add(finalScore);
     }
 
+    
     public void paintBackground(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(backgroundImage, -backgroundLocation, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         g2d.drawImage(backgroundImageFlipped, FRAME_WIDTH - backgroundLocation, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
-        for (int i = 1; i < 200; i++) {
+        for (int i = 1; i < MAX_NUM_BACKGROUNDS; i++) {
             if (i % 2 == 0) {
                 g2d.drawImage(backgroundImageFlipped, (i * FRAME_WIDTH) + (FRAME_WIDTH - backgroundLocation), 0, FRAME_WIDTH, FRAME_HEIGHT, null);
             } else {
@@ -564,7 +603,7 @@ public class View extends JPanel implements Serializable{
         return null;
 
     }
-
+    
     public void update(int xLoc, int yLoc, CopyOnWriteArrayList<GamePiece> g, Direction dir, int h, int s) {
         playerXLoc = xLoc;
         playerYLoc = yLoc;
@@ -572,10 +611,10 @@ public class View extends JPanel implements Serializable{
         score = s;
         currentViewableGPs = g;
         direction = dir;
-        backgroundLocation += 8;
+        backgroundLocation += BACKGROUND_LOCATION_X_INCREASE;
         frame.repaint();
         try {
-            Thread.sleep(MILLISECONDS_PER_SECOND / framesPerSecond);
+            Thread.sleep(MILLISECONDS_PER_SECOND / FRAMES_PER_SECOND);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -584,7 +623,7 @@ public class View extends JPanel implements Serializable{
     }
 
     class QuizPanel extends JPanel {
-
+    	
         String[] questions;
         JButton ButtonA;
         JButton ButtonB;
@@ -594,7 +633,7 @@ public class View extends JPanel implements Serializable{
         JLabel blank;
 
         QuizPanel() {
-            setLayout(new GridLayout(3, 2));
+            setLayout(new GridLayout(GRID_WIDTH, GRID_HEIGHT));
 //    		
     		ButtonA = Controller.getOptionAButton();
     		ButtonB = Controller.getOptionBButton();
@@ -602,10 +641,10 @@ public class View extends JPanel implements Serializable{
     		ButtonD = Controller.getOptionDButton();
     		question = new JLabel("Blank");
     		blank = new JLabel();
-    		question.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/33));
-        	question.setPreferredSize(new Dimension(FRAME_WIDTH/3,FRAME_HEIGHT/4));
-        	blank.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/40));
-        	blank.setPreferredSize(new Dimension(FRAME_WIDTH/3,FRAME_HEIGHT/4));
+    		question.setFont(new Font("Times New Roman", QUIZ_FONT_STYLE, FRAME_WIDTH/QUESTION_FONT_SIZE_RATIO));
+        	question.setPreferredSize(new Dimension(FRAME_WIDTH/QUIZ_DIMENSION_PREFERRED_X_RATIO,FRAME_HEIGHT/QUIZ_DIMENSION_PREFERRED_Y_RATIO));
+        	blank.setFont(new Font("Times New Roman", QUIZ_FONT_STYLE, FRAME_WIDTH/BLANK_FONT_SIZE_RATIO));
+        	blank.setPreferredSize(new Dimension(FRAME_WIDTH/QUIZ_DIMENSION_PREFERRED_X_RATIO,FRAME_HEIGHT/QUIZ_DIMENSION_PREFERRED_Y_RATIO));
 
         	add(question);
             add(blank);
@@ -645,6 +684,12 @@ public class View extends JPanel implements Serializable{
     }
     class MovingScreenPanel extends JPanel {
 
+    	final static int FOOD_X_INCREASE = 14;
+    	final static int DISTANCE_TO_NOT_DRAW_FOOD = 150;
+    	final static int HEIGHT_DIFFERENCE_TO_GET_FOOD = 100;
+    	final static int DISTANCE_WHERE_PLAYER_MISSED_FOOD = 250;
+    	final static int TUTORIAL_THOUGHT_BUBBLE_X_RATIO = 8;
+    	
         protected void paintComponent(Graphics g) {
         	runningFrameCount++;
             paintBackground(g);
@@ -658,25 +703,27 @@ public class View extends JPanel implements Serializable{
             g.drawImage(ospreyFly[ospreyPicNum], playerXLoc, playerYLoc, this);
             if(notOver) {
             	if(Controller.getUpArrowKeyTried() >=1 && Controller.getDownArrowKeyTried() >=1 && drawFish){
-            		foodX -= 14;
+            		foodX -= FOOD_X_INCREASE;
             		if(drawFish) {
             			g.drawImage(fish[fishPicNum], foodX, FRAME_HEIGHT/2, this);
             		}
-            		if(playerXLoc >= foodX - 150 && (playerYLoc >= FRAME_HEIGHT/2-100  && playerYLoc <= FRAME_HEIGHT/2+100 )  ) {
+            		if(playerXLoc >= foodX - DISTANCE_TO_NOT_DRAW_FOOD && (playerYLoc >= FRAME_HEIGHT/2-HEIGHT_DIFFERENCE_TO_GET_FOOD  && playerYLoc <= FRAME_HEIGHT/2+HEIGHT_DIFFERENCE_TO_GET_FOOD )  ) {
             			drawFish=false;
             			foodLabel.setVisible(false);
             			fishDone=true;
             			specialFoodLabel.setVisible(true);
             		}
-            		else if (playerXLoc >= foodX+250 ){
+            		else if (playerXLoc >= foodX+DISTANCE_WHERE_PLAYER_MISSED_FOOD ){
             			foodX=playerXLoc + FRAME_WIDTH;
             		}
             	}
+
+            	
             	if(fishDone){
-            		foodX3 -= 14;
+            		foodX3 -= FOOD_X_INCREASE;
             		if(drawSpecialSnake) {
             			g.drawImage(specialSnake[snakePicNum], foodX3, FRAME_HEIGHT/3, this);
-            			g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH/8, playerYLoc - FRAME_HEIGHT/3, this);
+            			g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH/TUTORIAL_THOUGHT_BUBBLE_X_RATIO, playerYLoc - FRAME_HEIGHT/3, this);
             	        g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/47));
             	        //(Model.getCurrentFact());
             	        String[] lines = "Hitting a Special Food, will display a fact, and gives you full,        health".split(",");
@@ -686,17 +733,17 @@ public class View extends JPanel implements Serializable{
             	            g.drawString(line, playerXLoc + FRAME_WIDTH/6, playerYLoc - 15*FRAME_HEIGHT/72 + yOffset);
             	        }
             		}
-            		if(playerXLoc >= foodX3 - 150 && (playerYLoc >= FRAME_HEIGHT/3-50  && playerYLoc <= FRAME_HEIGHT/3+50 )  ) {
+            		if(playerXLoc >= foodX3 - DISTANCE_TO_NOT_DRAW_FOOD && (playerYLoc >= FRAME_HEIGHT/3-50  && playerYLoc <= FRAME_HEIGHT/3+50 )  ) {
             			drawSpecialSnake=false;
             			specialFoodLabel.setVisible(false);
             			enemyLabel.setVisible(true);
             		}
-            		else if (playerXLoc >= foodX3+250 ){
+            		else if (playerXLoc >= foodX3+DISTANCE_WHERE_PLAYER_MISSED_FOOD ){
             			foodX3=playerXLoc + FRAME_WIDTH;
             		}
             	}
             	if(enemyLabel.isVisible()) {
-            		foodX2 -= 14;
+            		foodX2 -= FOOD_X_INCREASE;
             		hit = false;
             		if(drawEagle) {
             			g.drawImage(eagle[eaglePicNum], foodX2, FRAME_HEIGHT/4, this);
@@ -744,7 +791,7 @@ public class View extends JPanel implements Serializable{
             }
             if (Model.specialFoodEaten()) {
                 displayFacts(g);
-                if (runningFrameCount > momentEaten + specialFoodDelay) {
+                if (runningFrameCount > momentEaten + SPECIAL_FOOD_DELAY) {
                     Model.setSpecialFoodEaten(false);
                     Model.incrFactIndex();
                 }
@@ -801,10 +848,10 @@ public class View extends JPanel implements Serializable{
 
             }
             g.setColor(Color.green);
-            if(health < 125) {
+            if(health < MAX_BIRD_HEALTH/2) {
             	g.setColor(Color.red);
             }
-            g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, 250 * 2, FRAME_HEIGHT / 17);
+            g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, MAX_BIRD_HEALTH * 2, FRAME_HEIGHT / 17);
             g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
             g.setColor(Color.white);
             g.setFont(new Font("Times New Roman", 1, 20));
@@ -839,7 +886,7 @@ public class View extends JPanel implements Serializable{
             }
             if (Model.specialFoodEaten() && Model.hasMoreFacts()) {
                 displayFacts(g);
-                if (runningFrameCount > momentEaten + specialFoodDelay) {
+                if (runningFrameCount > momentEaten + SPECIAL_FOOD_DELAY) {
                     Model.setSpecialFoodEaten(false);
                     Model.incrFactIndex();
                 }
@@ -896,10 +943,10 @@ public class View extends JPanel implements Serializable{
 //            g.drawImage(delaware, FRAME_WIDTH-150, FRAME_HEIGHT-350, 150, 350, this);
             
             g.setColor(Color.green);
-            if(health < 125) {
+            if(health < MAX_BIRD_HEALTH/2) {
             	g.setColor(Color.red);
             }
-            g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, 250 * 2, FRAME_HEIGHT / 17);
+            g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, MAX_BIRD_HEALTH * 2, FRAME_HEIGHT / 17);
             g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
             g.setColor(Color.white);
             g.setFont(new Font("Times New Roman", 1, 20));
@@ -913,13 +960,13 @@ public class View extends JPanel implements Serializable{
     }
 
     class Map1to2Panel extends JPanel {
-
+    	
         protected void paintComponent(Graphics g) {
             if (map1To2TransitionPicNum < MAP_1_2_TRANSITION_COUNT) {
                 g.drawImage(map1to2transition[map1To2TransitionPicNum], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
                 map1To2TransitionPicNum++;
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(SECONDS_PER_MAP_FRAME * MILLISECONDS_PER_SECOND);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -927,9 +974,9 @@ public class View extends JPanel implements Serializable{
             } else {
                 g.drawImage(map1to2transition[MAP_1_2_TRANSITION_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
 
-                Controller.getRound2Button().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-                Controller.getRound2Button().setBounds((FRAME_WIDTH * 7) / defaultButtonFrameWidthRatio,
-                        (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+                Controller.getRound2Button().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+                Controller.getRound2Button().setBounds((FRAME_WIDTH * ROUND_BUTTON_X_MULTIPLIER) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO,
+                        (FRAME_HEIGHT * DEFAULT_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);
                 add(Controller.getRound2Button());
                 //setIsOspreyRound1Over(false);
             }
@@ -944,7 +991,7 @@ public class View extends JPanel implements Serializable{
                 g.drawImage(map2to3transition[map2To3TransitionPicNum], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
                 map2To3TransitionPicNum++;
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(SECONDS_PER_MAP_FRAME * MILLISECONDS_PER_SECOND);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -952,9 +999,9 @@ public class View extends JPanel implements Serializable{
             } else {
                 g.drawImage(map2to3transition[MAP_2_3_TRANSITION_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
                 //setIsOspreyRound2Over(false);
-                Controller.getOspreyNestButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-                Controller.getOspreyNestButton().setBounds((FRAME_WIDTH * 7) / defaultButtonFrameWidthRatio,
-                        (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+                Controller.getOspreyNestButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+                Controller.getOspreyNestButton().setBounds((FRAME_WIDTH * ROUND_BUTTON_X_MULTIPLIER) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO,
+                        (FRAME_HEIGHT * DEFAULT_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);
                 add(Controller.getOspreyNestButton());
             }
 
@@ -962,21 +1009,21 @@ public class View extends JPanel implements Serializable{
     }
 
     class OspreyNestPanel extends JPanel {
-
+    	
         protected void paintComponent(Graphics g) {
             if (ospreyNestPicNum < OSPREY_NEST_COUNT) {
                 g.drawImage(ospreyNesting[ospreyNestPicNum], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
                 ospreyNestPicNum++;
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(NEST_DELAY_MILLISECONDS);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             } else {
                 g.drawImage(ospreyNesting[OSPREY_NEST_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
-                Controller.getReturnToStartButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-                Controller.getReturnToStartButton().setBounds((FRAME_WIDTH) / defaultButtonFrameWidthRatio,
-                        (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+                Controller.getReturnToStartButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+                Controller.getReturnToStartButton().setBounds((FRAME_WIDTH) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO,
+                        (FRAME_HEIGHT * DEFAULT_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);
                 add(Controller.getReturnToStartButton());
             }
         }
@@ -989,15 +1036,15 @@ public class View extends JPanel implements Serializable{
                 g.drawImage(harrierNesting[harrierNestPicNum], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
                 harrierNestPicNum++;
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(NEST_DELAY_MILLISECONDS);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             } else {
                 g.drawImage(harrierNesting[HARRIER_NEST_COUNT - 1], 0, 0, FRAME_WIDTH, FRAME_HEIGHT, this);
-                Controller.getReturnToStartButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-                Controller.getReturnToStartButton().setBounds((FRAME_WIDTH) / defaultButtonFrameWidthRatio,
-                        (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+                Controller.getReturnToStartButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
+                Controller.getReturnToStartButton().setBounds((FRAME_WIDTH) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO,
+                        (FRAME_HEIGHT * DEFAULT_BUTTON_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / DEFAULT_BUTTON_X_LOCATION_RATIO, FRAME_HEIGHT / DEFAULT_BUTTON_Y_LOCATION_RATIO);
                 add(Controller.getReturnToStartButton());
                 Controller.setHarrierNested(true);
             }
