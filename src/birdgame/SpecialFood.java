@@ -6,10 +6,6 @@ import java.io.Serializable;
 // * To change this template file, choose Tools | Templates
 // * and open the template in the editor.
 // */
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * SpecialFood is food that may appear larger on screen with some glowing and 
@@ -30,22 +26,12 @@ public class SpecialFood extends Food implements Serializable{
 		super(x, y, foodType);
 		setSpecialFood(true);
 
-		setFact();
+		//setFact();
 		setXIncr(INITIAL_X_INCREASE);
 
 		
 		
 	}
-    public void setFact() {
 
-    	int randomIndex = new Random().nextInt(Model.availableFacts.size());
-    	//System.out.println(Model.avaliableFacts.size());
-   		fact = Model.availableFacts.get(randomIndex);
-   		//needs a way to avoid repeats!
-    }
-
-    public String getFact() {
-		return fact;
-	}
 
 }

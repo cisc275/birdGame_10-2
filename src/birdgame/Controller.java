@@ -16,10 +16,7 @@ import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import java.io.Serializable;
-import java.io.IOException;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
@@ -285,6 +282,8 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     }
 
     void resetAfterRound() {
+        model.setFoodHit(false);
+        model.setEnemyHit(false);
         model.getPlayer().setHealth(INITIAL_BIRD_HEALTH);
         model.getPlayer().setX(INITIAL_BIRD_X_LOCATION);
         model.getPlayer().setY(view.getFrameHeight() / 2);

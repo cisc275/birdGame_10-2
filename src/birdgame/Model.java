@@ -8,7 +8,6 @@ package birdgame;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.io.Serializable;
 
@@ -607,6 +606,8 @@ public class Model implements Serializable {
     
     public void resetModel(){
         round = 0;
+        enemyHit = false;
+        foodHit = false;
         questionNum = 0;
         clearFactsAndQuestions();
         clearQuestionsToAsk();

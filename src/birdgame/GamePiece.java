@@ -32,7 +32,7 @@ public class GamePiece implements Serializable{
 	final static int RACCOON_X_OFFSET = 30;
 	final static int RACCOON_Y_OFFSET = 30;
 	final static int SNAKE_X_OFFSET = 30;
-	final static int SNAKE_Y_OFFSET = 30;
+	final static int SNAKE_Y_OFFSET = 15;
 	
 	
     private int xLocation;

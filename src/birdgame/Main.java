@@ -1,14 +1,8 @@
 package birdgame;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+
 import java.io.Serializable;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

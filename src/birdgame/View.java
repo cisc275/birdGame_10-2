@@ -12,39 +12,24 @@ import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.event.*;
-import javax.swing.KeyStroke;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingWorker;
-import javax.swing.Timer;
-import javax.swing.WindowConstants;
-
 import java.util.Iterator;
 import java.util.Set;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TimerTask;
 import java.awt.AlphaComposite;
 import java.awt.CardLayout;
 
@@ -105,6 +90,8 @@ public class View extends JPanel implements Serializable {
     final static int TUTORIAL_FOOD_ENEMY_LABEL_X_MULTIPLIER = 5;
     final static int TUTORIAL_LABEL_Y_RATIO = 8;
     final static int TUTORIAL_LABEL_DOWN_Y_RATIO = 4;
+    final static int TUTORIAL_BUTTON_X_LOC_NUMERATOR = 55;
+    final static int TUTORIAL_BUTTON_Y_LOC_NUMERATOR = 65;
     final static int ROUND_BUTTON_X_MULTIPLIER = 7;
     final static int FINALSCORE_DISPLAY_FONT_SIZE_RATIO = 25;
     final static int FINALSCORE_DISPLAY_X_MULTIPLIER = 4;
@@ -148,21 +135,21 @@ public class View extends JPanel implements Serializable {
     private BufferedImage[] ospreyFly = new BufferedImage[FRAME_COUNT];
     private BufferedImage[] ospreyRed = new BufferedImage[FRAME_COUNT];
     private BufferedImage[] ospreyGreen = new BufferedImage[FRAME_COUNT];
-    private BufferedImage[] mice = new BufferedImage[2];
-    private BufferedImage[] specialMice = new BufferedImage[2];
-    private BufferedImage[] bunny = new BufferedImage[4];
-    private BufferedImage[] specialBunny = new BufferedImage[4];
-    private BufferedImage[] redFox = new BufferedImage[4];
-    private BufferedImage[] raccoon = new BufferedImage[4];
-    private BufferedImage[] fish = new BufferedImage[4];
-    private BufferedImage[] specialFish = new BufferedImage[4];
-    private BufferedImage[] snake = new BufferedImage[4];
-    private BufferedImage[] specialSnake = new BufferedImage[4];
-    private BufferedImage[] plane = new BufferedImage[1];
-    private BufferedImage[] eagle = new BufferedImage[6];
+    private BufferedImage[] mice = new BufferedImage[MICE_FRAME_COUNT];
+    private BufferedImage[] specialMice = new BufferedImage[MICE_FRAME_COUNT];
+    private BufferedImage[] bunny = new BufferedImage[BUNNY_FRAME_COUNT];
+    private BufferedImage[] specialBunny = new BufferedImage[BUNNY_FRAME_COUNT];
+    private BufferedImage[] redFox = new BufferedImage[RED_FOX_FRAME_COUNT];
+    private BufferedImage[] raccoon = new BufferedImage[RACCOON_FRAME_COUNT];
+    private BufferedImage[] fish = new BufferedImage[FISH_FRAME_COUNT];
+    private BufferedImage[] specialFish = new BufferedImage[FISH_FRAME_COUNT];
+    private BufferedImage[] snake = new BufferedImage[SNAKE_FRAME_COUNT];
+    private BufferedImage[] specialSnake = new BufferedImage[SNAKE_FRAME_COUNT];
+    private BufferedImage[] plane = new BufferedImage[PLANE_FRAME_COUNT];
+    private BufferedImage[] eagle = new BufferedImage[EAGLE_FRAME_COUNT];
     private BufferedImage[] map1to2transition = new BufferedImage[MAP_1_2_TRANSITION_COUNT];
     private BufferedImage[] map2to3transition = new BufferedImage[MAP_2_3_TRANSITION_COUNT];
-    private BufferedImage[] delaware = new BufferedImage[33];
+    private BufferedImage[] delaware = new BufferedImage[DE_FRAME_COUNT];
     private BufferedImage[] ospreyNesting = new BufferedImage[OSPREY_NEST_COUNT];
     private BufferedImage[] harrierNesting = new BufferedImage[HARRIER_NEST_COUNT];
     private Image thoughtBubble;
@@ -360,8 +347,7 @@ public class View extends JPanel implements Serializable {
         tutorialScreen = new TutorialScreenPanel();
         tutorialScreen.setLayout(null);
         c.getTutorialButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
-        c.getTutorialButton().setBounds(FRAME_WIDTH / TUTORIAL_BUTTON_X_RATIO, TUTORIAL_BUTTON_Y_MULTIPLIER * FRAME_HEIGHT/TUTORIAL_BUTTON_Y_RATIO, FRAME_WIDTH / TUTORIAL_BUTTON_X_RATIO, FRAME_HEIGHT / TUTORIAL_BUTTON_Y_LOCATION_RATIO);
-        
+        c.getTutorialButton().setBounds((FRAME_WIDTH*TUTORIAL_BUTTON_X_LOC_NUMERATOR)/DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, (FRAME_HEIGHT*TUTORIAL_BUTTON_Y_LOC_NUMERATOR)/DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH/TUTORIAL_BUTTON_X_RATIO, FRAME_HEIGHT/TUTORIAL_BUTTON_Y_LOCATION_RATIO);
         tutorialScreen.add(c.getTutorialButton());
 
     }
