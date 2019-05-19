@@ -58,6 +58,8 @@ public class Model implements Serializable {
     private int xLocationWhereGPsAreNoLongerCurrent = initNums.xLocationWhereGPsAreNoLongerCurrent();
     private GamePiece furthestGP = new GamePiece();
     private static boolean specialFoodEaten = false;
+    private static boolean foodHit = false;
+    private static boolean enemyHit = false;
     static ArrayList<String> availableFacts;
     private static boolean quiz1Done;
 	private static boolean quiz2Done;
@@ -140,11 +142,9 @@ public class Model implements Serializable {
         seeCurrentGP();
 
         if (currentGPs.size() == 0 && totalLevelTicks != 0) {
-        	System.out.println("Should be calling end of level");
             if (round == 1) {
                 endOfLevel();
             } else if (round == 2) {
-            	System.out.println("round 2 end of level");
                 endOfLevel();
             } else if (round == 3) {
                 endOfLevel();
@@ -177,6 +177,7 @@ public class Model implements Serializable {
             } else if (round == 2) {
                 View.setIsOspreyRound2Over(true);
             } else if (round == 3) {
+                System.out.println("end of level reached for harrier");
                 View.setIsHarrierRoundOver(true);
             }
         }
@@ -331,6 +332,8 @@ public class Model implements Serializable {
      * eat() will increment the player's score based off of what is eaten.
      */
     public void eat(Food f) {
+    	foodHit = true;
+    	View.setMomentFoodEaten(View.getFrameCount());
         player.setScore(player.getScore() + f.getFoodValue());
         if (player.getHealth() > maxBirdHealth - f.getFoodValue()) {
             player.setHealth(maxBirdHealth);
@@ -371,6 +374,9 @@ public class Model implements Serializable {
      * everything and taking them back to the level screen.
      */
     public void obstacleHit(Enemy e) {
+    	enemyHit = true;
+    	System.out.println("obstacle hit");
+    	View.setMomentEnemyHit(View.getFrameCount());
         player.setScore(player.getScore() - e.getDamage());
         if (player.getHealth() < e.getDamage()) {
             player.setHealth(0);
@@ -667,5 +673,17 @@ public static boolean isQuiz3Done() {
 }
 public static void setIsQuiz3Done(boolean b) {
 	quiz3Done = b;
+}
+public static boolean enemyHit() {
+	return enemyHit;
+}
+public static boolean foodHit() {
+	return foodHit;
+}
+public static void  setFoodHit(boolean b) {
+	foodHit = b;
+}
+public static void setEnemyHit(boolean b) {
+	enemyHit = b;
 }
 }
