@@ -69,10 +69,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     private static int upArrowKeyTried = 0;
     private static int downArrowKeyTried = 0;
 
-    private int tutorialHealth=10000;
+    private int tutorialHealth = 10000;
     private boolean runGame = true;
-    private boolean answeredCorrect=false;
-    
+    private boolean answeredCorrect = false;
 
     public Controller() {
         QuizOptionA = new JButton("A");
@@ -123,8 +122,8 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
 
-        view.setPanel("TUTORIAL");
-        
+        //view.setPanel("TUTORIAL");
+        view.setPanel("START");
     }
 
     public void resetForGameOver() {
@@ -135,16 +134,17 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 
     }
 
-	void start() {
+    void start() {
 
         while (!userDone) {
             //System.out.println("start reached");
 //        if(!tutorialTried){
 //            view.setPanel("TUTORIAL");
 //        }
+
     		//if () {
     		if (runGame) {
-    		System.out.println("Running game");
+    		//System.out.println("Running game");
     		runGame();
     		runGame = false;
     		}
@@ -153,7 +153,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         if (!model.getPlayer().isAlive() && !nextRound) {
         	
         	runGame = false;
-            System.out.println("reached first if");
+            //System.out.println("reached first if");
             
             if (birdsPlayed == 2) {// && !model.getPlayer().isAlive()) { // <-comment this out
                 System.out.println("reached second if");
@@ -165,11 +165,10 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
 
+                
                     }
                 }
-            }
-            
-                //<-comment this out
+            }//<-comment this out
                 //comment this out below
                 //Player loses first round
                 else {
@@ -201,9 +200,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (answered&&answeredCorrect) {
+            if (answered && answeredCorrect) {
                 answered = false;
-                answeredCorrect=false;
+                answeredCorrect = false;
                 if (!Model.quizOver() && !Model.lastQuestion()) {
                     Model.incrQuestionNum();
                     view.prepareQuiz();
@@ -239,7 +238,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                 view.setIsHarrierRoundOver(false);
             }
             if (view.getIsOspreyRound1Over() && !Model.isQuiz1Done()) {
-            	System.out.println("quiz1?");
+                System.out.println("quiz1?");
                 view.setIsOspreyRound1Over(false); //Might not be neeeded
                 view.set1To2Transition(true);
                 view.setPanel("QUIZ");
@@ -249,8 +248,10 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 
             if (view.is1To2Transition()) {
                 view.setPanel("MAP_1_TO_2");
-                
+
             } else if (view.getIsOspreyRound2Over() && !ospreyNested && !Model.isQuiz2Done()) {
+            	//System.out.println("Quiz?");
+
                 view.setPanel("QUIZ");
                 runQuiz();
                 view.set2To3Transition(true);
@@ -259,14 +260,18 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                 //view.setPanel("OSPREY_NEST");
             }
             if (view.is2To3Transition()) {
+            	//System.out.println("2 to 3");
+            	
+
                 view.setPanel("MAP_2_TO_3");
-                
+
             } else if (view.getIsHarrierRoundOver() && !harrierNested && !Model.isQuiz3Done()) {
                 //might need some code in here later to stop this else from triggering
                 //while playing osprey if you play harrier first
                 view.setPanel("QUIZ");
                 runQuiz();
                 model.setIsQuiz3Done(true);
+                //System.out.println("harrier round over");
                 //might need some code in here later 
 
             } else if (view.getIsHarrierRoundOver() && !harrierNested) {
@@ -283,23 +288,22 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     }
 
     public void handleQuizButtonClick(String choice) {
-    	answered = true;
-		 if (Model.getCorrectAnswer().equals(choice)){
-			 answeredCorrect=true;
-			 view.answeredCorrectly(true);
-		 }
-		 
-		 else {
-			 view.answeredCorrectly(false);
-		 }
+        answered = true;
+        if (Model.getCorrectAnswer().equals(choice)) {
+            answeredCorrect = true;
+            view.answeredCorrectly(true);
+        } else {
+            view.answeredCorrectly(false);
+        }
     }
+
     public void resetAfterGameOver() {
-    	view.resetView();
-    	model.resetModel();
-    	ospreyNested = false;
-    	harrierNested = false;
+        view.resetView();
+        model.resetModel();
+        ospreyNested = false;
+        harrierNested = false;
     }
-  
+
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == QuizOptionA) {
 
@@ -339,17 +343,17 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             OspreyButton.setVisible(false);
             runGame = true;
             userResponse = true;
-            
+
         } else if (e.getSource() == HarrierButton) {
-        	
-        	 resetAfterRound();
-        	 model.clearGP();
-             model.generateHarrierQuestions();
-             birdsPlayed++;
-             model.spawnHarrierGamePieces();
-             
-        	runGame = true;
-        	userResponse = true;
+
+            resetAfterRound();
+            model.clearGP();
+            model.generateHarrierQuestions();
+            birdsPlayed++;
+            model.spawnHarrierGamePieces();
+
+            runGame = true;
+            userResponse = true;
             view.setBackground(imgHarrier, imgHarrier2);
             view.setPanel("HARRIER_ROUND");
             HarrierButton.setVisible(false);
@@ -366,11 +370,10 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             paused = false;
             runGame = true;
             userResponse = true;
-           
-            
+
         } else if (e.getSource() == Round2Button) {
 
-        	runGame = true;
+            runGame = true;
 
             resetAfterRound();
             view.setIsOspreyRound1Over(false);
@@ -384,16 +387,17 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             model.spawnOspreyGamePieces();
             view.setBackground(imgOsprey3, imgOsprey4);
             model.setRound(2);
-            
+
         }
 
         if (e.getSource() == ReturnToStart) {
-           // reachedHarrierEnd = true;
-        	harrierNested = true;
-            if((harrierNested || ospreyNested) && birdsPlayed == 2){
-                view.setPanel("GAME_OVER");
+            // reachedHarrierEnd = true;
+            if (model.getRound() == 3) {
+                harrierNested = true;
             }
-            else{
+            if ((harrierNested || ospreyNested) && birdsPlayed == 2) {
+                view.setPanel("GAME_OVER");
+            } else {
                 view.setPanel("START");
             }
             model.setRound(0);
@@ -402,27 +406,27 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         }
 
         if (e.getSource() == ospreyNestButton) {
-        	
-        	///Doesn't break from runGame
+
+            ///Doesn't break from runGame
             ospreyNested = true;
             view.setPanel("OSPREY_NEST");
             view.setIsOspreyRound2Over(false);
             view.set2To3Transition(false);
-          
+
         }
 
         if (e.getSource() == osprey1SaveGameButton || e.getSource() == osprey2SaveGameButton || e.getSource() == harrierSaveGameButton) {
             try {
                 saveGame();
+                view.setPanel("GAME_OVER");
             } catch (Exception d) {
                 d.printStackTrace();
             }
         }
 
-
         if (e.getSource() == restartGameButton) {
             userDone = false;
-            
+
             birdsPlayed = 0;
             model.getPlayer().setScore(0);
             resetAfterGameOver();
@@ -496,6 +500,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         //HarrierButton.setEnabled(true);
         OspreyButton.setVisible(true);
         HarrierButton.setVisible(true);
+//        Round2Button.setVisible(false);
+//        ospreyNestButton.setVisible(false);
+//        ReturnToStart.setVisible(false);
         birdsPlayed = 0;
         model.resetModel();
         view.resetView();
@@ -604,5 +611,5 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     public JButton getTutorialButton() {
         return TutorialButton;
     }
-    
+
 }
