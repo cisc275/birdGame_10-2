@@ -58,21 +58,20 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
     private int birdsPlayed = 0;
-    private boolean answered = false;
+    private static boolean answered = false;
     private boolean nextRound = false;
     private boolean ospreyNested = false;
     private static boolean harrierNested = false;
     private boolean tutorialTried = false;
     private boolean userDone = false;
     private boolean userResponse = false;
-    private boolean reachedHarrierEnd = false;
-    private boolean reachedOspreyEnd = false;
     private boolean paused = false;
     private static int upArrowKeyTried = 0;
     private static int downArrowKeyTried = 0;
 
     private int tutorialHealth=10000;
     private boolean runGame = true;
+    private boolean answeredCorrect=false;
     
 
     public Controller() {
@@ -124,8 +123,8 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
 
-        view.setPanel("TUTORIAL");
-        
+        //view.setPanel("TUTORIAL");
+        view.setPanel("START");
     }
 
     public void resetForGameOver() {
@@ -158,7 +157,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             
             if (birdsPlayed == 2) {// && !model.getPlayer().isAlive()) { // <-comment this out
                 System.out.println("reached second if");
-                view.setPanel("GAME_OVER_LOSE");
+                view.setPanel("GAME_OVER");
                // paused = true;
                 while (!userResponse) {
                 	try {
@@ -202,8 +201,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (answered) {
+            if (answered&&answeredCorrect) {
                 answered = false;
+                answeredCorrect=false;
                 if (!Model.quizOver() && !Model.lastQuestion()) {
                     Model.incrQuestionNum();
                     view.prepareQuiz();
@@ -211,6 +211,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                     Model.incrQuestionNum();
                 }
             }
+
         }
         Model.resetQuestionNum();
 
@@ -243,6 +244,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                 
             } else if (view.getIsOspreyRound2Over() && !ospreyNested && !Model.isQuiz2Done()) {
             	//System.out.println("Quiz?");
+
                 view.setPanel("QUIZ");
                 runQuiz();
                 view.set2To3Transition(true);
@@ -253,6 +255,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             if (view.is2To3Transition()) {
             	//System.out.println("2 to 3");
             	
+
                 view.setPanel("MAP_2_TO_3");
                 
             } else if (view.getIsHarrierRoundOver() && !harrierNested && !Model.isQuiz3Done()) {
@@ -280,6 +283,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     public void handleQuizButtonClick(String choice) {
     	answered = true;
 		 if (Model.getCorrectAnswer().equals(choice)){
+			 answeredCorrect=true;
 			 view.answeredCorrectly(true);
 		 }
 		 
@@ -382,8 +386,11 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         }
 
         if (e.getSource() == ReturnToStart) {
-            reachedHarrierEnd = true;
-            if(harrierNested && ospreyNested){
+           // reachedHarrierEnd = true;
+            if(model.getRound() == 3){
+                harrierNested = true;
+            }
+            if((harrierNested || ospreyNested) && birdsPlayed == 2){
                 view.setPanel("GAME_OVER");
             }
             else{
@@ -395,12 +402,13 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         }
 
         if (e.getSource() == ospreyNestButton) {
+        	
         	///Doesn't break from runGame
-            reachedOspreyEnd = true;
+            ospreyNested = true;
             view.setPanel("OSPREY_NEST");
             view.setIsOspreyRound2Over(false);
             view.set2To3Transition(false);
-            ospreyNested = true;
+          
         }
 
         if (e.getSource() == osprey1SaveGameButton || e.getSource() == osprey2SaveGameButton || e.getSource() == harrierSaveGameButton) {
@@ -490,6 +498,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         OspreyButton.setVisible(true);
         HarrierButton.setVisible(true);
         birdsPlayed = 0;
+        Round2Button.setVisible(false);
+        ospreyNestButton.setVisible(false);
+        ReturnToStart.setVisible(false);
         model.resetModel();
         view.resetView();
         start();
@@ -597,4 +608,5 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     public JButton getTutorialButton() {
         return TutorialButton;
     }
+    
 }
