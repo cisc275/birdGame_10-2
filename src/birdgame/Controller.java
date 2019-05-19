@@ -125,6 +125,12 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         view.setPanel("TUTORIAL");
         
     }
+    public void resetForGameOver(){
+    	
+    }
+    public void resetForNewLevel() {
+    	
+    }
 
     void start() {
     	
@@ -135,15 +141,18 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 //        }
     		//if () {
     		if (startButton) {
+    		System.out.println("Running game");
     		runGame();
+    		startButton = false;
     		}
     		
     		//}
         if (!model.getPlayer().isAlive() && !nextRound) {
+        	
         	startButton = false;
             System.out.println("reached first if");
             
-            if (birdsPlayed == 2) { // <-comment this out
+            if (birdsPlayed == 2 && !model.getPlayer().isAlive()) { // <-comment this out
                 System.out.println("reached second if");
                 view.setPanel("GAME_OVER_LOSE");
                // paused = true;
@@ -158,6 +167,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             //comment this out below
             //Player loses first round
             else {
+            
                 view.setPanel("START");
             }
 //               paused = true;
@@ -310,24 +320,28 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         if(e.getSource() == OspreyButton){
             resetAfterRound();
             paused = false;
-            
-            model.generateOspreyQuestions();
             birdsPlayed++;
+            model.generateOspreyQuestions();
+            
 
             view.setBackground(imgOsprey, imgOsprey2);
             view.setPanel("INITIAL_MAP");
             OspreyButton.setVisible(false);
-            
+            startButton = true;
+            userResponse = true;
         } else if (e.getSource() == HarrierButton) {
+        	
+        	 resetAfterRound();
+        	 model.clearGP();
+             model.generateHarrierQuestions();
+             birdsPlayed++;
+             model.spawnHarrierGamePieces();
+             
         	startButton = true;
         	//paused = false;
-        	 userResponse = true;
-            resetAfterRound();
-            model.clearGP();
-            model.generateHarrierQuestions();
-            birdsPlayed++;
-            model.spawnHarrierGamePieces();
-            
+        	userResponse = true;
+           
+           
 
             view.setBackground(imgHarrier, imgHarrier2);
             view.setPanel("HARRIER_ROUND");
