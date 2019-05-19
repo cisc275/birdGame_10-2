@@ -448,9 +448,13 @@ public class View extends JPanel implements Serializable{
 
     public void answeredCorrectly(boolean bool) {
         if (bool) {
+        	quiz.blank.setForeground(Color.green);
             quiz.blank.setText("Correct! Nice Job");
+            quiz.blank.setVisible(true);
         } else {
+        	quiz.blank.setForeground(Color.red);
             quiz.blank.setText("Incorrect");
+            quiz.blank.setVisible(true);
         }
     }
 
@@ -606,9 +610,9 @@ public class View extends JPanel implements Serializable{
         	question.setPreferredSize(new Dimension(FRAME_WIDTH/3,FRAME_HEIGHT/4));
         	blank.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/40));
         	blank.setPreferredSize(new Dimension(FRAME_WIDTH/3,FRAME_HEIGHT/4));
-
         	add(question);
             add(blank);
+            blank.setVisible(false);
             add(Controller.getOptionAButton());
             add(Controller.getOptionBButton());
             add(Controller.getOptionCButton());
