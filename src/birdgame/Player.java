@@ -13,24 +13,32 @@ import java.io.Serializable;
  *
  * @author crnis
  */
-public class Player extends GamePiece implements Serializable{
+public class Player extends GamePiece implements Serializable {
+
+    final static int MAX_BIRD_HEALTH = 250;
+    final static int INITIAL_Y_INCREASE = 12;
+    final static int INITIAL_X_LOCATION = 30;
+    final static int INITIAL_Y_LOCATION = 300;
+    final static int BIRD_HEIGHT = 100;
+    final static int BIRD_WIDTH = 184;
+    final static int X_OFFSET = 30;
+    final static int Y_OFFSET = 5;
 
     private static int health;
     private static int score;
     private int xOffset;
     private int yOffset;
     private Sprite bird;
-    private static boolean alive=true;
 
     public Player() {
-        setYIncr(12);
-        setX(30);
-        setY(300);
-        setWidth(184);
-        setHeight(100);
-        health = 250;
-        xOffset = 30;
-        yOffset = 5;
+        setYIncr(INITIAL_Y_INCREASE);
+        setX(INITIAL_X_LOCATION);
+        setY(INITIAL_Y_LOCATION);
+        setWidth(BIRD_WIDTH);
+        setHeight(BIRD_HEIGHT);
+        health = MAX_BIRD_HEALTH;
+        xOffset = X_OFFSET;
+        yOffset = Y_OFFSET;
         score = 0;
     }
 
@@ -45,8 +53,6 @@ public class Player extends GamePiece implements Serializable{
         }
         return true;
     }
-    
-    
 
     /**
      * checks if the Player collides with a GamePiece
@@ -67,7 +73,6 @@ public class Player extends GamePiece implements Serializable{
         int otherYOff = piece.getYOffset();
         int otherXOff = piece.getXOffset();
 
-        //probably bugged, should test more
         if (xLocation + width - xOff >= otherX + otherXOff && xLocation + width - xOff <= otherX + otherW - otherXOff) {
             if (yLocation + yOff >= otherY + otherYOff && yLocation + yOff <= otherY + otherW - otherYOff) {
                 return true;
@@ -124,7 +129,6 @@ public class Player extends GamePiece implements Serializable{
     }
 
     public void resetPlayer() {
-        setHealth(250);
-        System.out.println("resetPlayer reached");
+        setHealth(MAX_BIRD_HEALTH);
     }
 }

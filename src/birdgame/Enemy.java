@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package birdgame;
 
 import java.io.Serializable;
@@ -11,42 +10,39 @@ import java.io.Serializable;
 /**
  * Enemy inherits from the GamePiece class; contains int damage that has a value
  * for the amount of damage the enemy can do to the bird
+ *
  * @author crnis
  */
-public class Enemy extends GamePiece implements Serializable{
+public class Enemy extends GamePiece implements Serializable {
+
+    final static int INITIAL_DAMAGE = 50;
+    final static int INITIAL_X_INCREASE = 14;
+    final static int INITIAL_ENEMY_WIDTH = 165;
+    final static int INITIAL_ENEMY_HEIGHT = 165;
 
     private int damage;
-    public Enemy(int x, int y, Sprite enemyType){
-    	setSpecialFood(false);
+
+    public Enemy(int x, int y, Sprite enemyType) {
+        setSpecialFood(false);
         setX(x);
         setY(y);
-        setXIncr(14);
-    	setYIncr(0);
-    	setWidth(165);
-    	setHeight(165);
-    	setSprite(enemyType);
+        setXIncr(INITIAL_X_INCREASE);
+        setYIncr(0);
+        setWidth(INITIAL_ENEMY_WIDTH);
+        setHeight(INITIAL_ENEMY_HEIGHT);
+        setSprite(enemyType);
         setPicNum(0);
-//        if(enemyType.equals(Type.EAGLE)){
-//            setPicNum(6);
-//        }
-//        else if(enemyType.equals(Type.PLANE)){
-//            setPicNum(1);
-//        }
-//        else{
-//            setPicNum(4);
-//        }
-    	setDamage(50);
-    	setOffsets(); //MIGHT NOT WORK
+        setDamage(INITIAL_DAMAGE);
+        setOffsets();
 
     }
-	public int getDamage() {
-		return damage;
-	}
-	public void setDamage(int damage) {
-		this.damage = damage;
-	}
-	
-	
-    
-    
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
 }
