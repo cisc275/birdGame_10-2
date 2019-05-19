@@ -31,6 +31,7 @@ public class Player extends GamePiece implements Serializable{
         health = 250;
         xOffset = 30;
         yOffset = 5;
+        score = 0;
     }
 
     /**
