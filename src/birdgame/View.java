@@ -867,8 +867,11 @@ public class View extends JPanel implements Serializable{
 
             }
 //            g.drawImage(delaware, FRAME_WIDTH-150, FRAME_HEIGHT-350, 150, 350, this);
-
-            g.setColor(Color.red);
+            
+            g.setColor(Color.green);
+            if(health < 125) {
+            	g.setColor(Color.red);
+            }
             g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, 250 * 2, FRAME_HEIGHT / 17);
             g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
             g.setColor(Color.white);
