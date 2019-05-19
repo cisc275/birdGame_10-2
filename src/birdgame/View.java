@@ -134,8 +134,7 @@ public class View extends JPanel implements Serializable{
     private JPanel harrierRound;
     private JPanel harrierNest;
     private QuizPanel quiz;
-    private JPanel gameOverWin;
-    private JPanel gameOverLose;
+    private JPanel gameOver;
 
     private int specialFoodDelay = initNums.specialFoodDelay();
     private int thoughtBubbleSize = initNums.thoughtBubbleSize();
@@ -164,8 +163,7 @@ public class View extends JPanel implements Serializable{
     private Image backgroundImageFlipped;
     private Image startScreenImg;
     private Image initialMapImg;
-    private Image gameOverWinImg;
-    private Image gameOverLoseImg;
+    private Image gameOverImg;
 	private static boolean is2To3Transition;
 	Color yellow = new Color(255,255,0,100);
 	Color snakeYellow = new Color(255,255,0,175);
@@ -193,7 +191,7 @@ public class View extends JPanel implements Serializable{
         createHarrierRound(c);
         createHarrierNestPanel(c);
         createQuizPanel();
-        createGameOverPanels();
+        createGameOverPanel();
         loadImages();
         cards.add(startScreen, "START");
         cards.add(tutorialScreen, "TUTORIAL");
@@ -206,11 +204,8 @@ public class View extends JPanel implements Serializable{
         cards.add(ospreyNest, "OSPREY_NEST");
         cards.add(harrierNest, "HARRIER_NEST");
         cards.add(harrierRound, "HARRIER_ROUND");
-
         cards.add(quiz, "QUIZ");
-
-        cards.add(gameOverWin, "GAME_OVER_WIN");
-        cards.add(gameOverLose, "GAME_OVER_LOSE");
+        cards.add(gameOver, "GAME_OVER");
 
         currentPanel = startScreen;
         //  currentPanel = startScreen;
@@ -269,6 +264,7 @@ public class View extends JPanel implements Serializable{
         for (int i = 0; i < DE_FRAME_COUNT; i++) {
             delaware[i] = createImage("images/MiniMapImages/delaware" + i + ".jpg");
         }
+        gameOverImg = createImage("images/BirdImages/GameOver.png");
     }
     private static BufferedImage dye(BufferedImage image, Color color) {
         int w = image.getWidth();
@@ -454,45 +450,21 @@ public class View extends JPanel implements Serializable{
         }
     }
 
-    void createGameOverPanels() {
-        createGameOverWin();
-        createGameOverLose();
-    }
+    void createGameOverPanel() {
+        gameOver = new GameOverPanel();
 
-    void createGameOverWin() {
-        gameOverWinImg = createImage("images/BirdImages/GameOverWin.png");
-        gameOverWin = new GameOverWinPanel();
-
-        gameOverWin.setLayout(null);
+        gameOver.setLayout(null);
         JLabel finalScore = new JLabel("Score: " + Player.getScore());
         finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/25));
-        finalScore.setBounds((FRAME_WIDTH*4)/defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 2)/10, FRAME_WIDTH/4, FRAME_HEIGHT/15);
+        finalScore.setBounds((FRAME_WIDTH*4)/defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 4)/10, FRAME_WIDTH/4, FRAME_HEIGHT/15);
         Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
         Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-        Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 37) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 60) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 60) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
         
-        gameOverWin.add(Controller.getRestartGameButton());
-        gameOverWin.add(Controller.getExitGameButton());
-        gameOverWin.add(finalScore);
-    }
-
-    void createGameOverLose() {
-        gameOverLoseImg = createImage("images/BirdImages/GameOverLose.png");
-        gameOverLose = new GameOverLosePanel();
-        
-        gameOverLose.setLayout(null);
-        JLabel finalScore = new JLabel("Score: " + Player.getScore());
-        finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 25));
-        finalScore.setBounds((FRAME_WIDTH*4)/defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 2)/10, FRAME_WIDTH/4, FRAME_HEIGHT/15);
-        Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 37) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-        Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 84) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-        
-        gameOverLose.add(Controller.getRestartGameButton());
-        gameOverLose.add(Controller.getExitGameButton());
-        gameOverLose.add(finalScore);
+        gameOver.add(Controller.getRestartGameButton());
+        gameOver.add(Controller.getExitGameButton());
+        gameOver.add(finalScore);
     }
 
     public void paintBackground(Graphics g) {
@@ -538,11 +510,9 @@ public class View extends JPanel implements Serializable{
             currentPanel = harrierNest;
         } else if (s.equals("QUIZ")) {
             currentPanel = quiz;
-        } else if (s.equals("GAME_OVER_WIN")) {
-            currentPanel = gameOverWin;
-        } else if (s.equals("GAME_OVER_LOSE")) {
-            currentPanel = gameOverLose;
-        }else if(s.equals("MOVING_SCREEN")) {
+        } else if (s.equals("GAME_OVER")) {
+            currentPanel = gameOver;
+        } else if(s.equals("MOVING_SCREEN")) {
         	currentPanel = movingScreen;
         }
 
@@ -1004,19 +974,11 @@ public class View extends JPanel implements Serializable{
         }
     }
 
-    class GameOverWinPanel extends JPanel {
+    class GameOverPanel extends JPanel {
 
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(gameOverWinImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
-        }
-    }
-
-    class GameOverLosePanel extends JPanel {
-
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawImage(gameOverLoseImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
+            g.drawImage(gameOverImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
     }
 
@@ -1109,6 +1071,7 @@ public class View extends JPanel implements Serializable{
         isOspreyRound1Over = false;
         isOspreyRound2Over = false;
         is1To2Transition = false;
+        is2To3Transition = false;
         isHarrierRoundOver = false;
         System.out.println("resetView reached");
     }
