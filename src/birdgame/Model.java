@@ -374,7 +374,6 @@ public class Model implements Serializable {
      */
     public void obstacleHit(Enemy e) {
     	enemyHit = true;
-    	System.out.println("obstacle hit");
     	View.setMomentEnemyHit(View.getFrameCount());
         player.setScore(player.getScore() - e.getDamage());
         if (player.getHealth() < e.getDamage()) {
@@ -382,14 +381,6 @@ public class Model implements Serializable {
         } else {
             player.setHealth(player.getHealth() - e.getDamage());
         }
-    }
-
-    /**
-     * nest() will handle the event of the player nesting by displaying screen
-     * showing bird nesting.
-     */
-    public void nest() {
-
     }
 
     public int getImgHeight() {
@@ -621,7 +612,6 @@ public class Model implements Serializable {
         currentGPs.clear();
         specialFoodEaten = false;
         availableFacts.clear();
-        System.out.println("resetModel reached");
     }
     
 public static void updateNumberOfQuestions() {
@@ -667,7 +657,7 @@ public static boolean isQuiz3Done() {
 		return true;
 	}
 	else {
-	return quiz3Done;
+		return quiz3Done;
 	}
 }
 public static void setIsQuiz3Done(boolean b) {

@@ -29,23 +29,10 @@ public class SpecialFood extends Food implements Serializable{
     public SpecialFood(int x, int y, Sprite foodType) {
 		super(x, y, foodType);
 		setSpecialFood(true);
-
-		setFact();
 		setXIncr(INITIAL_X_INCREASE);
 
 		
 		
-	}
-    public void setFact() {
-
-    	int randomIndex = new Random().nextInt(Model.availableFacts.size());
-    	//System.out.println(Model.avaliableFacts.size());
-   		fact = Model.availableFacts.get(randomIndex);
-   		//needs a way to avoid repeats!
-    }
-
-    public String getFact() {
-		return fact;
 	}
 
 }

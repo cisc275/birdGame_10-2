@@ -1,5 +1,7 @@
 package birdgame;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import org.junit.Test;
 
 public class ProjectTest {
@@ -117,17 +119,6 @@ public class ProjectTest {
 	public void directionGetNameReturnsName() {
 		Direction d = Direction.DOWN;
 		assert d.getName().equals("down");
-	}
-
-	
-	//Tests for SpecialFood
-		//setFact()
-	@Test
-	public void setFactGetsAFactFromModel() {
-		Model m = new Model(1,1,1,1);
-		m.generateOspreyQuestions();
-		SpecialFood s = new SpecialFood(1,1,Sprite.FISH);
-		assert Model.getAvaliableFacts().contains(s.getFact());
 	}
 	
 	//Tests for GamePiece
@@ -527,6 +518,59 @@ public class ProjectTest {
 		m.handleTicks();
 		assert m.getPlayer().getXIncr() == 30;
 	}
+	@Test
+	public void playerEatsSpecialFoodItCollidesWith() {
+		Model m = new Model(1,1,1,1);
+		SpecialFood s = new SpecialFood(1,1,Sprite.FISH);
+		s.setX(1);
+		s.setY(1);
+		m.setFurthestGP(s);
+		m.gamePieces.add(s);
+		m.getPlayer().setX(1);
+		m.getPlayer().setY(1);
+		m.getPlayer().setHealth(100);
+		m.handleTicks();
+		assert m.getPlayer().getHealth() == 250;
+	}
+	@Test
+	public void playerHitByEnemyItCollidesWith() {
+		Model m = new Model(1,1,1,1);
+		Enemy e = new Enemy(1,1,Sprite.REDFOX);
+		e.setX(1);
+		e.setY(1);
+		e.setDamage(50);
+		m.setFurthestGP(e);
+		m.gamePieces.add(e);
+		m.getPlayer().setX(1);
+		m.getPlayer().setY(1);
+		m.getPlayer().setHealth(100);
+		m.handleTicks();
+		assert m.getPlayer().getHealth() == 50;
+	}
+	@Test
+	public void handleTicksCallsEndOfLevelIfNoGPsLeftAndRound1() {
+		Model m = new Model(1,1,1,1);
+		m.setRound(1);
+		m.setTotalLevelTicks(1);
+		m.handleTicks();
+		assert m.getPlayer().getXIncr() == 30;
+	}
+	@Test
+	public void handleTicksCallsEndOfLevelIfNoGPsLeftAndRound2() {
+		Model m = new Model(1,1,1,1);
+		m.setRound(2);
+		m.setTotalLevelTicks(1);
+		m.handleTicks();
+		assert m.getPlayer().getXIncr() == 30;
+	}
+	@Test
+	public void handleTicksCallsEndOfLevelIfNoGPsLeftAndRound3() {
+		Model m = new Model(1,1,1,1);
+		m.setRound(3);
+		m.setTotalLevelTicks(1);
+		m.handleTicks();
+		assert m.getPlayer().getXIncr() == 30;
+	}
 		//eat()
 	@Test
 	public void playerEatingIncreasesHealthUnder250byFoodValue() {
@@ -594,13 +638,6 @@ public class ProjectTest {
 		m.obstacleHit(e);
 		assert m.getPlayer().getHealth() == 30;
 	}
-		//nest()
-	@Test
-	public void thisTestOnlyExistsSoNestDoesNotHaveAnyRedBarsWeWillAddMoreTestsWhenWeAddNest() {
-		Model m = new Model(1,1,1,1);
-		m.nest();
-		assert true == true;
-	}
 		//getImgHeight()
 	@Test
 	public void getImgHeightReturnsImgHeight() {
@@ -657,6 +694,71 @@ public class ProjectTest {
 		m.setBird(b);
 		assert m.getBird() == Sprite.OSPREY;
 	}
+		//setEnemyHit() and EnemyHit()
+	@Test
+	public void hitEnemyIsAHitEnemy() {
+		Model m = new Model(1,1,1,1);
+		m.setEnemyHit(true);
+		assert m.enemyHit();
+	}
+		//setFoodHit() and FoodHit()
+	@Test
+	public void hitFoodIsAHitFood() {
+		Model m = new Model(1,1,1,1);
+		m.setFoodHit(true);
+		assert m.foodHit();
+	}
+		//setIsQuiz3Done() and isQuiz3Done()
+	@Test
+	public void quiz3IsDoneIfSetDone() {
+		Model m = new Model(1,1,1,1);
+		m.setNumberOfQuestions(1);
+		m.setIsQuiz3Done(true);
+		assert m.isQuiz3Done();
+	}
+	@Test
+	public void ifNoQuestionsQuiz3IsDone() {
+		Model m = new Model(1,1,1,1);
+		m.setNumberOfQuestions(-1);
+		assert m.isQuiz3Done();
+	}
+		//setIsQuiz2Done() and isQuiz2Done()
+	@Test
+	public void quiz2IsDoneIfSetDone() {
+		Model m = new Model(1,1,1,1);
+		m.setNumberOfQuestions(1);
+		m.setIsQuiz2Done(true);
+		assert m.isQuiz2Done();
+	}
+	@Test
+	public void ifNoQuestionsQuiz2IsDone() {
+		Model m = new Model(1,1,1,1);
+		m.setNumberOfQuestions(-1);
+		assert m.isQuiz2Done();
+	}
+		//setIsQuiz1Done() and isQuiz1Done()
+	@Test
+	public void quiz1IsDoneIfSetDone() {
+		Model m = new Model(1,1,1,1);
+		m.setNumberOfQuestions(1);
+		m.setIsQuiz1Done(true);
+		assert m.isQuiz1Done();
+	}
+	@Test
+	public void ifNoQuestionsQuiz1IsDone() {
+		Model m = new Model(1,1,1,1);
+		m.setNumberOfQuestions(-1);
+		assert m.isQuiz1Done();
+	}
+		//updateNumberOfQuestions()
+	@Test
+	public void numOfQuestionsIsNegativeOneIfNoQuestions() {
+		Model m = new Model(1,1,1,1);
+		m.updateNumberOfQuestions();
+		System.out.println(m.getQuestionToAsk());
+		assert m.getNumberOfQuestions() == -1;
+	}
+	
 	//Tests for Sprite
 		//getName()
 	@Test
