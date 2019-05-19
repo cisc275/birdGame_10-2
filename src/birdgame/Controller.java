@@ -191,6 +191,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     }
 
     void runQuiz() {
+    	
         view.prepareQuiz();
         while (!Model.quizOver()) {
             //	System.out.println(Model.getQuestionNum());
