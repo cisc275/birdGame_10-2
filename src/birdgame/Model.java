@@ -140,9 +140,11 @@ public class Model implements Serializable {
         seeCurrentGP();
 
         if (currentGPs.size() == 0 && totalLevelTicks != 0) {
+        	System.out.println("Should be calling end of level");
             if (round == 1) {
                 endOfLevel();
             } else if (round == 2) {
+            	System.out.println("round 2 end of level");
                 endOfLevel();
             } else if (round == 3) {
                 endOfLevel();
@@ -604,6 +606,9 @@ public class Model implements Serializable {
         clearFactsAndQuestions();
         clearQuestionsToAsk();
         clearGP();
+        setIsQuiz1Done(false);
+        setIsQuiz2Done(false);
+        setIsQuiz3Done(false);
         totalLevelTicks = 0;
         currentFactIndex = 0;
         player.resetPlayer();
