@@ -13,23 +13,22 @@ import java.io.Serializable;
  *
  * @author crnis
  */
-public class Player extends GamePiece implements Serializable{
+public class Player extends GamePiece implements Serializable {
 
-	final static int MAX_BIRD_HEALTH = 250;
-	final static int INITIAL_Y_INCREASE = 12;
-	final static int INITIAL_X_LOCATION = 30;
-	final static int INITIAL_Y_LOCATION = 300;
-	final static int BIRD_HEIGHT = 100;
-	final static int BIRD_WIDTH = 184;
-	final static int X_OFFSET = 30;
-	final static int Y_OFFSET = 5;
-	
+    final static int MAX_BIRD_HEALTH = 250;
+    final static int INITIAL_Y_INCREASE = 12;
+    final static int INITIAL_X_LOCATION = 30;
+    final static int INITIAL_Y_LOCATION = 300;
+    final static int BIRD_HEIGHT = 100;
+    final static int BIRD_WIDTH = 184;
+    final static int X_OFFSET = 30;
+    final static int Y_OFFSET = 5;
+
     private static int health;
     private static int score;
     private int xOffset;
     private int yOffset;
     private Sprite bird;
-    private static boolean alive=true;
 
     public Player() {
         setYIncr(INITIAL_Y_INCREASE);
@@ -54,8 +53,6 @@ public class Player extends GamePiece implements Serializable{
         }
         return true;
     }
-    
-    
 
     /**
      * checks if the Player collides with a GamePiece

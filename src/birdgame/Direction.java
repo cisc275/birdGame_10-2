@@ -4,7 +4,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package birdgame;
 
 import java.io.Serializable;
@@ -15,7 +14,7 @@ import java.io.Serializable;
  *
  * @author crnis
  */
-public enum Direction implements Serializable{
+public enum Direction implements Serializable {
     UP("up"),
     DOWN("down");
     private String name;
@@ -25,15 +24,15 @@ public enum Direction implements Serializable{
      * @param s is a String direction that correlates with an existing direction
      * defined in the enum
      */
-    private Direction(String s){
+    private Direction(String s) {
         this.name = s;
     }
-    
+
     /**
      *
      * @return name variable corresponding to the direction
      */
-    public String getName(){
+    public String getName() {
         return name;
     }
 }
