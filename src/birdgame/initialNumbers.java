@@ -23,7 +23,7 @@ public class initialNumbers implements Serializable{
 	
 	//Model
 
-	private int obstaclesPerLevel = 10;
+	private int obstaclesPerLevel = 30;
 
 	public int obstaclesPerLevel() {
 		return obstaclesPerLevel;

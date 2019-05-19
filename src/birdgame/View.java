@@ -630,9 +630,12 @@ public class View extends JPanel implements Serializable{
 
     class TutorialScreenPanel extends JPanel {
 
+       
         protected void paintComponent(Graphics g) {
-
+            super.paintComponent(g);
+            g.drawImage(startScreenImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
+        
     }
     class MovingScreenPanel extends JPanel {
 
