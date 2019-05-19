@@ -7,13 +7,15 @@
 
 package birdgame;
 
+import java.io.Serializable;
+
 /**
  * Direction is an enum that contains all the directions that our bird might
  * travel
  *
  * @author crnis
  */
-public enum Direction {
+public enum Direction implements Serializable{
     UP("up"),
     DOWN("down");
     private String name;

@@ -5,13 +5,15 @@
  */
 package birdgame;
 
+import java.io.Serializable;
+
 /**
  * Player class contains all the attributes and methods related to the bird
  * (user).
  *
  * @author crnis
  */
-public class Player extends GamePiece {
+public class Player extends GamePiece implements Serializable{
 
     private static int health;
     private static int score;
@@ -120,7 +122,8 @@ public class Player extends GamePiece {
         return yOffset;
     }
 
-    public void reset() {
+    public void resetPlayer() {
         setHealth(250);
+        System.out.println("resetPlayer reached");
     }
 }

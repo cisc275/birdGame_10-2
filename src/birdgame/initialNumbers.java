@@ -1,14 +1,17 @@
 package birdgame;
 
+import java.io.Serializable;
+
 /**
  * initialNumbers contains all of the initial values for the game,
  * including all hard-coded constants
  * @author mattward
  */
 
-public class initialNumbers {
+public class initialNumbers implements Serializable{
 	//Controller	
-	private int birdHealth = 250;
+	
+	private int birdHealth = 250;//250;
 	public int birdHealth() {
 		return birdHealth;
 	}
@@ -19,7 +22,9 @@ public class initialNumbers {
 	}
 	
 	//Model
-	private int obstaclesPerLevel = 3;
+
+	private int obstaclesPerLevel = 15;
+
 	public int obstaclesPerLevel() {
 		return obstaclesPerLevel;
 	}
@@ -44,7 +49,7 @@ public class initialNumbers {
 		return additionalXLocationForSpecialFood;
 	}
 	
-	private double chanceSpecialFoodSpawns = 0.3;
+	private double chanceSpecialFoodSpawns = 0.2;
 	public double chanceSpecialFoodSpawns() {
 		return chanceSpecialFoodSpawns;
 	}
@@ -80,5 +85,36 @@ public class initialNumbers {
 	}
 	
 	//View
+			//some of the constants are left in view because 
+	private int framesPerSecond = 40;
+	public int framesPerSecond() {
+		return framesPerSecond;
+	}
+	
+	private int specialFoodDelay = 100;
+	public int specialFoodDelay() {
+		return specialFoodDelay;
+	}
+	
+	private int thoughtBubbleSize = 400;
+	public int thoughtBubbleSize() {
+		return thoughtBubbleSize;
+	}
+	
+	private int defaultButtonFontSizeRatio = 55;
+	public int defaultButtonFontSizeRatio() {
+		return defaultButtonFontSizeRatio;
+	}
+	
+	private int defaultButtonFrameWidthRatio = 10;
+	public int defaultButtonFrameWidthRatio() {
+		return defaultButtonFrameWidthRatio;
+	}
+	
+	private int defaultButtonFrameHeightRatio = 100;
+	public int defaultButtonFrameHeightRatio() {
+		return defaultButtonFrameHeightRatio;
+	}
+	
 	
 }

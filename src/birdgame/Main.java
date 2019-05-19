@@ -3,6 +3,7 @@ package birdgame;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,7 +20,7 @@ import javax.swing.Timer;
  *
  * @author crnis
  */
-public class Main {
+public class Main implements Serializable{
     /**
      * will call the start() method in Controller
      *

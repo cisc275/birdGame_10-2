@@ -6,6 +6,8 @@
 
 package birdgame;
 
+import java.io.Serializable;
+
 /**
  * GamePiece contains various attributes of a GamePiece, including x-location,
  * y-location, x and y increment, width, height, and type; in addition, the 
@@ -13,7 +15,7 @@ package birdgame;
  * on the screen
  * @author crnis
  */
-public class GamePiece {
+public class GamePiece implements Serializable{
 	
     private int xLocation;
     private int yLocation;
