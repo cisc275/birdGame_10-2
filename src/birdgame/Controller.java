@@ -125,8 +125,8 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
 
-        view.setPanel("TUTORIAL");
-        
+        //view.setPanel("TUTORIAL");
+        view.setPanel("START");
     }
 
     public void resetForGameOver() {
@@ -383,7 +383,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 
         if (e.getSource() == ReturnToStart) {
            // reachedHarrierEnd = true;
-        	harrierNested = true;
+            if(model.getRound() == 3){
+                harrierNested = true;
+            }
             if((harrierNested || ospreyNested) && birdsPlayed == 2){
                 view.setPanel("GAME_OVER");
             }
@@ -491,6 +493,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         OspreyButton.setVisible(true);
         HarrierButton.setVisible(true);
         birdsPlayed = 0;
+        Round2Button.setVisible(false);
+        ospreyNestButton.setVisible(false);
+        ReturnToStart.setVisible(false);
         model.resetModel();
         view.resetView();
         start();

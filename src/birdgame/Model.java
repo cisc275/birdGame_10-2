@@ -176,6 +176,7 @@ public class Model implements Serializable {
             } else if (round == 2) {
                 View.setIsOspreyRound2Over(true);
             } else if (round == 3) {
+                System.out.println("end of level reached for harrier");
                 View.setIsHarrierRoundOver(true);
             }
         }

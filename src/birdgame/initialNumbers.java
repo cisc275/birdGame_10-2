@@ -82,6 +82,7 @@ public class initialNumbers implements Serializable{
 //	public int xLocationWhereGPsAreNoLongerCurrent() {
 //		return xLocationWhereGPsAreNoLongerCurrent;
 //	}
+
 	//View
 			//some of the constants are left in view because they are constants that are never changed
 //	private int framesPerSecond = 40;
