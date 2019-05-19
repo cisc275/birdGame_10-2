@@ -6,10 +6,12 @@
 
 package birdgame;
 
+import java.io.Serializable;
+
 /**
  *
  * @author crnis
  */
-public class Nest extends GamePiece{
+public class Nest extends GamePiece implements Serializable{
     
 }

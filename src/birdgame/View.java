@@ -8,6 +8,8 @@ package birdgame;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -51,7 +53,7 @@ import java.awt.CardLayout;
  *
  * @author crnis
  */
-public class View extends JPanel {
+public class View extends JPanel implements Serializable{
 
 	private initialNumbers initNums = new initialNumbers();
     static Rectangle rect = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();

@@ -1,6 +1,8 @@
 package birdgame;
 
-public enum Sprite{
+import java.io.Serializable;
+
+public enum Sprite implements Serializable{
 	BUNNY("bunny"),
 	SNAKE("snake"),
 	MOUSE("mouse"),

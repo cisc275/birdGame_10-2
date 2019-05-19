@@ -1,12 +1,14 @@
 package birdgame;
 
+import java.io.Serializable;
+
 /**
  * initialNumbers contains all of the initial values for the game,
  * including all hard-coded constants
  * @author mattward
  */
 
-public class initialNumbers {
+public class initialNumbers implements Serializable{
 	//Controller	
 	
 	private int birdHealth = 250;//250;
