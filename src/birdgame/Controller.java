@@ -197,7 +197,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             //	System.out.println(Model.getQuestionNum());
             //	System.out.println(Model.getNumberOfQuestions());
             try {
-                Thread.sleep(50);
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -210,7 +210,15 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                 } else {
                     Model.incrQuestionNum();
                 }
+                try {
+                    Thread.sleep(250);
+                    view.setFalse();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                
             }
+            
 
         }
         Model.resetQuestionNum();
