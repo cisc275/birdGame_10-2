@@ -50,6 +50,8 @@ public class View extends JPanel implements Serializable {
     final static int SPECIAL_FOOD_DELAY = 100;
     final static Color YELLOW = new Color(255, 255, 0, 100);
     final static Color SNAKEYELLOW = new Color(255, 255, 0, 175);
+    final static Color GREEN = new Color(0, 255, 0, 100);
+    final static Color RED = new Color(255, 0, 0, 100);
     final static int DELAY_FOR_ANIMATION_UPDATES = 10;
     final static int BACKGROUND_LOCATION_X_INCREASE = 8;
     final static int MAX_NUM_BACKGROUNDS = 200;
@@ -195,8 +197,6 @@ public class View extends JPanel implements Serializable {
     private Image gameOverImg;
     private Image homeScreenImg;
     private static boolean is2To3Transition;
-    Color green = new Color(0, 255, 0, 100);
-    Color red = new Color(255, 0, 0, 100);
     private static boolean isOspreyRound1Over = false;
     private static boolean isOspreyRound2Over = false;
     private static boolean is1To2Transition = false;
@@ -244,13 +244,13 @@ public class View extends JPanel implements Serializable {
     void loadImages() {
         for (int i = 0; i < FRAME_COUNT; i++) {
             harrierFly[i] = createImage("images/BirdImages/Harrier" + i + ".png");
-            harrierRed[i] = dye(harrierFly[i], red);
-            harrierGreen[i] = dye(harrierFly[i], green);
+            harrierRed[i] = dye(harrierFly[i], RED);
+            harrierGreen[i] = dye(harrierFly[i], GREEN);
         }
         for (int i = 0; i < FRAME_COUNT; i++) {
             ospreyFly[i] = createImage("images/BirdImages/Osprey" + i + ".png");
-            ospreyRed[i] = dye(ospreyFly[i], red);
-            ospreyGreen[i] = dye(ospreyFly[i], green);
+            ospreyRed[i] = dye(ospreyFly[i], RED);
+            ospreyGreen[i] = dye(ospreyFly[i], GREEN);
         }
         for (int i = 0; i < MICE_FRAME_COUNT; i++) {
             mice[i] = createImage("images/BirdImages/Mice" + i + ".png");
