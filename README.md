@@ -51,3 +51,6 @@ Snake:
   
 Harrier Background:
   https://images.xomusic.ru/sykpOL-S18E/little-singham-with-bandbudh-aur-budbak-finger-family-song-learning-videos-for-toddlers.jpg
+  
+Harrier Minimap:
+  https://geology.com/county-map/map-of-delaware-counties.jpg
