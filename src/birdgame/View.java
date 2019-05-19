@@ -146,9 +146,13 @@ public class View extends JPanel implements Serializable{
     private JLabel downLabel;
     private JLabel upLabel;
     private JLabel foodLabel;
+    private JLabel specialFoodLabel;
+
     private JLabel enemyLabel;
     private int foodX;
     private int foodX2;
+    private int foodX3;
+
 
     private Direction direction;
     private CopyOnWriteArrayList<GamePiece> currentViewableGPs = new CopyOnWriteArrayList<>();
@@ -169,11 +173,14 @@ public class View extends JPanel implements Serializable{
     private static boolean isOspreyRound2Over = false;
     private static boolean is1To2Transition = false;
     private static boolean isHarrierRoundOver = false;
-    boolean draw =true;
-    boolean drawPlane = true;
+    boolean drawFish =true;
     boolean drawEagle = true;
+    boolean drawSpecialSnake = true;
+
     boolean hit = false;
     boolean finished = false;
+    boolean fishDone =false;
+    boolean notOver = true;
 
     public View(Controller c) {
         frame = new JFrame();
@@ -325,6 +332,9 @@ public class View extends JPanel implements Serializable{
         foodLabel = new JLabel("Now try to hit the moving food");
         foodLabel.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/30));
         foodLabel.setBounds(5*FRAME_WIDTH/12, FRAME_HEIGHT/8, FRAME_WIDTH, FRAME_HEIGHT/8);
+        specialFoodLabel = new JLabel("Now try to hit the golden moving food");
+        specialFoodLabel.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/30));
+        specialFoodLabel.setBounds(5*FRAME_WIDTH/12, FRAME_HEIGHT/8, FRAME_WIDTH, FRAME_HEIGHT/8);
         enemyLabel = new JLabel("Now avoid the predators and obstacles");
         enemyLabel.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/30));
         enemyLabel.setBounds(5*FRAME_WIDTH/12, FRAME_HEIGHT/8, FRAME_WIDTH, FRAME_HEIGHT/8);
@@ -333,12 +343,15 @@ public class View extends JPanel implements Serializable{
         movingScreen.add(upLabel);
         movingScreen.add(downLabel);
         movingScreen.add(foodLabel);
+        movingScreen.add(specialFoodLabel);
         movingScreen.add(enemyLabel);
         movingScreen.add(c.getTutorialMovingButton());
         foodX=playerXLoc + FRAME_WIDTH;
         foodX2=playerXLoc + FRAME_WIDTH;
+        foodX3=playerXLoc + FRAME_WIDTH;
 
         foodLabel.setVisible(false);
+        specialFoodLabel.setVisible(false);
         enemyLabel.setVisible(false);
         c.getTutorialMovingButton().setVisible(false);
         
@@ -639,47 +652,73 @@ public class View extends JPanel implements Serializable{
                 ospreyPicNum = (ospreyPicNum + 1) % FRAME_COUNT;
                 fishPicNum = (fishPicNum + 1) % FISH_FRAME_COUNT;
                 eaglePicNum = (eaglePicNum + 1) % EAGLE_FRAME_COUNT;
-                planePicNum = (planePicNum + 1) % PLANE_FRAME_COUNT;
+                snakePicNum = (snakePicNum + 1) % SNAKE_FRAME_COUNT;
 
             }
             g.drawImage(ospreyFly[ospreyPicNum], playerXLoc, playerYLoc, this);
-            if(Controller.getUpArrowKeyTried() >=1 && Controller.getDownArrowKeyTried() >=1 && draw){
-            	foodX -= 14;
-            	if(draw) {
-            		g.drawImage(fish[fishPicNum], foodX, FRAME_HEIGHT/2, this);
+            if(notOver) {
+            	if(Controller.getUpArrowKeyTried() >=1 && Controller.getDownArrowKeyTried() >=1 && drawFish){
+            		foodX -= 14;
+            		if(drawFish) {
+            			g.drawImage(fish[fishPicNum], foodX, FRAME_HEIGHT/2, this);
+            		}
+            		if(playerXLoc >= foodX - 150 && (playerYLoc >= FRAME_HEIGHT/2-100  && playerYLoc <= FRAME_HEIGHT/2+100 )  ) {
+            			drawFish=false;
+            			foodLabel.setVisible(false);
+            			fishDone=true;
+            			specialFoodLabel.setVisible(true);
+            		}
+            		else if (playerXLoc >= foodX+250 ){
+            			foodX=playerXLoc + FRAME_WIDTH;
+            		}
             	}
-            	if(playerXLoc >= foodX - 150 && (playerYLoc >= FRAME_HEIGHT/2-100  && playerYLoc <= FRAME_HEIGHT/2+100 )  ) {
-            		draw=false;
-            		foodLabel.setVisible(false);
-                    enemyLabel.setVisible(true);
+            	if(fishDone){
+            		foodX3 -= 14;
+            		if(drawSpecialSnake) {
+            			g.drawImage(specialSnake[snakePicNum], foodX3, FRAME_HEIGHT/3, this);
+            			g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH/8, playerYLoc - FRAME_HEIGHT/3, this);
+            	        g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/47));
+            	        //(Model.getCurrentFact());
+            	        String[] lines = "Hitting a Special Food, will display a fact, and gives you full,        health".split(",");
+            	        int yOffset = 0;
+            	        for (String line : lines) {
+            	            yOffset += g.getFontMetrics().getHeight();
+            	            g.drawString(line, playerXLoc + FRAME_WIDTH/6, playerYLoc - 15*FRAME_HEIGHT/72 + yOffset);
+            	        }
+            		}
+            		if(playerXLoc >= foodX3 - 150 && (playerYLoc >= FRAME_HEIGHT/3-50  && playerYLoc <= FRAME_HEIGHT/3+50 )  ) {
+            			drawSpecialSnake=false;
+            			specialFoodLabel.setVisible(false);
+            			enemyLabel.setVisible(true);
+            		}
+            		else if (playerXLoc >= foodX3+250 ){
+            			foodX3=playerXLoc + FRAME_WIDTH;
+            		}
             	}
-            	else if (playerXLoc >= foodX+250 ){
-            		foodX=playerXLoc + FRAME_WIDTH;
-            	}
-            }
-            if(enemyLabel.isVisible()) {
-            	foodX2 -= 14;
-            	hit = false;
-            	if(drawEagle) {
-            		g.drawImage(eagle[eaglePicNum], foodX2, FRAME_HEIGHT/4, this);
-            	}
+            	if(enemyLabel.isVisible()) {
+            		foodX2 -= 14;
+            		hit = false;
+            		if(drawEagle) {
+            			g.drawImage(eagle[eaglePicNum], foodX2, FRAME_HEIGHT/4, this);
+            		}
             	
-            	if(playerXLoc >= foodX2 - 150 && (playerYLoc >= FRAME_HEIGHT/3-100  && playerYLoc <= FRAME_HEIGHT/3+100 )  ) {
-            		drawEagle=false;
-            		hit = true;
+            		if(playerXLoc >= foodX2 - 150 && (playerYLoc >= FRAME_HEIGHT/3-100  && playerYLoc <= FRAME_HEIGHT/3+100 )  ) {
+            			drawEagle=false;
+            			hit = true;
+            		}
+            		else if(playerXLoc >= foodX2+300) {
+            			hit=false;
+            			finished=true;
+            		}
+            		if(hit) {
+            			drawEagle = true;
+            			foodX2=playerXLoc + FRAME_WIDTH;
+            		}
             	}
-            	else if(playerXLoc >= foodX2+300) {
-            		hit=false;
-            		finished=true;
-            	}
-            	if(hit) {
-            		drawEagle = true;
-            		foodX2=playerXLoc + FRAME_WIDTH;
-            	}
-
             }
             if(!hit&&finished) {
             	enemyLabel.setVisible(false);
+            	notOver=false;
             	Controller.getTutorialMovingButton().setVisible(true);
         	}
             
@@ -779,15 +818,14 @@ public class View extends JPanel implements Serializable{
         //	JLabel img = new JLabel(new ImageIcon(thoughtBubble));
         // 	img.setBounds(playerXLoc + 300,playerYLoc ,300,300);
         // 	getPanel().add(img);
-        g.drawImage(thoughtBubble, playerXLoc + 300, playerYLoc - 300, this);
-        g.setFont(new Font("Times New Roman", 1, 30));
+    	g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH/8, playerYLoc - FRAME_HEIGHT/3, this);
+        g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/47));
         //(Model.getCurrentFact());
         String[] lines = Model.getCurrentFact().split(",");
         int yOffset = 0;
         for (String line : lines) {
             yOffset += g.getFontMetrics().getHeight();
-            g.drawString(line, playerXLoc + 375, playerYLoc - 175 + yOffset);
-        }
+            g.drawString(line, playerXLoc + FRAME_WIDTH/6, playerYLoc - 15*FRAME_HEIGHT/72 + yOffset);        }
 
     }
 

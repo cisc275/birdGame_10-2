@@ -438,7 +438,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             view.getDownLabel().setVisible(false);
         	downArrowKeyTried++;
         }
-        if(upArrowKeyTried>=1&&downArrowKeyTried>=1 && view.draw) {
+        if(upArrowKeyTried>=1&&downArrowKeyTried>=1 && view.drawFish) {
         	view.getFoodLabel().setVisible(true);
         }
     }
