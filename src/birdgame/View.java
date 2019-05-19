@@ -939,7 +939,7 @@ public class View extends JPanel implements Serializable {
             if (runningFrameCount % 30 == 0) {
                 dePicNum = (dePicNum + 1) % DE_FRAME_COUNT;
             }
-            g.drawImage(delaware[dePicNum], FRAME_WIDTH - 150, FRAME_HEIGHT - 350, 150, 350, this);
+            g.drawImage(delaware[dePicNum], FRAME_WIDTH - 3*FRAME_WIDTH/28, FRAME_HEIGHT - 7*FRAME_HEIGHT/16, 3*FRAME_WIDTH/28, 7*FRAME_HEIGHT/16, this);
         }
     }
 
