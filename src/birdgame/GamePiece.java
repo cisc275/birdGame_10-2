@@ -17,11 +17,11 @@ import java.io.Serializable;
  */
 public class GamePiece implements Serializable{
 	
-	final static int FOX_X_OFFSET = 50;
-	final static int FOX_Y_OFFSET = 50;
-	final static int EAGLE_X_OFFSET = 30;
+	final static int FOX_X_OFFSET = 35;
+	final static int FOX_Y_OFFSET = 0;
+	final static int EAGLE_X_OFFSET = 15;
 	final static int EAGLE_Y_OFFSET = 30;
-	final static int PLANE_X_OFFSET = 40;
+	final static int PLANE_X_OFFSET = 25;
 	final static int PLANE_Y_OFFSET = 20;
 	final static int BUNNY_X_OFFSET = 20;
 	final static int BUNNY_Y_OFFSET = 20;
