@@ -60,7 +60,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     private ImageIcon imgHarrier = new ImageIcon("nature2.jpg");
     private ImageIcon imgHarrier2 = new ImageIcon("nature2Mirror.jpg");
     private int birdsPlayed = 0;
-    private boolean answered = false;
+    private static boolean answered = false;
     private boolean nextRound = false;
     private boolean ospreyNested = false;
     private static boolean harrierNested = false;
@@ -73,6 +73,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 
     private int tutorialHealth=10000;
     private boolean runGame = true;
+    private boolean answeredCorrect=false;
     
 
     public Controller() {
@@ -202,8 +203,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (answered) {
+            if (answered&&answeredCorrect) {
                 answered = false;
+                answeredCorrect=false;
                 if (!Model.quizOver() && !Model.lastQuestion()) {
                     Model.incrQuestionNum();
                     view.prepareQuiz();
@@ -211,6 +213,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                     Model.incrQuestionNum();
                 }
             }
+
         }
         Model.resetQuestionNum();
 
@@ -276,6 +279,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     public void handleQuizButtonClick(String choice) {
     	answered = true;
 		 if (Model.getCorrectAnswer().equals(choice)){
+			 answeredCorrect=true;
 			 view.answeredCorrectly(true);
 		 }
 		 
@@ -594,4 +598,5 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     public JButton getTutorialButton() {
         return TutorialButton;
     }
+    
 }
