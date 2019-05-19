@@ -156,7 +156,6 @@ public class Model implements Serializable {
             } else if (round == 2) {
                 View.setIsOspreyRound2Over(true);
             } else if (round == 3) {
-                System.out.println("end of level reached for harrier");
                 View.setIsHarrierRoundOver(true);
             }
         }
@@ -177,7 +176,7 @@ public class Model implements Serializable {
         int numSpecialFood = 0;
         questionsToAsk = new HashMap<String, String[]>();
         int tempXLoc = X_LOCATION_FOR_OBSTACLE_SPAWNS;
-        int maxSpecialFood = 3;
+        int maxSpecialFood = MAX_SPECIAL_FOOD;
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
                 if (Math.random() < CHANCE_SPECIAL_FOOD_SPAWNS) {
@@ -581,11 +580,7 @@ public class Model implements Serializable {
     }
 
     public static void updateNumberOfQuestions() {
-        if (Model.getQuestionToAsk().equals(null)) {
-            numberOfQuestions = -1;
-        } else {
             numberOfQuestions = getQuestionToAsk().size() - 1;
-        }
     }
 
     public static boolean isQuiz1Done() {
