@@ -262,8 +262,6 @@ public class View extends JPanel implements Serializable{
         for (int i = 0; i < DE_FRAME_COUNT; i++) {
             delaware[i] = createImage("images/MiniMapImages/delaware" + i + ".jpg");
         }
-//        delaware = createImage("delaware.jpg").getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH);
-
     }
     private static BufferedImage dye(BufferedImage image, Color color) {
         int w = image.getWidth();
@@ -309,7 +307,7 @@ public class View extends JPanel implements Serializable{
         tutorialScreen = new TutorialScreenPanel();
         tutorialScreen.setLayout(null);
         c.getTutorialButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
-        c.getTutorialButton().setBounds((FRAME_WIDTH * 7) / 10, (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        c.getTutorialButton().setBounds(FRAME_WIDTH/3, 4*FRAME_HEIGHT/10, FRAME_WIDTH / 3, FRAME_HEIGHT / 14);
         
         tutorialScreen.add(c.getTutorialButton());
 
@@ -319,19 +317,19 @@ public class View extends JPanel implements Serializable{
     	movingScreen = new MovingScreenPanel();
         movingScreen.setLayout(null);
         upLabel = new JLabel("Use the UP arrow key to move up");
-        upLabel.setFont(new Font("Times New Roman", 1, 20));
-        upLabel.setBounds(0, 100, FRAME_WIDTH/4, 100);
+        upLabel.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/30));
+        upLabel.setBounds(FRAME_WIDTH/50, FRAME_HEIGHT/8, FRAME_WIDTH, FRAME_HEIGHT/8);
         downLabel = new JLabel("Use the DOWN arrow key to move down");
-        downLabel.setFont(new Font("Times New Roman", 1, 20));
-        downLabel.setBounds(0, FRAME_HEIGHT-200, FRAME_WIDTH/4, 100);
+        downLabel.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/30));
+        downLabel.setBounds(FRAME_WIDTH/50, FRAME_HEIGHT-FRAME_HEIGHT/4, FRAME_WIDTH, FRAME_HEIGHT/8);
         foodLabel = new JLabel("Now try to hit the moving food");
-        foodLabel.setFont(new Font("Times New Roman", 1, 20));
-        foodLabel.setBounds(800, 100, FRAME_WIDTH/4, 100);
+        foodLabel.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/30));
+        foodLabel.setBounds(5*FRAME_WIDTH/12, FRAME_HEIGHT/8, FRAME_WIDTH, FRAME_HEIGHT/8);
         enemyLabel = new JLabel("Now avoid the predators and obstacles");
-        enemyLabel.setFont(new Font("Times New Roman", 1, 20));
-        enemyLabel.setBounds(800, 100, FRAME_WIDTH/4, 100);
+        enemyLabel.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/30));
+        enemyLabel.setBounds(5*FRAME_WIDTH/12, FRAME_HEIGHT/8, FRAME_WIDTH, FRAME_HEIGHT/8);
         c.getTutorialMovingButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 55));
-        c.getTutorialMovingButton().setBounds((FRAME_WIDTH * 7) / 10, (FRAME_HEIGHT * 84) / 100, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+        c.getTutorialMovingButton().setBounds(FRAME_WIDTH/3, 4*FRAME_HEIGHT/10, FRAME_WIDTH / 3, FRAME_HEIGHT / 14);
         movingScreen.add(upLabel);
         movingScreen.add(downLabel);
         movingScreen.add(foodLabel);
@@ -440,17 +438,6 @@ public class View extends JPanel implements Serializable{
     void createGameOverPanels() {
         createGameOverWin();
         createGameOverLose();
-//        gameOver = new GameOverPanel();
-//        gameOver.setLayout(null);
-//        JLabel gameOverLabel = new JLabel("Game Over");
-//        gameOver.setFont(new Font("Times New Roman", 1, 70));
-//        gameOver.setBounds(FRAME_WIDTH / 2 - 100, FRAME_HEIGHT / 2, 100, 100);
-//        JLabel finalScore = new JLabel("Score: " + Player.getScore());
-//        finalScore.setFont(new Font("Times New Roman", 1, 70));
-//        finalScore.setBounds(FRAME_WIDTH / 2 - 100, FRAME_HEIGHT / 2, 300, 100);
-//        gameOver.add(gameOverLabel);
-//        gameOver.add(finalScore);
-
     }
 
     void createGameOverWin() {

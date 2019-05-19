@@ -495,7 +495,7 @@ public class Model implements Serializable {
         facts = new String[]{"Northern Harriers, eat rodents", "Northern Harriers are, non-migratory birds", "Foxes are a predator, for Northern Harriers"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsHarrier1 = new HashMap<>();
-        String[] harrierFood = {"rodents", "fish", "eagles", "plants", "A"};
+        String[] harrierFood = {"Rodents", "Fish", "Eagles", "Plants", "A"};
         QandAsHarrier1.put("What do Northern Harriers eat?", harrierFood);
         factsAndQuestions.put("Northern Harriers, eat rodents", QandAsHarrier1);
 
