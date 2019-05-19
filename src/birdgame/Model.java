@@ -603,6 +603,9 @@ public class Model implements Serializable {
         clearFactsAndQuestions();
         clearQuestionsToAsk();
         clearGP();
+        setIsQuiz1Done(false);
+        setIsQuiz2Done(false);
+        setIsQuiz3Done(false);
         totalLevelTicks = 0;
         currentFactIndex = 0;
         player.resetPlayer();
