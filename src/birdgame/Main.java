@@ -1,6 +1,5 @@
 package birdgame;
 
-
 import java.io.Serializable;
 
 
@@ -14,7 +13,8 @@ import java.io.Serializable;
  *
  * @author crnis
  */
-public class Main implements Serializable{
+public class Main implements Serializable {
+
     /**
      * will call the start() method in Controller
      *

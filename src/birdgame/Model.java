@@ -20,20 +20,20 @@ import java.io.Serializable;
  */
 public class Model implements Serializable {
 
-	final static int TOTAL_OBSTACLES_PER_LEVEL = 30;
-	final static int MAX_BIRD_HEALTH = 250;
-	final static int MAX_SPECIAL_FOOD = 3;
-	final static double CHANCE_SPECIAL_FOOD_SPAWNS = 0.2;
-	final static double CHANCE_FOOD_SPAWNS_INSTEAD_OF_ENEMY = 0.5;
-	final static double EQUAL_CHANCE_BETWEEN_2 = 0.5;
-	final static int X_LOCATION_WHERE_GPS_ARE_NO_LONGER_CURRENT = -500;
-	final static int X_INCREASE_AT_END_OF_LEVEL = 30;
-	final static int X_LOCATION_FOR_OBSTACLE_SPAWNS = 1200;
-	final static int ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD = 800;
-	
+    final static int TOTAL_OBSTACLES_PER_LEVEL = 30;
+    final static int MAX_BIRD_HEALTH = 250;
+    final static int MAX_SPECIAL_FOOD = 3;
+    final static double CHANCE_SPECIAL_FOOD_SPAWNS = 0.2;
+    final static double CHANCE_FOOD_SPAWNS_INSTEAD_OF_ENEMY = 0.5;
+    final static double EQUAL_CHANCE_BETWEEN_2 = 0.5;
+    final static int X_LOCATION_WHERE_GPS_ARE_NO_LONGER_CURRENT = -500;
+    final static int X_INCREASE_AT_END_OF_LEVEL = 30;
+    final static int X_LOCATION_FOR_OBSTACLE_SPAWNS = 1200;
+    final static int ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD = 800;
+
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
-    public static HashMap<String,String[]> questionsToAsk = new HashMap<>();
-    private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
+    public static HashMap<String, String[]> questionsToAsk = new HashMap<>();
+    private static Sprite bird = Sprite.OSPREY; 
     private static int round;
     private static int questionNum;
     private static int numberOfQuestions;
@@ -45,7 +45,7 @@ public class Model implements Serializable {
     private static String correctAnswer;
     private int sceneNum;
     protected ArrayList<GamePiece> gamePieces = new ArrayList<>();
-    
+
     static String[] facts;
     private int totalLevelTicks;
     private static int currentFactIndex = 0;
@@ -62,8 +62,8 @@ public class Model implements Serializable {
     private static boolean enemyHit = false;
     static ArrayList<String> availableFacts;
     private static boolean quiz1Done;
-	private static boolean quiz2Done;
-	private static boolean quiz3Done;
+    private static boolean quiz2Done;
+    private static boolean quiz3Done;
 
     /**
      * Model constructor will take in four variables defined below
@@ -74,17 +74,14 @@ public class Model implements Serializable {
      * @param imageHeight is an int for the height of the image
      */
     public Model(int fwidth, int fheight, int imageWidth, int imageHeight) {
-        //gamePieces = new ArrayList<>();
         fWidth = fwidth;
         fHeight = fheight;
         setImgWidth(imageWidth);
         setImgHeight(imageHeight);
         player = new Player();
-//        setGroundLevel((int)(0.8*fHeight));
         setGroundLevel(fHeight - imgHeight);
         setIndexOfGP(0);
         indexOfGP = 0;
-        //round = 1;
 
     }
 
@@ -99,7 +96,7 @@ public class Model implements Serializable {
         }
 
         if (direction == Direction.UP) {
-            if (player.getY() > 0) {      //Needs to be adjusted
+            if (player.getY() > 0) {      
                 player.move(Direction.UP);
             }
         }
@@ -119,7 +116,6 @@ public class Model implements Serializable {
      */
     public void handleTicks() {
         updateLocationAndDirection();
-        //for(GamePiece g: gamePieces){
         Iterator<GamePiece> it = gamePieces.iterator();
         while (it.hasNext()) {
             GamePiece g = (GamePiece) it.next();
@@ -135,9 +131,6 @@ public class Model implements Serializable {
                 it.remove();
             }
         }
-//        if (player.isAlive()==false) {
-//        	player.alive=false;
-//        }
         clearCurrentGP();
         seeCurrentGP();
 
@@ -151,25 +144,11 @@ public class Model implements Serializable {
             }
         }
 
-//        if (player.getX() > (fWidth - imgWidth)) {
-//            if(round == 1){
-//                View.setIsOspreyRound1Over(true);
-//                round = 2;
-//                player.setX(30);
-//            }
-//            else if(round == 2){
-//                View.setIsOspreyRound2Over(true);
-//                round = 0;
-//                player.setX(30);
-//            }
-//        }
-        //System.out.println(gamePieces);
         totalLevelTicks++;
     }
 
     public void endOfLevel() {
         player.setXIncr(X_INCREASE_AT_END_OF_LEVEL);
-//    	player.setXIncr((int)(fWidth * .5));
         player.setX(player.getX() + player.getXIncr());
         if (player.getX() > (fWidth - imgWidth)) {
             if (round == 1) {
@@ -192,19 +171,12 @@ public class Model implements Serializable {
      * spawnGamePieces() will randomly generate an obstacle on the screen,
      * including buildings, enemies, food, etc.
      */
-    //randomize the location of the GamePieces (1 every screen)
+
     public void spawnHarrierGamePieces() {
-        //SpecialFood.generateFactsAndQuestions();
         int numGamePieces = 0;
         int numSpecialFood = 0;
         questionsToAsk = new HashMap<String, String[]>();
-        //background0:
-        //land: 0-432px, 1776-2640px, 
-        //int tempXLoc = (int)(Math.random() * 2639 + 1776);
         int tempXLoc = X_LOCATION_FOR_OBSTACLE_SPAWNS;
-
-        //int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
-        //int topHalfY = ((int) (Math.random()*(fHeight/2)));
         int maxSpecialFood = 3;
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
@@ -255,7 +227,6 @@ public class Model implements Serializable {
         int maxSpecialFood = MAX_SPECIAL_FOOD;
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
-                // instead of 1
                 if (Math.random() < CHANCE_SPECIAL_FOOD_SPAWNS) {
                     if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
                         gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD, (int) (Math.random() * groundLevel), Sprite.SNAKE));
@@ -284,7 +255,6 @@ public class Model implements Serializable {
             numGamePieces++;
             tempXLoc += fWidth / 3;
         }
-        //System.out.println(gamePieces);
         for (GamePiece gp : gamePieces) {
             int furthestGPLoc = 0;
             if (gp.getX() > furthestGPLoc) {
@@ -293,7 +263,6 @@ public class Model implements Serializable {
 
             }
         }
-        //System.out.println(gamePieces);
     }
 
     public void clearCurrentGP() {
@@ -311,11 +280,12 @@ public class Model implements Serializable {
             }
         }
     }
-    
-    void clearQuestionsToAsk(){
+
+    void clearQuestionsToAsk() {
         questionsToAsk.clear();
     }
-    void clearFactsAndQuestions(){
+
+    void clearFactsAndQuestions() {
         factsAndQuestions.clear();
     }
 
@@ -330,8 +300,8 @@ public class Model implements Serializable {
      * eat() will increment the player's score based off of what is eaten.
      */
     public void eat(Food f) {
-    	foodHit = true;
-    	View.setMomentFoodEaten(View.getFrameCount());
+        foodHit = true;
+        View.setMomentFoodEaten(View.getFrameCount());
         player.setScore(player.getScore() + f.getFoodValue());
         if (player.getHealth() > MAX_BIRD_HEALTH - f.getFoodValue()) {
             player.setHealth(MAX_BIRD_HEALTH);
@@ -347,9 +317,6 @@ public class Model implements Serializable {
             currentFact = facts[currentFactIndex];
             HashMap<String, String[]> associatedFactandQuestion = factsAndQuestions.get(currentFact);
             questionsToAsk.putAll(associatedFactandQuestion);
-            //String[] associatedQuestion
-
-            //	questionsToAsk.add()
         }
         player.setScore(player.getScore() + sf.getFoodValue());
         player.setHealth(MAX_BIRD_HEALTH);
@@ -372,9 +339,9 @@ public class Model implements Serializable {
      * everything and taking them back to the level screen.
      */
     public void obstacleHit(Enemy e) {
-    	enemyHit = true;
-    	System.out.println("obstacle hit");
-    	View.setMomentEnemyHit(View.getFrameCount());
+        enemyHit = true;
+        System.out.println("obstacle hit");
+        View.setMomentEnemyHit(View.getFrameCount());
         player.setScore(player.getScore() - e.getDamage());
         if (player.getHealth() < e.getDamage()) {
             player.setHealth(0);
@@ -407,7 +374,6 @@ public class Model implements Serializable {
         return gamePieces;
     }
 
-    //private static Direction direction;
     public Direction getDirection() {
         return direction;
     }
@@ -506,7 +472,7 @@ public class Model implements Serializable {
         factsAndQuestions.put("Northern Harriers, eat rodents", QandAsHarrier1);
 
         HashMap<String, String[]> QandAsHarrier2 = new HashMap<>();
-        String[] harrierMigrate = { "They migrate to California","They migrate to South America", "They don't migrate", "They migrate to canada", "C"};
+        String[] harrierMigrate = {"They migrate to California", "They migrate to South America", "They don't migrate", "They migrate to canada", "C"};
         QandAsHarrier2.put("Where do Harriers migrate?", harrierMigrate);
         factsAndQuestions.put("Northern Harriers are, non-migratory birds", QandAsHarrier2);
 
@@ -524,7 +490,7 @@ public class Model implements Serializable {
         facts = new String[]{"Ospreys like to,eat Snakes and Fish", "Ospreys migrate to, South America for, the winter", "Eagles are a, predator of Ospreys"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
-        String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Eagles","B"};
+        String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Eagles", "B"};
         QandAsOsprey1.put("What do Ospreys eat?", OspreyFood);
         factsAndQuestions.put("Ospreys like to,eat Snakes and Fish", QandAsOsprey1);
 
@@ -542,11 +508,11 @@ public class Model implements Serializable {
     }
 
     public void generateOspreyQuestions2() {
-    	currentFactIndex = 0;
-    	facts = new String[] {"Ospreys nest in, North America","Ospreys nest in, trees","Airplanes are a,threat to Ospreys"};
+        currentFactIndex = 0;
+        facts = new String[]{"Ospreys nest in, North America", "Ospreys nest in, trees", "Airplanes are a,threat to Ospreys"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
-        String[] OspreyNest = {"South America", "Asia", "Antartica", "North America","D"};
+        String[] OspreyNest = {"South America", "Asia", "Antartica", "North America", "D"};
         QandAsOsprey1.put("Where do Ospreys nest?", OspreyNest);
         factsAndQuestions.put("Ospreys nest in, North America", QandAsOsprey1);
 
@@ -556,7 +522,7 @@ public class Model implements Serializable {
         factsAndQuestions.put("Ospreys nest in, trees", QandAsOsprey2);
 
         HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();
-        String[] OspreyThreat = {"Airplanes", "Hunters", "Radio waves","Drones", "A"};
+        String[] OspreyThreat = {"Airplanes", "Hunters", "Radio waves", "Drones", "A"};
         QandAsOsprey3.put("Which is a common threat to Ospreys?", OspreyThreat);
         factsAndQuestions.put("Airplanes are a,threat to Ospreys", QandAsOsprey3);
         availableFacts = new ArrayList<String>(factsAndQuestions.keySet());
@@ -586,7 +552,6 @@ public class Model implements Serializable {
     public static void setNumberOfQuestions(int x) {
         numberOfQuestions = x;
     }
-    
 
     public static boolean quizOver() {
         return questionNum > numberOfQuestions;
@@ -603,8 +568,8 @@ public class Model implements Serializable {
     public static void resetQuestionNum() {
         questionNum = 0;
     }
-    
-    public void resetModel(){
+
+    public void resetModel() {
         round = 0;
         enemyHit = false;
         foodHit = false;
@@ -624,66 +589,67 @@ public class Model implements Serializable {
         availableFacts.clear();
         System.out.println("resetModel reached");
     }
-    
-public static void updateNumberOfQuestions() {
-	//numberOfQuestions = x;
-	if (Model.getQuestionToAsk().equals(null)){
-		numberOfQuestions = -1;
-	}
-	else {
-		numberOfQuestions = getQuestionToAsk().size() - 1;
-	}
-}
 
-public static boolean isQuiz1Done() {
-	if (numberOfQuestions == -1) {
-		View.set1To2Transition(true);
-		return true;
-	}
-		else {
-			return quiz1Done;
-		}
-}
-public static void setIsQuiz1Done(boolean b) {
-	quiz1Done = b;
-}
+    public static void updateNumberOfQuestions() {
+        if (Model.getQuestionToAsk().equals(null)) {
+            numberOfQuestions = -1;
+        } else {
+            numberOfQuestions = getQuestionToAsk().size() - 1;
+        }
+    }
 
-public static boolean isQuiz2Done() {
-	if (numberOfQuestions == -1) {
-		View.set2To3Transition(true);
-		return true;
-	}
-		else {
-			return quiz2Done;
-		}
-}
+    public static boolean isQuiz1Done() {
+        if (numberOfQuestions == -1) {
+            View.set1To2Transition(true);
+            return true;
+        } else {
+            return quiz1Done;
+        }
+    }
 
-public static void setIsQuiz2Done(boolean b) {
-	quiz2Done = b;
-	
-}
+    public static void setIsQuiz1Done(boolean b) {
+        quiz1Done = b;
+    }
 
-public static boolean isQuiz3Done() {
-	if (getNumberOfQuestions() == -1) {
-		return true;
-	}
-	else {
-	return quiz3Done;
-	}
-}
-public static void setIsQuiz3Done(boolean b) {
-	quiz3Done = b;
-}
-public static boolean enemyHit() {
-	return enemyHit;
-}
-public static boolean foodHit() {
-	return foodHit;
-}
-public static void  setFoodHit(boolean b) {
-	foodHit = b;
-}
-public static void setEnemyHit(boolean b) {
-	enemyHit = b;
-}
+    public static boolean isQuiz2Done() {
+        if (numberOfQuestions == -1) {
+            View.set2To3Transition(true);
+            return true;
+        } else {
+            return quiz2Done;
+        }
+    }
+
+    public static void setIsQuiz2Done(boolean b) {
+        quiz2Done = b;
+
+    }
+
+    public static boolean isQuiz3Done() {
+        if (getNumberOfQuestions() == -1) {
+            return true;
+        } else {
+            return quiz3Done;
+        }
+    }
+
+    public static void setIsQuiz3Done(boolean b) {
+        quiz3Done = b;
+    }
+
+    public static boolean enemyHit() {
+        return enemyHit;
+    }
+
+    public static boolean foodHit() {
+        return foodHit;
+    }
+
+    public static void setFoodHit(boolean b) {
+        foodHit = b;
+    }
+
+    public static void setEnemyHit(boolean b) {
+        enemyHit = b;
+    }
 }
