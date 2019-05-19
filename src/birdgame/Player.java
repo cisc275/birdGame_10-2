@@ -40,6 +40,7 @@ public class Player extends GamePiece implements Serializable{
         health = MAX_BIRD_HEALTH;
         xOffset = X_OFFSET;
         yOffset = Y_OFFSET;
+        score = 0;
     }
 
     /**
