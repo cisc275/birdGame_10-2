@@ -513,7 +513,7 @@ public class Model implements Serializable {
 
         HashMap<String, String[]> QandAsHarrier3 = new HashMap<>();
         String[] harrierPred = {"Foxes", "Snakes", "Cats", "Humans", "A"};
-        QandAsHarrier3.put("What is a major predator of Northern Harriers", harrierPred);
+        QandAsHarrier3.put("What is a predator of Northern Harriers?", harrierPred);
         factsAndQuestions.put("Foxes are a predator, for Northern Harriers", QandAsHarrier3);
 
         availableFacts = new ArrayList<String>(factsAndQuestions.keySet());
@@ -536,7 +536,7 @@ public class Model implements Serializable {
 
         HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();
         String[] OspreyPred = {"Foxes", "Snakes", "Eagles", "Cats and Dogs", "C"};
-        QandAsOsprey3.put("What is a major predator of Ospreys?", OspreyPred);
+        QandAsOsprey3.put("What is a predator of Ospreys?", OspreyPred);
         factsAndQuestions.put("Eagles are a, predator of Ospreys", QandAsOsprey3);
         availableFacts = new ArrayList<String>(factsAndQuestions.keySet());
 
@@ -558,7 +558,7 @@ public class Model implements Serializable {
 
         HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();
         String[] OspreyThreat = {"Airplanes", "Hunters", "Radio waves","Drones", "A"};
-        QandAsOsprey3.put("Which is a common threat to Ospreys", OspreyThreat);
+        QandAsOsprey3.put("Which is a common threat to Ospreys?", OspreyThreat);
         factsAndQuestions.put("Airplanes are a,threat to Ospreys", QandAsOsprey3);
         availableFacts = new ArrayList<String>(factsAndQuestions.keySet());
 
