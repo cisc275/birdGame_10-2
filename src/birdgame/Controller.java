@@ -141,32 +141,34 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 //        if(!tutorialTried){
 //            view.setPanel("TUTORIAL");
 //        }
-            //if () {
-            if (runGame) {
-                System.out.println("Running game");
-                runGame();
-                runGame = false;
-            }
 
-            //}
-            if (!model.getPlayer().isAlive() && !nextRound) {
+    		//if () {
+    		if (runGame) {
+    		//System.out.println("Running game");
+    		runGame();
+    		runGame = false;
+    		}
+    		
+    		//}
+        if (!model.getPlayer().isAlive() && !nextRound) {
+        	
+        	runGame = false;
+            //System.out.println("reached first if");
+            
+            if (birdsPlayed == 2) {// && !model.getPlayer().isAlive()) { // <-comment this out
+                System.out.println("reached second if");
+                view.setPanel("GAME_OVER");
+               // paused = true;
+                while (!userResponse) {
+                	try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
 
-                runGame = false;
-                System.out.println("reached first if");
-
-                if (birdsPlayed == 2) {// && !model.getPlayer().isAlive()) { // <-comment this out
-                    System.out.println("reached second if");
-                    view.setPanel("GAME_OVER");
-                    // paused = true;
-                    while (!userResponse) {
-                        try {
-                            Thread.sleep(50);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-
-                        }
+                
                     }
-                } //<-comment this out
+                }
+            }//<-comment this out
                 //comment this out below
                 //Player loses first round
                 else {
@@ -240,6 +242,8 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                 view.setPanel("MAP_1_TO_2");
 
             } else if (view.getIsOspreyRound2Over() && !ospreyNested && !Model.isQuiz2Done()) {
+            	//System.out.println("Quiz?");
+
                 view.setPanel("QUIZ");
                 runQuiz();
                 view.set2To3Transition(true);
@@ -248,6 +252,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                 //view.setPanel("OSPREY_NEST");
             }
             if (view.is2To3Transition()) {
+            	//System.out.println("2 to 3");
+            	
+
                 view.setPanel("MAP_2_TO_3");
 
             } else if (view.getIsHarrierRoundOver() && !harrierNested && !Model.isQuiz3Done()) {
@@ -256,6 +263,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                 view.setPanel("QUIZ");
                 runQuiz();
                 model.setIsQuiz3Done(true);
+                //System.out.println("harrier round over");
                 //might need some code in here later 
 
             } else if (view.getIsHarrierRoundOver() && !harrierNested) {
@@ -402,6 +410,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         if (e.getSource() == osprey1SaveGameButton || e.getSource() == osprey2SaveGameButton || e.getSource() == harrierSaveGameButton) {
             try {
                 saveGame();
+                view.setPanel("GAME_OVER");
             } catch (Exception d) {
                 d.printStackTrace();
             }

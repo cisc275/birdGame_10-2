@@ -453,18 +453,6 @@ public class View extends JPanel implements Serializable {
     void createGameOverPanel() {
         gameOver = new GameOverPanel();
 
-        gameOver.setLayout(null);
-        JLabel finalScore = new JLabel("Score: " + Player.getScore());
-        finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 25));
-        finalScore.setBounds((FRAME_WIDTH * 4) / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 4) / 10, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-        Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
-        Controller.getRestartGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 60) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-        Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 60) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-
-        gameOver.add(Controller.getRestartGameButton());
-        gameOver.add(Controller.getExitGameButton());
-        gameOver.add(finalScore);
     }
 
     public void paintBackground(Graphics g) {
@@ -594,6 +582,30 @@ public class View extends JPanel implements Serializable {
             super.paintComponent(g);
         }
 
+    }
+    
+    class GameOverPanel extends JPanel {
+    	public JLabel finalScore = new JLabel("Score: " + score);
+    	
+    	GameOverPanel(){
+            setLayout(null);
+            finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH/25));
+            finalScore.setBounds((FRAME_WIDTH*4)/defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 4)/10, FRAME_WIDTH/4, FRAME_HEIGHT/15);
+            Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
+            Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / defaultButtonFontSizeRatio));
+            Controller.getRestartGameButton().setBounds(FRAME_WIDTH / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 60) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+            Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / defaultButtonFrameWidthRatio, (FRAME_HEIGHT * 60) / defaultButtonFrameHeightRatio, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+            
+            add(Controller.getRestartGameButton());
+            add(Controller.getExitGameButton());
+            add(finalScore);
+    	}
+    	      
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(gameOverImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
+            finalScore.setText("Score: " + score);
+        }
     }
 
     class StartScreenPanel extends JPanel {
@@ -978,13 +990,7 @@ public class View extends JPanel implements Serializable {
         }
     }
 
-    class GameOverPanel extends JPanel {
 
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawImage(gameOverImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
-        }
-    }
 
     public int getBirdWidth() {
         return BIRD_WIDTH;
@@ -1077,7 +1083,7 @@ public class View extends JPanel implements Serializable {
         is1To2Transition = false;
         is2To3Transition = false;
         isHarrierRoundOver = false;
-        System.out.println("resetView reached");
+        //System.out.println("resetView reached");
     }
 
     public static boolean is2To3Transition() {
