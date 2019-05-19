@@ -580,6 +580,7 @@ public class Model implements Serializable {
     public static void setNumberOfQuestions(int x) {
         numberOfQuestions = x;
     }
+    
 
     public static boolean quizOver() {
         return questionNum > numberOfQuestions;
