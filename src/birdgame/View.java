@@ -101,7 +101,7 @@ public class View extends JPanel implements Serializable {
 	final static int GRID_WIDTH = 3;
 	final static int GRID_HEIGHT = 2;
 	final static int QUIZ_FONT_STYLE = 1;
-	final static int QUESTION_FONT_SIZE_RATIO = 33;
+	final static int QUESTION_FONT_SIZE_RATIO = 40;
 	final static int BLANK_FONT_SIZE_RATIO = 40;
 	final static int QUIZ_DIMENSION_PREFERRED_X_RATIO = 3;
 	final static int QUIZ_DIMENSION_PREFERRED_Y_RATIO = 4;
@@ -671,10 +671,9 @@ public class View extends JPanel implements Serializable {
     class MovingScreenPanel extends JPanel {
 
     	final static int FOOD_X_INCREASE = 14;
-    	final static int DISTANCE_TO_NOT_DRAW_FOOD = 150;
-    	final static int HEIGHT_DIFFERENCE_TO_GET_FOOD = 100;
-    	final static int DISTANCE_WHERE_PLAYER_MISSED_FOOD = 250;
-    	final static int TUTORIAL_THOUGHT_BUBBLE_X_RATIO = 8;
+    	final int DISTANCE_TO_NOT_DRAW_FOOD = 3*FRAME_WIDTH/28;
+    	final int HEIGHT_DIFFERENCE_TO_GET_FOOD = FRAME_HEIGHT/8;
+    	final int DISTANCE_WHERE_PLAYER_MISSED_FOOD = 5*FRAME_WIDTH/28;
     	
         protected void paintComponent(Graphics g) {
             runningFrameCount++;
@@ -710,7 +709,7 @@ public class View extends JPanel implements Serializable {
             		if(drawSpecialSnake) {
             			g.drawImage(specialSnake[snakePicNum], foodX3, FRAME_HEIGHT/3, this);
             		}
-            		if(playerXLoc >= foodX3 - DISTANCE_TO_NOT_DRAW_FOOD && (playerYLoc >= FRAME_HEIGHT/3-50  && playerYLoc <= FRAME_HEIGHT/3+50 )  ) {
+            		if(playerXLoc >= foodX3 - DISTANCE_TO_NOT_DRAW_FOOD && (playerYLoc >= FRAME_HEIGHT/3-FRAME_HEIGHT/16  && playerYLoc <= FRAME_HEIGHT/3+FRAME_HEIGHT/16 )  ) {
             			drawSpecialSnake=false;
             			specialFoodLabel.setVisible(false);
             			enemyLabel.setVisible(true);
@@ -735,11 +734,11 @@ public class View extends JPanel implements Serializable {
             			g.drawImage(eagle[eaglePicNum], foodX2, FRAME_HEIGHT/4, this);
             		}
             	
-            		if(playerXLoc >= foodX2 - 150 && (playerYLoc >= FRAME_HEIGHT/3-100  && playerYLoc <= FRAME_HEIGHT/3+100 )  ) {
+            		if(playerXLoc >= foodX2 - DISTANCE_TO_NOT_DRAW_FOOD && (playerYLoc >= FRAME_HEIGHT/3-FRAME_HEIGHT/8  && playerYLoc <= FRAME_HEIGHT/3+FRAME_HEIGHT/8 )  ) {
             			drawEagle=false;
             			hit = true;
             		}
-            		else if(playerXLoc >= foodX2+300) {
+            		else if(playerXLoc >= foodX2+3*FRAME_WIDTH/14) {
             			hit=false;
             			finished=true;
             		}
@@ -858,10 +857,9 @@ public class View extends JPanel implements Serializable {
             }
             g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, MAX_BIRD_HEALTH * 2, FRAME_HEIGHT / 17);
             g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
-            g.setColor(Color.white);
-            g.setFont(new Font("Times New Roman", 1, 20));
-            g.drawRect(FRAME_WIDTH - 105, FRAME_HEIGHT / 30, FRAME_WIDTH / 14, FRAME_HEIGHT / 25);
-            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 103, FRAME_HEIGHT / 17);
+            g.setColor(Color.black);
+            g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/47));
+            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - FRAME_WIDTH/8, FRAME_HEIGHT / 17);
 
         }
     }
@@ -972,10 +970,9 @@ public class View extends JPanel implements Serializable {
             }
             g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, MAX_BIRD_HEALTH * 2, FRAME_HEIGHT / 17);
             g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
-            g.setColor(Color.white);
-            g.setFont(new Font("Times New Roman", 1, 20));
-            g.drawRect(FRAME_WIDTH - 105, FRAME_HEIGHT / 30, FRAME_WIDTH / 14, FRAME_HEIGHT / 25);
-            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - 103, FRAME_HEIGHT / 17);
+            g.setColor(Color.black);
+            g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH/47));
+            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - FRAME_WIDTH/8, FRAME_HEIGHT / 17);
             if (runningFrameCount % 30 == 0) {
                 dePicNum = (dePicNum + 1) % DE_FRAME_COUNT;
             }
