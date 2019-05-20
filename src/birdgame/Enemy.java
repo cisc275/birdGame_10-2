@@ -22,6 +22,9 @@ public class Enemy extends GamePiece implements Serializable {
 
     private int damage;
 
+    /**
+     * Enemy constructor initializes fields to their starting values
+     */
     public Enemy(int x, int y, Sprite enemyType) {
         setSpecialFood(false);
         setX(x);
@@ -37,10 +40,20 @@ public class Enemy extends GamePiece implements Serializable {
 
     }
 
+    /**
+     * getDamage returns the amount of damage hitting the enemy will do
+     * 
+     * @return int damage is the value of how much health is lost for colliding with the enemy
+     */
     public int getDamage() {
         return damage;
     }
 
+    /**
+     * setDamage takes one parameter and sets the enemy's damage to the given value
+     * 
+     * @param int damage is the amount of health that the enemy will inflict upon collision with the player
+     */
     public void setDamage(int damage) {
         this.damage = damage;
     }

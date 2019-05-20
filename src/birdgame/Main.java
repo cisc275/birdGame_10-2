@@ -16,9 +16,9 @@ import java.io.Serializable;
 public class Main implements Serializable {
 
     /**
-     * will call the start() method in Controller
+     * main instantiates a controller and then calls the start() method in Controller
      *
-     * @param args
+     * @param String[] args
      */
     public static void main(String[] args) {
         Controller c = new Controller();

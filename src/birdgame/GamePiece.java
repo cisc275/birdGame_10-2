@@ -48,83 +48,173 @@ public class GamePiece implements Serializable {
     private int imgCount = 0;
 
     /**
-     * the move() method will call upon the methods in the Model class to update
-     * the object's location and direction.
+     * the toString method is an override of Object's toString, and allows for easier printing of GamePieces during user tests. It returns the sprite name and location
+     * 
+     * @return String (" " + sprite + " " + xLocation + ", " + yLocation) is the Sprite name and x,y location of the GamePiece.
      */
+    @Override
     public String toString() {
         return " " + sprite + " " + xLocation + ", " + yLocation;
     }
 
+    /**
+     * the move() method calls upon the methods in the Model class to update the object's location and direction.
+     */
     public void move() {
         xLocation = xLocation - xincr;
         yLocation = yLocation - yincr;
 
     }
 
+    /**
+     * setPicNum takes one parameter and sets the picNum to the given number
+     * 
+     * @param int newNum is the number given to set picNum equal to
+     */
     public void setPicNum(int newNum) {
         picNum = newNum;
     }
 
+    /**
+     * getPicNum returns the current picNum
+     * 
+     * @return int picNum is the number of the current picture's animation
+     */
     public int getPicNum() {
         return picNum;
     }
 
+    /**
+     * getX returns the xLocation of a gamePiece
+     * 
+     * @return int xLocation is the x location of the GamePiece
+     */
     public int getX() {
         return xLocation;
     }
 
+    /**
+     * getY returns the yLocation of a gamePiece
+     * 
+     * @return int yLocation is the y location of the GamePiece
+     */
     public int getY() {
         return yLocation;
     }
 
+    /**
+     * getXIncr returns the x velocity of a GamePiece
+     * 
+     * @return int xincr is the increase in x per tick of the GamePiece
+     */
     public int getXIncr() {
         return xincr;
     }
 
+    /**
+     * getYIncr returns the y velocity of a GamePiece
+     * 
+     * @return int yincr is the increase in y per tick of the GamePiece
+     */
     public int getYIncr() {
         return yincr;
     }
 
+    /**
+     * getWidth returns the width of the GamePiece
+     * 
+     * @return int width is the width in pixels of the GamePiece
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * getHeight returns the height of the GamePiece
+     * 
+     * @return int height is the height in pixels of the GamePiece
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * getSprite returns the Sprite of the GamePiece
+     * 
+     * @return Sprite sprite is the Enum value of the exact GamePiece it is
+     */
     public Sprite getSprite() {
         return sprite;
     }
 
+    /**
+     * setX takes one parameter and sets the xLocation of the GamePiece
+     * 
+     * @param int x is the xLocation of a GamePiece
+     */
     public void setX(int x) {
         xLocation = x;
     }
 
+    /**
+     * setY takes one parameter and sets the yLocation of the GamePiece
+     * 
+     * @param int y is the yLocation of a GamePiece
+     */
     public void setY(int y) {
         yLocation = y;
     }
 
+    /**
+     * setXIncr takes one parameter and sets the xIncr of the GamePiece
+     * 
+     * @param int x is the x increase of a GamePiece
+     */
     public void setXIncr(int x) {
         xincr = x;
     }
 
+    /**
+     * setYIncr takes one parameter and sets the yIncr of the GamePiece
+     * 
+     * @param int y is the y increase of a GamePiece
+     */
     public void setYIncr(int y) {
         yincr = y;
     }
 
+    /**
+     * setWidth takes one parameter and sets the Width of the GamePiece
+     * 
+     * @return int w is the width in pixels of the GamePiece
+     */
     public void setWidth(int w) {
         width = w;
     }
 
+    /**
+     * setHeight takes one parameter and sets the height of the GamePiece
+     * 
+     * @return int h is the height in pixels of the GamePiece
+     */
     public void setHeight(int h) {
         height = h;
     }
 
+    /**
+     * setSprite takes one parameter and sets the Sprite of the GamePiece
+     * 
+     * @return Sprite s is the Sprite of the GamePiece
+     */
     public void setSprite(Sprite s) {
         sprite = s;
     }
 
+    /**
+     * isEnemy returns the true or false for if a GamePiece is an Enemy or Food based on its Sprite
+     * 
+     * @return boolean true/false is the value for if the GamePiece is an enemy or a consumable food
+     */
     public boolean isEnemy() {
         if (sprite.equals(Sprite.PLANE) || sprite.equals(Sprite.EAGLE) || sprite.equals(Sprite.REDFOX) || sprite.equals(Sprite.RACCOON)) {
             return true;
@@ -133,10 +223,18 @@ public class GamePiece implements Serializable {
         }
     }
 
+    /**
+     * isFood returns the true or false for if a GamePiece is a Food based on if its an Enemy
+     * 
+     * @return boolean !(isEnemy()) is the value for if it's an enemy, or a food
+     */
     public boolean isFood() {
         return !(isEnemy());
     }
 
+    /**
+     * setOffsets sets the x and y offsets for the GamePiece based on the Sprite it is
+     */
     public void setOffsets() {
         if (getSprite().equals(Sprite.REDFOX)) {
             xOffset = FOX_X_OFFSET;
@@ -173,26 +271,54 @@ public class GamePiece implements Serializable {
 
     }
 
+    /**
+     * getXOffset returns the int value of the horizontal distance between the edge of the image and where the hitbox should be
+     * 
+     * @return int xOffset is the value of the horizontal distance between the edge of the image and where the hitbox should be
+     */
     public int getXOffset() {
         return xOffset;
     }
 
+    /**
+     * getYOffset returns the int value of the vertical distance between the edge of the image and where the hitbox should be
+     * 
+     * @return int yOffset is the value of the vertical distance between the edge of the image and where the hitbox should be
+     */
     public int getYOffset() {
         return yOffset;
     }
 
+    /**
+     * isSpecialFood returns the true/false for if the GamePiece is a specialFood
+     * 
+     * @return boolean isSpecialFood is the boolean true/false value for if the GamePiece is a specialfood
+     */
     public boolean isSpecialFood() {
         return isSpecialFood;
     }
-
+    
+    /**
+     * setSpecialFood takes one parameter and sets the boolean true/false value for if the GamePiece is a specialfood
+     * 
+     * @param boolean bool is the boolean true/false value for if the GamePiece is a specialfood
+     */
     public void setSpecialFood(boolean bool) {
         isSpecialFood = bool;
     }
 
+    /**
+     * incrImgCount increases the count of the image by one
+     */
     public void incrImgCount() {
         imgCount++;
     }
 
+    /**
+     * getImgCount returns the count of the image of the GamePiece
+     * 
+     * @return int imgCount is the count of the image of the GamePiece
+     */
     public int getImgCount() {
         return imgCount;
     }

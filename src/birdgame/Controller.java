@@ -20,7 +20,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * Controller class will handle flow of game and will take user input.
+ * Controller class handles flow of game and will take user input.
  *
  * @author crnis
  */
@@ -71,7 +71,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     private int tutorialHealth = 10000;
     private boolean runGame = true;
     private boolean answeredCorrect = false;
-
+    /**
+     * The constructor for Controller initializes many of the values, such as the different quiz options, the buttons, the view, the model, and it sets the frame to tutorial
+     */
     public Controller() {
         QuizOptionA = new JButton("A");
         QuizOptionB = new JButton("B");
@@ -125,18 +127,19 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         view.setPanel("TUTORIAL");
     }
 
+    /**
+     * start contains the logic to run the game
+     * it checks if the user has finished or died
+     * start moves a finished or dead used onto the next round if there is one
+     */
     void start() {
-
         while (!userDone) {
             if (runGame) {
                 runGame();
                 runGame = false;
             }
-
             if (!model.getPlayer().isAlive() && !nextRound) {
-
                 runGame = false;
-
                 if (birdsPlayed == 2) {
                     System.out.println("reached second if");
                     view.setPanel("GAME_OVER");
@@ -145,23 +148,21 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                             Thread.sleep(50);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
-
                         }
                     }
                 }
                 else {
-
                     view.setPanel("START");
                 }
-
             }
             nextRound = false;
         }
-
     }
 
+    /**
+     * runQuiz contains the logic to run and prepare a quiz for the end of a level
+     */
     void runQuiz() {
-
         view.prepareQuiz();
         while (!Model.quizOver()) {
             try {
@@ -194,6 +195,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         Model.resetQuestionNum();
     }
 
+    /**
+     * runGame contains the logic for the individual ticks of a game. It controls when a player is still in the game or when they have died, and sets them to the correct round when need be.
+     */
     void runGame() {
         while (model.getPlayer().isAlive() && !paused) {
             model.handleTicks();
@@ -241,6 +245,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 
     }
 
+    /**
+     * resetAfterRound sets key model values that change to what they need to be in order to move to the next stage.
+     */
     void resetAfterRound() {
         model.setFoodHit(false);
         model.setEnemyHit(false);
@@ -249,6 +256,11 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         model.getPlayer().setY(view.getFrameHeight() / 2);
     }
 
+    /**
+     * handleQuizButtonClick takes one parameter and checks if the answer was correct
+     * 
+     * @param choice is the string value of the player's answer
+     */
     public void handleQuizButtonClick(String choice) {
         answered = true;
         if (Model.getCorrectAnswer().equals(choice)) {
@@ -259,6 +271,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         }
     }
 
+    /**
+     * resetAfterGameOver resets view and model methods so that the next runthrough has them reset
+     */
     public void resetAfterGameOver() {
         view.resetView();
         model.resetModel();
@@ -266,6 +281,12 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         harrierNested = false;
     }
 
+    /**
+     * actionPreformed takes one parameter and handles the logic for what happens based on what action is done
+     * This handles all button presses
+     * 
+     * @param ActionEvent e is the actionEvent that the user has done, which needs to be dealt with
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == QuizOptionA) {
 
@@ -453,6 +474,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         model.setDirection(null);
     }
 
+    /**
+     * restartGame resets key variables in Controller, resets model and view, then calls start again to continue gameplay.
+     */
     void restartGame() {
         OspreyButton.setVisible(true);
         HarrierButton.setVisible(true);
@@ -462,74 +486,157 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         start();
     }
 
+    /**
+     * getOspreyButton returns the button for the Osprey logic
+     * 
+     * @return JButton OspreyButton is the button for the Osprey logic
+     */
     public JButton getOspreyButton() {
         return OspreyButton;
     }
 
+    /**
+     * getHarrierButton returns the button for the Harrier logic
+     * 
+     * @return JButton HarrierButton is the button for the Harrier logic
+     */
     public JButton getHarrierButton() {
         return HarrierButton;
     }
 
+    /**
+     * getRound1Button returns the button for the Round1 logic
+     * 
+     * @return JButton Round1Button is the button for the Round1 logic
+     */
     public JButton getRound1Button() {
         return Round1Button;
     }
 
+    /**
+     * getRound2Button returns the button for the Round2 logic
+     * 
+     * @return JButton Round2Button is the button for the Round2 logic
+     */
     public static JButton getRound2Button() {
         return Round2Button;
     }
 
+    /**
+     * getReturnToStartButton returns the button for the return to start logic
+     * 
+     * @return JButton ReturnToStart is the button for the return to start logic
+     */
     public static JButton getReturnToStartButton() {
         return ReturnToStart;
     }
 
+    /**
+     * getOspreyNestButton returns the button for the osprey nesting logic
+     * 
+     * @return JButton ospreyNestButton is the button for the osprey nesting logic
+     */
     public static JButton getOspreyNestButton() {
         return ospreyNestButton;
     }
 
+    /**
+     * getRestartGameButton returns the button for restarting the game
+     * 
+     * @return JButton restartGameButton is the button for the restart game logic
+     */
     public static JButton getRestartGameButton() {
         return restartGameButton;
     }
 
+    /**
+     * getExitGameButton returns the button for exiting the game
+     * 
+     * @return JButton exitGameButton is the button for the exit game logic
+     */
     public static JButton getExitGameButton() {
         return exitGameButton;
     }
 
+    /**
+     * getView returns the current view
+     * 
+     * @return View view is the current view used by the Controller
+     */
     public View getView() {
         return view;
     }
 
+    /**
+     * getModel returns the current model
+     * 
+     * @return Model model is the current view used by the Controller
+     */
     public Model getModel() {
         return model;
     }
 
+    /**
+     * getOptionAButton() returns the button used for quiz option A.
+     * 
+     * @return JButton QuizOptionA is the button used for quiz option A logic
+     */
     public static JButton getOptionAButton() {
         return QuizOptionA;
     }
 
+    /**
+     * getOptionBButton() returns the button used for quiz option B.
+     * 
+     * @return JButton QuizOptionB is the button used for quiz option B logic
+     */
     public static JButton getOptionBButton() {
         return QuizOptionB;
     }
 
+    /**
+     * getOptionCButton() returns the button used for quiz option C.
+     * 
+     * @return JButton QuizOptionC is the button used for quiz option C logic
+     */
     public static JButton getOptionCButton() {
         return QuizOptionC;
     }
 
+    /**
+     * getOptionDButton() returns the button used for quiz option D.
+     * 
+     * @return JButton QuizOptionD is the button used for quiz option D logic
+     */
     public static JButton getOptionDButton() {
         return QuizOptionD;
     }
 
+    /**
+     * setHarrierNested takes one parameter and sets the harrierNested to the true or false value given
+     * 
+     * @param Boolean b is the true or false boolean for if the Harrier has nested yet or not
+     */
     public static void setHarrierNested(Boolean b) {
         harrierNested = b;
 
     }
 
+    /**
+     * setAnswers takes one parameter and sets the possible quiz answers to the different parts of the answer array
+     * 
+     * @param String[] answers is the string array of possible quiz answers
+     */
     public static void setAnswers(String[] answers) {
         QuizOptionA.setText(answers[0]);
         QuizOptionB.setText(answers[1]);
         QuizOptionC.setText(answers[2]);
         QuizOptionD.setText(answers[3]);
     }
-
+    
+    /**
+     * saveGame writes the model object to file using Serializable
+     */
     public void saveGame() throws Exception {
         FileOutputStream in = new FileOutputStream("gameState.txt");
         ObjectOutputStream ois = new ObjectOutputStream(in);
@@ -537,30 +644,65 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         ois.writeObject(model);
     }
 
+    /**
+     * getOsprey1SaveGameButton returns the button used for saving the osprey game 1
+     * 
+     * @return JButton osprey1SaveGameButton is the button used for save game logic in osprey stage 1
+     */
     public JButton getOsprey1SaveGameButton() {
         return osprey1SaveGameButton;
     }
 
+    /**
+     * getOsprey2SaveGameButton returns the button used for saving the osprey game 2
+     * 
+     * @return JButton osprey2SaveGameButton is the button used for save game logic in osprey stage 2
+     */
     public JButton getOsprey2SaveGameButton() {
         return osprey2SaveGameButton;
     }
 
+    /**
+     * getHarrierSaveGameButton returns the button used for saving the Harrier game
+     * 
+     * @return JButton harrierSaveGameButton is the button used for save game logic in the Harrier game
+     */
     public JButton getHarrierSaveGameButton() {
         return harrierSaveGameButton;
     }
 
+    /**
+     * getUpArrowKeyTried returns the int representation of if the up arrow has been tried
+     * 
+     * @return int upArrowKeyTried is the int for if the up arrow has been tried. 0 represents not tried.
+     */
     public static int getUpArrowKeyTried() {
         return upArrowKeyTried;
     }
 
+    /**
+     * getDownArrowKeyTried returns the int representation of if the down arrow has been tried
+     * 
+     * @return int downArrowKeyTried is the int for if the down arrow has been tried. 0 represents not tried.
+     */
     public static int getDownArrowKeyTried() {
         return downArrowKeyTried;
     }
-
+    
+    /**
+     * getTutorialMovingButton returns the button used for starting the tutorial's movement
+     * 
+     * @return JButton tutorialMovingButton is the button used for starting the movement in the tutorial
+     */
     public static JButton getTutorialMovingButton() {
         return TutorialMovingButton;
     }
-
+    
+    /**
+     * getTutorialButton returns the JButton for the tutorial
+     * 
+     * @return JButton used in tutorial
+     */
     public JButton getTutorialButton() {
         return TutorialButton;
     }
