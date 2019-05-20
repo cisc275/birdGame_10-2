@@ -712,12 +712,12 @@ public class ProjectTest {
 	}
 		//setOffsets()
 	@Test
-	public void redfoxSetXOffsetis35() {
+	public void redfoxSetXOffsetis20() {
 		GamePiece g = new GamePiece();
 		Sprite s = Sprite.REDFOX;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getXOffset() == 35;
+		assert g.getXOffset() == 20;
 	}
 	@Test
 	public void redfoxSetYOffsetis0() {
@@ -736,28 +736,28 @@ public class ProjectTest {
 		assert g.getXOffset() == 15;
 	}
 	@Test
-	public void eagleSetYOffsetis30() {
+	public void eagleSetYOffsetis20() {
 		GamePiece g = new GamePiece();
 		Sprite s = Sprite.EAGLE;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getYOffset() == 30;
-	}
-	@Test
-	public void planeSetXOffsetis25() {
-		GamePiece g = new GamePiece();
-		Sprite s = Sprite.PLANE;
-		g.setSprite(s);
-		g.setOffsets();
-		assert g.getXOffset() == 25;
-	}
-	@Test
-	public void planeSetYOffsetis20() {
-		GamePiece g = new GamePiece();
-		Sprite s = Sprite.PLANE;
-		g.setSprite(s);
-		g.setOffsets();
 		assert g.getYOffset() == 20;
+	}
+	@Test
+	public void planeSetXOffsetis10() {
+		GamePiece g = new GamePiece();
+		Sprite s = Sprite.PLANE;
+		g.setSprite(s);
+		g.setOffsets();
+		assert g.getXOffset() == 10;
+	}
+	@Test
+	public void planeSetYOffsetis5() {
+		GamePiece g = new GamePiece();
+		Sprite s = Sprite.PLANE;
+		g.setSprite(s);
+		g.setOffsets();
+		assert g.getYOffset() == 5;
 	}
 	@Test
 	public void bunnySetXOffsetis20() {
@@ -768,28 +768,28 @@ public class ProjectTest {
 		assert g.getXOffset() == 20;
 	}
 	@Test
-	public void bunnySetYOffsetis20() {
+	public void bunnySetYOffsetis15() {
 		GamePiece g = new GamePiece();
 		Sprite s = Sprite.BUNNY;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getYOffset() == 20;
+		assert g.getYOffset() == 15;
 	}
 	@Test
-	public void mouseSetXOffsetis10() {
+	public void mouseSetXOffsetis15() {
 		GamePiece g = new GamePiece();
 		Sprite s = Sprite.MOUSE;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getXOffset() == 10;
+		assert g.getXOffset() == 15;
 	}
 	@Test
-	public void mouseSetYOffsetis5() {
+	public void mouseSetYOffsetisNeg10() {
 		GamePiece g = new GamePiece();
 		Sprite s = Sprite.MOUSE;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getYOffset() == 5;
+		assert g.getYOffset() == -10;
 	}
 	@Test
 	public void fishSetXOffsetis10() {
@@ -808,28 +808,28 @@ public class ProjectTest {
 		assert g.getYOffset() == 0;
 	}
 	@Test
-	public void raccoonSetXOffsetis30() {
+	public void raccoonSetXOffsetis5() {
 		GamePiece g = new GamePiece();
 		Sprite s = Sprite.RACCOON;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getXOffset() == 30;
+		assert g.getXOffset() == 5;
 	}
 	@Test
-	public void raccoonSetYOffsetis30() {
+	public void raccoonSetYOffsetis20() {
 		GamePiece g = new GamePiece();
 		Sprite s = Sprite.RACCOON;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getYOffset() == 30;
+		assert g.getYOffset() == 20;
 	}
 	@Test
-	public void snakeSetXOffsetis30() {
+	public void snakeSetXOffsetis20() {
 		GamePiece g = new GamePiece();
 		Sprite s = Sprite.SNAKE;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getXOffset() == 30;
+		assert g.getXOffset() == 20;
 	}
 	@Test
 	public void snakeSetYOffsetis15() {
@@ -837,7 +837,7 @@ public class ProjectTest {
 		Sprite s = Sprite.SNAKE;
 		g.setSprite(s);
 		g.setOffsets();
-		assert g.getYOffset() == 15;
+		assert g.getYOffset() == 10;
 	}
 		//toString()
 	@Test
