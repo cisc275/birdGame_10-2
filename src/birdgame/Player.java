@@ -78,17 +78,11 @@ public class Player extends GamePiece implements Serializable {
         									//+                                                         //
         if (xLocation + width - xOff >= otherX + otherXOff && xLocation + width - xOff <= otherX + otherW - otherXOff) {
             if (yLocation + yOff >= otherY + otherYOff && yLocation + yOff <= otherY + otherW - otherYOff) {
-<<<<<<< HEAD
-                return true;		                     //+
-            } else if (yLocation + height - yOff >= otherY + otherYOff && yLocation + height - yOff <= otherY + otherH - otherYOff) {
-                return true;
-            }																					//+
-=======
+
             	return true;
             } else if (yLocation + height - yOff >= otherY + otherYOff && yLocation + height - yOff <= otherY + otherH - otherYOff) {
             	return true;
             }
->>>>>>> dev
         } else if (xLocation + xOff >= otherX + otherXOff && xLocation + xOff <= otherX + otherH - otherXOff) {
         	if (yLocation + yOff >= otherY + otherYOff && yLocation + yOff <= otherY + otherW - otherYOff) {
                 return true;
