@@ -110,6 +110,32 @@ public class View extends JPanel implements Serializable {
     final static int QUIZ_DIMENSION_PREFERRED_X_RATIO = 3;
     final static int QUIZ_DIMENSION_PREFERRED_Y_RATIO = 4;
 
+    final static int HEALTH_BAR_WIDTH_RATIO = 105;
+    final static int HEALTH_BAR_HEIGHT_RATIO = 75;
+    final static int HEALTH_BAR_Y_LOCATION_RATIO = 17;
+    final static int HEALTH_BAR_AMOUNT_FULL_MULTIPLIER = 2;
+    final static int SCORE_FONT_SIZE_RATIO = 47;
+    final static int SCORE_FONT_X_LOCATION_RATIO = 8;
+    final static int FRAMES_PER_DE_MAP_UPDATE = 30;
+    final static int DE_PIC_X_MULTIPLIER = 3;
+    final static int DE_PIC_X_RATIO = 28;
+    final static int DE_PIC_Y_MULTIPLIER = 7;
+    final static int DE_PIC_Y_RATIO = 16;
+    final static int THOUGHT_BUBBLE_X_RATIO = 8;
+    final static int THOUGHT_BUBBLE_Y_RATIO = 3;
+    final static int FACT_FONT_SIZE_RATIO = 57;
+    final static int FACT_X_LOCATION_RATIO = 6;
+    final static int FACT_Y_LOCATION_RATIO = 72;
+    final static int FACT_Y_LOCATION_MULTIPLIER = 15;
+    final static int GAMEOVER_SCORE_FONT_SIZE_RATIO = 25;
+    final static int GAMEOVER_SCORE_X_MULTIPLIER = 4;
+    final static int GAMEOVER_SCORE_Y_MULTIPLIER = 4;
+    final static int GAMEOVER_BUTTON_X_RATIO = 4;
+    final static int GAMEOVER_SCORE_X_RATIO = 15;
+    final static int GAMEOVER_SCORE_Y_RATIO = 10;
+    final static int GAMEOVER_EXIT_FRAME_X_MULTIPLIER = 6;
+    final static int GAMEOVER_EXIT_FRAME_Y_MULTIPLIER = 60;
+    
     private static int runningFrameCount = 0;
 //changed runningframeCount to static, might be a problem
     private int ticksPerFrameUpdate = FRAMES_PER_SECOND / DELAY_FOR_ANIMATION_UPDATES;
@@ -768,7 +794,7 @@ public class View extends JPanel implements Serializable {
         }
 
     }
-
+    
     /**
      * GameOverPanel is a Panel that is shown at the very end of the game after both birds have been finished
      */
@@ -781,12 +807,12 @@ public class View extends JPanel implements Serializable {
          */
         GameOverPanel() {
             setLayout(null);
-            finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 25));
-            finalScore.setBounds((FRAME_WIDTH * 4) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * 4) / 10, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+            finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / GAMEOVER_SCORE_FONT_SIZE_RATIO));
+            finalScore.setBounds((FRAME_WIDTH * GAMEOVER_SCORE_X_MULTIPLIER) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * GAMEOVER_SCORE_Y_MULTIPLIER) / GAMEOVER_SCORE_Y_RATIO, FRAME_WIDTH /GAMEOVER_BUTTON_X_RATIO, FRAME_HEIGHT / GAMEOVER_SCORE_X_RATIO);
             Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
             Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
-            Controller.getRestartGameButton().setBounds(FRAME_WIDTH / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * 60) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-            Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * 60) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+            Controller.getRestartGameButton().setBounds(FRAME_WIDTH / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * GAMEOVER_EXIT_FRAME_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / GAMEOVER_BUTTON_X_RATIO, FRAME_HEIGHT / GAMEOVER_SCORE_X_RATIO);
+            Controller.getExitGameButton().setBounds((FRAME_WIDTH * GAMEOVER_EXIT_FRAME_X_MULTIPLIER) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * GAMEOVER_EXIT_FRAME_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / GAMEOVER_BUTTON_X_RATIO, FRAME_HEIGHT / GAMEOVER_SCORE_X_RATIO);
 
             add(Controller.getRestartGameButton());
             add(Controller.getExitGameButton());
@@ -842,7 +868,7 @@ public class View extends JPanel implements Serializable {
      * TutorialScreenPanel is the panel to be used during the tutorial
      */
     class MovingScreenPanel extends JPanel {
-
+    	
         final static int FOOD_X_INCREASE = 14;
         final int DISTANCE_TO_NOT_DRAW_FOOD = 3 * FRAME_WIDTH / 28;
         final int HEIGHT_DIFFERENCE_TO_GET_FOOD = FRAME_HEIGHT / 8;
@@ -897,14 +923,14 @@ public class View extends JPanel implements Serializable {
                     foodX2 -= FOOD_X_INCREASE;
                     hit = false;
                     if (drawEagle) {
-                        g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH / 8, playerYLoc - FRAME_HEIGHT / 3, this);
+                        g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH / THOUGHT_BUBBLE_X_RATIO, playerYLoc - FRAME_HEIGHT / 3, this);
                         g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / 60));
                         //(Model.getCurrentFact());
                         String[] lines = "Hitting a Special Food, will display a fact, and gives you full,        health".split(",");
                         int yOffset = 0;
                         for (String line : lines) {
                             yOffset += g.getFontMetrics().getHeight();
-                            g.drawString(line, playerXLoc + FRAME_WIDTH / 6, playerYLoc - 15 * FRAME_HEIGHT / 72 + yOffset);
+                            g.drawString(line, playerXLoc + FRAME_WIDTH / FACT_X_LOCATION_RATIO, playerYLoc - FACT_Y_LOCATION_MULTIPLIER * FRAME_HEIGHT / FACT_Y_LOCATION_RATIO + yOffset);
                         }
                         g.drawImage(eagle[eaglePicNum], foodX2, FRAME_HEIGHT / 4, this);
                     }
@@ -1033,11 +1059,11 @@ public class View extends JPanel implements Serializable {
             if (health < MAX_BIRD_HEALTH / 2) {
                 g.setColor(Color.red);
             }
-            g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, MAX_BIRD_HEALTH * 2, FRAME_HEIGHT / 17);
-            g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
+            g.drawRect(FRAME_WIDTH / HEALTH_BAR_WIDTH_RATIO, FRAME_HEIGHT / HEALTH_BAR_HEIGHT_RATIO, MAX_BIRD_HEALTH * HEALTH_BAR_AMOUNT_FULL_MULTIPLIER, FRAME_HEIGHT / HEALTH_BAR_Y_LOCATION_RATIO);
+            g.fillRect(FRAME_WIDTH / HEALTH_BAR_WIDTH_RATIO, FRAME_HEIGHT / HEALTH_BAR_HEIGHT_RATIO, health * HEALTH_BAR_AMOUNT_FULL_MULTIPLIER, FRAME_HEIGHT / HEALTH_BAR_Y_LOCATION_RATIO);
             g.setColor(Color.black);
-            g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / 47));
-            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - FRAME_WIDTH / 8, FRAME_HEIGHT / 17);
+            g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / SCORE_FONT_SIZE_RATIO));
+            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - FRAME_WIDTH / SCORE_FONT_X_LOCATION_RATIO, FRAME_HEIGHT / HEALTH_BAR_Y_LOCATION_RATIO);
 
         }
     }
@@ -1048,15 +1074,14 @@ public class View extends JPanel implements Serializable {
      * @param Graphics g is the set of visuals to be shown
      */
     void displayFacts(Graphics g) {
-        g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH / 8, playerYLoc - FRAME_HEIGHT / 3, this);
-        g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / 57));
+        g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH / THOUGHT_BUBBLE_X_RATIO, playerYLoc - FRAME_HEIGHT / THOUGHT_BUBBLE_Y_RATIO, this);
+        g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / FACT_FONT_SIZE_RATIO));
         String[] lines = Model.getCurrentFact().split(",");
         int yOffset = 0;
         for (String line : lines) {
             yOffset += g.getFontMetrics().getHeight();
-            g.drawString(line, playerXLoc + FRAME_WIDTH / 6, playerYLoc - 15 * FRAME_HEIGHT / 72 + yOffset);
+            g.drawString(line, playerXLoc + FRAME_WIDTH / FACT_X_LOCATION_RATIO, playerYLoc - FACT_Y_LOCATION_MULTIPLIER * FRAME_HEIGHT / FACT_Y_LOCATION_RATIO + yOffset);
         }
-
     }
 
     /**
@@ -1144,15 +1169,15 @@ public class View extends JPanel implements Serializable {
             if (health < MAX_BIRD_HEALTH / 2) {
                 g.setColor(Color.red);
             }
-            g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, MAX_BIRD_HEALTH * 2, FRAME_HEIGHT / 17);
-            g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
+            g.drawRect(FRAME_WIDTH / HEALTH_BAR_WIDTH_RATIO, FRAME_HEIGHT / HEALTH_BAR_HEIGHT_RATIO, MAX_BIRD_HEALTH * HEALTH_BAR_AMOUNT_FULL_MULTIPLIER, FRAME_HEIGHT / HEALTH_BAR_Y_LOCATION_RATIO);
+            g.fillRect(FRAME_WIDTH / HEALTH_BAR_WIDTH_RATIO, FRAME_HEIGHT / HEALTH_BAR_HEIGHT_RATIO, health * HEALTH_BAR_AMOUNT_FULL_MULTIPLIER, FRAME_HEIGHT / HEALTH_BAR_Y_LOCATION_RATIO);
             g.setColor(Color.black);
-            g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / 47));
-            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - FRAME_WIDTH / 8, FRAME_HEIGHT / 17);
-            if (runningFrameCount % 30 == 0) {
+            g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / SCORE_FONT_SIZE_RATIO));
+            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - FRAME_WIDTH / SCORE_FONT_X_LOCATION_RATIO, FRAME_HEIGHT / HEALTH_BAR_Y_LOCATION_RATIO);
+            if (runningFrameCount % FRAMES_PER_DE_MAP_UPDATE == 0) {
                 dePicNum = (dePicNum + 1) % DE_FRAME_COUNT;
             }
-            g.drawImage(delaware[dePicNum], FRAME_WIDTH - 3*FRAME_WIDTH/28, FRAME_HEIGHT - 7*FRAME_HEIGHT/16, 3*FRAME_WIDTH/28, 7*FRAME_HEIGHT/16, this);
+            g.drawImage(delaware[dePicNum], FRAME_WIDTH - DE_PIC_X_MULTIPLIER*FRAME_WIDTH/DE_PIC_X_RATIO, FRAME_HEIGHT - DE_PIC_Y_MULTIPLIER*FRAME_HEIGHT/DE_PIC_Y_RATIO, DE_PIC_X_MULTIPLIER*FRAME_WIDTH/DE_PIC_X_RATIO, DE_PIC_Y_MULTIPLIER*FRAME_HEIGHT/DE_PIC_Y_RATIO, this);
         }
     }
 
