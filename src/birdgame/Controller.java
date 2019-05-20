@@ -121,8 +121,8 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
 
-        //view.setPanel("TUTORIAL");
-        view.setPanel("START");
+   
+        view.setPanel("TUTORIAL");
     }
 
     void start() {
