@@ -71,7 +71,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
     private int tutorialHealth = 10000;
     private boolean runGame = true;
     private boolean answeredCorrect = false;
-
+    /**
+     * Controller constructor
+     */
     public Controller() {
         QuizOptionA = new JButton("A");
         QuizOptionB = new JButton("B");
@@ -124,26 +126,17 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         view.setPanel("TUTORIAL");
     }
 
-    public void resetForGameOver() {
-
-    }
-
-    public void resetForNewLevel() {
-
-    }
-
+    /**
+     * 
+     */
     void start() {
-
         while (!userDone) {
             if (runGame) {
                 runGame();
                 runGame = false;
             }
-
             if (!model.getPlayer().isAlive() && !nextRound) {
-
                 runGame = false;
-
                 if (birdsPlayed == 2) {
                     System.out.println("reached second if");
                     view.setPanel("GAME_OVER");
@@ -152,23 +145,21 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                             Thread.sleep(50);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
-
                         }
                     }
                 }
                 else {
-
                     view.setPanel("START");
                 }
-
             }
             nextRound = false;
         }
-
     }
 
+    /**
+     * 
+     */
     void runQuiz() {
-
         view.prepareQuiz();
         while (!Model.quizOver()) {
             try {
@@ -199,6 +190,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 
     }
 
+    /**
+     * 
+     */
     void runGame() {
         while (model.getPlayer().isAlive() && !paused) {
             model.handleTicks();
@@ -246,6 +240,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 
     }
 
+    /**
+     * 
+     */
     void resetAfterRound() {
         model.setFoodHit(false);
         model.setEnemyHit(false);
@@ -254,6 +251,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         model.getPlayer().setY(view.getFrameHeight() / 2);
     }
 
+    /**
+     * 
+     */
     public void handleQuizButtonClick(String choice) {
         answered = true;
         if (Model.getCorrectAnswer().equals(choice)) {
@@ -264,6 +264,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         }
     }
 
+    /**
+     * 
+     */
     public void resetAfterGameOver() {
         view.resetView();
         model.resetModel();
@@ -271,6 +274,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         harrierNested = false;
     }
 
+    /**
+     * 
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == QuizOptionA) {
 
@@ -458,6 +464,9 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         model.setDirection(null);
     }
 
+    /**
+     * 
+     */
     void restartGame() {
         OspreyButton.setVisible(true);
         HarrierButton.setVisible(true);
@@ -467,74 +476,125 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         start();
     }
 
+    /**
+     * 
+     */
     public JButton getOspreyButton() {
         return OspreyButton;
     }
 
+    /**
+     * 
+     */
     public JButton getHarrierButton() {
         return HarrierButton;
     }
 
+    /**
+     * 
+     */
     public JButton getRound1Button() {
         return Round1Button;
     }
 
+    /**
+     * 
+     */
     public static JButton getRound2Button() {
         return Round2Button;
     }
 
+    /**
+     * 
+     */
     public static JButton getReturnToStartButton() {
         return ReturnToStart;
     }
 
+    /**
+     * 
+     */
     public static JButton getOspreyNestButton() {
         return ospreyNestButton;
     }
 
+    /**
+     * 
+     */
     public static JButton getRestartGameButton() {
         return restartGameButton;
     }
 
+    /**
+     * 
+     */
     public static JButton getExitGameButton() {
         return exitGameButton;
     }
 
+    /**
+     * 
+     */
     public View getView() {
         return view;
     }
 
+    /**
+     * 
+     */
     public Model getModel() {
         return model;
     }
 
+    /**
+     * 
+     */
     public static JButton getOptionAButton() {
         return QuizOptionA;
     }
 
+    /**
+     * 
+     */
     public static JButton getOptionBButton() {
         return QuizOptionB;
     }
 
+    /**
+     * 
+     */
     public static JButton getOptionCButton() {
         return QuizOptionC;
     }
 
+    /**
+     * 
+     */
     public static JButton getOptionDButton() {
         return QuizOptionD;
     }
 
+    /**
+     * 
+     */
     public static void setHarrierNested(Boolean b) {
         harrierNested = b;
 
     }
 
+    /**
+     * 
+     */
     public static void setAnswers(String[] answers) {
         QuizOptionA.setText(answers[0]);
         QuizOptionB.setText(answers[1]);
         QuizOptionC.setText(answers[2]);
         QuizOptionD.setText(answers[3]);
     }
-
+    
+    /**
+     * saveGame() writes the model object to file using Serializable
+     */
     public void saveGame() throws Exception {
         FileOutputStream in = new FileOutputStream("gameState.txt");
         ObjectOutputStream ois = new ObjectOutputStream(in);
@@ -542,30 +602,53 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         ois.writeObject(model);
     }
 
+    /**
+     * 
+     */
     public JButton getOsprey1SaveGameButton() {
         return osprey1SaveGameButton;
     }
 
+    /**
+     * 
+     */
     public JButton getOsprey2SaveGameButton() {
         return osprey2SaveGameButton;
     }
 
+    /**
+     * 
+     */
     public JButton getHarrierSaveGameButton() {
         return harrierSaveGameButton;
     }
 
+    /**
+     * 
+     */
     public static int getUpArrowKeyTried() {
         return upArrowKeyTried;
     }
 
+    /**
+     * 
+     */
     public static int getDownArrowKeyTried() {
         return downArrowKeyTried;
     }
-
+    
+    /**
+     * 
+     */
     public static JButton getTutorialMovingButton() {
         return TutorialMovingButton;
     }
-
+    
+    /**
+     * getTutorialButton() returns the JButton for the tutorial
+     * 
+     * @return JButton used in tutorial
+     */
     public JButton getTutorialButton() {
         return TutorialButton;
     }

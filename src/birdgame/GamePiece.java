@@ -55,76 +55,130 @@ public class GamePiece implements Serializable {
         return " " + sprite + " " + xLocation + ", " + yLocation;
     }
 
+    /**
+     * 
+     */
     public void move() {
         xLocation = xLocation - xincr;
         yLocation = yLocation - yincr;
 
     }
 
+    /**
+     * 
+     */
     public void setPicNum(int newNum) {
         picNum = newNum;
     }
 
+    /**
+     * 
+     */
     public int getPicNum() {
         return picNum;
     }
 
+    /**
+     * 
+     */
     public int getX() {
         return xLocation;
     }
 
+    /**
+     * 
+     */
     public int getY() {
         return yLocation;
     }
 
+    /**
+     * 
+     */
     public int getXIncr() {
         return xincr;
     }
 
+    /**
+     * 
+     */
     public int getYIncr() {
         return yincr;
     }
 
+    /**
+     * 
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * 
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * 
+     */
     public Sprite getSprite() {
         return sprite;
     }
 
+    /**
+     * 
+     */
     public void setX(int x) {
         xLocation = x;
     }
 
+    /**
+     * 
+     */
     public void setY(int y) {
         yLocation = y;
     }
 
+    /**
+     * 
+     */
     public void setXIncr(int x) {
         xincr = x;
     }
 
+    /**
+     * 
+     */
     public void setYIncr(int y) {
         yincr = y;
     }
 
+    /**
+     * 
+     */
     public void setWidth(int w) {
         width = w;
     }
 
+    /**
+     * 
+     */
     public void setHeight(int h) {
         height = h;
     }
 
+    /**
+     * 
+     */
     public void setSprite(Sprite s) {
         sprite = s;
     }
 
+    /**
+     * 
+     */
     public boolean isEnemy() {
         if (sprite.equals(Sprite.PLANE) || sprite.equals(Sprite.EAGLE) || sprite.equals(Sprite.REDFOX) || sprite.equals(Sprite.RACCOON)) {
             return true;
@@ -133,10 +187,16 @@ public class GamePiece implements Serializable {
         }
     }
 
+    /**
+     * 
+     */
     public boolean isFood() {
         return !(isEnemy());
     }
 
+    /**
+     * 
+     */
     public void setOffsets() {
         if (getSprite().equals(Sprite.REDFOX)) {
             xOffset = FOX_X_OFFSET;
@@ -173,26 +233,44 @@ public class GamePiece implements Serializable {
 
     }
 
+    /**
+     * 
+     */
     public int getXOffset() {
         return xOffset;
     }
 
+    /**
+     * 
+     */
     public int getYOffset() {
         return yOffset;
     }
 
+    /**
+     * 
+     */
     public boolean isSpecialFood() {
         return isSpecialFood;
     }
-
+    
+    /**
+     * 
+     */
     public void setSpecialFood(boolean bool) {
         isSpecialFood = bool;
     }
 
+    /**
+     * 
+     */
     public void incrImgCount() {
         imgCount++;
     }
 
+    /**
+     * 
+     */
     public int getImgCount() {
         return imgCount;
     }

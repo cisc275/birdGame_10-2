@@ -22,6 +22,9 @@ public class Food extends GamePiece implements Serializable {
 
     private int foodValue;
 
+    /**
+     * 
+     */
     public Food(int x, int y, Sprite foodType) {
         setSpecialFood(false);
         setX(x);
@@ -36,10 +39,16 @@ public class Food extends GamePiece implements Serializable {
         setOffsets();
     }
 
+    /**
+     * 
+     */
     public int getFoodValue() {
         return foodValue;
     }
 
+    /**
+     * 
+     */
     public void setFoodValue(int foodValue) {
         this.foodValue = foodValue;
     }

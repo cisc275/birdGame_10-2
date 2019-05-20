@@ -20,12 +20,12 @@ public class SpecialFood extends Food implements Serializable {
 
     protected String fact;
 
+    /**
+     * 
+     */
     public SpecialFood(int x, int y, Sprite foodType) {
         super(x, y, foodType);
         setSpecialFood(true);
-
         setXIncr(INITIAL_X_INCREASE);
-
     }
-
 }

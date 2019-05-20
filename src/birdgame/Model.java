@@ -147,6 +147,9 @@ public class Model implements Serializable {
         totalLevelTicks++;
     }
 
+    /**
+     * endOfLevel() increases the player's x velocity when the level ends until the player goes off the screen
+     */
     public void endOfLevel() {
         player.setXIncr(X_INCREASE_AT_END_OF_LEVEL);
         player.setX(player.getX() + player.getXIncr());
@@ -159,18 +162,22 @@ public class Model implements Serializable {
                 View.setIsHarrierRoundOver(true);
             }
         }
-
     }
-
+    
+    /**
+     * getAvailableFacts returns the facts available to the player
+     * 
+     * @return ArrayList<String> availableFacts
+     */
     public static ArrayList<String> getAvaliableFacts() {
         return availableFacts;
     }
-
+    
     /**
-     * spawnGamePieces() will randomly generate an obstacle on the screen,
-     * including buildings, enemies, food, etc.
+     * spawnHarrierGamePieces() will randomly generate a food, enemy, or special food of a random type for the player
+     * these obstacles will match those for a harrier, and include Bunnies, Mice, Foxes, and Raccoons.
+     * 
      */
-
     public void spawnHarrierGamePieces() {
         int numGamePieces = 0;
         int numSpecialFood = 0;
@@ -218,6 +225,11 @@ public class Model implements Serializable {
 
     }
 
+    /**
+     * spawnOspreyGamePieces() will randomly generate a food, enemy, or special food of a random type for the player
+     * these obstacles will match those for a osprey, and include Snakes, Fish, Eagles, and Planes.
+     * 
+     */
     public void spawnOspreyGamePieces() {
         questionsToAsk = new HashMap<String, String[]>();
         int numGamePieces = 0;
@@ -231,13 +243,10 @@ public class Model implements Serializable {
                         gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD, (int) (Math.random() * groundLevel), Sprite.SNAKE));
                     } else {
                         gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD, (int) (Math.random() * groundLevel), Sprite.FISH));
-
                     }
                     numSpecialFood++;
-
                 }
             }
-
             if (Math.random() < CHANCE_FOOD_SPAWNS_INSTEAD_OF_ENEMY) {
                 if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
                     gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.SNAKE));
@@ -259,19 +268,27 @@ public class Model implements Serializable {
             if (gp.getX() > furthestGPLoc) {
                 furthestGPLoc = gp.getX();
                 setFurthestGP(gp);
-
             }
         }
     }
 
+    /**
+     * clearCurrentGP() removes all GamePieces currently being tracked by currentGPs
+     */
     public void clearCurrentGP() {
         currentGPs.clear();
     }
 
+    /**
+     * clearGP() removes all GamePieces, including those not being tracked by currentGPs.
+     */
     public void clearGP() {
         gamePieces.clear();
     }
 
+    /**
+     * seeCurrentGP() runs through all of the gamePieces and adds the ones that are on the screen
+     */
     public void seeCurrentGP() {
         for (GamePiece g : gamePieces) {
             if (g.getX() <= fWidth && g.getX() >= X_LOCATION_WHERE_GPS_ARE_NO_LONGER_CURRENT) {
@@ -280,23 +297,24 @@ public class Model implements Serializable {
         }
     }
 
+    /**
+     * clearQuestionsToAsk() removes any questions stored in questionsToAsk
+     */
     void clearQuestionsToAsk() {
         questionsToAsk.clear();
     }
 
+    /**
+     * clearFactsAndQuestions() removes any facts and questions stored in factsAndQuestions
+     */
     void clearFactsAndQuestions() {
         factsAndQuestions.clear();
     }
 
-    //minimap
-    /**
-     * will return an int value describing progress throughout the level to
-     * update the minimap.
-     *
-     * @return an int value that describes the progress of the user
-     */
     /**
      * eat() will increment the player's score based off of what is eaten.
+     * 
+     * @param Food f is the food being consumed by the player
      */
     public void eat(Food f) {
         foodHit = true;
@@ -309,6 +327,11 @@ public class Model implements Serializable {
         }
     }
 
+    /**
+     * eatSpecial takes one parameter, and adds a fact to be displayed on the screen after a specialfood is eaten
+     * 
+     * @param SpecialFood sf is the special food that is consumed by the player
+     */
     public void eatSpecial(SpecialFood sf) {
         specialFoodEaten = true;
         View.setMomentEaten(View.getFrameCount());
@@ -321,21 +344,37 @@ public class Model implements Serializable {
         player.setHealth(MAX_BIRD_HEALTH);
     }
 
+    /**
+     * getQuestionToAsk returns the question/answer pairing to be used next
+     * 
+     * @return HashMap<String, String[]> questionsToAsk is the next Q/A pairing
+     */
     public static HashMap<String, String[]> getQuestionToAsk() {
         return questionsToAsk;
     }
 
+    /**
+     * specialFoodEaten returns a true or false for if a specialfood has just been eaten
+     * 
+     * @return boolean specialFoodEaten is a boolean that represents if a specialFood has been eaten
+     */
     public static boolean specialFoodEaten() {
         return specialFoodEaten;
     }
 
+    /**
+     * setSpecialFoodEaten sets the current state of if a specialFood has been eaten
+     * 
+     * @param boolean bool is a true or false to represent if a specialFood has been eaten recently
+     */
     public static void setSpecialFoodEaten(boolean bool) {
         specialFoodEaten = bool;
     }
 
     /**
-     * obstacleHit() will handle the event of the player dying by resetting
-     * everything and taking them back to the level screen.
+     * obstacleHit() will handle the event of the player colliding with an enemy and taking damage
+     * 
+     * @param Enemy e is the enemy that has collided with the player
      */
     public void obstacleHit(Enemy e) {
         enemyHit = true;
@@ -348,110 +387,231 @@ public class Model implements Serializable {
         }
     }
 
+    /**
+     * getImgHeight returns the height of the image
+     * 
+     * @return int imgHeight is the height of the image
+     */
     public int getImgHeight() {
         return imgHeight;
     }
 
+    /**
+     * getplayer returns the current game player object
+     * 
+     * @return Player player is the object for the current Player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * getCurrentGPs returns the gamePieces on the screen
+     * 
+     * @return CopyOnWriteArrayList<GamePiece> currentGPs is the ArrayList of GamePieces on the screen
+     * 
+     * this method uses a COpyOnWriteArrayList to avoid concurrent modification errors
+     */
     public CopyOnWriteArrayList<GamePiece> getCurrentGPs() {
         return currentGPs;
     }
 
+    /**
+     * getGamePieces() returns all of the gamepieces that have been spawned
+     * 
+     * @return ArrayList<GamePiece> gamePieces is the arraylist of all gamepieces/obstacles in the game.
+     */
     public ArrayList<GamePiece> getGamePieces() {
         return gamePieces;
     }
 
+    /**
+     * getDirection returns the direction the player is currently going
+     * 
+     * @return Direction direction is the direction (UP or DOWN) of the player
+     */
     public Direction getDirection() {
         return direction;
     }
 
+    /**
+     * setDirection takes one parameter and sets the direction the bird/player is moving
+     * 
+     * @param Direction direction is the direction the player is moving (UP or DOWN)
+     */
     public static void setDirection(Direction Direction) {
         direction = Direction;
     }
 
+    /**
+     * setImgHeight takes one paramater and sets the Model's imageheight
+     * 
+     * @param int imgHeight is the integer height of the image.
+     */
     public void setImgHeight(int imgHeight) {
         this.imgHeight = imgHeight;
     }
 
+    /**
+     * getImgWidth returns the width of the model's image
+     * 
+     * @return int imgWidth is the width of the image
+     */
     public int getImgWidth() {
         return imgWidth;
     }
 
+    /**
+     * setImgWidth takes one parameter and sets the width of the model's image
+     * 
+     * @param int imgWidth is the width of the image
+     */
     public void setImgWidth(int imgWidth) {
         this.imgWidth = imgWidth;
     }
 
+    /**
+     * getGroundLevel returns the ground level coordinate
+     * 
+     * @return int groundLevel is the y coordinate of the ground
+     */
     public int getGroundLevel() {
         return groundLevel;
     }
 
+    /**
+     * setGroundLevel takes one parameter and sets the coordinate of the ground
+     * 
+     * @param int groundLevel is the y coordinate that the ground is being set to
+     */
     public void setGroundLevel(int groundLevel) {
         this.groundLevel = groundLevel;
     }
 
+    /**
+     * getSceneNum returns the number of the scene
+     * 
+     * @return int sceneNum is the number of the current scene
+     */
     public int getSceneNum() {
         return sceneNum;
     }
 
+    /**
+     * setSceneNum takes one parameter and sets the number of the scene
+     * 
+     * @param int sceneNum is the number of the current scene
+     */
     public void setSceneNum(int sceneNum) {
         this.sceneNum = sceneNum;
     }
 
+    /**
+     * getTotalLevelTicks returns the total level ticks that have passed
+     * 
+     * @return int totalLevelTicks is the number of ticks/updates that have passed in the game so far
+     */
     public int getTotalLevelTicks() {
         return totalLevelTicks;
     }
 
+    /**
+     * setTotalLevelTicks takes one parameter and sets the total level ticks that have passed
+     * 
+     * @param int totalLevelTicks is the number of ticks/updates that have passed in the game so far
+     */
     public void setTotalLevelTicks(int totalLevelTicks) {
         this.totalLevelTicks = totalLevelTicks;
     }
-
+    
+    /**
+     * getIndexOfGP returns the index in gamePieces of the current GamePiece
+     * 
+     * @return int indexOfGP is the index in gamePieces of the current GamePiece
+     */
     public int getIndexOfGP() {
         return indexOfGP;
     }
-
+    
+    /**
+     * setIndexOfGP takes one parameter and sets the index in gamePieces of the current GamePiece
+     * 
+     * @param int indexOfGP is the index in gamePieces of the current Gamepiece.
+     */
     public void setIndexOfGP(int indexOfGP) {
         this.indexOfGP = indexOfGP;
     }
 
+    /**
+     * setPlayer takes one parameter and sets the player in the model to a give player
+     * 
+     * @param Player p is the player to be used in the current game
+     */
     public void setPlayer(Player p) {
         this.player = p;
     }
 
+    /**
+     * setFHeight takes one parameter and sets the FrameHeight
+     * 
+     * @param int h is the height of the Frame in the Model
+     */
     public void setFHeight(int h) {
         this.fHeight = h;
     }
 
+    /**
+     * 
+     */
     public static void incrFactIndex() {
         currentFactIndex++;
     }
 
+    /**
+     * 
+     */
     public void setFurthestGP(GamePiece gP) {
         this.furthestGP = gP;
     }
 
+    /**
+     * 
+     */
     public static Sprite getBird() {
         return bird;
     }
 
+    /**
+     * 
+     */
     public static void setBird(Sprite b) {
         bird = b;
     }
 
+    /**
+     * 
+     */
     public static String getCurrentFact() {
         return facts[currentFactIndex];
     }
 
+    /**
+     * 
+     */
     public void setRound(int r) {
         round = r;
     }
 
+    /**
+     * 
+     */
     public int getRound() {
         return round;
     }
 
+    /**
+     * 
+     */
     public void generateHarrierQuestions() {
         currentFactIndex = 0;
         facts = new String[]{"Northern Harriers, eat rodents", "Northern Harriers are, non-migratory birds", "Foxes are a predator, for Northern Harriers"};
@@ -475,6 +635,9 @@ public class Model implements Serializable {
 
     }
 
+    /**
+     * 
+     */
     public void generateOspreyQuestions() {
         currentFactIndex = 0;
         facts = new String[]{"Ospreys like to,eat Snakes and Fish", "Ospreys migrate to, South America for, the winter", "Eagles are a, predator of Ospreys"};
@@ -497,6 +660,9 @@ public class Model implements Serializable {
 
     }
 
+    /**
+     * 
+     */
     public void generateOspreyQuestions2() {
         currentFactIndex = 0;
         facts = new String[]{"Ospreys nest in, North America", "Ospreys nest in, trees", "Airplanes are a,threat to Ospreys"};
@@ -519,46 +685,79 @@ public class Model implements Serializable {
 
     }
 
+    /**
+     * 
+     */
     public static boolean hasMoreFacts() {
         return currentFactIndex < facts.length;
     }
 
+    /**
+     * 
+     */
     public static void setCorrectAnswer(String answer) {
         correctAnswer = answer;
     }
 
+    /**
+     * 
+     */
     public static String getCorrectAnswer() {
         return correctAnswer;
     }
 
+    /**
+     * 
+     */
     public static void incrQuestionNum() {
         questionNum++;
     }
 
+    /**
+     * 
+     */
     public static int getQuestionNum() {
         return questionNum;
     }
 
+    /**
+     * 
+     */
     public static void setNumberOfQuestions(int x) {
         numberOfQuestions = x;
     }
 
+    /**
+     * 
+     */
     public static boolean quizOver() {
         return questionNum > numberOfQuestions;
     }
 
+    /**
+     * 
+     */
     public static boolean lastQuestion() {
         return questionNum == numberOfQuestions;
     }
 
+    /**
+     * 
+     */
     public static int getNumberOfQuestions() {
         return numberOfQuestions;
     }
 
+    /**
+     * 
+     */
     public static void resetQuestionNum() {
         questionNum = 0;
     }
 
+    /**
+     * 
+     */
     public void resetModel() {
         round = 0;
         enemyHit = false;
@@ -579,10 +778,16 @@ public class Model implements Serializable {
         availableFacts.clear();
     }
 
+    /**
+     * 
+     */
     public static void updateNumberOfQuestions() {
             numberOfQuestions = getQuestionToAsk().size() - 1;
     }
 
+    /**
+     * 
+     */
     public static boolean isQuiz1Done() {
         if (numberOfQuestions == -1) {
             View.set1To2Transition(true);
@@ -592,10 +797,16 @@ public class Model implements Serializable {
         }
     }
 
+    /**
+     * 
+     */
     public static void setIsQuiz1Done(boolean b) {
         quiz1Done = b;
     }
 
+    /**
+     * 
+     */
     public static boolean isQuiz2Done() {
         if (numberOfQuestions == -1) {
             View.set2To3Transition(true);
@@ -605,11 +816,17 @@ public class Model implements Serializable {
         }
     }
 
+    /**
+     * 
+     */
     public static void setIsQuiz2Done(boolean b) {
         quiz2Done = b;
 
     }
 
+    /**
+     * 
+     */
     public static boolean isQuiz3Done() {
         if (getNumberOfQuestions() == -1) {
             return true;
@@ -618,22 +835,37 @@ public class Model implements Serializable {
         }
     }
 
+    /**
+     * 
+     */
     public static void setIsQuiz3Done(boolean b) {
         quiz3Done = b;
     }
 
+    /**
+     * 
+     */
     public static boolean enemyHit() {
         return enemyHit;
     }
-
+    
+    /**
+     * 
+     */
     public static boolean foodHit() {
         return foodHit;
     }
 
+    /**
+     * 
+     */
     public static void setFoodHit(boolean b) {
         foodHit = b;
     }
 
+    /**
+     * 
+     */
     public static void setEnemyHit(boolean b) {
         enemyHit = b;
     }

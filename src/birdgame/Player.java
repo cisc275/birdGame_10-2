@@ -30,6 +30,9 @@ public class Player extends GamePiece implements Serializable {
     private int yOffset;
     private Sprite bird;
 
+    /**
+     * 
+     */
     public Player() {
         setYIncr(INITIAL_Y_INCREASE);
         setX(INITIAL_X_LOCATION);
@@ -92,6 +95,9 @@ public class Player extends GamePiece implements Serializable {
 
     }
 
+    /**
+     * 
+     */
     public void move(Direction dir) {
         if (dir.equals(Direction.UP)) {
 
@@ -104,30 +110,51 @@ public class Player extends GamePiece implements Serializable {
 
     }
 
+    /**
+     * 
+     */
     public static int getScore() {
         return score;
     }
 
+    /**
+     * 
+     */
     public static void setScore(int score) {
         Player.score = score;
     }
 
+    /**
+     * 
+     */
     public int getHealth() {
         return health;
     }
 
+    /**
+     * 
+     */
     public void setHealth(int health) {
         Player.health = health;
     }
-
+    
+    /**
+     * 
+     */
     public int getXOffset() {
         return xOffset;
     }
 
+    /**
+     * 
+     */
     public int getYOffset() {
         return yOffset;
     }
 
+    /**
+     * 
+     */
     public void resetPlayer() {
         setHealth(MAX_BIRD_HEALTH);
     }

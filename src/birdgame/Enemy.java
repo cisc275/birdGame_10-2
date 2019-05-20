@@ -22,6 +22,9 @@ public class Enemy extends GamePiece implements Serializable {
 
     private int damage;
 
+    /**
+     * 
+     */
     public Enemy(int x, int y, Sprite enemyType) {
         setSpecialFood(false);
         setX(x);
@@ -37,10 +40,16 @@ public class Enemy extends GamePiece implements Serializable {
 
     }
 
+    /**
+     * 
+     */
     public int getDamage() {
         return damage;
     }
 
+    /**
+     * 
+     */
     public void setDamage(int damage) {
         this.damage = damage;
     }
