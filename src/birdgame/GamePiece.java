@@ -20,19 +20,19 @@ public class GamePiece implements Serializable {
     final static int FOX_X_OFFSET = 35;
     final static int FOX_Y_OFFSET = 0;
     final static int EAGLE_X_OFFSET = 15;
-    final static int EAGLE_Y_OFFSET = 30;
-    final static int PLANE_X_OFFSET = 25;
-    final static int PLANE_Y_OFFSET = 20;
+    final static int EAGLE_Y_OFFSET = 10;//20
+    final static int PLANE_X_OFFSET = 10;
+    final static int PLANE_Y_OFFSET = 15; //20
     final static int BUNNY_X_OFFSET = 20;
-    final static int BUNNY_Y_OFFSET = 20;
-    final static int MOUSE_X_OFFSET = 10;
-    final static int MOUSE_Y_OFFSET = 5;
+    final static int BUNNY_Y_OFFSET = 15; //20
+    final static int MOUSE_X_OFFSET = 15;
+    final static int MOUSE_Y_OFFSET = 0;
     final static int FISH_X_OFFSET = 10;
-    final static int FISH_Y_OFFSET = 0;
-    final static int RACCOON_X_OFFSET = 30;
-    final static int RACCOON_Y_OFFSET = 30;
-    final static int SNAKE_X_OFFSET = 30;
-    final static int SNAKE_Y_OFFSET = 15;
+    final static int FISH_Y_OFFSET = 0; //
+    final static int RACCOON_X_OFFSET = 10;
+    final static int RACCOON_Y_OFFSET = 20;
+    final static int SNAKE_X_OFFSET = 20;
+    final static int SNAKE_Y_OFFSET = 10;
 
     private int xLocation;
     private int yLocation;

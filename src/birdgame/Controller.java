@@ -121,15 +121,8 @@ public class Controller implements KeyListener, ActionListener, Serializable {
         view = new View(this);
         model = new Model(view.getFrameWidth(), view.getFrameHeight(), view.getBirdWidth(), view.getBirdHeight());
 
-        view.setPanel("TUTORIAL");
-    }
-
-    public void resetForGameOver() {
-
-    }
-
-    public void resetForNewLevel() {
-
+        //view.setPanel("TUTORIAL");
+        view.setPanel("START");
     }
 
     void start() {
@@ -182,7 +175,10 @@ public class Controller implements KeyListener, ActionListener, Serializable {
                 if (!Model.quizOver() && !Model.lastQuestion()) {
                     Model.incrQuestionNum();
                     view.prepareQuiz();
-                } else {
+                    System.out.println(Model.getNumberOfQuestions());
+                    System.out.println(Model.getQuestionNum());
+                } 
+                else {
                     Model.incrQuestionNum();
                 }
                 try {
@@ -196,7 +192,6 @@ public class Controller implements KeyListener, ActionListener, Serializable {
 
         }
         Model.resetQuestionNum();
-
     }
 
     void runGame() {
@@ -349,7 +344,7 @@ public class Controller implements KeyListener, ActionListener, Serializable {
             model.setTotalLevelTicks(0);
             model.clearGP();
             view.setPanel("OSPREY_ROUND_TWO");
-
+            model.clearQuestionsToAsk();
             model.generateOspreyQuestions2();
             model.spawnOspreyGamePieces();
             view.setBackground(imgOsprey3, imgOsprey4);

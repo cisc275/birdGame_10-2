@@ -27,6 +27,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+
 import java.util.Iterator;
 import java.util.Set;
 import java.util.HashMap;
@@ -83,12 +85,12 @@ public class View extends JPanel implements Serializable {
     final static int TUTORIAL_BUTTON_Y_MULTIPLIER = 4;
     final static int TUTORIAL_BUTTON_Y_RATIO = 10;
     final static int TUTORIAL_BUTTON_Y_LOCATION_RATIO = 14;
-    final static int TUTORIAL_LABEL_FONT_SIZE_RATIO = 30;
+    final static int TUTORIAL_LABEL_FONT_SIZE_RATIO = 30; 
     final static int TUTORIAL_LABEL_FONT_STYLE = 1;
     final static int TUTORIAL_UP_DOWN_LABEL_X_RATIO = 50;
     final static int TUTORIAL_FOOD_ENEMY_LABEL_X_RATIO = 12;
     final static int TUTORIAL_FOOD_ENEMY_LABEL_X_MULTIPLIER = 5;
-    final static int TUTORIAL_LABEL_Y_RATIO = 8;
+    final static int TUTORIAL_LABEL_Y_RATIO = 9; //8
     final static int TUTORIAL_LABEL_DOWN_Y_RATIO = 4;
     final static int TUTORIAL_BUTTON_X_LOC_NUMERATOR = 55;
     final static int TUTORIAL_BUTTON_Y_LOC_NUMERATOR = 65;
@@ -173,6 +175,7 @@ public class View extends JPanel implements Serializable {
     private JPanel gameOver;
     private JPanel movingScreen;
     private JLabel downLabel;
+    private JLabel moveLabel;
     private JLabel upLabel;
     private JLabel foodLabel;
     private JLabel specialFoodLabel;
@@ -209,6 +212,7 @@ public class View extends JPanel implements Serializable {
     boolean finished = false;
     boolean fishDone = false;
     boolean notOver = true;
+	
 
     public View(Controller c) {
         frame = new JFrame();
@@ -351,6 +355,9 @@ public class View extends JPanel implements Serializable {
     void createTutorialMovingDemo(Controller c) {
         movingScreen = new MovingScreenPanel();
         movingScreen.setLayout(null);
+        moveLabel = new JLabel("Moving the bird makes it lose health");
+        moveLabel.setFont(new Font("Times New Roman", TUTORIAL_LABEL_FONT_STYLE, FRAME_WIDTH / TUTORIAL_LABEL_FONT_SIZE_RATIO));
+        moveLabel.setBounds(TUTORIAL_FOOD_ENEMY_LABEL_X_MULTIPLIER * FRAME_WIDTH / TUTORIAL_FOOD_ENEMY_LABEL_X_RATIO, FRAME_HEIGHT / TUTORIAL_LABEL_Y_RATIO, FRAME_WIDTH, FRAME_HEIGHT / 2);
         upLabel = new JLabel("Use the UP arrow key to move up");
         upLabel.setFont(new Font("Times New Roman", TUTORIAL_LABEL_FONT_STYLE, FRAME_WIDTH / TUTORIAL_LABEL_FONT_SIZE_RATIO));
         upLabel.setBounds(FRAME_WIDTH / TUTORIAL_UP_DOWN_LABEL_X_RATIO, FRAME_HEIGHT / TUTORIAL_LABEL_Y_RATIO, FRAME_WIDTH, FRAME_HEIGHT / TUTORIAL_LABEL_Y_RATIO);
@@ -373,11 +380,12 @@ public class View extends JPanel implements Serializable {
         movingScreen.add(foodLabel);
         movingScreen.add(specialFoodLabel);
         movingScreen.add(enemyLabel);
+        movingScreen.add(moveLabel);
         movingScreen.add(c.getTutorialMovingButton());
         foodX = playerXLoc + FRAME_WIDTH;
         foodX2 = playerXLoc + FRAME_WIDTH;
         foodX3 = playerXLoc + FRAME_WIDTH;
-
+        moveLabel.setVisible(true);
         foodLabel.setVisible(false);
         specialFoodLabel.setVisible(false);
         enemyLabel.setVisible(false);
@@ -682,6 +690,7 @@ public class View extends JPanel implements Serializable {
             g.drawImage(ospreyFly[ospreyPicNum], playerXLoc, playerYLoc, this);
             if (notOver) {
                 if (Controller.getUpArrowKeyTried() >= 1 && Controller.getDownArrowKeyTried() >= 1 && drawFish) {
+                	moveLabel.setVisible(false);
                     foodX -= FOOD_X_INCREASE;
                     if (drawFish) {
                         g.drawImage(fish[fishPicNum], foodX, FRAME_HEIGHT / 2, this);
@@ -716,11 +725,11 @@ public class View extends JPanel implements Serializable {
                         g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH / 8, playerYLoc - FRAME_HEIGHT / 3, this);
                         g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / 60));
                         //(Model.getCurrentFact());
-                        String[] lines = "Hitting a Special Food, will display a fact, and gives you full,        health".split(",");
+                        String[] lines = "Hitting a Special,Food displays a fact, and gives you full,        health".split(",");
                         int yOffset = 0;
                         for (String line : lines) {
-                            yOffset += g.getFontMetrics().getHeight();
-                            g.drawString(line, playerXLoc + FRAME_WIDTH / 6, playerYLoc - 15 * FRAME_HEIGHT / 72 + yOffset);
+                            yOffset += g.getFontMetrics().getHeight(); 
+                            g.drawString(line, playerXLoc + FRAME_WIDTH / 6, playerYLoc - 18 * FRAME_HEIGHT / 72 + yOffset);
                         }
                         g.drawImage(eagle[eaglePicNum], foodX2, FRAME_HEIGHT / 4, this);
                     }
@@ -849,7 +858,7 @@ public class View extends JPanel implements Serializable {
         int yOffset = 0;
         for (String line : lines) {
             yOffset += g.getFontMetrics().getHeight();
-            g.drawString(line, playerXLoc + FRAME_WIDTH / 6, playerYLoc - 15 * FRAME_HEIGHT / 72 + yOffset);
+            g.drawString(line, playerXLoc + FRAME_WIDTH / 6 - 5, playerYLoc - 17 * FRAME_HEIGHT / 72 + yOffset);
         }
 
     }

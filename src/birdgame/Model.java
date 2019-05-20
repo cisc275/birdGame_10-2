@@ -29,7 +29,7 @@ public class Model implements Serializable {
     final static int X_LOCATION_WHERE_GPS_ARE_NO_LONGER_CURRENT = -500;
     final static int X_INCREASE_AT_END_OF_LEVEL = 30;
     final static int X_LOCATION_FOR_OBSTACLE_SPAWNS = 1200;
-    final static int ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD = 800;
+    final static int ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD = 400;
 
     public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
     public static HashMap<String, String[]> questionsToAsk = new HashMap<>();
@@ -177,15 +177,17 @@ public class Model implements Serializable {
         int numSpecialFood = 0;
         questionsToAsk = new HashMap<String, String[]>();
         int tempXLoc = X_LOCATION_FOR_OBSTACLE_SPAWNS;
+        int tempXSpecial = 0;
         int maxSpecialFood = 3;
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
                 if (Math.random() < CHANCE_SPECIAL_FOOD_SPAWNS) {
                     if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
-                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD, (int) (Math.random() * groundLevel), Sprite.BUNNY));
+                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD + tempXSpecial, (int) (Math.random() * groundLevel), Sprite.BUNNY));
+                        tempXSpecial += fWidth;
                     } else {
-                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD, (int) (Math.random() * groundLevel), Sprite.MOUSE));
-
+                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD + tempXSpecial, (int) (Math.random() * groundLevel), Sprite.MOUSE));
+                        tempXSpecial += fWidth;
                     }
                     numSpecialFood++;
 
@@ -206,6 +208,7 @@ public class Model implements Serializable {
                 }
             }
             numGamePieces++;
+            
             tempXLoc += fWidth / 3;
 
         }
@@ -223,15 +226,18 @@ public class Model implements Serializable {
         questionsToAsk = new HashMap<String, String[]>();
         int numGamePieces = 0;
         int numSpecialFood = 0;
+        int tempXSpecial = 0;
         int tempXLoc = X_LOCATION_FOR_OBSTACLE_SPAWNS;
         int maxSpecialFood = MAX_SPECIAL_FOOD;
         while (numGamePieces < numGamePiecesInRoundLeft) {
             if (numSpecialFood < maxSpecialFood) {
                 if (Math.random() < CHANCE_SPECIAL_FOOD_SPAWNS) {
                     if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
-                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD, (int) (Math.random() * groundLevel), Sprite.SNAKE));
+                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD + tempXSpecial, (int) (Math.random() * groundLevel), Sprite.SNAKE));
+                        tempXSpecial += fWidth;
                     } else {
-                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD, (int) (Math.random() * groundLevel), Sprite.FISH));
+                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD + tempXSpecial, (int) (Math.random() * groundLevel), Sprite.FISH));
+                        tempXSpecial += fWidth;
 
                     }
                     numSpecialFood++;
@@ -316,6 +322,7 @@ public class Model implements Serializable {
         if (hasMoreFacts()) {
             currentFact = facts[currentFactIndex];
             HashMap<String, String[]> associatedFactandQuestion = factsAndQuestions.get(currentFact);
+            System.out.println(associatedFactandQuestion);
             questionsToAsk.putAll(associatedFactandQuestion);
         }
         player.setScore(player.getScore() + sf.getFoodValue());
@@ -464,7 +471,7 @@ public class Model implements Serializable {
 
     public void generateHarrierQuestions() {
         currentFactIndex = 0;
-        facts = new String[]{"Northern Harriers, eat rodents", "Northern Harriers are, non-migratory birds", "Foxes are a predator, for Northern Harriers"};
+        facts = new String[]{"Northern Harriers, eat rodents", "Northern Harriers, are non-migratory,   birds", "Foxes are a, predator for, Northern Harriers"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsHarrier1 = new HashMap<>();
         String[] harrierFood = {"Rodents", "Fish", "Eagles", "Plants", "A"};
@@ -474,12 +481,12 @@ public class Model implements Serializable {
         HashMap<String, String[]> QandAsHarrier2 = new HashMap<>();
         String[] harrierMigrate = {"They migrate to California", "They migrate to South America", "They don't migrate", "They migrate to canada", "C"};
         QandAsHarrier2.put("Where do Harriers migrate?", harrierMigrate);
-        factsAndQuestions.put("Northern Harriers are, non-migratory birds", QandAsHarrier2);
+        factsAndQuestions.put("Northern Harriers, are non-migratory,   birds", QandAsHarrier2);
 
         HashMap<String, String[]> QandAsHarrier3 = new HashMap<>();
         String[] harrierPred = {"Foxes", "Snakes", "Cats", "Humans", "A"};
         QandAsHarrier3.put("What is a predator of Northern Harriers?", harrierPred);
-        factsAndQuestions.put("Foxes are a predator, for Northern Harriers", QandAsHarrier3);
+        factsAndQuestions.put("Foxes are a, predator for, Northern Harriers", QandAsHarrier3);
 
         availableFacts = new ArrayList<String>(factsAndQuestions.keySet());
 
@@ -487,7 +494,7 @@ public class Model implements Serializable {
 
     public void generateOspreyQuestions() {
         currentFactIndex = 0;
-        facts = new String[]{"Ospreys like to,eat Snakes and Fish", "Ospreys migrate to, South America for, the winter", "Eagles are a, predator of Ospreys"};
+        facts = new String[]{"Ospreys like to,eat Snakes and Fish", "Ospreys migrate to, South America for, the winter", "Eagles are a, predator of,   Ospreys"};
         factsAndQuestions = new HashMap<>();
         HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
         String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Eagles", "B"};
@@ -502,7 +509,7 @@ public class Model implements Serializable {
         HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();
         String[] OspreyPred = {"Foxes", "Snakes", "Eagles", "Cats and Dogs", "C"};
         QandAsOsprey3.put("What is a predator of Ospreys?", OspreyPred);
-        factsAndQuestions.put("Eagles are a, predator of Ospreys", QandAsOsprey3);
+        factsAndQuestions.put("Eagles are a, predator of,   Ospreys", QandAsOsprey3);
         availableFacts = new ArrayList<String>(factsAndQuestions.keySet());
 
     }
@@ -518,7 +525,7 @@ public class Model implements Serializable {
 
         HashMap<String, String[]> QandAsOsprey2 = new HashMap<>();
         String[] OspreyLoc = {"on the floor", "in trees", "on mountains", "in caves", "B"};
-        QandAsOsprey2.put("Where do Ospreys nest?", OspreyLoc);
+        QandAsOsprey2.put("Where do Ospreys make nests?", OspreyLoc);
         factsAndQuestions.put("Ospreys nest in, trees", QandAsOsprey2);
 
         HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();

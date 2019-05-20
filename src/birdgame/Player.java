@@ -65,24 +65,24 @@ public class Player extends GamePiece implements Serializable {
         int width = getWidth();
         int height = getHeight();
         int xOff = getXOffset();
-        int yOff = getYOffset();
+        int yOff = getYOffset(); 
         int otherX = piece.getX();
         int otherY = piece.getY();
         int otherW = piece.getWidth();
         int otherH = piece.getHeight();
         int otherYOff = piece.getYOffset();
         int otherXOff = piece.getXOffset();
-
+        									//+                                                         //
         if (xLocation + width - xOff >= otherX + otherXOff && xLocation + width - xOff <= otherX + otherW - otherXOff) {
             if (yLocation + yOff >= otherY + otherYOff && yLocation + yOff <= otherY + otherW - otherYOff) {
-                return true;
+                return true;		                     //+
             } else if (yLocation + height - yOff >= otherY + otherYOff && yLocation + height - yOff <= otherY + otherH - otherYOff) {
                 return true;
-            }
+            }																					//+
         } else if (xLocation + xOff >= otherX + otherXOff && xLocation + xOff <= otherX + otherH - otherXOff) {
             if (yLocation + yOff >= otherY + otherYOff && yLocation + yOff <= otherY + otherW - otherYOff) {
                 return true;
-            }
+            }										//+
             if (yLocation + height - yOff >= otherY + otherYOff && yLocation + height - yOff <= otherY + otherH - otherYOff) {
                 return true;
             }
