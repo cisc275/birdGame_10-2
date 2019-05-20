@@ -22,6 +22,9 @@ public class Food extends GamePiece implements Serializable {
 
     private int foodValue;
 
+    /**
+     * Food constructor initializes fields to their starting values
+     */
     public Food(int x, int y, Sprite foodType) {
         setSpecialFood(false);
         setX(x);
@@ -36,10 +39,20 @@ public class Food extends GamePiece implements Serializable {
         setOffsets();
     }
 
+    /**
+     * getFoodValue returns the amount of health the players gains by eating the food
+     * 
+     * @return int foodValue is the value of how much health the players gains by eating the food
+     */
     public int getFoodValue() {
         return foodValue;
     }
 
+    /**
+     * setFoodValue takes one parameter and sets the foodValue to the given value
+     * 
+     * @param int foodValue is the value of how much health the players gains by eating the food
+     */
     public void setFoodValue(int foodValue) {
         this.foodValue = foodValue;
     }

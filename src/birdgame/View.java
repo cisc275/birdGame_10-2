@@ -36,6 +36,7 @@ import java.awt.AlphaComposite;
 import java.awt.CardLayout;
 
 /**
+ * View handles the visual updates for the game
  *
  * @author crnis
  */
@@ -52,12 +53,15 @@ public class View extends JPanel implements Serializable {
     final static int SPECIAL_FOOD_DELAY = 100;
     final static Color YELLOW = new Color(255, 255, 0, 100);
     final static Color SNAKEYELLOW = new Color(255, 255, 0, 175);
+    final static Color GREEN = new Color(0, 255, 0, 100);
+    final static Color RED = new Color(255, 0, 0, 100);
     final static int DELAY_FOR_ANIMATION_UPDATES = 10;
     final static int BACKGROUND_LOCATION_X_INCREASE = 8;
     final static int MAX_NUM_BACKGROUNDS = 200;
     final static int SECONDS_PER_MAP_FRAME = 1;
     final static int MAX_BIRD_HEALTH = Model.MAX_BIRD_HEALTH;
     final static int NEST_DELAY_MILLISECONDS = 50;
+    final static int FOOD_AND_ENEMY_DELAY_MILLISECONDS = 25;
 
     final static int THOUGHT_BUBBLE_SIZE = 400;
     final static int DEFAULT_BUTTON_FONT_SIZE_RATIO = 55;
@@ -108,6 +112,32 @@ public class View extends JPanel implements Serializable {
     final static int QUIZ_DIMENSION_PREFERRED_X_RATIO = 3;
     final static int QUIZ_DIMENSION_PREFERRED_Y_RATIO = 4;
 
+    final static int HEALTH_BAR_WIDTH_RATIO = 105;
+    final static int HEALTH_BAR_HEIGHT_RATIO = 75;
+    final static int HEALTH_BAR_Y_LOCATION_RATIO = 17;
+    final static int HEALTH_BAR_AMOUNT_FULL_MULTIPLIER = 2;
+    final static int SCORE_FONT_SIZE_RATIO = 47;
+    final static int SCORE_FONT_X_LOCATION_RATIO = 8;
+    final static int FRAMES_PER_DE_MAP_UPDATE = 30;
+    final static int DE_PIC_X_MULTIPLIER = 3;
+    final static int DE_PIC_X_RATIO = 28;
+    final static int DE_PIC_Y_MULTIPLIER = 7;
+    final static int DE_PIC_Y_RATIO = 16;
+    final static int THOUGHT_BUBBLE_X_RATIO = 8;
+    final static int THOUGHT_BUBBLE_Y_RATIO = 3;
+    final static int FACT_FONT_SIZE_RATIO = 57;
+    final static int FACT_X_LOCATION_RATIO = 6;
+    final static int FACT_Y_LOCATION_RATIO = 72;
+    final static int FACT_Y_LOCATION_MULTIPLIER = 15;
+    final static int GAMEOVER_SCORE_FONT_SIZE_RATIO = 25;
+    final static int GAMEOVER_SCORE_X_MULTIPLIER = 4;
+    final static int GAMEOVER_SCORE_Y_MULTIPLIER = 4;
+    final static int GAMEOVER_BUTTON_X_RATIO = 4;
+    final static int GAMEOVER_SCORE_X_RATIO = 15;
+    final static int GAMEOVER_SCORE_Y_RATIO = 10;
+    final static int GAMEOVER_EXIT_FRAME_X_MULTIPLIER = 6;
+    final static int GAMEOVER_EXIT_FRAME_Y_MULTIPLIER = 60;
+    
     private static int runningFrameCount = 0;
 //changed runningframeCount to static, might be a problem
     private int ticksPerFrameUpdate = FRAMES_PER_SECOND / DELAY_FOR_ANIMATION_UPDATES;
@@ -156,8 +186,8 @@ public class View extends JPanel implements Serializable {
     private Image thoughtBubble;
     private static int momentFoodEaten = 0;
     private static int momentEnemyHit = 0;
-    private int enemyDelay = 25;
-    private int foodDelay = 25;
+    private int enemyDelay = FOOD_AND_ENEMY_DELAY_MILLISECONDS;
+    private int foodDelay = FOOD_AND_ENEMY_DELAY_MILLISECONDS;
     private JFrame frame;
     private JPanel cards;
     private JPanel currentPanel;
@@ -198,8 +228,6 @@ public class View extends JPanel implements Serializable {
     private Image gameOverImg;
     private Image homeScreenImg;
     private static boolean is2To3Transition;
-    Color green = new Color(0, 255, 0, 100);
-    Color red = new Color(255, 0, 0, 100);
     private static boolean isOspreyRound1Over = false;
     private static boolean isOspreyRound2Over = false;
     private static boolean is1To2Transition = false;
@@ -214,6 +242,11 @@ public class View extends JPanel implements Serializable {
     boolean notOver = true;
 	
 
+    /**
+     * View constructor takes one parameter, and sets up cardlayout for the game
+     * 
+     * @param Controller c is the controller that gives the userinputs for the view/game
+     */
     public View(Controller c) {
         frame = new JFrame();
         cards = new JPanel(new CardLayout());
@@ -245,16 +278,19 @@ public class View extends JPanel implements Serializable {
         createFrame(c);
     }
 
+    /**
+     * loadImages takes the game's imagefiles and creates bufferedimages from the given images
+     */
     void loadImages() {
         for (int i = 0; i < FRAME_COUNT; i++) {
             harrierFly[i] = createImage("images/BirdImages/Harrier" + i + ".png");
-            harrierRed[i] = dye(harrierFly[i], red);
-            harrierGreen[i] = dye(harrierFly[i], green);
+            harrierRed[i] = dye(harrierFly[i], RED);
+            harrierGreen[i] = dye(harrierFly[i], GREEN);
         }
         for (int i = 0; i < FRAME_COUNT; i++) {
             ospreyFly[i] = createImage("images/BirdImages/Osprey" + i + ".png");
-            ospreyRed[i] = dye(ospreyFly[i], red);
-            ospreyGreen[i] = dye(ospreyFly[i], green);
+            ospreyRed[i] = dye(ospreyFly[i], RED);
+            ospreyGreen[i] = dye(ospreyFly[i], GREEN);
         }
         for (int i = 0; i < MICE_FRAME_COUNT; i++) {
             mice[i] = createImage("images/BirdImages/Mice" + i + ".png");
@@ -304,6 +340,14 @@ public class View extends JPanel implements Serializable {
         homeScreenImg = createImage("images/BirdImages/HomeScreen.png");
     }
 
+    /**
+     * dye takes two parameters and returns a BufferedImage of the given image with a tint in the new color
+     * 
+     * @param BufferedImage image is the subject image to be colored
+     * @param Color color is the color that is to be added to the image
+     * 
+     * @return BufferedImage dyed is the original image but with the tint of the given color
+     */
     private static BufferedImage dye(BufferedImage image, Color color) {
         int w = image.getWidth();
         int h = image.getHeight();
@@ -317,6 +361,12 @@ public class View extends JPanel implements Serializable {
         return dyed;
     }
 
+    /**
+     * createFrame takes one parameter and sets up the frame to be used in the game. 
+     * it also adds a keylistener to the controller
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createFrame(Controller c) {
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.add(cards);
@@ -329,6 +379,11 @@ public class View extends JPanel implements Serializable {
         frame.setVisible(true);
     }
 
+    /**
+     * createStartScreen takes one parameter and sets up the frame and image to show a start screen
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createStartScreen(Controller c) {
         startScreen = new StartScreenPanel();
         startScreenImg = createImage("images/BirdImages/StartScreen.png");
@@ -343,6 +398,11 @@ public class View extends JPanel implements Serializable {
         startScreen.add(c.getHarrierButton());
     }
 
+    /**
+     * createTutorialStartScreen takes one parameter and sets up the frame and image to show a start screen for the tutorial
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createTutorialStartScreen(Controller c) {
         tutorialScreen = new TutorialScreenPanel();
         tutorialScreen.setLayout(null);
@@ -352,6 +412,11 @@ public class View extends JPanel implements Serializable {
 
     }
 
+    /**
+     * createTutorialMovingDemo takes one parameter and adds the labels and information for the tutorial to happen
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createTutorialMovingDemo(Controller c) {
         movingScreen = new MovingScreenPanel();
         movingScreen.setLayout(null);
@@ -393,6 +458,11 @@ public class View extends JPanel implements Serializable {
 
     }
 
+    /**
+     * createOspreyPanels takes one parameter and calls the methods to set up the different stages/buttons for the osprey
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createOspreyPanels(Controller c) {
         createInitialMapPanel(c);
         createOspreyRound1Panel(c);
@@ -402,6 +472,11 @@ public class View extends JPanel implements Serializable {
         createOspreyNestPanel(c);
     }
 
+    /**
+     * createInitialMapPanel takes one parameter and sets up the osprey's map screen
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createInitialMapPanel(Controller c) {
         initialMap = new InitialMapPanel();
         initialMapImg = createImage("images/BirdImages/OspreyLevelScreen0.png");
@@ -413,6 +488,11 @@ public class View extends JPanel implements Serializable {
         initialMap.add(c.getRound1Button());
     }
 
+    /**
+     * createOspreyRound1Panel takes one parameter and sets up the osprey's first stage's screen
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createOspreyRound1Panel(Controller c) {
         ospreyRound1 = new OspreyPanel();
         c.getOsprey1SaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
@@ -420,6 +500,11 @@ public class View extends JPanel implements Serializable {
         ospreyRound1.add(c.getOsprey1SaveGameButton());
     }
 
+    /**
+     * createOspreyMap1to2 takes one parameter and sets up the osprey's map screen part 2
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createOspreyMap1to2() {
 
         map1to2 = new Map1to2Panel();
@@ -428,6 +513,11 @@ public class View extends JPanel implements Serializable {
         map1to2.add(Controller.getRound2Button());
     }
 
+    /**
+     * createOspreyRound2Panel takes one parameter and sets up the osprey's second stage's screen
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createOspreyRound2Panel(Controller c) {
         ospreyRound2 = new OspreyPanel();
         c.getOsprey2SaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
@@ -435,6 +525,11 @@ public class View extends JPanel implements Serializable {
         ospreyRound2.add(c.getOsprey2SaveGameButton());
     }
 
+    /**
+     * createOspreyMap2to3 takes one parameter and sets up the osprey's map screen part 3
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createOspreyMap2to3(Controller c) {
         map2to3 = new Map2to3Panel();
         map2to3.setLayout(null);
@@ -442,10 +537,20 @@ public class View extends JPanel implements Serializable {
         map2to3.add(Controller.getReturnToStartButton());
     }
 
+    /**
+     * createOspreyNestPanel takes one parameter and sets up the osprey's nesting screen
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createOspreyNestPanel(Controller c) {
         ospreyNest = new OspreyNestPanel();
     }
 
+    /**
+     * createHarrierRound takes one parameter and sets up the harrier's stage screen
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createHarrierRound(Controller c) {
         harrierRound = new HarrierPanel();
         c.getHarrierSaveGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
@@ -453,19 +558,33 @@ public class View extends JPanel implements Serializable {
         harrierRound.add(c.getHarrierSaveGameButton());
     }
 
+    /**
+     * createHarrierNestPanel takes one parameter and sets up the harrier's nesting screen
+     * 
+     * @param Controller c is the controller for userinput
+     */
     void createHarrierNestPanel(Controller c) {
         harrierNest = new HarrierNestPanel();
     }
 
+    /**
+     * createQuizPanel sets quiz to a new QuizPanel to be used to ask the player questions
+     */
     void createQuizPanel() {
         quiz = new QuizPanel();
 
     }
 
+    /**
+     * clearPreviousQuizResult removes the old correct/incorrect info from the quiz
+     */
     void clearPreviousQuizResult() {
         quiz.blank.setText("");
     }
 
+    /**
+     * prepareQuiz sets up the quiz panel with questions and sets what the correct answer is in Model
+     */
     public void prepareQuiz() {
 
         HashMap<String, String[]> questionsToAsk = Model.getQuestionToAsk();
@@ -481,6 +600,11 @@ public class View extends JPanel implements Serializable {
         Model.setCorrectAnswer(questionsToAsk.get(questions[Model.getQuestionNum()])[4]);
     }
 
+    /**
+     * answeredCorrectly takes one parameter and changes the quiz view based in if the player was correct or not
+     * 
+     * @param boolean bool is if the player answered correctly (true) or incorrectly (false)
+     */
     public void answeredCorrectly(boolean bool) {
         if (bool) {
             quiz.blank.setForeground(Color.green);
@@ -493,14 +617,25 @@ public class View extends JPanel implements Serializable {
         }
     }
 
+    /**
+     * setFalse sets the quiz's correct or incorrect dialogue to invisible
+     */
     public void setFalse() {
         quiz.blank.setVisible(false);
     }
 
+    /**
+     * createGameOverPanel creates a panel to display the end of game screen
+     */
     void createGameOverPanel() {
         gameOver = new GameOverPanel();
     }
 
+    /**
+     * paintBackGround takes one parameter and paints the background, flipping it each time so that the edges line up
+     * 
+     * @param Graphics g is the set of images to show
+     */
     public void paintBackground(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(backgroundImage, -backgroundLocation, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
@@ -515,11 +650,22 @@ public class View extends JPanel implements Serializable {
 
     }
 
+    /**
+     * setBackground takes two parameters and sets the two background images to the different images (one is flipped)
+     * 
+     * @param ImageIcon i1 is the inital background image
+     * @param ImageIcon i2 is the mirrored background image
+     */
     public void setBackground(ImageIcon i1, ImageIcon i2) {
         backgroundImage = i1.getImage();
         backgroundImageFlipped = i2.getImage();
     }
 
+    /**
+     * setPanel takes one parameter and sets the card panel to the one given
+     * 
+     * @param String s is the name corresponding to the panel that should be switched to
+     */
     public void setPanel(String s) {
         ((CardLayout) cards.getLayout()).show(cards, s);
         if (s.equals("START")) {
@@ -549,13 +695,24 @@ public class View extends JPanel implements Serializable {
         } else if (s.equals("MOVING_SCREEN")) {
             currentPanel = movingScreen;
         }
-
     }
 
+    /**
+     * getPanel returns the current JPanel
+     * 
+     * @return JPanel currentPanel is the panel that is currently being displayed
+     */
     public JPanel getPanel() {
         return currentPanel;
     }
 
+    /**
+     * createImage takes one parameter and returns a BufferedImage from a given string path
+     * 
+     * @param String path is the filepath to find the image to be created
+     * 
+     * @return BufferedImage buff is the BufferedImage created from the imagefile
+     */
     public BufferedImage createImage(String path) {
 
         BufferedImage buff;
@@ -569,6 +726,9 @@ public class View extends JPanel implements Serializable {
 
     }
 
+    /**
+     * update runs the logic, frames, and ticks for the view. It controls how often the different objects in view move
+     */
     public void update(int xLoc, int yLoc, CopyOnWriteArrayList<GamePiece> g, Direction dir, int h, int s) {
         playerXLoc = xLoc;
         playerYLoc = yLoc;
@@ -586,6 +746,9 @@ public class View extends JPanel implements Serializable {
 
     }
 
+    /**
+     * QuizPanel is a panel for use at the end of completed stages to quiz different users about the birds
+     */
     class QuizPanel extends JPanel {
 
         String[] questions;
@@ -596,6 +759,9 @@ public class View extends JPanel implements Serializable {
         JLabel question;
         JLabel blank;
 
+        /**
+         * the QuizPanel constructor initializes the different quiz buttons, the question, and sets up the fonts
+         */
         QuizPanel() {
             setLayout(new GridLayout(GRID_WIDTH, GRID_HEIGHT));    		
             ButtonA = Controller.getOptionAButton();
@@ -617,35 +783,55 @@ public class View extends JPanel implements Serializable {
             add(Controller.getOptionDButton());
         }
 
+        /**
+         * setQuestion takes one parameter and sets up the question for the quiz
+         * 
+         * @param String text is the question to be asked
+         */
         public void setQuestion(String text) {
             question.setText(text);
-
         }
 
+        /**
+         * paintComponent takes one parameter and calls its super method
+         * 
+         * @param Graphics g is the set of visuals to be shown
+         */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
         }
 
     }
-
+    
+    /**
+     * GameOverPanel is a Panel that is shown at the very end of the game after both birds have been finished
+     */
     class GameOverPanel extends JPanel {
 
         public JLabel finalScore = new JLabel("Score: " + score);
 
+        /**
+         * the GameOverPanel constructor creates the fonts, buttons, and graphics needed to show the end of the game
+         */
         GameOverPanel() {
             setLayout(null);
-            finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / 25));
-            finalScore.setBounds((FRAME_WIDTH * 4) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * 4) / 10, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+            finalScore.setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / GAMEOVER_SCORE_FONT_SIZE_RATIO));
+            finalScore.setBounds((FRAME_WIDTH * GAMEOVER_SCORE_X_MULTIPLIER) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * GAMEOVER_SCORE_Y_MULTIPLIER) / GAMEOVER_SCORE_Y_RATIO, FRAME_WIDTH /GAMEOVER_BUTTON_X_RATIO, FRAME_HEIGHT / GAMEOVER_SCORE_X_RATIO);
             Controller.getRestartGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
             Controller.getExitGameButton().setFont(new Font("Agency FB", Font.BOLD, FRAME_WIDTH / DEFAULT_BUTTON_FONT_SIZE_RATIO));
-            Controller.getRestartGameButton().setBounds(FRAME_WIDTH / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * 60) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
-            Controller.getExitGameButton().setBounds((FRAME_WIDTH * 6) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * 60) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / 4, FRAME_HEIGHT / 15);
+            Controller.getRestartGameButton().setBounds(FRAME_WIDTH / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * GAMEOVER_EXIT_FRAME_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / GAMEOVER_BUTTON_X_RATIO, FRAME_HEIGHT / GAMEOVER_SCORE_X_RATIO);
+            Controller.getExitGameButton().setBounds((FRAME_WIDTH * GAMEOVER_EXIT_FRAME_X_MULTIPLIER) / DEFAULT_BUTTON_FRAMEWIDTH_RATIO, (FRAME_HEIGHT * GAMEOVER_EXIT_FRAME_Y_MULTIPLIER) / DEFAULT_BUTTON_FRAMEHEIGHT_RATIO, FRAME_WIDTH / GAMEOVER_BUTTON_X_RATIO, FRAME_HEIGHT / GAMEOVER_SCORE_X_RATIO);
 
             add(Controller.getRestartGameButton());
             add(Controller.getExitGameButton());
             add(finalScore);
         }
 
+        /**
+         * paintComponent takes one parameter and calls the super paint method, and also shows the final score of a player
+         * 
+         * @param Graphics g is the set of visuals to be shown
+         */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(gameOverImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
@@ -653,16 +839,32 @@ public class View extends JPanel implements Serializable {
         }
     }
 
+    /**
+     * StartScreenPanel is the panel to be used at the very beginning of a the game after tutorial, and also between bird playings
+     */
     class StartScreenPanel extends JPanel {
 
+    	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and also shows the startscreen
+         * 
+         * @param Graphics g is the set of visuals to be shown
+         */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(startScreenImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
     }
 
+    /**
+     * TutorialScreenPanel is the panel to be used at the very beginning of a the game for the tutorial
+     */
     class TutorialScreenPanel extends JPanel {
 
+    	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and also shows the tutorial screen
+         * 
+         * @param Graphics g is the set of visuals to be shown
+         */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(homeScreenImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
@@ -670,13 +872,21 @@ public class View extends JPanel implements Serializable {
 
     }
 
+    /**
+     * TutorialScreenPanel is the panel to be used during the tutorial
+     */
     class MovingScreenPanel extends JPanel {
-
+    	
         final static int FOOD_X_INCREASE = 14;
         final int DISTANCE_TO_NOT_DRAW_FOOD = 3 * FRAME_WIDTH / 28;
         final int HEIGHT_DIFFERENCE_TO_GET_FOOD = FRAME_HEIGHT / 8;
         final int DISTANCE_WHERE_PLAYER_MISSED_FOOD = 5 * FRAME_WIDTH / 28;
 
+        /**
+         * paintComponent takes one parameter and displays the visuals using its super method, and also sets up the different parts of the turtorial's movement and pieces
+         * 
+         * @param Graphics g is the set of visuals to be shown
+         */
         protected void paintComponent(Graphics g) {
             runningFrameCount++;
             paintBackground(g);
@@ -722,14 +932,14 @@ public class View extends JPanel implements Serializable {
                     foodX2 -= FOOD_X_INCREASE;
                     hit = false;
                     if (drawEagle) {
-                        g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH / 8, playerYLoc - FRAME_HEIGHT / 3, this);
+                        g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH / THOUGHT_BUBBLE_X_RATIO, playerYLoc - FRAME_HEIGHT / 3, this);
                         g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / 60));
                         //(Model.getCurrentFact());
                         String[] lines = "Hitting a Special,Food displays a fact, and gives you full,        health".split(",");
                         int yOffset = 0;
                         for (String line : lines) {
-                            yOffset += g.getFontMetrics().getHeight(); 
-                            g.drawString(line, playerXLoc + FRAME_WIDTH / 6, playerYLoc - 18 * FRAME_HEIGHT / 72 + yOffset);
+                            yOffset += g.getFontMetrics().getHeight();
+                            g.drawString(line, playerXLoc + FRAME_WIDTH / FACT_X_LOCATION_RATIO, playerYLoc - FACT_Y_LOCATION_MULTIPLIER * FRAME_HEIGHT / FACT_Y_LOCATION_RATIO + yOffset);
                         }
                         g.drawImage(eagle[eaglePicNum], foodX2, FRAME_HEIGHT / 4, this);
                     }
@@ -756,16 +966,32 @@ public class View extends JPanel implements Serializable {
         }
     }
 
+    /**
+     * InitialMapPanel is the panel for the first map showing in the Osprey's game
+     */
     class InitialMapPanel extends JPanel {
 
+    	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and also shows the first map's panel
+         * 
+         * @param Graphics g is the set of visuals to be shown
+         */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(initialMapImg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
         }
     }
 
+    /**
+     * OspreyPanel is the panel for the osprey's stages
+     */
     class OspreyPanel extends JPanel {
 
+    	/**
+         * paintComponent takes one parameter and runs the image information for the Osprey. 
+         * 
+         * @param Graphics g is the set of visuals to be shown
+         */
         protected void paintComponent(Graphics g) {
             runningFrameCount++;
             paintBackground(g);
@@ -842,29 +1068,41 @@ public class View extends JPanel implements Serializable {
             if (health < MAX_BIRD_HEALTH / 2) {
                 g.setColor(Color.red);
             }
-            g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, MAX_BIRD_HEALTH * 2, FRAME_HEIGHT / 17);
-            g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
+            g.drawRect(FRAME_WIDTH / HEALTH_BAR_WIDTH_RATIO, FRAME_HEIGHT / HEALTH_BAR_HEIGHT_RATIO, MAX_BIRD_HEALTH * HEALTH_BAR_AMOUNT_FULL_MULTIPLIER, FRAME_HEIGHT / HEALTH_BAR_Y_LOCATION_RATIO);
+            g.fillRect(FRAME_WIDTH / HEALTH_BAR_WIDTH_RATIO, FRAME_HEIGHT / HEALTH_BAR_HEIGHT_RATIO, health * HEALTH_BAR_AMOUNT_FULL_MULTIPLIER, FRAME_HEIGHT / HEALTH_BAR_Y_LOCATION_RATIO);
             g.setColor(Color.black);
-            g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / 47));
-            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - FRAME_WIDTH / 8, FRAME_HEIGHT / 17);
+            g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / SCORE_FONT_SIZE_RATIO));
+            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - FRAME_WIDTH / SCORE_FONT_X_LOCATION_RATIO, FRAME_HEIGHT / HEALTH_BAR_Y_LOCATION_RATIO);
 
         }
     }
 
+    /**
+     * displayFacts takes one parameter and draws the facts on the screen in a thoughtbubble after a specialfood is hit
+     * 
+     * @param Graphics g is the set of visuals to be shown
+     */
     void displayFacts(Graphics g) {
-        g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH / 8, playerYLoc - FRAME_HEIGHT / 3, this);
-        g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / 57));
+        g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH / THOUGHT_BUBBLE_X_RATIO, playerYLoc - FRAME_HEIGHT / THOUGHT_BUBBLE_Y_RATIO, this);
+        g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / FACT_FONT_SIZE_RATIO));
         String[] lines = Model.getCurrentFact().split(",");
         int yOffset = 0;
         for (String line : lines) {
             yOffset += g.getFontMetrics().getHeight();
-            g.drawString(line, playerXLoc + FRAME_WIDTH / 6 - 5, playerYLoc - 17 * FRAME_HEIGHT / 72 + yOffset);
+            g.drawString(line, playerXLoc + FRAME_WIDTH / FACT_X_LOCATION_RATIO, playerYLoc - FACT_Y_LOCATION_MULTIPLIER * FRAME_HEIGHT / FACT_Y_LOCATION_RATIO + yOffset);
         }
-
     }
 
+    /**
+     * HarrierPanel is the panel for the harrier's stages
+     */
     class HarrierPanel extends JPanel {
 
+    	/**
+         * paintComponent takes one parameter and runs the image information for the Harrier. 
+         * 
+         * @param Graphics g is the set of visuals to be shown
+         */
         protected void paintComponent(Graphics g) {
             runningFrameCount++;
             paintBackground(g);
@@ -940,20 +1178,28 @@ public class View extends JPanel implements Serializable {
             if (health < MAX_BIRD_HEALTH / 2) {
                 g.setColor(Color.red);
             }
-            g.drawRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, MAX_BIRD_HEALTH * 2, FRAME_HEIGHT / 17);
-            g.fillRect(FRAME_WIDTH / 105, FRAME_HEIGHT / 75, health * 2, FRAME_HEIGHT / 17);
+            g.drawRect(FRAME_WIDTH / HEALTH_BAR_WIDTH_RATIO, FRAME_HEIGHT / HEALTH_BAR_HEIGHT_RATIO, MAX_BIRD_HEALTH * HEALTH_BAR_AMOUNT_FULL_MULTIPLIER, FRAME_HEIGHT / HEALTH_BAR_Y_LOCATION_RATIO);
+            g.fillRect(FRAME_WIDTH / HEALTH_BAR_WIDTH_RATIO, FRAME_HEIGHT / HEALTH_BAR_HEIGHT_RATIO, health * HEALTH_BAR_AMOUNT_FULL_MULTIPLIER, FRAME_HEIGHT / HEALTH_BAR_Y_LOCATION_RATIO);
             g.setColor(Color.black);
-            g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / 47));
-            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - FRAME_WIDTH / 8, FRAME_HEIGHT / 17);
-            if (runningFrameCount % 30 == 0) {
+            g.setFont(new Font("Times New Roman", 1, FRAME_WIDTH / SCORE_FONT_SIZE_RATIO));
+            g.drawString("Score: " + String.valueOf(score), FRAME_WIDTH - FRAME_WIDTH / SCORE_FONT_X_LOCATION_RATIO, FRAME_HEIGHT / HEALTH_BAR_Y_LOCATION_RATIO);
+            if (runningFrameCount % FRAMES_PER_DE_MAP_UPDATE == 0) {
                 dePicNum = (dePicNum + 1) % DE_FRAME_COUNT;
             }
-            g.drawImage(delaware[dePicNum], FRAME_WIDTH - 3*FRAME_WIDTH/28, FRAME_HEIGHT - 7*FRAME_HEIGHT/16, 3*FRAME_WIDTH/28, 7*FRAME_HEIGHT/16, this);
+            g.drawImage(delaware[dePicNum], FRAME_WIDTH - DE_PIC_X_MULTIPLIER*FRAME_WIDTH/DE_PIC_X_RATIO, FRAME_HEIGHT - DE_PIC_Y_MULTIPLIER*FRAME_HEIGHT/DE_PIC_Y_RATIO, DE_PIC_X_MULTIPLIER*FRAME_WIDTH/DE_PIC_X_RATIO, DE_PIC_Y_MULTIPLIER*FRAME_HEIGHT/DE_PIC_Y_RATIO, this);
         }
     }
 
+    /**
+     * Map1to2Panel is the panel for the second map showing in the Osprey's game
+     */
     class Map1to2Panel extends JPanel {
 
+    	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and also shows the second map's panel
+         * 
+         * @param Graphics g is the set of visuals to be shown
+         */
         protected void paintComponent(Graphics g) {
             if (map1To2TransitionPicNum < MAP_1_2_TRANSITION_COUNT) {
                 Controller.getRound2Button().setVisible(false);
@@ -977,8 +1223,16 @@ public class View extends JPanel implements Serializable {
         }
     }
 
+    /**
+     * Map2to3Panel is the panel for the third map showing in the Osprey's game
+     */
     class Map2to3Panel extends JPanel {
 
+    	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and also shows the third map's panel
+         * 
+         * @param Graphics g is the set of visuals to be shown
+         */
         protected void paintComponent(Graphics g) {
             if (map2To3TransitionPicNum < MAP_2_3_TRANSITION_COUNT) {
                 Controller.getOspreyNestButton().setVisible(false);
@@ -1002,8 +1256,16 @@ public class View extends JPanel implements Serializable {
         }
     }
 
+    /**
+     * OspreyNestPanel is the panel for the nesting animation in the Osprey's game
+     */
     class OspreyNestPanel extends JPanel {
 
+    	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and runs the nesting animation for Osprey
+         * 
+         * @param Graphics g is the set of visuals to be shown
+         */
         protected void paintComponent(Graphics g) {
             if (ospreyNestPicNum < OSPREY_NEST_COUNT) {
                 Controller.getReturnToStartButton().setVisible(false);
@@ -1025,8 +1287,16 @@ public class View extends JPanel implements Serializable {
         }
     }
 
+    /**
+     * HarrierNestPanel is the panel for the nesting animation in the Harrier's game
+     */
     class HarrierNestPanel extends JPanel {
 
+    	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and runs the nesting animation for Harrier
+         * 
+         * @param Graphics g is the set of visuals to be shown
+         */
         protected void paintComponent(Graphics g) {
             if (harrierNestPicNum < HARRIER_NEST_COUNT) {
                 Controller.getReturnToStartButton().setVisible(false);
@@ -1049,70 +1319,153 @@ public class View extends JPanel implements Serializable {
         }
     }
 
+    /**
+     * getBirdWidth returns the width of the bird in pixels
+     * 
+     * @return int BIRD_WIDTH is the width of the bird in pixels
+     */
     public int getBirdWidth() {
         return BIRD_WIDTH;
     }
 
+    /**
+     * getBirdHeight returns the height of the bird in pixels
+     * 
+     * @return int BIRD_HEIGHT is the height of the bird in pixels
+     */
     public int getBirdHeight() {
         return BIRD_HEIGHT;
     }
 
+    /**
+     * getFrameHeight returns the height of the frame in pixels
+     * 
+     * @return int FRAME_HEIGHT is the height of the frame in pixels
+     */
     public int getFrameHeight() {
         return FRAME_HEIGHT;
     }
 
+    /**
+     * getFrameWidth returns the width of the frame in pixels
+     * 
+     * @return int FRAME_WIDTH is the width of the frame in pixels
+     */
     public int getFrameWidth() {
         return FRAME_WIDTH;
     }
 
+    /**
+     * getFrameCount returns the number of frames that have happened so far
+     * 
+     * @return int runningFrameCount is the number of frames that have happened so far
+     */
     public static int getFrameCount() {
         return runningFrameCount;
     }
 
+    /**
+     * setMomentEaten takes one parameter and sets the Moment where eating occurs to an int
+     * 
+     * @param int i is the int value of the moment where the eating happens
+     */
     public static void setMomentEaten(int i) {
         momentEaten = i;
     }
 
+    /**
+     * getStartScreen returns the start screen panel
+     * 
+     * @return JPanel startScreen is the panel of the start screen
+     */
     public JPanel getStartScreen() {
         return startScreen;
     }
 
+    /**
+     * getIsOspreyRound1Over returns the true/false of if the first Osprey round is over
+     * 
+     * @return boolean isOspreyRound1Over is the boolean true/false of if the first Osprey round is over
+     */
     public boolean getIsOspreyRound1Over() {
         return isOspreyRound1Over;
     }
 
+    /**
+     * getIsOspreyRound2Over returns the true/false of if the second Osprey round is over
+     * 
+     * @return boolean isOspreyRound2Over is the boolean true/false of if the second Osprey round is over
+     */
     public boolean getIsOspreyRound2Over() {
         return isOspreyRound2Over;
     }
 
+    /**
+     * getIsHarrierRoundOver returns the true/false of if the Harrier round is over
+     * 
+     * @return boolean isHarrierRoundOver is the boolean true/false of if the Harrier round is over
+     */
     public boolean getIsHarrierRoundOver() {
         return isHarrierRoundOver;
     }
 
+    /**
+     * setIsOspreyRound1Over takes one parameter and sets the boolean true/false of if the first Osprey round is over
+     * 
+     * @param boolean b is the boolean true/false of if the first Osprey round is over
+     */
     public static void setIsOspreyRound1Over(boolean b) {
         isOspreyRound1Over = b;
     }
-
+    
+    /**
+     * setIsOspreyRound2Over takes one parameter and sets the boolean true/false of if the second Osprey round is over
+     * 
+     * @param boolean b is the boolean true/false of if the second Osprey round is over
+     */
     public static void setIsOspreyRound2Over(boolean b) {
         isOspreyRound2Over = b;
     }
 
+    /**
+     * setIsHarrierRoundOver takes one parameter and sets the boolean true/false of if the Harrier round is over
+     * 
+     * @param boolean b is the boolean true/false of if the Harrier round is over
+     */
     public static void setIsHarrierRoundOver(boolean b) {
         isHarrierRoundOver = b;
     }
 
+    /**
+     * is1to2Transition returns a true/false for if the map 1to2 transition is happening
+     * 
+     * @return boolean is1To2Transition is the boolean true/false value for if the map 1to2 transition is happening
+     */
     public static boolean is1To2Transition() {
         return is1To2Transition;
     }
 
+    /**
+     * set1To2Transition takes one parameter and sets if the map 1to2 transition is happening
+     * 
+     * @param boolean b is the boolean true/false value for if the map 1to2 transition is happening
+     */
     public static void set1To2Transition(boolean b) {
         is1To2Transition = b;
     }
 
+    /**
+     * getFrame returns the JFrame in use
+     * 
+     * @return JFrame frame is the current JFrame
+     */
     public JFrame getFrame() {
         return frame;
     }
 
+    /**
+     * resetView resets any values that change during a run of the View to their initial values and clears any created data structures
+     */
     public void resetView() {
         runningFrameCount = 0;
         harrierPicNum = 0;
@@ -1142,42 +1495,86 @@ public class View extends JPanel implements Serializable {
         isHarrierRoundOver = false;
     }
 
+    /**
+     * is2t32Transition returns a true/false for if the map 2to3 transition is happening
+     * 
+     * @return boolean is2To3Transition is the boolean true/false value for if the map 2to3 transition is happening
+     */
     public static boolean is2To3Transition() {
         return is2To3Transition;
     }
 
+    /**
+     * set2To3Transition takes one parameter and sets if the map 2to3 transition is happening
+     * 
+     * @param boolean b is the boolean true/false value for if the map 2to3 transition is happening
+     */
     public static void set2To3Transition(boolean b) {
         is2To3Transition = b;
 
     }
 
+    /**
+     * getUpLabel returns the up label
+     * 
+     * @return JLabel upLabel is the Label corresponding to up
+     */
     public JLabel getUpLabel() {
         return upLabel;
     }
 
+    /**
+     * getDownLabel returns the down label
+     * 
+     * @return JLabel downLabel is the Label corresponding to down
+     */
     public JLabel getDownLabel() {
         return downLabel;
     }
 
+    /**
+     * getFoodLabel returns the food's label
+     * 
+     * @return JLabel foodLabel is the label correspinding to the food
+     */
     public JLabel getFoodLabel() {
         return foodLabel;
     }
 
+    /**
+     * getQuiz returns the quiz panel
+     * 
+     * @return JPanel quiz is the panel to run/display the quiz
+     */
     public JPanel getQuiz() {
         return quiz;
     }
 
+    /**
+     * getQuiz returns the quiz panel but blank
+     * 
+     * @return JPanel quiz.blank is the panel to run/display the blank version of the quiz
+     */
     public JLabel getBlank() {
         return quiz.blank;
     }
 
+    /**
+     * setMomentFoodEaten takes one parameter and sets the moment the food was eaten to the frame that it happened
+     * 
+     * @param int frameCount is the exact frame where the food was eaten
+     */
     public static void setMomentFoodEaten(int frameCount) {
         momentFoodEaten = frameCount;
 
     }
 
+    /**
+     * setMomentEnemyHit takes one parameter and sets the moment the enemy was hit to the frame that it happened
+     * 
+     * @param int frameCount is the exact frame where the Enemy was hit 
+     */
     public static void setMomentEnemyHit(int frameCount) {
         momentEnemyHit = frameCount;
     }
-
 }
