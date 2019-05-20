@@ -59,6 +59,7 @@ public class View extends JPanel implements Serializable {
     final static int SECONDS_PER_MAP_FRAME = 1;
     final static int MAX_BIRD_HEALTH = Model.MAX_BIRD_HEALTH;
     final static int NEST_DELAY_MILLISECONDS = 50;
+    final static int FOOD_AND_ENEMY_DELAY_MILLISECONDS = 25;
 
     final static int THOUGHT_BUBBLE_SIZE = 400;
     final static int DEFAULT_BUTTON_FONT_SIZE_RATIO = 55;
@@ -157,8 +158,8 @@ public class View extends JPanel implements Serializable {
     private Image thoughtBubble;
     private static int momentFoodEaten = 0;
     private static int momentEnemyHit = 0;
-    private int enemyDelay = 25;
-    private int foodDelay = 25;
+    private int enemyDelay = FOOD_AND_ENEMY_DELAY_MILLISECONDS;
+    private int foodDelay = FOOD_AND_ENEMY_DELAY_MILLISECONDS;
     private JFrame frame;
     private JPanel cards;
     private JPanel currentPanel;

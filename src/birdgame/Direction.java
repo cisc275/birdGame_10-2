@@ -20,6 +20,7 @@ public enum Direction implements Serializable {
     private String name;
 
     /**
+     * Direction constructor is private, sets the name to the given string
      *
      * @param s is a String direction that correlates with an existing direction
      * defined in the enum
@@ -29,8 +30,9 @@ public enum Direction implements Serializable {
     }
 
     /**
+     * getName returns the name of the direction
      *
-     * @return name variable corresponding to the direction
+     * @return name is the variable corresponding to the direction
      */
     public String getName() {
         return name;

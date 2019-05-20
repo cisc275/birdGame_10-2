@@ -5,7 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.Test;
 
 /**
- * 
+ * Project tests contains all of the testing for logic based files. 
+ * The model testing covers all possible methods, although some were untestable using JUnit due to random spawning mechanics
  */
 public class ProjectTest {
 	

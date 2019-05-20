@@ -31,7 +31,7 @@ public class Player extends GamePiece implements Serializable {
     private Sprite bird;
 
     /**
-     * 
+     * Player constructor initializes values to their given initial values and sets score to 0
      */
     public Player() {
         setYIncr(INITIAL_Y_INCREASE);
@@ -58,9 +58,9 @@ public class Player extends GamePiece implements Serializable {
     }
 
     /**
-     * checks if the Player collides with a GamePiece
+     * checkCollison checks if the Player collides with a GamePiece
      *
-     * @return true if player collides with GamePiece and false otherwise
+     * @return boolean true if player collides with GamePiece and false otherwise
      */
     public boolean checkCollision(GamePiece piece) {
         int xLocation = getX();
@@ -96,7 +96,10 @@ public class Player extends GamePiece implements Serializable {
     }
 
     /**
+     * move takes one parameter, and moves the player up or down based on the given direction
+     * move also decreases health by one
      * 
+     * @param Direction dir is the direction the bird is currently moving
      */
     public void move(Direction dir) {
         if (dir.equals(Direction.UP)) {
@@ -111,28 +114,36 @@ public class Player extends GamePiece implements Serializable {
     }
 
     /**
+     * getScore returns the current score of the player
      * 
+     * @return int score is the current score of the player
      */
     public static int getScore() {
         return score;
     }
 
     /**
+     * setScore sets the score of the player to a give int
      * 
+     * @param int score is the score of the player
      */
     public static void setScore(int score) {
         Player.score = score;
     }
 
     /**
+     * getHealth returns the current health of the player
      * 
+     * @return int health is the current health of the player
      */
     public int getHealth() {
         return health;
     }
 
     /**
+     * setHealth takes one parameter and sets the player's health to the given int
      * 
+     * @param int health is the health of the player
      */
     public void setHealth(int health) {
         Player.health = health;
