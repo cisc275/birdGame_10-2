@@ -213,7 +213,9 @@ public class View extends JPanel implements Serializable {
     boolean notOver = true;
 
     /**
+     * View constructor takes one parameter, and sets up cardlayout for the game
      * 
+     * @param Controller c is the controller that gives the userinputs for the view/game
      */
     public View(Controller c) {
         frame = new JFrame();
@@ -247,7 +249,7 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * loadImages takes the game's imagefiles and creates bufferedimages from the given images
      */
     void loadImages() {
         for (int i = 0; i < FRAME_COUNT; i++) {
@@ -309,7 +311,12 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * dye takes two parameters and returns a BufferedImage of the given image with a tint in the new color
      * 
+     * @param BufferedImage image is the subject image to be colored
+     * @param Color color is the color that is to be added to the image
+     * 
+     * @return BufferedImage dyed is the original image but with the tint of the given color
      */
     private static BufferedImage dye(BufferedImage image, Color color) {
         int w = image.getWidth();
@@ -325,7 +332,10 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * createFrame takes one parameter and sets up the frame to be used in the game. 
+     * it also adds a keylistener to the controller
      * 
+     * @param Controller c is the controller for userinput
      */
     void createFrame(Controller c) {
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -340,7 +350,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * createStartScreen takes one parameter and sets up the frame and image to show a start screen
      * 
+     * @param Controller c is the controller for userinput
      */
     void createStartScreen(Controller c) {
         startScreen = new StartScreenPanel();
@@ -357,7 +369,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * createTutorialStartScreen takes one parameter and sets up the frame and image to show a start screen for the tutorial
      * 
+     * @param Controller c is the controller for userinput
      */
     void createTutorialStartScreen(Controller c) {
         tutorialScreen = new TutorialScreenPanel();
@@ -369,7 +383,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * createTutorialMovingDemo takes one parameter and adds the labels and information for the tutorial to happen
      * 
+     * @param Controller c is the controller for userinput
      */
     void createTutorialMovingDemo(Controller c) {
         movingScreen = new MovingScreenPanel();
@@ -409,7 +425,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * createOspreyPanels takes one parameter and calls the methods to set up the different stages/buttons for the osprey
      * 
+     * @param Controller c is the controller for userinput
      */
     void createOspreyPanels(Controller c) {
         createInitialMapPanel(c);
@@ -421,7 +439,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * createInitialMapPanel takes one parameter and sets up the osprey's map screen
      * 
+     * @param Controller c is the controller for userinput
      */
     void createInitialMapPanel(Controller c) {
         initialMap = new InitialMapPanel();
@@ -435,7 +455,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * createOspreyRound1Panel takes one parameter and sets up the osprey's first stage's screen
      * 
+     * @param Controller c is the controller for userinput
      */
     void createOspreyRound1Panel(Controller c) {
         ospreyRound1 = new OspreyPanel();
@@ -445,7 +467,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * createOspreyMap1to2 takes one parameter and sets up the osprey's map screen part 2
      * 
+     * @param Controller c is the controller for userinput
      */
     void createOspreyMap1to2() {
 
@@ -456,7 +480,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * createOspreyRound2Panel takes one parameter and sets up the osprey's second stage's screen
      * 
+     * @param Controller c is the controller for userinput
      */
     void createOspreyRound2Panel(Controller c) {
         ospreyRound2 = new OspreyPanel();
@@ -466,7 +492,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * createOspreyMap2to3 takes one parameter and sets up the osprey's map screen part 3
      * 
+     * @param Controller c is the controller for userinput
      */
     void createOspreyMap2to3(Controller c) {
         map2to3 = new Map2to3Panel();
@@ -476,14 +504,18 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * createOspreyNestPanel takes one parameter and sets up the osprey's nesting screen
      * 
+     * @param Controller c is the controller for userinput
      */
     void createOspreyNestPanel(Controller c) {
         ospreyNest = new OspreyNestPanel();
     }
 
     /**
+     * createHarrierRound takes one parameter and sets up the harrier's stage screen
      * 
+     * @param Controller c is the controller for userinput
      */
     void createHarrierRound(Controller c) {
         harrierRound = new HarrierPanel();
@@ -493,14 +525,16 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * createHarrierNestPanel takes one parameter and sets up the harrier's nesting screen
      * 
+     * @param Controller c is the controller for userinput
      */
     void createHarrierNestPanel(Controller c) {
         harrierNest = new HarrierNestPanel();
     }
 
     /**
-     * 
+     * createQuizPanel sets quiz to a new QuizPanel to be used to ask the player questions
      */
     void createQuizPanel() {
         quiz = new QuizPanel();
@@ -508,14 +542,14 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * clearPreviousQuizResult removes the old correct/incorrect info from the quiz
      */
     void clearPreviousQuizResult() {
         quiz.blank.setText("");
     }
 
     /**
-     * 
+     * prepareQuiz sets up the quiz panel with questions and sets what the correct answer is in Model
      */
     public void prepareQuiz() {
 
@@ -533,7 +567,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * answeredCorrectly takes one parameter and changes the quiz view based in if the player was correct or not
      * 
+     * @param boolean bool is if the player answered correctly (true) or incorrectly (false)
      */
     public void answeredCorrectly(boolean bool) {
         if (bool) {
@@ -548,21 +584,23 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * setFalse sets the quiz's correct or incorrect dialogue to invisible
      */
     public void setFalse() {
         quiz.blank.setVisible(false);
     }
 
     /**
-     * 
+     * createGameOverPanel creates a panel to display the end of game screen
      */
     void createGameOverPanel() {
         gameOver = new GameOverPanel();
     }
 
     /**
+     * paintBackGround takes one parameter and paints the background, flipping it each time so that the edges line up
      * 
+     * @param Graphics g is the set of images to show
      */
     public void paintBackground(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
@@ -579,7 +617,10 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * setBackground takes two parameters and sets the two background images to the different images (one is flipped)
      * 
+     * @param ImageIcon i1 is the inital background image
+     * @param ImageIcon i2 is the mirrored background image
      */
     public void setBackground(ImageIcon i1, ImageIcon i2) {
         backgroundImage = i1.getImage();
@@ -587,7 +628,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * setPanel takes one parameter and sets the card panel to the one given
      * 
+     * @param String s is the name corresponding to the panel that should be switched to
      */
     public void setPanel(String s) {
         ((CardLayout) cards.getLayout()).show(cards, s);
@@ -618,18 +661,23 @@ public class View extends JPanel implements Serializable {
         } else if (s.equals("MOVING_SCREEN")) {
             currentPanel = movingScreen;
         }
-
     }
 
     /**
+     * getPanel returns the current JPanel
      * 
+     * @return JPanel currentPanel is the panel that is currently being displayed
      */
     public JPanel getPanel() {
         return currentPanel;
     }
 
     /**
+     * createImage takes one parameter and returns a BufferedImage from a given string path
      * 
+     * @param String path is the filepath to find the image to be created
+     * 
+     * @return BufferedImage buff is the BufferedImage created from the imagefile
      */
     public BufferedImage createImage(String path) {
 
@@ -645,7 +693,7 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * update runs the logic, frames, and ticks for the view. It controls how often the different objects in view move
      */
     public void update(int xLoc, int yLoc, CopyOnWriteArrayList<GamePiece> g, Direction dir, int h, int s) {
         playerXLoc = xLoc;
@@ -665,7 +713,7 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * QuizPanel is a panel for use at the end of completed stages to quiz different users about the birds
      */
     class QuizPanel extends JPanel {
 
@@ -678,7 +726,7 @@ public class View extends JPanel implements Serializable {
         JLabel blank;
 
         /**
-         * 
+         * the QuizPanel constructor initializes the different quiz buttons, the question, and sets up the fonts
          */
         QuizPanel() {
             setLayout(new GridLayout(GRID_WIDTH, GRID_HEIGHT));    		
@@ -702,14 +750,18 @@ public class View extends JPanel implements Serializable {
         }
 
         /**
+         * setQuestion takes one parameter and sets up the question for the quiz
          * 
+         * @param String text is the question to be asked
          */
         public void setQuestion(String text) {
             question.setText(text);
         }
 
         /**
+         * paintComponent takes one parameter and calls its super method
          * 
+         * @param Graphics g is the set of visuals to be shown
          */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -718,14 +770,14 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * GameOverPanel is a Panel that is shown at the very end of the game after both birds have been finished
      */
     class GameOverPanel extends JPanel {
 
         public JLabel finalScore = new JLabel("Score: " + score);
 
         /**
-         * 
+         * the GameOverPanel constructor creates the fonts, buttons, and graphics needed to show the end of the game
          */
         GameOverPanel() {
             setLayout(null);
@@ -742,7 +794,9 @@ public class View extends JPanel implements Serializable {
         }
 
         /**
+         * paintComponent takes one parameter and calls the super paint method, and also shows the final score of a player
          * 
+         * @param Graphics g is the set of visuals to be shown
          */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -752,12 +806,14 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * StartScreenPanel is the panel to be used at the very beginning of a the game after tutorial, and also between bird playings
      */
     class StartScreenPanel extends JPanel {
 
     	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and also shows the startscreen
          * 
+         * @param Graphics g is the set of visuals to be shown
          */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -766,12 +822,14 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * TutorialScreenPanel is the panel to be used at the very beginning of a the game for the tutorial
      */
     class TutorialScreenPanel extends JPanel {
 
     	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and also shows the tutorial screen
          * 
+         * @param Graphics g is the set of visuals to be shown
          */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -781,7 +839,7 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * TutorialScreenPanel is the panel to be used during the tutorial
      */
     class MovingScreenPanel extends JPanel {
 
@@ -791,7 +849,9 @@ public class View extends JPanel implements Serializable {
         final int DISTANCE_WHERE_PLAYER_MISSED_FOOD = 5 * FRAME_WIDTH / 28;
 
         /**
+         * paintComponent takes one parameter and displays the visuals using its super method, and also sets up the different parts of the turtorial's movement and pieces
          * 
+         * @param Graphics g is the set of visuals to be shown
          */
         protected void paintComponent(Graphics g) {
             runningFrameCount++;
@@ -872,12 +932,14 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * InitialMapPanel is the panel for the first map showing in the Osprey's game
      */
     class InitialMapPanel extends JPanel {
 
     	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and also shows the first map's panel
          * 
+         * @param Graphics g is the set of visuals to be shown
          */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -886,12 +948,14 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * OspreyPanel is the panel for the osprey's stages
      */
     class OspreyPanel extends JPanel {
 
     	/**
+         * paintComponent takes one parameter and runs the image information for the Osprey. 
          * 
+         * @param Graphics g is the set of visuals to be shown
          */
         protected void paintComponent(Graphics g) {
             runningFrameCount++;
@@ -979,7 +1043,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * displayFacts takes one parameter and draws the facts on the screen in a thoughtbubble after a specialfood is hit
      * 
+     * @param Graphics g is the set of visuals to be shown
      */
     void displayFacts(Graphics g) {
         g.drawImage(thoughtBubble, playerXLoc + FRAME_WIDTH / 8, playerYLoc - FRAME_HEIGHT / 3, this);
@@ -994,12 +1060,14 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * HarrierPanel is the panel for the harrier's stages
      */
     class HarrierPanel extends JPanel {
 
     	/**
+         * paintComponent takes one parameter and runs the image information for the Harrier. 
          * 
+         * @param Graphics g is the set of visuals to be shown
          */
         protected void paintComponent(Graphics g) {
             runningFrameCount++;
@@ -1089,12 +1157,14 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * Map1to2Panel is the panel for the second map showing in the Osprey's game
      */
     class Map1to2Panel extends JPanel {
 
     	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and also shows the second map's panel
          * 
+         * @param Graphics g is the set of visuals to be shown
          */
         protected void paintComponent(Graphics g) {
             if (map1To2TransitionPicNum < MAP_1_2_TRANSITION_COUNT) {
@@ -1120,12 +1190,14 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * Map2to3Panel is the panel for the third map showing in the Osprey's game
      */
     class Map2to3Panel extends JPanel {
 
     	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and also shows the third map's panel
          * 
+         * @param Graphics g is the set of visuals to be shown
          */
         protected void paintComponent(Graphics g) {
             if (map2To3TransitionPicNum < MAP_2_3_TRANSITION_COUNT) {
@@ -1151,12 +1223,14 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * OspreyNestPanel is the panel for the nesting animation in the Osprey's game
      */
     class OspreyNestPanel extends JPanel {
 
     	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and runs the nesting animation for Osprey
          * 
+         * @param Graphics g is the set of visuals to be shown
          */
         protected void paintComponent(Graphics g) {
             if (ospreyNestPicNum < OSPREY_NEST_COUNT) {
@@ -1180,12 +1254,14 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
-     * 
+     * HarrierNestPanel is the panel for the nesting animation in the Harrier's game
      */
     class HarrierNestPanel extends JPanel {
 
     	/**
+         * paintComponent takes one parameter and displays the visuals using its super method, and runs the nesting animation for Harrier
          * 
+         * @param Graphics g is the set of visuals to be shown
          */
         protected void paintComponent(Graphics g) {
             if (harrierNestPicNum < HARRIER_NEST_COUNT) {
@@ -1210,119 +1286,151 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * getBirdWidth returns the width of the bird in pixels
      * 
+     * @return int BIRD_WIDTH is the width of the bird in pixels
      */
     public int getBirdWidth() {
         return BIRD_WIDTH;
     }
 
     /**
+     * getBirdHeight returns the height of the bird in pixels
      * 
+     * @return int BIRD_HEIGHT is the height of the bird in pixels
      */
     public int getBirdHeight() {
         return BIRD_HEIGHT;
     }
 
     /**
+     * getFrameHeight returns the height of the frame in pixels
      * 
+     * @return int FRAME_HEIGHT is the height of the frame in pixels
      */
     public int getFrameHeight() {
         return FRAME_HEIGHT;
     }
 
     /**
+     * getFrameWidth returns the width of the frame in pixels
      * 
+     * @return int FRAME_WIDTH is the width of the frame in pixels
      */
     public int getFrameWidth() {
         return FRAME_WIDTH;
     }
 
     /**
+     * getFrameCount returns the number of frames that have happened so far
      * 
+     * @return int runningFrameCount is the number of frames that have happened so far
      */
     public static int getFrameCount() {
         return runningFrameCount;
     }
 
     /**
+     * setMomentEaten takes one parameter and sets the Moment where eating occurs to an int
      * 
+     * @param int i is the int value of the moment where the eating happens
      */
     public static void setMomentEaten(int i) {
         momentEaten = i;
     }
 
     /**
+     * getStartScreen returns the start screen panel
      * 
+     * @return JPanel startScreen is the panel of the start screen
      */
     public JPanel getStartScreen() {
         return startScreen;
     }
 
     /**
+     * getIsOspreyRound1Over returns the true/false of if the first Osprey round is over
      * 
+     * @return boolean isOspreyRound1Over is the boolean true/false of if the first Osprey round is over
      */
     public boolean getIsOspreyRound1Over() {
         return isOspreyRound1Over;
     }
 
     /**
+     * getIsOspreyRound2Over returns the true/false of if the second Osprey round is over
      * 
+     * @return boolean isOspreyRound2Over is the boolean true/false of if the second Osprey round is over
      */
     public boolean getIsOspreyRound2Over() {
         return isOspreyRound2Over;
     }
 
     /**
+     * getIsHarrierRoundOver returns the true/false of if the Harrier round is over
      * 
+     * @return boolean isHarrierRoundOver is the boolean true/false of if the Harrier round is over
      */
     public boolean getIsHarrierRoundOver() {
         return isHarrierRoundOver;
     }
 
     /**
+     * setIsOspreyRound1Over takes one parameter and sets the boolean true/false of if the first Osprey round is over
      * 
+     * @param boolean b is the boolean true/false of if the first Osprey round is over
      */
     public static void setIsOspreyRound1Over(boolean b) {
         isOspreyRound1Over = b;
     }
     
     /**
+     * setIsOspreyRound2Over takes one parameter and sets the boolean true/false of if the second Osprey round is over
      * 
+     * @param boolean b is the boolean true/false of if the second Osprey round is over
      */
     public static void setIsOspreyRound2Over(boolean b) {
         isOspreyRound2Over = b;
     }
 
     /**
+     * setIsHarrierRoundOver takes one parameter and sets the boolean true/false of if the Harrier round is over
      * 
+     * @param boolean b is the boolean true/false of if the Harrier round is over
      */
     public static void setIsHarrierRoundOver(boolean b) {
         isHarrierRoundOver = b;
     }
 
     /**
+     * is1to2Transition returns a true/false for if the map 1to2 transition is happening
      * 
+     * @return boolean is1To2Transition is the boolean true/false value for if the map 1to2 transition is happening
      */
     public static boolean is1To2Transition() {
         return is1To2Transition;
     }
 
     /**
+     * set1To2Transition takes one parameter and sets if the map 1to2 transition is happening
      * 
+     * @param boolean b is the boolean true/false value for if the map 1to2 transition is happening
      */
     public static void set1To2Transition(boolean b) {
         is1To2Transition = b;
     }
 
     /**
+     * getFrame returns the JFrame in use
      * 
+     * @return JFrame frame is the current JFrame
      */
     public JFrame getFrame() {
         return frame;
     }
 
     /**
-     * 
+     * resetView resets any values that change during a run of the View to their initial values and clears any created data structures
      */
     public void resetView() {
         runningFrameCount = 0;
@@ -1354,14 +1462,18 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * is2t32Transition returns a true/false for if the map 2to3 transition is happening
      * 
+     * @return boolean is2To3Transition is the boolean true/false value for if the map 2to3 transition is happening
      */
     public static boolean is2To3Transition() {
         return is2To3Transition;
     }
 
     /**
+     * set2To3Transition takes one parameter and sets if the map 2to3 transition is happening
      * 
+     * @param boolean b is the boolean true/false value for if the map 2to3 transition is happening
      */
     public static void set2To3Transition(boolean b) {
         is2To3Transition = b;
@@ -1369,42 +1481,54 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * getUpLabel returns the up label
      * 
+     * @return JLabel upLabel is the Label corresponding to up
      */
     public JLabel getUpLabel() {
         return upLabel;
     }
 
     /**
+     * getDownLabel returns the down label
      * 
+     * @return JLabel downLabel is the Label corresponding to down
      */
     public JLabel getDownLabel() {
         return downLabel;
     }
 
     /**
+     * getFoodLabel returns the food's label
      * 
+     * @return JLabel foodLabel is the label correspinding to the food
      */
     public JLabel getFoodLabel() {
         return foodLabel;
     }
 
     /**
+     * getQuiz returns the quiz panel
      * 
+     * @return JPanel quiz is the panel to run/display the quiz
      */
     public JPanel getQuiz() {
         return quiz;
     }
 
     /**
+     * getQuiz returns the quiz panel but blank
      * 
+     * @return JPanel quiz.blank is the panel to run/display the blank version of the quiz
      */
     public JLabel getBlank() {
         return quiz.blank;
     }
 
     /**
+     * setMomentFoodEaten takes one parameter and sets the moment the food was eaten to the frame that it happened
      * 
+     * @param int frameCount is the exact frame where the food was eaten
      */
     public static void setMomentFoodEaten(int frameCount) {
         momentFoodEaten = frameCount;
@@ -1412,7 +1536,9 @@ public class View extends JPanel implements Serializable {
     }
 
     /**
+     * setMomentEnemyHit takes one parameter and sets the moment the enemy was hit to the frame that it happened
      * 
+     * @param int frameCount is the exact frame where the Enemy was hit 
      */
     public static void setMomentEnemyHit(int frameCount) {
         momentEnemyHit = frameCount;
