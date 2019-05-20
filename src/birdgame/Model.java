@@ -5,314 +5,355 @@
  */
 package birdgame;
 
-import java.util.ArrayList;    
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.io.Serializable;
 
 /**
  * Model contains and deals with the basic logic of the game, including updating
- * an object's location and direction, handling collisions, spawning obstacles, 
+ * an object's location and direction, handling collisions, spawning obstacles,
  * and player progress.
+ *
  * @author crnis
  */
-public class Model {
-    private static Sprite bird = Sprite.OSPREY; //Solves NULL POINTER EXCEPTION, Don't touch!
-    static int level;
+public class Model implements Serializable {
+
+    final static int TOTAL_OBSTACLES_PER_LEVEL = 30;
+    final static int MAX_BIRD_HEALTH = 250;
+    final static int MAX_SPECIAL_FOOD = 3;
+    final static double CHANCE_SPECIAL_FOOD_SPAWNS = 0.2;
+    final static double CHANCE_FOOD_SPAWNS_INSTEAD_OF_ENEMY = 0.5;
+    final static double EQUAL_CHANCE_BETWEEN_2 = 0.5;
+    final static int X_LOCATION_WHERE_GPS_ARE_NO_LONGER_CURRENT = -500;
+    final static int X_INCREASE_AT_END_OF_LEVEL = 30;
+    final static int X_LOCATION_FOR_OBSTACLE_SPAWNS = 1200;
+    final static int ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD = 400;
+
+    public static HashMap<String, HashMap<String, String[]>> factsAndQuestions;
+    public static HashMap<String, String[]> questionsToAsk = new HashMap<>();
+    private static Sprite bird = Sprite.OSPREY; 
+    private static int round;
+    private static int questionNum;
+    private static int numberOfQuestions;
     protected int fWidth;
     protected int fHeight;
     private int imgHeight;
     private int imgWidth;
     protected int groundLevel;
+    private static String correctAnswer;
     private int sceneNum;
-    protected ArrayList<GamePiece> gamePieces;
-    private int progress;
-    private int enemyFrequency;
-    private int foodFrequency;
-    private int specialfoodFrequency;
+    protected ArrayList<GamePiece> gamePieces = new ArrayList<>();
+
+    static String[] facts;
     private int totalLevelTicks;
+    private static int currentFactIndex = 0;
     private static Direction direction;
     private static Player player;
     //GamePiece currentGP;
     private int indexOfGP;
     private static String currentFact;
-    private ArrayList<GamePiece> currentGPs = new ArrayList<>();
-    private GamePiece furthestGP;
+    private CopyOnWriteArrayList<GamePiece> currentGPs = new CopyOnWriteArrayList<>();
+    private int numGamePiecesInRoundLeft = TOTAL_OBSTACLES_PER_LEVEL;
+    private GamePiece furthestGP = new GamePiece();
     private static boolean specialFoodEaten = false;
-    
+    private static boolean foodHit = false;
+    private static boolean enemyHit = false;
+    static ArrayList<String> availableFacts;
+    private static boolean quiz1Done;
+    private static boolean quiz2Done;
+    private static boolean quiz3Done;
+
     /**
      * Model constructor will take in four variables defined below
+     *
      * @param fwidth is an int for the width of the frame
      * @param fheight is an int for the height of the frame
      * @param imageWidth is an int for the width of the image
      * @param imageHeight is an int for the height of the image
      */
-
     public Model(int fwidth, int fheight, int imageWidth, int imageHeight) {
-    	gamePieces = new ArrayList<>();
-    	fWidth = fwidth;
-    	fHeight = fheight;
-    	setImgWidth(imageWidth);
-    	setImgHeight(imageHeight);
-    	player = new Player();
-//        setGroundLevel((int)(0.8*fHeight));
-    	setGroundLevel(fHeight - imgHeight);
+        fWidth = fwidth;
+        fHeight = fheight;
+        setImgWidth(imageWidth);
+        setImgHeight(imageHeight);
+        player = new Player();
+        setGroundLevel(fHeight - imgHeight);
         setIndexOfGP(0);
         indexOfGP = 0;
+
     }
 
     /**
-     * updateLocationAndDirection() will increment/decrement the object's location
-     * and change the object's direction based off of user input from Controller
+     * updateLocationAndDirection() will increment/decrement the object's
+     * location and change the object's direction based off of user input from
+     * Controller
      */
-
     public void updateLocationAndDirection() {
-    	for(GamePiece gameObjs:gamePieces) {
-    		gameObjs.move();
-    	}
-    	
-    	if (direction == Direction.UP) {
-    		if (player.getY() > 0) {      //Needs to be adjusted
-    			player.move(Direction.UP);
-    		}
-    	}
-    	if (direction == Direction.DOWN){
-    		if (player.getY() < fHeight - imgHeight) {
-    			player.move(Direction.DOWN);
-    		}
-    	}
-    	
+        for (GamePiece gameObjs : gamePieces) {
+            gameObjs.move();
+        }
+
+        if (direction == Direction.UP) {
+            if (player.getY() > 0) {      
+                player.move(Direction.UP);
+            }
+        }
+        if (direction == Direction.DOWN) {
+            if (player.getY() < fHeight - imgHeight) {
+                player.move(Direction.DOWN);
+            }
+        }
+
     }
 
     /**
-     * the handleTicks() method will update the screen every tick, including 
-     * updating the player's direction and location, spawning obstacles periodically,
-     * updating progress on minimap, and checking win/lose conditions.
+     * the handleTicks() method will update the screen every tick, including
+     * updating the player's direction and location, spawning obstacles
+     * periodically, updating progress on minimap, and checking win/lose
+     * conditions.
      */
-
     public void handleTicks() {
-    	updateLocationAndDirection();
-        //for(GamePiece g: gamePieces){
-    	Iterator<GamePiece> it = gamePieces.iterator();
-    	while(it.hasNext()) {
-    		GamePiece g = (GamePiece) it.next();
-            if(player.checkCollision(g)){ 
-            	if (g.isSpecialFood()) {
-            		eatSpecial((SpecialFood) g);
-            	}
-            	if(g.isFood()) {
-            		eat((Food)g);
-            	}
-                else {
-                    obstacleHit((Enemy)g);
+        updateLocationAndDirection();
+        Iterator<GamePiece> it = gamePieces.iterator();
+        while (it.hasNext()) {
+            GamePiece g = (GamePiece) it.next();
+            if (player.checkCollision(g)) {
+                if (g.isSpecialFood()) {
+                    eatSpecial((SpecialFood) g);
                 }
-            	it.remove();
+                if (g.isFood()) {
+                    eat((Food) g);
+                } else {
+                    obstacleHit((Enemy) g);
+                }
+                it.remove();
             }
-    	}
-        player.isAlive();
+        }
         clearCurrentGP();
         seeCurrentGP();
-        
-        if(furthestGP == null || furthestGP.getX() < 0){
-        	endOfLevel();
-        }
-        
-        if(player.getX() > (fWidth - imgWidth)) {
-        	//TODO
-        	//MAKE IT SO TRANSITIONS TO NEXT LEVEL SCREEN
-        }
-    }
-    
-    
-    public void endOfLevel() {
-    	player.setXIncr(40);    	
-//    	player.setXIncr((int)(fWidth * .5));
-    	player.setX(player.getX() + player.getXIncr());
 
+        if (currentGPs.size() == 0 && totalLevelTicks != 0) {
+            if (round == 1) {
+                endOfLevel();
+            } else if (round == 2) {
+                endOfLevel();
+            } else if (round == 3) {
+                endOfLevel();
+            }
+        }
+
+        totalLevelTicks++;
+    }
+
+    public void endOfLevel() {
+        player.setXIncr(X_INCREASE_AT_END_OF_LEVEL);
+        player.setX(player.getX() + player.getXIncr());
+        if (player.getX() > (fWidth - imgWidth)) {
+            if (round == 1) {
+                View.setIsOspreyRound1Over(true);
+            } else if (round == 2) {
+                View.setIsOspreyRound2Over(true);
+            } else if (round == 3) {
+                System.out.println("end of level reached for harrier");
+                View.setIsHarrierRoundOver(true);
+            }
+        }
+
+    }
+
+    public static ArrayList<String> getAvaliableFacts() {
+        return availableFacts;
     }
 
     /**
-     * spawnGamePieces() will randomly generate an obstacle on the screen, including
-     * buildings, enemies, food, etc.
+     * spawnGamePieces() will randomly generate an obstacle on the screen,
+     * including buildings, enemies, food, etc.
      */
 
-    //randomize the location of the GamePieces (1 every screen)
-//    public void spawnGamePieces() {
-//    	SpecialFood.generateFactsAndQuestions();
-//        int numGamePieces = 0;
-//        int numSpecialFood = 0;
-//        
-//        //background0:
-//            //land: 0-432px, 1776-2640px, 
-//        //int tempXLoc = (int)(Math.random() * 2639 + 1776);
-//        int tempXLoc = 500;
-//        int landHeight = 96;
-//        boolean flag = true;
-//        
-//        int bottomHalfY = ((int) (Math.random()*(fHeight/2)) + (fHeight/2));
-//    	int topHalfY = ((int) (Math.random()*(fHeight/2)));
-//    	int maxSpecialFood = 3;
-//        if(bird.equals(Sprite.NORTHERN_HARRIER)){ //northern harrier
-//            while(numGamePieces < 10){
-//            	if( numSpecialFood < 3) {
-//            		if (Math.random() < .2) {
-//            			if (Math.random() < .5) {
-//            				gamePieces.add(new SpecialFood(3*tempXLoc, (int) (Math.random()*groundLevel), Sprite.BUNNY));
-//            			}
-//            			else {
-//            				gamePieces.add(new SpecialFood(3*tempXLoc, (int) (Math.random()*groundLevel), Sprite.MOUSE));
-//
-//            			}
-//            			numSpecialFood++;
-//            			
-//            		}
-//            	}
-//            	
-//                if(Math.random() < .5){ //food
-//                    if(Math.random() < .5){//bunny
-//                    		gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.BUNNY));
-//                    	}
-//                        
-//                    
-//                    else{//mouse
-//                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.MOUSE));
-//                    }
-//                }
-//                else{//enemy
-//                    if(Math.random() < .5){//red fox
-//                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.REDFOX));
-//                    }
-//                    else{//raccoon
-//                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.RACCOON));
-//                    }
-//                }
-//                numGamePieces++;
-//                tempXLoc+=fWidth/3;
-//            
-//        }
-//        }
-//    
-//        else{
-//            while(numGamePieces < 10){
-//            	if (numSpecialFood < maxSpecialFood) {
-//            		if (Math.random() < .2) {
-//            			if (Math.random() < .5) {
-//            				gamePieces.add(new SpecialFood(3*tempXLoc, (int) (Math.random()*groundLevel), Sprite.SNAKE));
-//            			}
-//            			else {
-//            				gamePieces.add(new SpecialFood(3*tempXLoc, (int) (Math.random()*groundLevel), Sprite.FISH));
-//
-//            			}
-//            			numSpecialFood++;
-//            			
-//            		}
-//            	}
-//            	
-//            
-//            	
-//                if(Math.random() < .5){ //food
-//                    if(Math.random() < .5){//snakes
-//                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.SNAKE));
-//                    }
-//                    else{//fish
-//                        gamePieces.add(new Food(tempXLoc, (int) (Math.random()*groundLevel), Sprite.FISH));
-//                    }
-//                }
-//                else{//enemy
-//                    if(Math.random() < 0.5){//eagles
-//                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.EAGLE));
-//                    }
-//                    else{//planes
-//                        gamePieces.add(new Enemy(tempXLoc, (int) (Math.random()*groundLevel), Sprite.PLANE));
-//                    }
-//                }
-//                numGamePieces++;
-//                tempXLoc+=fWidth/3;
-//            }
-//            //System.out.println(gamePieces);
-//        }
-//
-//        for(GamePiece gp: gamePieces) {
-//        	int furthestGPLoc = 0;
-//        	if(gp.getX() > furthestGPLoc) {
-//        		furthestGPLoc = gp.getX();
-//        		setFurthestGP(gp);
-//        		
-//        	}
-//        }
-//        
-//
-//        
-//        
-//
-//        
-//        System.out.println("hi, furthest gamepiece loc: " + furthestGP);
-//      
-//    }
+    public void spawnHarrierGamePieces() {
+        int numGamePieces = 0;
+        int numSpecialFood = 0;
+        questionsToAsk = new HashMap<String, String[]>();
+        int tempXLoc = X_LOCATION_FOR_OBSTACLE_SPAWNS;
+        int tempXSpecial = 0;
+        int maxSpecialFood = 3;
+        while (numGamePieces < numGamePiecesInRoundLeft) {
+            if (numSpecialFood < maxSpecialFood) {
+                if (Math.random() < CHANCE_SPECIAL_FOOD_SPAWNS) {
+                    if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
+                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD + tempXSpecial, (int) (Math.random() * groundLevel), Sprite.BUNNY));
+                        tempXSpecial += fWidth;
+                    } else {
+                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD + tempXSpecial, (int) (Math.random() * groundLevel), Sprite.MOUSE));
+                        tempXSpecial += fWidth;
+                    }
+                    numSpecialFood++;
 
-    public void clearCurrentGP(){
+                }
+            }
+
+            if (Math.random() < CHANCE_FOOD_SPAWNS_INSTEAD_OF_ENEMY) {
+                if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
+                    gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.BUNNY));
+                } else {
+                    gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.MOUSE));
+                }
+            } else {
+                if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
+                    gamePieces.add(new Enemy(tempXLoc, (int) (Math.random() * groundLevel), Sprite.REDFOX));
+                } else {
+                    gamePieces.add(new Enemy(tempXLoc, (int) (Math.random() * groundLevel), Sprite.RACCOON));
+                }
+            }
+            numGamePieces++;
+            
+            tempXLoc += fWidth / 3;
+
+        }
+        for (GamePiece gp : gamePieces) {
+            int furthestGPLoc = 0;
+            if (gp.getX() > furthestGPLoc) {
+                furthestGPLoc = gp.getX();
+                setFurthestGP(gp);
+            }
+        }
+
+    }
+
+    public void spawnOspreyGamePieces() {
+        questionsToAsk = new HashMap<String, String[]>();
+        int numGamePieces = 0;
+        int numSpecialFood = 0;
+        int tempXSpecial = 0;
+        int tempXLoc = X_LOCATION_FOR_OBSTACLE_SPAWNS;
+        int maxSpecialFood = MAX_SPECIAL_FOOD;
+        while (numGamePieces < numGamePiecesInRoundLeft) {
+            if (numSpecialFood < maxSpecialFood) {
+                if (Math.random() < CHANCE_SPECIAL_FOOD_SPAWNS) {
+                    if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
+                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD + tempXSpecial, (int) (Math.random() * groundLevel), Sprite.SNAKE));
+                        tempXSpecial += fWidth;
+                    } else {
+                        gamePieces.add(new SpecialFood(tempXLoc + ADDITIONAL_X_LOCATION_FOR_SPECIAL_FOOD + tempXSpecial, (int) (Math.random() * groundLevel), Sprite.FISH));
+                        tempXSpecial += fWidth;
+
+                    }
+                    numSpecialFood++;
+
+                }
+            }
+
+            if (Math.random() < CHANCE_FOOD_SPAWNS_INSTEAD_OF_ENEMY) {
+                if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
+                    gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.SNAKE));
+                } else {
+                    gamePieces.add(new Food(tempXLoc, (int) (Math.random() * groundLevel), Sprite.FISH));
+                }
+            } else {
+                if (Math.random() < EQUAL_CHANCE_BETWEEN_2) {
+                    gamePieces.add(new Enemy(tempXLoc, (int) (Math.random() * groundLevel), Sprite.EAGLE));
+                } else {
+                    gamePieces.add(new Enemy(tempXLoc, (int) (Math.random() * groundLevel), Sprite.PLANE));
+                }
+            }
+            numGamePieces++;
+            tempXLoc += fWidth / 3;
+        }
+        for (GamePiece gp : gamePieces) {
+            int furthestGPLoc = 0;
+            if (gp.getX() > furthestGPLoc) {
+                furthestGPLoc = gp.getX();
+                setFurthestGP(gp);
+
+            }
+        }
+    }
+
+    public void clearCurrentGP() {
         currentGPs.clear();
     }
-    
-    public void seeCurrentGP(){
-        for(GamePiece g: gamePieces){
-            if(g.getX() <= fWidth && g.getX() >= 0)
+
+    public void clearGP() {
+        gamePieces.clear();
+    }
+
+    public void seeCurrentGP() {
+        for (GamePiece g : gamePieces) {
+            if (g.getX() <= fWidth && g.getX() >= X_LOCATION_WHERE_GPS_ARE_NO_LONGER_CURRENT) {
                 currentGPs.add(g);
+            }
         }
     }
-   
-    //minimap
 
-    /**
-     * will return an int value describing progress throughout the level to update
-     * the minimap.
-     * @return an int value that describes the progress of the user
-     */
-    public int getProgress() {
-        return progress;
+    void clearQuestionsToAsk() {
+        questionsToAsk.clear();
     }
 
+    void clearFactsAndQuestions() {
+        factsAndQuestions.clear();
+    }
+
+    //minimap
+    /**
+     * will return an int value describing progress throughout the level to
+     * update the minimap.
+     *
+     * @return an int value that describes the progress of the user
+     */
     /**
      * eat() will increment the player's score based off of what is eaten.
      */
-
     public void eat(Food f) {
+        foodHit = true;
+        View.setMomentFoodEaten(View.getFrameCount());
         player.setScore(player.getScore() + f.getFoodValue());
-        if(player.getHealth() > 90){
-            player.setHealth(100);
-        }
-        else{
-            player.setHealth( player.getHealth() + 10);
+        if (player.getHealth() > MAX_BIRD_HEALTH - f.getFoodValue()) {
+            player.setHealth(MAX_BIRD_HEALTH);
+        } else {
+            player.setHealth(player.getHealth() + f.getFoodValue());
         }
     }
+
     public void eatSpecial(SpecialFood sf) {
-    	System.out.println("TODO, specialFood eaten");
-    	specialFoodEaten = true;
-    	currentFact = sf.getFact();
-    	 player.setScore(player.getScore() + sf.getFoodValue());
-         if(player.getHealth() > 90){
-             player.setHealth(100);
-         }
-         else{
-             player.setHealth( player.getHealth() + 10);
-         }
-     }
-    public static boolean specialFoodEaten() {
-    	return specialFoodEaten;
+        specialFoodEaten = true;
+        View.setMomentEaten(View.getFrameCount());
+        if (hasMoreFacts()) {
+            currentFact = facts[currentFactIndex];
+            HashMap<String, String[]> associatedFactandQuestion = factsAndQuestions.get(currentFact);
+            System.out.println(associatedFactandQuestion);
+            questionsToAsk.putAll(associatedFactandQuestion);
+        }
+        player.setScore(player.getScore() + sf.getFoodValue());
+        player.setHealth(MAX_BIRD_HEALTH);
     }
-    
-    
+
+    public static HashMap<String, String[]> getQuestionToAsk() {
+        return questionsToAsk;
+    }
+
+    public static boolean specialFoodEaten() {
+        return specialFoodEaten;
+    }
+
+    public static void setSpecialFoodEaten(boolean bool) {
+        specialFoodEaten = bool;
+    }
 
     /**
-     * obstacleHit() will handle the event of the player dying by resetting everything 
-     * and taking them back to the level screen.
+     * obstacleHit() will handle the event of the player dying by resetting
+     * everything and taking them back to the level screen.
      */
-
     public void obstacleHit(Enemy e) {
+        enemyHit = true;
+        System.out.println("obstacle hit");
+        View.setMomentEnemyHit(View.getFrameCount());
         player.setScore(player.getScore() - e.getDamage());
-        if(player.getHealth() < 20){
+        if (player.getHealth() < e.getDamage()) {
             player.setHealth(0);
-        }
-        else{
-            player.setHealth(player.getHealth() - 20);
+        } else {
+            player.setHealth(player.getHealth() - e.getDamage());
         }
     }
 
@@ -320,130 +361,302 @@ public class Model {
      * nest() will handle the event of the player nesting by displaying screen
      * showing bird nesting.
      */
-
     public void nest() {
 
     }
 
-	public int getImgHeight() {
-		return imgHeight;
-	}
-	
-	public static Player getPlayer() {
-		return player;
-	}
-	
-	public ArrayList<GamePiece> getCurrentGPs() {
-		return currentGPs;
-	}
-	
-	public ArrayList<GamePiece> getGamePieces() {
-		return gamePieces;
-	}
+    public int getImgHeight() {
+        return imgHeight;
+    }
 
-	//private static Direction direction;
-	
-	public Direction getDirection() {
-		return direction;
-	}
-	
-	public static void setDirection(Direction Direction) {
-		direction = Direction;
-	}
-	
-	public void setImgHeight(int imgHeight) {
-		this.imgHeight = imgHeight;
-	}
+    public Player getPlayer() {
+        return player;
+    }
 
-	public int getImgWidth() {
-		return imgWidth;
-	}
+    public CopyOnWriteArrayList<GamePiece> getCurrentGPs() {
+        return currentGPs;
+    }
 
-	public void setImgWidth(int imgWidth) {
-		this.imgWidth = imgWidth;
-	}
+    public ArrayList<GamePiece> getGamePieces() {
+        return gamePieces;
+    }
 
-	public int getGroundLevel() {
-		return groundLevel;
-	}
+    public Direction getDirection() {
+        return direction;
+    }
 
-	public void setGroundLevel(int groundLevel) {
-		this.groundLevel = groundLevel;
-	}
+    public static void setDirection(Direction Direction) {
+        direction = Direction;
+    }
 
-	public int getSceneNum() {
-		return sceneNum;
-	}
+    public void setImgHeight(int imgHeight) {
+        this.imgHeight = imgHeight;
+    }
 
-	public void setSceneNum(int sceneNum) {
-		this.sceneNum = sceneNum;
-	}
+    public int getImgWidth() {
+        return imgWidth;
+    }
 
-	public int getEnemyFrequency() {
-		return enemyFrequency;
-	}
+    public void setImgWidth(int imgWidth) {
+        this.imgWidth = imgWidth;
+    }
 
-	public void setEnemyFrequency(int enemyFrequency) {
-		this.enemyFrequency = enemyFrequency;
-	}
+    public int getGroundLevel() {
+        return groundLevel;
+    }
 
-	public int getFoodFrequency() {
-		return foodFrequency;
-	}
+    public void setGroundLevel(int groundLevel) {
+        this.groundLevel = groundLevel;
+    }
 
-	public void setFoodFrequency(int foodFrequency) {
-		this.foodFrequency = foodFrequency;
-	}
+    public int getSceneNum() {
+        return sceneNum;
+    }
 
-	public int getSpecialfoodFrequency() {
-		return specialfoodFrequency;
-	}
+    public void setSceneNum(int sceneNum) {
+        this.sceneNum = sceneNum;
+    }
 
-	public void setSpecialfoodFrequency(int specialfoodFrequency) {
-		this.specialfoodFrequency = specialfoodFrequency;
-	}
+    public int getTotalLevelTicks() {
+        return totalLevelTicks;
+    }
 
-	public int getTotalLevelTicks() {
-		return totalLevelTicks;
-	}
+    public void setTotalLevelTicks(int totalLevelTicks) {
+        this.totalLevelTicks = totalLevelTicks;
+    }
 
-	public void setTotalLevelTicks(int totalLevelTicks) {
-		this.totalLevelTicks = totalLevelTicks;
-	}
+    public int getIndexOfGP() {
+        return indexOfGP;
+    }
 
-	public int getIndexOfGP() {
-		return indexOfGP;
-	}
+    public void setIndexOfGP(int indexOfGP) {
+        this.indexOfGP = indexOfGP;
+    }
 
-	public void setIndexOfGP(int indexOfGP) {
-		this.indexOfGP = indexOfGP;
-	}
-	
-	public void setPlayer(Player p) {
-		this.player = p;
-	}
-	
-	public void setFHeight(int h) {
-		this.fHeight = h;
-	}
-	
-	public void setProgress(int h) {
-		this.progress = h;
-	}
-    
-	public void setFurthestGP(GamePiece gP) {
-		this.furthestGP = gP;
-	}
-	
-	public static Sprite getBird() {
-		return bird;
-	}
-	
-	public static void setBird(Sprite b) {
-		bird = b;
-	}
-	public static String getCurrentFact() {
-		return currentFact;
-	}
+    public void setPlayer(Player p) {
+        this.player = p;
+    }
 
+    public void setFHeight(int h) {
+        this.fHeight = h;
+    }
+
+    public static void incrFactIndex() {
+        currentFactIndex++;
+    }
+
+    public void setFurthestGP(GamePiece gP) {
+        this.furthestGP = gP;
+    }
+
+    public static Sprite getBird() {
+        return bird;
+    }
+
+    public static void setBird(Sprite b) {
+        bird = b;
+    }
+
+    public static String getCurrentFact() {
+        return facts[currentFactIndex];
+    }
+
+    public void setRound(int r) {
+        round = r;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void generateHarrierQuestions() {
+        currentFactIndex = 0;
+        facts = new String[]{"Northern Harriers, eat rodents", "Northern Harriers, are non-migratory,   birds", "Foxes are a, predator for, Northern Harriers"};
+        factsAndQuestions = new HashMap<>();
+        HashMap<String, String[]> QandAsHarrier1 = new HashMap<>();
+        String[] harrierFood = {"Rodents", "Fish", "Eagles", "Plants", "A"};
+        QandAsHarrier1.put("What do Northern Harriers eat?", harrierFood);
+        factsAndQuestions.put("Northern Harriers, eat rodents", QandAsHarrier1);
+
+        HashMap<String, String[]> QandAsHarrier2 = new HashMap<>();
+        String[] harrierMigrate = {"They migrate to California", "They migrate to South America", "They don't migrate", "They migrate to canada", "C"};
+        QandAsHarrier2.put("Where do Harriers migrate?", harrierMigrate);
+        factsAndQuestions.put("Northern Harriers, are non-migratory,   birds", QandAsHarrier2);
+
+        HashMap<String, String[]> QandAsHarrier3 = new HashMap<>();
+        String[] harrierPred = {"Foxes", "Snakes", "Cats", "Humans", "A"};
+        QandAsHarrier3.put("What is a predator of Northern Harriers?", harrierPred);
+        factsAndQuestions.put("Foxes are a, predator for, Northern Harriers", QandAsHarrier3);
+
+        availableFacts = new ArrayList<String>(factsAndQuestions.keySet());
+
+    }
+
+    public void generateOspreyQuestions() {
+        currentFactIndex = 0;
+        facts = new String[]{"Ospreys like to,eat Snakes and Fish", "Ospreys migrate to, South America for, the winter", "Eagles are a, predator of,   Ospreys"};
+        factsAndQuestions = new HashMap<>();
+        HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
+        String[] OspreyFood = {"Mice and Rabbits", "Snakes and Fish", "Raccoons", "Eagles", "B"};
+        QandAsOsprey1.put("What do Ospreys eat?", OspreyFood);
+        factsAndQuestions.put("Ospreys like to,eat Snakes and Fish", QandAsOsprey1);
+
+        HashMap<String, String[]> QandAsOsprey2 = new HashMap<>();
+        String[] OspreyMigrate = {"They migrate to South America", "They migrate to California", "They don't migrate", "They migrate to canada", "A"};
+        QandAsOsprey2.put("Where do Ospreys migrate for winter?", OspreyMigrate);
+        factsAndQuestions.put("Ospreys migrate to, South America for, the winter", QandAsOsprey2);
+
+        HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();
+        String[] OspreyPred = {"Foxes", "Snakes", "Eagles", "Cats and Dogs", "C"};
+        QandAsOsprey3.put("What is a predator of Ospreys?", OspreyPred);
+        factsAndQuestions.put("Eagles are a, predator of,   Ospreys", QandAsOsprey3);
+        availableFacts = new ArrayList<String>(factsAndQuestions.keySet());
+
+    }
+
+    public void generateOspreyQuestions2() {
+        currentFactIndex = 0;
+        facts = new String[]{"Ospreys nest in, North America", "Ospreys nest in, trees", "Airplanes are a,threat to Ospreys"};
+        factsAndQuestions = new HashMap<>();
+        HashMap<String, String[]> QandAsOsprey1 = new HashMap<>();
+        String[] OspreyNest = {"South America", "Asia", "Antartica", "North America", "D"};
+        QandAsOsprey1.put("Where do Ospreys nest?", OspreyNest);
+        factsAndQuestions.put("Ospreys nest in, North America", QandAsOsprey1);
+
+        HashMap<String, String[]> QandAsOsprey2 = new HashMap<>();
+        String[] OspreyLoc = {"on the floor", "in trees", "on mountains", "in caves", "B"};
+        QandAsOsprey2.put("Where do Ospreys make nests?", OspreyLoc);
+        factsAndQuestions.put("Ospreys nest in, trees", QandAsOsprey2);
+
+        HashMap<String, String[]> QandAsOsprey3 = new HashMap<>();
+        String[] OspreyThreat = {"Airplanes", "Hunters", "Radio waves", "Drones", "A"};
+        QandAsOsprey3.put("Which is a common threat to Ospreys?", OspreyThreat);
+        factsAndQuestions.put("Airplanes are a,threat to Ospreys", QandAsOsprey3);
+        availableFacts = new ArrayList<String>(factsAndQuestions.keySet());
+
+    }
+
+    public static boolean hasMoreFacts() {
+        return currentFactIndex < facts.length;
+    }
+
+    public static void setCorrectAnswer(String answer) {
+        correctAnswer = answer;
+    }
+
+    public static String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public static void incrQuestionNum() {
+        questionNum++;
+    }
+
+    public static int getQuestionNum() {
+        return questionNum;
+    }
+
+    public static void setNumberOfQuestions(int x) {
+        numberOfQuestions = x;
+    }
+
+    public static boolean quizOver() {
+        return questionNum > numberOfQuestions;
+    }
+
+    public static boolean lastQuestion() {
+        return questionNum == numberOfQuestions;
+    }
+
+    public static int getNumberOfQuestions() {
+        return numberOfQuestions;
+    }
+
+    public static void resetQuestionNum() {
+        questionNum = 0;
+    }
+
+    public void resetModel() {
+        round = 0;
+        enemyHit = false;
+        foodHit = false;
+        questionNum = 0;
+        clearFactsAndQuestions();
+        clearQuestionsToAsk();
+        clearGP();
+        setIsQuiz1Done(false);
+        setIsQuiz2Done(false);
+        setIsQuiz3Done(false);
+        totalLevelTicks = 0;
+        currentFactIndex = 0;
+        player.resetPlayer();
+        indexOfGP = 0;
+        currentGPs.clear();
+        specialFoodEaten = false;
+        availableFacts.clear();
+        System.out.println("resetModel reached");
+    }
+
+    public static void updateNumberOfQuestions() {
+        if (Model.getQuestionToAsk().equals(null)) {
+            numberOfQuestions = -1;
+        } else {
+            numberOfQuestions = getQuestionToAsk().size() - 1;
+        }
+    }
+
+    public static boolean isQuiz1Done() {
+        if (numberOfQuestions == -1) {
+            View.set1To2Transition(true);
+            return true;
+        } else {
+            return quiz1Done;
+        }
+    }
+
+    public static void setIsQuiz1Done(boolean b) {
+        quiz1Done = b;
+    }
+
+    public static boolean isQuiz2Done() {
+        if (numberOfQuestions == -1) {
+            View.set2To3Transition(true);
+            return true;
+        } else {
+            return quiz2Done;
+        }
+    }
+
+    public static void setIsQuiz2Done(boolean b) {
+        quiz2Done = b;
+
+    }
+
+    public static boolean isQuiz3Done() {
+        if (getNumberOfQuestions() == -1) {
+            return true;
+        } else {
+            return quiz3Done;
+        }
+    }
+
+    public static void setIsQuiz3Done(boolean b) {
+        quiz3Done = b;
+    }
+
+    public static boolean enemyHit() {
+        return enemyHit;
+    }
+
+    public static boolean foodHit() {
+        return foodHit;
+    }
+
+    public static void setFoodHit(boolean b) {
+        foodHit = b;
+    }
+
+    public static void setEnemyHit(boolean b) {
+        enemyHit = b;
+    }
 }

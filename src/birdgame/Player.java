@@ -5,73 +5,85 @@
  */
 package birdgame;
 
+import java.io.Serializable;
+
 /**
- * Player class contains all the attributes and methods related to the bird (user).
+ * Player class contains all the attributes and methods related to the bird
+ * (user).
+ *
  * @author crnis
  */
-public class Player extends GamePiece {
-	private static int health;
-        private static int score;
-        private int xOffset;
-        private int yOffset;
-        private Sprite bird;
+public class Player extends GamePiece implements Serializable {
 
-	public Player(){
-            setYIncr(20);
-            setX(30);
-            setY(300);
-            setWidth(184);
-            setHeight(100);
-            health = 100;
-            xOffset = 30;
-            yOffset = 30;
-	}
+    final static int MAX_BIRD_HEALTH = 250;
+    final static int INITIAL_Y_INCREASE = 12;
+    final static int INITIAL_X_LOCATION = 30;
+    final static int INITIAL_Y_LOCATION = 300;
+    final static int BIRD_HEIGHT = 100;
+    final static int BIRD_WIDTH = 184;
+    final static int X_OFFSET = 30;
+    final static int Y_OFFSET = 5;
 
+    private static int health;
+    private static int score;
+    private int xOffset;
+    private int yOffset;
+    private Sprite bird;
 
-	/**
+    public Player() {
+        setYIncr(INITIAL_Y_INCREASE);
+        setX(INITIAL_X_LOCATION);
+        setY(INITIAL_Y_LOCATION);
+        setWidth(BIRD_WIDTH);
+        setHeight(BIRD_HEIGHT);
+        health = MAX_BIRD_HEALTH;
+        xOffset = X_OFFSET;
+        yOffset = Y_OFFSET;
+        score = 0;
+    }
+
+    /**
      * isAlive() checks if the player is still alive
+     *
      * @return true if player is still alive and false otherwise
      */
-
-
     public boolean isAlive() {
         if (health <= 0) {
-        	return false;
+            return false;
         }
         return true;
     }
 
     /**
      * checks if the Player collides with a GamePiece
+     *
      * @return true if player collides with GamePiece and false otherwise
      */
-
     public boolean checkCollision(GamePiece piece) {
-        int x = getX();
-        int y = getY();
-        int w = getWidth();
-        int h = getHeight();
+        int xLocation = getX();
+        int yLocation = getY();
+        int width = getWidth();
+        int height = getHeight();
         int xOff = getXOffset();
-        int yOff = getYOffset();
+        int yOff = getYOffset(); 
         int otherX = piece.getX();
         int otherY = piece.getY();
         int otherW = piece.getWidth();
         int otherH = piece.getHeight();
         int otherYOff = piece.getYOffset();
         int otherXOff = piece.getXOffset();
-
-        //probably bugged, should test more
-        if (x + w - xOff >= otherX + otherXOff && x + w -xOff <= otherX + otherW - otherXOff) {
-            if (y + yOff >= otherY + otherYOff && y + yOff <= otherY + otherW - otherYOff) {
+        									//+                                                         //
+        if (xLocation + width - xOff >= otherX + otherXOff && xLocation + width - xOff <= otherX + otherW - otherXOff) {
+            if (yLocation + yOff >= otherY + otherYOff && yLocation + yOff <= otherY + otherW - otherYOff) {
+                return true;		                     //+
+            } else if (yLocation + height - yOff >= otherY + otherYOff && yLocation + height - yOff <= otherY + otherH - otherYOff) {
                 return true;
-            } else if (y + h - yOff >= otherY + otherYOff && y + h - yOff <= otherY + otherH - otherYOff) {
+            }																					//+
+        } else if (xLocation + xOff >= otherX + otherXOff && xLocation + xOff <= otherX + otherH - otherXOff) {
+            if (yLocation + yOff >= otherY + otherYOff && yLocation + yOff <= otherY + otherW - otherYOff) {
                 return true;
-            }
-        } else if (x + xOff >= otherX + otherXOff && x + xOff <= otherX + otherH - otherXOff) {
-        	if (y + yOff >= otherY + otherYOff && y + yOff <= otherY + otherW - otherYOff) {
-                return true;
-            }
-            if (y + h - yOff >= otherY + otherYOff && y + h - yOff <= otherY + otherH - otherYOff) {
+            }										//+
+            if (yLocation + height - yOff >= otherY + otherYOff && yLocation + height - yOff <= otherY + otherH - otherYOff) {
                 return true;
             }
         }
@@ -79,44 +91,44 @@ public class Player extends GamePiece {
         return false;
 
     }
+
     public void move(Direction dir) {
-    	if (dir.equals(Direction.UP)) {
-    		
-    		setY(getY() - getYIncr());
-    	}
-    	if (dir.equals(Direction.DOWN)) {
-    		setY(getY() + getYIncr());
-    	}
-    	health--;
-    	
+        if (dir.equals(Direction.UP)) {
+
+            setY(getY() - getYIncr());
+        }
+        if (dir.equals(Direction.DOWN)) {
+            setY(getY() + getYIncr());
+        }
+        health--;
+
     }
 
+    public static int getScore() {
+        return score;
+    }
 
-	public static int getScore() {
-		return score;
-	}
+    public static void setScore(int score) {
+        Player.score = score;
+    }
 
+    public int getHealth() {
+        return health;
+    }
 
-	public static void setScore(int score) {
-		Player.score = score;
-	}
-	
-	public static int getHealth() {
-		return health;
-	}
+    public void setHealth(int health) {
+        Player.health = health;
+    }
 
+    public int getXOffset() {
+        return xOffset;
+    }
 
-	public static void setHealth(int health) {
-		Player.health = health;
-	}
-	public int getXOffset() {
-		return xOffset;
-	}
-	public int getYOffset() {
-		return yOffset;
-	}
-	
-	public void reset() {
-		setHealth(100);
-	}
+    public int getYOffset() {
+        return yOffset;
+    }
+
+    public void resetPlayer() {
+        setHealth(MAX_BIRD_HEALTH);
+    }
 }
