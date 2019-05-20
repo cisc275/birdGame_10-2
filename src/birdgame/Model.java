@@ -561,56 +561,69 @@ public class Model implements Serializable {
     }
 
     /**
-     * 
+     * incrFactIndex increases the index of the currentFact array by 1
      */
     public static void incrFactIndex() {
         currentFactIndex++;
     }
 
     /**
+     * setFurthestGP takes one parameter and sets the furthestGP equal to it
      * 
+     * @param GamePiece gP is the GamePiece that is being set to the furthest one from the player
      */
     public void setFurthestGP(GamePiece gP) {
         this.furthestGP = gP;
     }
 
     /**
+     * getBird returns the sprite of the bird in model
      * 
+     * @return Sprite bird is the Sprite of the bird being played as in Model
      */
     public static Sprite getBird() {
         return bird;
     }
 
     /**
+     * setBird takes one parameter, the Sprite of the bird being played as in Model
      * 
+     * @param Sprite bird is the Sprite of the bird being played as in Model
      */
     public static void setBird(Sprite b) {
         bird = b;
     }
 
     /**
+     * getCurrentFact returns the fact from the facts array that currentFactIndex is pointing to
      * 
+     * @return String facts[currentFactIndex] is the string of the currentFact
      */
     public static String getCurrentFact() {
         return facts[currentFactIndex];
     }
 
     /**
+     * setRound takes one parameter, and sets the round equal to the integer passed in
      * 
+     * @param int r is the round of the model
      */
     public void setRound(int r) {
         round = r;
     }
 
     /**
+     * getRound returns the value of the round currently being played in the model
      * 
+     * @return int round is the round currently being played
      */
     public int getRound() {
         return round;
     }
 
     /**
-     * 
+     * generateHarrierQuestions takes the different questions that will be asked of a player who plays as a Northern Harrier and places them in an Hashmap with answers
+     * the questions are then put into an arraylist to be chosen from
      */
     public void generateHarrierQuestions() {
         currentFactIndex = 0;
@@ -636,7 +649,8 @@ public class Model implements Serializable {
     }
 
     /**
-     * 
+	 * generateOspreyQuestions takes the different questions that will be asked of a player who plays as a Osprey in the first stage and places them in an Hashmap with answers
+     * the questions are then put into an arraylist to be chosen from
      */
     public void generateOspreyQuestions() {
         currentFactIndex = 0;
@@ -661,7 +675,8 @@ public class Model implements Serializable {
     }
 
     /**
-     * 
+	 * generateOspreyQuestions takes the different questions that will be asked of a player who plays as a Osprey in the second stage and places them in an Hashmap with answers
+     * the questions are then put into an arraylist to be chosen from
      */
     public void generateOspreyQuestions2() {
         currentFactIndex = 0;
@@ -686,77 +701,93 @@ public class Model implements Serializable {
     }
 
     /**
+     * hasMoreFacts returns a true or false for if there are more facts left to give
      * 
+     * @return boolean (currentFactIndex < facts.length) is the boolean true or false for if all of the facts have already been given.
      */
     public static boolean hasMoreFacts() {
         return currentFactIndex < facts.length;
     }
 
     /**
+     * setCorrectAnswer takes one parameter and sets the correctAnswer to a question to the String passed in
      * 
+     * @param String answer is the correct answer for the current question in Model
      */
     public static void setCorrectAnswer(String answer) {
         correctAnswer = answer;
     }
 
     /**
+     * getCorrectAnswer returns the correctAnswer for the current question in Model
      * 
+     * @return String correctAnswer is the correctAnswer for the current question in Model
      */
     public static String getCorrectAnswer() {
         return correctAnswer;
     }
 
     /**
-     * 
+     * incrQuestionNum increases the questionNum by 1 to move to the next question
      */
     public static void incrQuestionNum() {
         questionNum++;
     }
 
     /**
+     * getQuestionNum returns the number of the current question
      * 
+     * @return int questionNum is the number of the current question
      */
     public static int getQuestionNum() {
         return questionNum;
     }
 
     /**
+     * setNumberOfQuestions takes one parameter and sets the maximum number of questions to be asked
      * 
+     * @param int x is the number of questions that there will be
      */
     public static void setNumberOfQuestions(int x) {
         numberOfQuestions = x;
     }
 
     /**
+     * quizOver returns the true or false for if the quiz has been completes
      * 
+     * @return boolean (questionNum > numberOfQuestions) is the boolean true or false for if the quiz has been completed by the player
      */
     public static boolean quizOver() {
         return questionNum > numberOfQuestions;
     }
 
     /**
+     * lastQuestion returns the true or false for if the current question is the final question
      * 
+     * @return boolean (questionNum == numberOfQuestions) is the true/false boolean for if the quiz is on its final question
      */
     public static boolean lastQuestion() {
         return questionNum == numberOfQuestions;
     }
 
     /**
+     * getNumberOfQuestions returns the number of questions that can be asked
      * 
+     * @return int numberOfQuestions is the number of questions to ask
      */
     public static int getNumberOfQuestions() {
         return numberOfQuestions;
     }
 
     /**
-     * 
+     * resetQuestionNum sets the questionNum to its initial value, 0
      */
     public static void resetQuestionNum() {
         questionNum = 0;
     }
 
     /**
-     * 
+     * resetModel sets the different values that change in Model to their initial values.
      */
     public void resetModel() {
         round = 0;
@@ -779,14 +810,16 @@ public class Model implements Serializable {
     }
 
     /**
-     * 
+     * updateNumberOfQuestions sets numberOfQuestions equal to one less than the size of the possible questions to ask
      */
     public static void updateNumberOfQuestions() {
             numberOfQuestions = getQuestionToAsk().size() - 1;
     }
 
     /**
+     * isQuiz1Done returns if the quiz is complete or if there are no questions
      * 
+     * @return boolean quiz1Done is the boolean for if the quiz is complete, the return value will also be true if the number of questions was never initialized beyond -1
      */
     public static boolean isQuiz1Done() {
         if (numberOfQuestions == -1) {
@@ -798,14 +831,18 @@ public class Model implements Serializable {
     }
 
     /**
+     * setIsQuiz1Done takes one parameter and sets quiz1Done to the parameter
      * 
+     * @param boolean b is the boolean true/false of if the quiz1 has been completed
      */
     public static void setIsQuiz1Done(boolean b) {
         quiz1Done = b;
     }
 
     /**
+     * isQuiz2Done returns if the quiz is complete or if there are no questions
      * 
+     * @return boolean quiz2Done is the boolean for if the quiz is complete, the return value will also be true if the number of questions was never initialized beyond -1
      */
     public static boolean isQuiz2Done() {
         if (numberOfQuestions == -1) {
@@ -817,7 +854,9 @@ public class Model implements Serializable {
     }
 
     /**
+     * setIsQuiz2Done takes one parameter and sets quiz1Done to the parameter
      * 
+     * @param boolean b is the boolean true/false of if the quiz2 has been completed
      */
     public static void setIsQuiz2Done(boolean b) {
         quiz2Done = b;
@@ -825,7 +864,9 @@ public class Model implements Serializable {
     }
 
     /**
+     * isQuiz3Done returns if the quiz is complete or if there are no questions
      * 
+     * @return boolean quiz3Done is the boolean for if the quiz is complete, the return value will also be true if the number of questions was never initialized beyond -1
      */
     public static boolean isQuiz3Done() {
         if (getNumberOfQuestions() == -1) {
@@ -836,35 +877,45 @@ public class Model implements Serializable {
     }
 
     /**
+     * setIsQuiz3Done takes one parameter and sets quiz1Done to the parameter
      * 
+     * @param boolean b is the boolean true/false of if the quiz3 has been completed
      */
     public static void setIsQuiz3Done(boolean b) {
         quiz3Done = b;
     }
 
     /**
+     * enemyHit returns the true/false for if an enemy has been hit
      * 
+     * @return boolean enemyHit is the boolean true/false for if the player has hit an enemy
      */
     public static boolean enemyHit() {
         return enemyHit;
     }
     
     /**
+     * foodHit returns the true/false for if a food has been hit
      * 
+     * @return boolean foodHit is the boolean true/false for if the player has hit an food
      */
     public static boolean foodHit() {
         return foodHit;
     }
 
     /**
+     * setFoodHit takes one parameter and sets the true/false for if a food has been hit
      * 
+     * @param boolean b is the true/false for if a food has been hit
      */
     public static void setFoodHit(boolean b) {
         foodHit = b;
     }
 
     /**
+     * setEnemyHit takes one parameter and sets the true/false for if a enemy has been hit
      * 
+     * @param boolean b is the true/false for if an enemy has been hit
      */
     public static void setEnemyHit(boolean b) {
         enemyHit = b;

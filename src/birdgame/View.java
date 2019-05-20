@@ -34,6 +34,7 @@ import java.awt.AlphaComposite;
 import java.awt.CardLayout;
 
 /**
+ * View handles the visual updates for the game
  *
  * @author crnis
  */

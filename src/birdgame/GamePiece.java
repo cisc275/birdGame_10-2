@@ -48,15 +48,17 @@ public class GamePiece implements Serializable {
     private int imgCount = 0;
 
     /**
-     * the move() method will call upon the methods in the Model class to update
-     * the object's location and direction.
+     * the toString method is an override of Object's toString, and allows for easier printing of GamePieces during user tests. It returns the sprite name and location
+     * 
+     * @return String (" " + sprite + " " + xLocation + ", " + yLocation) is the Sprite name and x,y location of the GamePiece.
      */
+    @Override
     public String toString() {
         return " " + sprite + " " + xLocation + ", " + yLocation;
     }
 
     /**
-     * 
+     * the move() method calls upon the methods in the Model class to update the object's location and direction.
      */
     public void move() {
         xLocation = xLocation - xincr;
